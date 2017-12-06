@@ -1,0 +1,15 @@
+{
+  "name": "@devexperts/platform",
+  "repository": {
+	"type": "git",
+	"url": "git+https://github.com/devex-web-frontend/dx-util.git"
+  },
+  "bugs": {
+	"url": "https://github.com/devex-web-frontend/dx-platform/issues"
+  },
+  "author": "devexperts",
+  "license": "MPL-2.0",
+  "devDependencies": {
+	"lerna": "2.5.1"
+  }
+}

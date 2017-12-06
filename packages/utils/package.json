@@ -1,0 +1,29 @@
+{
+  "name": "@devexperts/utils",
+  "version": "0.0.0",
+  "description": "",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "dx-tools build-ts-only"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/devex-web-frontend/dx-util.git"
+  },
+  "author": "devexperts",
+  "license": "MPL-2.0",
+  "files": [
+    "lib"
+  ],
+  "typings": "lib/index.d.ts",
+  "bugs": {
+    "url": "https://github.coxm/devex-web-frontend/dx-util/issues"
+  },
+  "homepage": "https://github.com/devex-web-frontend/dx-util#readme",
+  "dependencies": {
+    "@devexperts/tools": "^0.0.0",
+    "tslib": "^1.8.0",
+    "typelevel-ts": "^0.2.2"
+  }
+}
