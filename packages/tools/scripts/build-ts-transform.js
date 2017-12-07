@@ -1,7 +1,10 @@
-import {SRC_PATH, DIST_PATH} from '../config/env';
+import {SRC_PATH, DIST_PATH, PKG} from '../config/env';
 import spawn from 'cross-spawn';
+import {createLogger} from '../utils/logger';
 
-console.log('started', SRC_PATH);
+const log = createLogger(PKG.name, 'build-ts-transform');
+
+log('started');
 
 const result = spawn.sync(
 	require.resolve('typescript/bin/tsc'),

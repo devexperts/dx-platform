@@ -5,8 +5,9 @@
   "main": "lib/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "dx-tools build-ts-only",
-    "prepublish": "npm run build"
+    "build": "dx-tools build-ts-transform",
+    "clean": "dx-tools clean",
+    "prepublish": "npm run clean && npm run build"
   },
   "repository": {
     "type": "git",
