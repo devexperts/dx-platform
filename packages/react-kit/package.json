@@ -1,34 +1,34 @@
 {
-  "name": "@devexperts/utils",
+  "name": "@devexperts/react-kit",
   "version": "0.0.0",
   "description": "",
-  "main": "lib/index.js",
+  "main": "lib",
+  "module": "src",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "dx-tools build-ts-transform",
+    "build": "dx-tools build-lib",
     "clean": "dx-tools clean",
     "prepublish": "npm run clean && npm run build",
-    "start": "dx-tools watch-ts-transform"
+    "start": "dx-tools storybook"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/devex-web-frontend/dx-util.git"
+    "url": "git+https://github.com/devex-web-frontend/dx-platform.git"
   },
   "author": "devexperts",
   "license": "MPL-2.0",
-  "files": [
-    "lib"
-  ],
-  "typings": "lib/index.d.ts",
   "bugs": {
-    "url": "https://github.coxm/devex-web-frontend/dx-util/issues"
+    "url": "https://github.com/devex-web-frontend/dx-platform/issues"
   },
-  "homepage": "https://github.com/devex-web-frontend/dx-util#readme",
+  "homepage": "https://github.com/devex-web-frontend/dx-platform#readme",
   "dependencies": {
     "@devexperts/tools": "^0.0.0",
+    "@devexperts/utils": "^0.0.0",
+    "@types/classnames": "^2.2.3",
     "@types/prop-types": "^15.5.2",
+    "classnames": "^2.2.5",
     "prop-types": "^15.6.0",
-    "tslib": "^1.8.0",
+    "tslib": "^1.8.1",
     "typelevel-ts": "^0.2.2"
   },
   "peerDependencies": {
@@ -38,6 +38,7 @@
   "devDependencies": {
     "@types/react": "^15.6.7",
     "@types/react-dom": "^15.5.6",
+    "babel-preset-env": "^1.6.1",
     "react": "^15.6.2",
     "react-dom": "^15.6.2"
   }

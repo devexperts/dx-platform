@@ -11,7 +11,10 @@ const script = scriptIndex === -1 ? args[0] : args[scriptIndex];
 const nodeArgs = scriptIndex > 0 ? args.slice(0, scriptIndex) : [];
 
 switch (script) {
+	case 'watch-ts-transform':
     case 'build-ts-transform':
+    case 'build-lib':
+    case 'storybook':
     case 'clean': {
 
         const result = spawn.sync(
