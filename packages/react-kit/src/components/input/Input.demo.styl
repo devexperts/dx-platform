@@ -1,0 +1,46 @@
+@require './Input.styl';
+
+.container {
+	cursor: text;
+	border-width: 1px;
+	border-style: solid;
+	border-radius: 1px;
+	border-color: #3b3b3b;
+	background-color: #202020;
+	box-shadow: 0 1px 0 rgba(#000000, .7) inset;
+	color: #ffffff;
+	
+	&:focus:not([readonly]):not([disabled]),
+	&_isFocused:not([readonly]) {
+		background: #464646;
+		border-color: rgba(#fff, .2);
+		box-shadow: none;
+	}
+
+	&[readonly] {
+		background-color: transparent;
+		box-shadow: none;
+		border-color: transparent;
+	}
+		
+	&_hasError {
+		background-color: red;
+		border-color: red;
+	}
+
+	&:disabled,
+	&[disabled] {
+		background: #3b3b3b;
+		border-color: #3b3b3b;
+		box-shadow: none;
+		color: #cccccc;
+	}
+}
+	
+.input {
+	background-color: transparent;
+	border: none;
+	padding: 0 6px;
+	outline: none;
+	box-shadow: none;
+}
