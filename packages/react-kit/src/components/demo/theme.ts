@@ -144,8 +144,12 @@ import buttonTheme from '../Button/Button.styl';
 import {LOADING_INDICATOR} from '../LoadingIndicator/LoadingIndicator';
 import loadingIndicatorTheme from '../LoadingIndicator/LoadingIndicator.demo.styl'
 
+import {CHECKBOX} from '../Checkbox/Checkbox';
+import checkboxTheme from '../Checkbox/Checkbox.demo.styl'
+
 export default {
 	[INPUT]: inputTheme,
 	[BUTTON]: buttonTheme,
-	[LOADING_INDICATOR]: loadingIndicatorTheme
+	[LOADING_INDICATOR]: loadingIndicatorTheme,
+	[CHECKBOX]: checkboxTheme
 }

@@ -13,7 +13,7 @@ const DEMO = Symbol();
 
 export type TFullDemoComponentProps = JSX.IntrinsicAttributes & {
 	theme: {
-		container: string
+		container?: string
 	}
 }
 

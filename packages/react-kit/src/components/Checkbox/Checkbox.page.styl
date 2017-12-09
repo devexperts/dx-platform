@@ -1,0 +1,37 @@
+.container {
+	background: #000;
+
+	.label {
+		display: inline-block;
+		padding: 10px;
+		color: #fff;
+		vertical-align: middle;
+		&:hover {
+			color: gold;
+			.view {
+				background-color: lighten(#202020, 5);
+				border-color: gold;
+			}
+			 .icon {
+				color: gold;
+			}
+		}
+	}
+
+	.label_isDisabled,
+	.label_isDisabled:hover {
+		color: #CCC;
+		.view {
+			color: #ccc;
+			background-color: darken(#202020, 5);
+			border-color: darken(#3b3b3b, 5);
+		}
+		.icon {
+			color: #CCC;
+		}
+	}
+
+	.icon_isDisabled {
+		color: #CCC;
+	}
+}

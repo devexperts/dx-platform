@@ -1,3 +1,5 @@
+.container__flat,
+.container_primary,
 .container {
 	user-select: none;
 	display: inline-block;
@@ -8,18 +10,6 @@
 	font-family: inherit; //override default user-agent stylesheet
 	outline: none;
 	cursor: pointer;
-			
-	//types
-	&_primary {
-		composes: container;
-	}
-		
-	&_flat {
-		composes: container;
-		background-color: transparent;
-		border: none;
-		box-shadow: none;
-	}
 		
 	//status
 	&_isLoading {
@@ -31,6 +21,12 @@
 	&[disabled] {
 		cursor: default;
 	}
+}
+
+.container_flat {
+	background-color: transparent;
+	border: none;
+	box-shadow: none;
 }
 	
 .loadingIndicator {

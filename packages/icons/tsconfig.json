@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+	"module": "es2015",
+	"moduleResolution": "node",
+	"emitDecoratorMetadata": true,
+	"experimentalDecorators": true,
+	"allowSyntheticDefaultImports": true,
+	"importHelpers": true,
+	"jsx": "react",
+	"noImplicitAny": true,
+	"noImplicitReturns": true,
+	"noImplicitThis": true,
+	"outDir": "lib",
+	"declaration": true,
+	"pretty": true,
+	"strictNullChecks": true,
+	"suppressImplicitAnyIndexErrors": true,
+	"target": "es2015",
+	"lib": [
+	  "dom",
+	  "es6",
+	  "scripthost",
+	  "es2015.symbol",
+	  "es2017.object",
+	  "es2016.array.include"
+	]
+  },
+  "include": [
+	"src/**/*"
+  ]
+}

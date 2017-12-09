@@ -1,15 +1,14 @@
 {
-  "name": "@devexperts/react-kit",
+  "name": "@devexperts/icons",
   "version": "0.0.0",
   "description": "",
   "main": "lib",
-  "module": "src",
+  "mdoule": "src",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "dx-tools build-lib",
     "clean": "dx-tools clean",
-    "prepublish": "npm run clean && npm run build",
-    "start": "dx-tools storybook"
+    "prepublish": "npm run clean && npm run build"
   },
   "repository": {
     "type": "git",
@@ -22,20 +21,7 @@
   },
   "homepage": "https://github.com/devex-web-frontend/dx-platform#readme",
   "dependencies": {
-    "@devexperts/icons": "^0.0.0",
-    "@devexperts/tools": "^0.0.0",
-    "@devexperts/utils": "^0.0.0",
-    "@types/classnames": "^2.2.3",
-    "@types/prop-types": "^15.5.2",
-    "classnames": "^2.2.5",
-    "date-fns": "^1.29.0",
-    "element-resize-detector": "^1.1.12",
-    "moment": "^2.19.3",
-    "prop-types": "^15.6.0",
-    "react-css-themr": "^2.1.2",
-    "react-overlays": "^0.6.12",
-    "tslib": "^1.8.1",
-    "typelevel-ts": "^0.2.2"
+    "@devexperts/tools": "^0.0.0"
   },
   "peerDependencies": {
     "react": "^15.6.2",
@@ -44,12 +30,12 @@
   "devDependencies": {
     "@types/react": "^15.6.7",
     "@types/react-dom": "^15.5.6",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-decorators-legacy": "^1.3.4",
     "babel-plugin-transform-function-bind": "^6.22.0",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "babel-preset-env": "^1.6.1",
-    "babel-preset-react": "^6.24.1",
     "react": "^15.6.2",
     "react-dom": "^15.6.2"
   }

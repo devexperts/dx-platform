@@ -63,18 +63,18 @@ const loaders = [
 		]
 	},
 	//css
-	{
-		test: /\.css$/,
-		name: 'css',
-		loader: [
-			'style',
-			'css-loader?localIdentName=[name]__[local]__[hash:base64:5]',
-			'postcss-loader'
-		].join('!'),
-		exclude: [
-			ENV.SRC_PATH
-		]
-	},
+	// {
+	// 	test: /\.css$/,
+	// 	name: 'css',
+	// 	loader: [
+	// 		'style',
+	// 		'css-loader?localIdentName=[name]__[local]__[hash:base64:5]',
+	// 		'postcss-loader'
+	// 	].join('!'),
+	// 	exclude: [
+	// 		ENV.SRC_PATH
+	// 	]
+	// },
 	//css-modules
 	{
 		test: /\.css$/,
@@ -89,19 +89,19 @@ const loaders = [
 		]
 	},
 	//stylus
-	{
-		test: /\.styl$/,
-		name: 'stylus',
-		loader: [
-			'style',
-			'css-loader?localIdentName=[name]__[local]__[hash:base64:5]',
-			'postcss-loader',
-			`stylus-loader?${JSON.stringify(STYLUS_OPTIONS)}`
-		].join('!'),
-		exclude: [
-			ENV.SRC_PATH
-		]
-	},
+	// {
+	// 	test: /\.styl$/,
+	// 	name: 'stylus',
+	// 	loader: [
+	// 		'style',
+	// 		'css-loader?localIdentName=[name]__[local]__[hash:base64:5]',
+	// 		'postcss-loader',
+	// 		`stylus-loader?${JSON.stringify(STYLUS_OPTIONS)}`
+	// 	].join('!'),
+	// 	exclude: [
+	// 		ENV.SRC_PATH
+	// 	]
+	// },
 	//stylus-modules
 	{
 		test: /\.styl$/,
@@ -113,7 +113,8 @@ const loaders = [
 			`stylus-loader?${JSON.stringify(STYLUS_OPTIONS)}`
 		].join('!'),
 		include: [
-			ENV.SRC_PATH
+			ENV.SRC_PATH,
+			...ENV.STYLUS_PROCESSABLES
 		]
 	}
 ];
