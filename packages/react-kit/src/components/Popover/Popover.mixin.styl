@@ -1,0 +1,37 @@
+Popover($selector, $arrowSize = 0, $arrowColor = transparent) {
+	if $arrowSize {
+		.{$selector} {
+			&_hasArrow {
+				&.{$selector}_placementTop {
+					padding-bottom: $arrowSize;
+					.arrow {
+						border-width: $arrowSize $arrowSize 0 $arrowSize;
+						border-color: $arrowColor transparent transparent transparent;
+					}
+				}
+				&.{$selector}_placementBottom {
+					padding-top: $arrowSize;
+					.arrow {
+						border-width: 0 $arrowSize $arrowSize $arrowSize;
+						border-color: transparent transparent $arrowColor transparent;
+					}
+				}
+				
+				&.{$selector}_placementLeft {
+					padding-right: $arrowSize;
+					.arrow {
+						border-width: $arrowSize 0 $arrowSize $arrowSize;
+						border-color: transparent transparent transparent $arrowColor;
+					}
+				}
+				&.{$selector}_placementRight {
+					padding-left: $arrowSize;
+					.arrow {
+						border-width: $arrowSize $arrowSize $arrowSize 0;
+						border-color: transparent $arrowColor transparent transparent;
+					}
+				}
+			}
+		}
+	}
+}

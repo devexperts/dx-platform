@@ -1,0 +1,42 @@
+.container {
+	position: absolute;
+	top: 0;
+	left: 0;
+	box-sizing: border-box;
+	
+	&_hasArrow {
+		composes: container;
+		&.container_placementTop {
+			.arrow {
+				top: 100%;
+			}
+		}
+		&.container_placementBottom {
+			.arrow {
+				bottom: 100%;
+			}
+		}
+		&.container_placementLeft {
+			.arrow {
+				left: 100%;
+			}
+		}
+		&.container_placementRight {
+			.arrow {
+				right: 100%;
+			}
+		}
+	}
+}
+	
+.content {
+	position: relative;
+}
+
+.arrow {
+	display: block;
+	width: 0;
+	height: 0;
+	position: absolute;
+	border-style: solid;
+}

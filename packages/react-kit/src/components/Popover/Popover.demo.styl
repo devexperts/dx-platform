@@ -1,0 +1,10 @@
+@require './Popover.mixin.styl';
+@require './Popover.styl';
+
+Popover(container, 5px, lightgrey);
+.content {
+	background-color: lightgrey;
+	&:not(:empty) {
+		padding: 10px;
+	}
+}

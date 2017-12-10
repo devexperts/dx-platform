@@ -41,6 +41,7 @@ export default (host, port, standalone) => {
 	} : config.output;
 	return {
 		...config,
+		devtool: "source-map",
 		output,
 		entry: {
 			manager: [

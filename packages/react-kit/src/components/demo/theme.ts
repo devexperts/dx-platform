@@ -147,9 +147,13 @@ import loadingIndicatorTheme from '../LoadingIndicator/LoadingIndicator.demo.sty
 import {CHECKBOX} from '../Checkbox/Checkbox';
 import checkboxTheme from '../Checkbox/Checkbox.demo.styl'
 
+import {POPOVER} from '../Popover/Popover';
+import popoverTheme from '../Popover/Popover.demo.styl';
+
 export default {
 	[INPUT]: inputTheme,
 	[BUTTON]: buttonTheme,
 	[LOADING_INDICATOR]: loadingIndicatorTheme,
-	[CHECKBOX]: checkboxTheme
+	[CHECKBOX]: checkboxTheme,
+	[POPOVER]: popoverTheme
 }
