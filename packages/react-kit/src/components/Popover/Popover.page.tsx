@@ -9,7 +9,6 @@ import { storiesOf } from '@devexperts/tools/utils/storybook';
 import {stateful} from '../Control/Control';
 
 import css from './Popover.page.styl';
-import * as PropTypes from 'prop-types';
 
 const buttonTheme = {
 	container: css.toggleButton

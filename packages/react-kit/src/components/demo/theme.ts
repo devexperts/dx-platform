@@ -159,6 +159,9 @@ import menuTheme from '../Menu/Menu.demo.styl';
 import {SELECTBOX} from '../Selectbox/Selectbox';
 import selectBoxTheme from '../Selectbox/Selectbox.demo.styl';
 
+import {TABLE} from '../Table/Table';
+import tableTheme from '../Table/Table.demo.styl';
+
 export default {
 	[INPUT]: inputTheme,
 	[BUTTON]: buttonTheme,
@@ -167,5 +170,6 @@ export default {
 	[POPOVER]: popoverTheme,
 	[LIST]: listTheme,
 	[MENU]: menuTheme,
-	[SELECTBOX]: selectBoxTheme
+	[SELECTBOX]: selectBoxTheme,
+	[TABLE]: tableTheme
 }
