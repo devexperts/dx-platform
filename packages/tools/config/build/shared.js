@@ -112,10 +112,10 @@ const loaders = [
 			'postcss-loader',
 			`stylus-loader?${JSON.stringify(STYLUS_OPTIONS)}`
 		].join('!'),
-		include: [
-			ENV.SRC_PATH,
-			...ENV.STYLUS_PROCESSABLES
-		]
+		// include: [
+		// 	ENV.SRC_PATH,
+		// 	...ENV.STYLUS_PROCESSABLES
+		// ]
 	}
 ];
 

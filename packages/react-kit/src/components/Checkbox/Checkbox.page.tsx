@@ -8,7 +8,6 @@ import {CheckboxTickIcon} from '@devexperts/icons/lib/checkbox-tick-icon';
 import { Checkbox } from './Checkbox';
 import { storiesOf, action } from '@devexperts/tools/utils/storybook';
 
-import checkboxIcon from './img/icon-checkbox-tick.svg';
 import css from './Checkbox.page.styl';
 
 const darkDemoTheme = {
@@ -36,7 +35,6 @@ class CheckboxPage extends React.Component<{isDisabled?: boolean}, {isChecked: b
 					<label htmlFor="check1" className={labelClassName}>
 						<Checkbox theme={darkDemoTheme}
 								  checkMark={<CheckboxTickIcon/>}
-						          checkboxIconName={checkboxIcon}
 						          value={this.state.isChecked}
 						          onValueChange={this.onChangeHandler}
 						          isDisabled={this.props.isDisabled}

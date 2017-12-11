@@ -2,8 +2,8 @@ import React from 'react';
 import Demo from '../demo/Demo';
 import { Button } from '../Button/Button';
 import { Popover, PopoverPlacement, PopoverAlign } from './Popover';
-// import { Selectbox } from '../Selectbox/Selectbox.tsx';
-// import { MenuItem } from '../Menu/Menu.tsx';
+import { Selectbox } from '../Selectbox/Selectbox';
+import { MenuItem } from '../Menu/Menu';
 import { PURE } from '@devexperts/utils/lib/react/pure';
 import { storiesOf } from '@devexperts/tools/utils/storybook';
 import {stateful} from '../Control/Control';
@@ -40,7 +40,7 @@ class HeavyContent extends React.Component<{isLong?: boolean}> {
 	}
 }
 
-// const Stateful = stateful()(Selectbox);
+const Stateful = stateful()(Selectbox);
 
 @PURE
 class PopoverPage extends React.Component {
@@ -63,35 +63,35 @@ class PopoverPage extends React.Component {
 				<div className={css.container}>
 					<div>
 						<label className={css.label}>Placement</label>
-						{/*<Stateful defaultValue={PopoverPlacement.Bottom}*/}
-						          {/*onChange={this.onPlacementSelect}>*/}
-							{/*<MenuItem value={PopoverPlacement.Top}>Top</MenuItem>*/}
-							{/*<MenuItem value={PopoverPlacement.Bottom}>Bottom</MenuItem>*/}
-							{/*<MenuItem value={PopoverPlacement.Left}>Left</MenuItem>*/}
-							{/*<MenuItem value={PopoverPlacement.Right}>Right</MenuItem>*/}
-						{/*</Stateful>*/}
-						{/*<label className={css.label}>Align</label>*/}
-						{/*{(placement === PopoverPlacement.Top || placement === PopoverPlacement.Bottom) && (*/}
-							{/*<Stateful defaultValue={PopoverAlign.Left}*/}
-							          {/*onChange={this.onAlignSelect}>*/}
-								{/*<MenuItem value={PopoverAlign.Left}>Left</MenuItem>*/}
-								{/*<MenuItem value={PopoverAlign.Center}>Center</MenuItem>*/}
-								{/*<MenuItem value={PopoverAlign.Right}>Right</MenuItem>*/}
-							{/*</Stateful>*/}
-						{/*)}*/}
-						{/*{(placement === PopoverPlacement.Left || placement === PopoverPlacement.Right) && (*/}
-							{/*<Stateful defaultValue={PopoverAlign.Top}*/}
-							          {/*onChange={this.onAlignSelect}>*/}
-								{/*<MenuItem value={PopoverAlign.Top}>Top</MenuItem>*/}
-								{/*<MenuItem value={PopoverAlign.Middle}>Middle</MenuItem>*/}
-								{/*<MenuItem value={PopoverAlign.Bottom}>Bottom</MenuItem>*/}
-							{/*</Stateful>*/}
-						{/*)}*/}
-						{/*<label className={css.label}>*/}
-							{/*Close on clickaway <input type="checkbox"*/}
-							                          {/*value={closeOnClickAway}*/}
-							                          {/*onChange={this.onCloseOnClickAwayChange}/>*/}
-						{/*</label>*/}
+						<Stateful defaultValue={PopoverPlacement.Bottom}
+						          onValueChange={this.onPlacementSelect}>
+							<MenuItem value={PopoverPlacement.Top}>Top</MenuItem>
+							<MenuItem value={PopoverPlacement.Bottom}>Bottom</MenuItem>
+							<MenuItem value={PopoverPlacement.Left}>Left</MenuItem>
+							<MenuItem value={PopoverPlacement.Right}>Right</MenuItem>
+						</Stateful>
+						<label className={css.label}>Align</label>
+						{(placement === PopoverPlacement.Top || placement === PopoverPlacement.Bottom) && (
+							<Stateful defaultValue={PopoverAlign.Left}
+							          onValueChange={this.onAlignSelect}>
+								<MenuItem value={PopoverAlign.Left}>Left</MenuItem>
+								<MenuItem value={PopoverAlign.Center}>Center</MenuItem>
+								<MenuItem value={PopoverAlign.Right}>Right</MenuItem>
+							</Stateful>
+						)}
+						{(placement === PopoverPlacement.Left || placement === PopoverPlacement.Right) && (
+							<Stateful defaultValue={PopoverAlign.Top}
+							          onValueChange={this.onAlignSelect}>
+								<MenuItem value={PopoverAlign.Top}>Top</MenuItem>
+								<MenuItem value={PopoverAlign.Middle}>Middle</MenuItem>
+								<MenuItem value={PopoverAlign.Bottom}>Bottom</MenuItem>
+							</Stateful>
+						)}
+						<label className={css.label}>
+							Close on clickaway <input type="checkbox"
+							                          value={closeOnClickAway.toString()}
+							                          onChange={this.onCloseOnClickAwayChange}/>
+						</label>
 					</div>
 					<Button isPrimary={true}
 					        onClick={this.onToggleClick}

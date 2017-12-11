@@ -1,0 +1,49 @@
+.container {
+
+	&__anchor {
+		&__text {
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+		&__content {
+			text-align: left;
+			&_hasCaret {
+				position: relative;
+				.container__anchor__caret {
+					display: block;
+					position: absolute;
+					right: 0;
+					top: 50%;
+					transform: translateY(-50%);
+					&_isReversed {
+						transform: translateY(-50%) rotate(-180deg);
+					}
+				}
+			}
+		}
+	}
+
+	&__item {
+		&__text {
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+	}
+
+	&__menu {
+		&_hasSelectedItem {
+			.container__item {
+				position: relative;
+				&__activeIcon {
+					display: block;
+					position: absolute;
+					right: 0;
+					top: 50%;
+					transform: translateY(-50%);
+				}
+			}
+		}
+	}
+}

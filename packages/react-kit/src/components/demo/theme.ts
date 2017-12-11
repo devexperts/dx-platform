@@ -150,10 +150,22 @@ import checkboxTheme from '../Checkbox/Checkbox.demo.styl'
 import {POPOVER} from '../Popover/Popover';
 import popoverTheme from '../Popover/Popover.demo.styl';
 
+import {LIST} from '../List/List';
+import listTheme from '../List/List.demo.styl';
+
+import {MENU} from '../Menu/Menu';
+import menuTheme from '../Menu/Menu.demo.styl';
+
+import {SELECTBOX} from '../Selectbox/Selectbox';
+import selectBoxTheme from '../Selectbox/Selectbox.demo.styl';
+
 export default {
 	[INPUT]: inputTheme,
 	[BUTTON]: buttonTheme,
 	[LOADING_INDICATOR]: loadingIndicatorTheme,
 	[CHECKBOX]: checkboxTheme,
-	[POPOVER]: popoverTheme
+	[POPOVER]: popoverTheme,
+	[LIST]: listTheme,
+	[MENU]: menuTheme,
+	[SELECTBOX]: selectBoxTheme
 }

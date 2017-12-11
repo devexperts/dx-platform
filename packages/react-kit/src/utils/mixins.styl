@@ -1,0 +1,17 @@
+nesting($selector, $padding = 0, $limit = 0, $nestedSelector = null) {
+	if $padding and $limit {
+		for $level in (0..$limit) {
+			$currentPadding = ($level * $padding);
+			
+			if $nestedSelector {
+				.{$selector}_level_{$level} .{$nestedSelector} {
+					padding-left: $currentPadding;
+				}
+			} else {
+				.{$selector}_level_{$level} {
+					padding-left: $currentPadding;
+				}
+			}
+		}
+	}
+}

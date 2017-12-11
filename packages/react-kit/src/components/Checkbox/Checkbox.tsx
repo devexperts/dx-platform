@@ -12,8 +12,7 @@ export const CHECKBOX = Symbol('Checkbox');
 
 export type TFullCheckboxProps = TControlProps<boolean> & {
 	id?: string,
-	checkboxIconName: string,
-	checkMark: React.ReactChild,
+	checkMark: React.ReactElement<any> | React.ReactText,
 	isDisabled?: boolean,
 	theme: {
 		container?: string,

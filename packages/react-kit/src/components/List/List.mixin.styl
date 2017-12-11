@@ -1,0 +1,10 @@
+@require '../../utils/mixins.styl';
+
+list-nesting($selector, $padding = 0, $limit = 0) {
+	if $padding and $limit {
+		.{$selector} {
+			nesting(item, $padding, $limit);
+			nesting(itemGroup, $padding, $limit, itemGroup__header);
+		}
+	}
+}
