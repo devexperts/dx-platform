@@ -1,0 +1,57 @@
+//@require '~config';
+@require './Scrollable.config.styl';
+
+.scrollable {
+	overflow: hidden;
+	position: relative;
+}
+
+.withHorizontalScrollbar {
+	> .wrapper > .container > .content {
+		padding-bottom: $scrollableScrollBarSize;
+	}
+}
+.withVerticalScrollbar {
+	> .wrapper > .container {
+		padding-right: $scrollableScrollBarSize;
+	}
+}
+
+.wrapper {
+	display: block;
+	width: 100%;
+	height: 100%;
+	max-height: inherit;
+	background-color: inherit;
+}
+
+.container {
+	padding: 0;
+	overflow: scroll;
+	max-height: inherit;
+	box-sizing: border-box;
+}
+
+.content {
+	display: inline-block;
+	vertical-align: middle;
+	position: relative;
+	min-width: 100%;
+}
+
+
+.resizeDetector {
+	position: absolute;
+	top: 0;
+	left: 0;
+
+	z-index: -1;
+	width: 100%;
+	height: 100%;
+	border: none;
+}
+
+
+.scrollbar {
+	background-color: inherit;
+}

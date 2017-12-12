@@ -1,0 +1,32 @@
+//@require '~config';
+
+@require '../Scrollable/Scrollable.config.styl';
+@require './Scrollbar.styl';
+
+.container {
+	bottom: 0;
+	left: 0;
+	right: 0;
+	visibility: hidden;
+	z-index: -1;
+	padding: 0;
+	height: $scrollableScrollBarSize;
+}
+
+.track {
+	height: 100%;
+}
+
+.bar {
+	min-width: $scrollableMinBarSize;
+}
+
+
+.containerIsVisible {
+	visibility: inherit;
+	z-index: auto;
+
+	&:global(.withBothScrollabars) {
+		right: $scrollableScrollBarSize;
+	}
+}

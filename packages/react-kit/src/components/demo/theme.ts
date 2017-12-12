@@ -162,6 +162,15 @@ import selectBoxTheme from '../Selectbox/Selectbox.demo.styl';
 import {TABLE} from '../Table/Table';
 import tableTheme from '../Table/Table.demo.styl';
 
+import {HORIZONTAL_SCROLLBAR} from '../Scrollbar/HorizontalScrollbar';
+import horScrollbar from '../Scrollbar/HorizontalScrollbar.demo.styl';
+
+import {VERTICAL_SCROLLBAR} from '../Scrollbar/VerticalScrollbar';
+import vertScrollbar from '../Scrollbar/VerricalScrollbar.demo.styl';
+
+import {SCROLLABLE} from '../Scrollable/Scrollable';
+import scrollableTheme from '../Scrollable/Scrollable.styl';
+
 export default {
 	[INPUT]: inputTheme,
 	[BUTTON]: buttonTheme,
@@ -171,5 +180,8 @@ export default {
 	[LIST]: listTheme,
 	[MENU]: menuTheme,
 	[SELECTBOX]: selectBoxTheme,
-	[TABLE]: tableTheme
+	[TABLE]: tableTheme,
+	[HORIZONTAL_SCROLLBAR]: horScrollbar,
+	[VERTICAL_SCROLLBAR]: vertScrollbar,
+	[SCROLLABLE]: scrollableTheme
 }
