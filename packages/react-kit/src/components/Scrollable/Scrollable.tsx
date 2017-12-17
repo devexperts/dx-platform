@@ -38,8 +38,8 @@ export type TFullScrollableProps = {
 		horizontal_scrollbar__bar?: string
 		vertical_scrollbar__bar?: string
 	}
-    onUpdate?: (withHorizantal: boolean, withVertical: boolean) => {},
-    onScroll?: (scrollLeft: number, scrollTop: number) => {},
+    onUpdate?: (withHorizantal: boolean, withVertical: boolean) => void,
+    onScroll?: (scrollLeft: number, scrollTop: number) => void,
     scrollTop?: number,
     scrollLeft?: number
 }

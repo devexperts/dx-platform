@@ -171,6 +171,9 @@ import vertScrollbar from '../Scrollbar/VerricalScrollbar.demo.styl';
 import {SCROLLABLE} from '../Scrollable/Scrollable';
 import scrollableTheme from '../Scrollable/Scrollable.styl';
 
+import {GRID} from '../Grid/Grid';
+import gridTheme from '../Grid/Grid.styl';
+
 export default {
 	[INPUT]: inputTheme,
 	[BUTTON]: buttonTheme,
@@ -183,5 +186,6 @@ export default {
 	[TABLE]: tableTheme,
 	[HORIZONTAL_SCROLLBAR]: horScrollbar,
 	[VERTICAL_SCROLLBAR]: vertScrollbar,
-	[SCROLLABLE]: scrollableTheme
+	[SCROLLABLE]: scrollableTheme,
+	[GRID]: gridTheme
 }

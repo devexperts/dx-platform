@@ -7,15 +7,17 @@ import {PartialKeys} from '@devexperts/utils/lib/object/object';
 
 export const TABLE = Symbol('Table');
 
+export type TTableTheme = {
+    container ?:string,
+    head ?:string,
+    body ?:string,
+    row ?:string,
+    cell ?:string,
+    cell_isInHead ?:string
+}
+
 export type TFullTableProps = {
-    theme: {
-        container ?:string,
-        head ?:string,
-        body ?:string,
-		row ?:string,
-		cell ?:string,
-        cell_isInHead ?:string
-    },
+    theme: TTableTheme,
 	children: React.ReactNode
 }
 

@@ -1,0 +1,46 @@
+.container {
+	background-color: #161412;
+	.gridCell {
+		&__content {
+			min-width: 30px; //to avoid repainting
+		}
+	}
+}
+
+.gridBody {
+	max-height: 300px;
+}
+	
+.gridCell {
+	&__placeholder {
+		height: 16px; //this should be fixed integer to avoid repainting whole table on content change
+		position: relative;
+	}
+	&__content {
+		position: absolute;
+		top: 0;
+		&_left {
+			composes: gridCell__content;
+			text-align: left;
+		}
+		&_center {
+			left: 50%;
+			transform: translateX(-50%);
+		}
+		&_right {
+			right: 0;
+		}
+	}
+}
+	
+.gridHead {
+	background-color: #242424;
+}
+
+.horizontal_scrollbar__bar {
+	background: red;
+}
+
+.vertical_scrollbar__bar {
+	background: red;
+}
