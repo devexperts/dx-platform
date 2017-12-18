@@ -39,5 +39,9 @@
     "babel-preset-react": "^6.24.1",
     "react": "^15.6.2",
     "react-dom": "^15.6.2"
+  },
+  "dependencies": {
+    "@types/classnames": "^2.2.3",
+    "classnames": "^2.2.5"
   }
 }
