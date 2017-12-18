@@ -1,10 +1,10 @@
 import * as React from 'react';
 import classnames from 'classnames';
-import { withTheme } from '@devexperts/utils/lib/react/withTheme';
+import { withTheme } from '../../utils/withTheme';
 import { ComponentClass, MouseEventHandler, ReactNode } from 'react';
 import { ObjectClean } from 'typelevel-ts';
 import { PartialKeys } from '@devexperts/utils/lib/object/object';
-import { PURE } from '@devexperts/utils/lib/react/pure';
+import { PURE } from '../../utils/pure';
 
 export const LIST = Symbol('List');
 const CONTEXT_LEVEL_KEY = '__LIST_CONTEXT_LEVEL_KEY__';

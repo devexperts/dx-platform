@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import * as PropTypes from 'prop-types';
-import { PURE } from '@devexperts/utils/lib/react/pure';
+import { PURE } from '../../utils/pure';
 import classnames from 'classnames';
 import Demo from '../demo/Demo';
 import {CheckboxTickIcon} from '@devexperts/icons/lib/checkbox-tick-icon';

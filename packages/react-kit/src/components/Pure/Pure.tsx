@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { shouldComponentUpdate } from '@devexperts/utils/lib/react/pure';
+import { shouldComponentUpdate } from '../../utils/pure';
 
 export type TPureProps = {
 	[key: string]: any,

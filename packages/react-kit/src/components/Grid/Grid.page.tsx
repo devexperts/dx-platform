@@ -1,7 +1,7 @@
 import React from 'react';
 import {storiesOf} from '@devexperts/tools/utils/storybook';
 import Demo from '../demo/Demo';
-import {PURE} from '@devexperts/utils/lib/react/pure';
+import {PURE} from '../../utils/pure';
 
 import {
 	Grid,

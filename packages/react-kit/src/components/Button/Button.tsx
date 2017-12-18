@@ -1,8 +1,8 @@
 import * as React from 'react';
 import classnames from 'classnames';
-import { PURE } from '@devexperts/utils/lib/react/pure';
+import { PURE } from '../../utils/pure';
 import { LoadingIndicator, TLoadingIndicatorProps } from '../LoadingIndicator/LoadingIndicator';
-import { withTheme } from '@devexperts/utils/lib/react/withTheme';
+import { withTheme } from '../../utils/withTheme';
 import { ComponentClass, EventHandler, MouseEvent } from 'react';
 import { PartialKeys } from '@devexperts/utils/lib/object/object';
 import { ObjectClean } from 'typelevel-ts';

@@ -1,7 +1,7 @@
 import React from 'react';
 import { themr, ThemeProvider as ThemrProvider } from 'react-css-themr';
 import * as PropTypes from 'prop-types';
-import { ThemeProvider, withTheme } from '@devexperts/utils/lib/react/withTheme';
+import { ThemeProvider, withTheme } from '../../utils/withTheme';
 
 import css from './Demo.styl';
 

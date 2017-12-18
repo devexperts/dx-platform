@@ -1,7 +1,7 @@
 import * as React from 'react';
 import split from '@devexperts/utils/lib/string/split';
-import { PURE } from '@devexperts/utils/lib/react/pure';
-import { withTheme } from '@devexperts/utils/lib/react/withTheme';
+import { PURE } from '../../utils/pure';
+import { withTheme } from '../../utils/withTheme';
 import { PartialKeys } from '@devexperts/utils/lib/object/object';
 import { ObjectClean } from 'typelevel-ts/lib';
 import { ComponentClass, ReactNode } from 'react';

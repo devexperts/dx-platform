@@ -15,7 +15,7 @@ import {VerticalScrollbar as BaseVerticalScrollbar, TVerticalScrollbarProps} fro
 
 import getScrollbarSize from '../Scrollbar/Scrollbar.util';
 import * as PropTypes from 'prop-types';
-import {withTheme} from '@devexperts/utils/lib/react/withTheme';
+import {withTheme} from '../../utils/withTheme';
 import {ObjectClean} from 'typelevel-ts';
 import {PartialKeys} from '@devexperts/utils/lib/object/object';
 

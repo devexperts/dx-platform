@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { PURE } from '@devexperts/utils/lib/react/pure';
+import { PURE } from '../../utils/pure';
 import classnames from 'classnames';
-import { withTheme } from '@devexperts/utils/lib/react/withTheme';
+import { withTheme } from '../../utils/withTheme';
 import {ObjectClean} from "typelevel-ts/lib";
 import {PartialKeys} from '@devexperts/utils/lib/object/object';
 

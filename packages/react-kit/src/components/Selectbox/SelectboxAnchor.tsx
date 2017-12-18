@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { PURE } from '@devexperts/utils/lib/react/pure';
+import { PURE } from '../../utils/pure';
 import { Button, TButtonProps, TFullButtonProps } from '../Button/Button';
 import { ComponentClass, ComponentType, ReactNode } from 'react';
 import { ObjectClean, ObjectOmit } from 'typelevel-ts';

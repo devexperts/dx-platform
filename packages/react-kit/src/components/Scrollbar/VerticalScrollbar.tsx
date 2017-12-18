@@ -4,9 +4,9 @@ import {
 	EVENT_SCROLABLE,
 	SCROLLABLE_CONTEXT_EMITTER,
 } from '../Scrollable/Scrollable.const';
-import {PURE} from '@devexperts/utils/lib/react/pure';
+import {PURE} from '../../utils/pure';
 import * as PropTypes from 'prop-types';
-import {withTheme} from '@devexperts/utils/lib/react/withTheme';
+import {withTheme} from '../../utils/withTheme';
 import {ObjectClean} from 'typelevel-ts';
 import {PartialKeys} from '@devexperts/utils/lib/object/object';
 

@@ -3,7 +3,7 @@ import { storiesOf } from '@devexperts/tools/utils/storybook';
 import {Scrollable} from './Scrollable';
 import Demo from '../demo/Demo';
 import css from './Scrollable.page.styl';
-import { PURE } from '@devexperts/utils/lib/react/pure';
+import { PURE } from '../../utils/pure';
 import { Pure } from '../Pure/Pure';
 
 const darkDemoTheme = {

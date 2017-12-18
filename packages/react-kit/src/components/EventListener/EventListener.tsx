@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Component, ReactElement } from 'react';
-import { PURE } from '@devexperts/utils/lib/react/pure';
+import { PURE } from '../../utils/pure';
 
 type Handlers = {
 	[onEvent: string]: Function

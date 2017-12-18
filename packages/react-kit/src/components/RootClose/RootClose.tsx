@@ -3,7 +3,7 @@ import { Component, KeyboardEventHandler, MouseEvent, MouseEventHandler, ReactEl
 import { EventListener } from '../EventListener/EventListener';
 import { findDOMNode } from 'react-dom';
 import { KeyCode } from '../Control/Control';
-import { PURE } from '@devexperts/utils/lib/react/pure';
+import { PURE } from '../../utils/pure';
 
 //inspired by https://github.com/react-bootstrap/react-overlays/blob/master/src/RootCloseWrapper.js
 

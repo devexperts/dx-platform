@@ -4,14 +4,14 @@ import {
 	TListItemProps,
 	TListProps
 } from '../List/List';
-import { withTheme } from '@devexperts/utils/lib/react/withTheme';
+import { withTheme } from '../../utils/withTheme';
 import { Component, ComponentClass, ComponentType, ReactElement, ReactNode, ReactText } from 'react';
 import { ObjectClean } from 'typelevel-ts';
 import { PartialKeys } from '@devexperts/utils/lib/object/object';
-import { PURE } from '@devexperts/utils/lib/react/pure';
+import { PURE } from '../../utils/pure';
 import classNames from 'classnames';
 import { Pure } from '../Pure/Pure';
-import { ReactChildren } from '@devexperts/utils/lib/react/typings';
+import { ReactChildren } from '../../utils/typings';
 
 export const MENU = Symbol('Menu');
 

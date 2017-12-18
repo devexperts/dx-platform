@@ -2,13 +2,11 @@ import React from 'react';
 import * as PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import prefix from '@devexperts/utils/lib/dom/prefix';
-import { PURE } from '@devexperts/utils/lib/react/pure';
+import { PURE } from '../../utils/pure';
 import { Pure } from '../Pure/Pure';
 import {
-    // TABLE_IS_IN_HEAD_KEY,
     Table as BasicTable,
     TableBody as BasicTableBody,
-    // TABLE_BODY_THEME,
     TableHead as BasicTableHead,
     TableCell as BasicTableCell,
     TableRow as BasicTableRow,
@@ -24,7 +22,7 @@ import { Scrollable } from '../Scrollable/Scrollable';
 import classnames from 'classnames';
 import {ObjectClean, ObjectOmit} from 'typelevel-ts';
 import {PartialKeys} from "@devexperts/utils/lib/object/object";
-import {withTheme} from '@devexperts/utils/lib/react/withTheme';
+import {withTheme} from '../../utils/withTheme';
 
 export const GRID = Symbol('Grid');
 

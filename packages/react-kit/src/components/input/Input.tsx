@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import classnames from 'classnames';
-import { PURE } from '@devexperts/utils/lib/react/pure';
+import { PURE } from '../../utils/pure';
 import { TControlProps } from '../Control/Control';
 import {
 	ChangeEventHandler, ComponentClass, FocusEventHandler, KeyboardEventHandler, MouseEventHandler,
@@ -9,7 +9,7 @@ import {
 } from 'react';
 import { ObjectClean } from 'typelevel-ts';
 import { PartialKeys } from '@devexperts/utils/lib/object/object';
-import { withTheme } from '@devexperts/utils/lib/react/withTheme';
+import { withTheme } from '../../utils/withTheme';
 
 export const INPUT = Symbol('Input');
 

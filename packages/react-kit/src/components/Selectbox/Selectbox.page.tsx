@@ -5,7 +5,7 @@ import { Button } from '../Button/Button';
 import { Selectbox, TFullSelectboxProps } from './Selectbox';
 import { SelectboxAnchor, TFullSelectboxAnchorProps } from './SelectboxAnchor';
 import { MenuItem } from '../Menu/Menu';
-import { PURE } from '@devexperts/utils/lib/react/pure';
+import { PURE } from '../../utils/pure';
 
 // import iconListItemTick from './img/icon-list-item-tick.svg';
 // import iconSmallDropdownArrow from './img/icon-small-dropdown-arrow.svg';

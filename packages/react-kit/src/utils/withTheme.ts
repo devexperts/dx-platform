@@ -4,7 +4,7 @@ import {
 } from 'react';
 import * as PropTypes from 'prop-types';
 import { ObjectOmit } from 'typelevel-ts';
-import {PartialKeys} from '../object/object';
+import {PartialKeys} from '@devexperts/utils/lib/object/object';
 
 const THEME_CONTEXT_KEY = '@@dx-util/withTheme-context-key'; //should be serializable
 const THEME_CONFIG_KEY = '@@dx-util/withTheme-config-key';
