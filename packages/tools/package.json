@@ -16,6 +16,9 @@
   "bin": {
     "dx-tools": "./bin/dx-tools.js"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "author": "devexperts",
   "license": "MPL-2.0",
   "dependencies": {

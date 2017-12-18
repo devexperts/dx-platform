@@ -14,6 +14,9 @@
     "type": "git",
     "url": "git+https://github.com/devex-web-frontend/dx-util.git"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "author": "devexperts",
   "license": "MPL-2.0",
   "files": [
