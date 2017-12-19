@@ -7,9 +7,6 @@ import { SelectboxAnchor, TFullSelectboxAnchorProps } from './SelectboxAnchor';
 import { MenuItem } from '../Menu/Menu';
 import { PURE } from '../../utils/pure';
 
-// import iconListItemTick from './img/icon-list-item-tick.svg';
-// import iconSmallDropdownArrow from './img/icon-small-dropdown-arrow.svg';
-
 import {ListItemTickIcon} from '@devexperts/icons/lib/list-item-tick-icon';
 import {SmallDropDownArrowIcon} from '@devexperts/icons/lib/small-dropdown-arrow-icon';
 import { stateful } from '../Control/Control';

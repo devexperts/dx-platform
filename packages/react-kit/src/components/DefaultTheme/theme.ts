@@ -40,6 +40,15 @@ import gridTheme from '../Grid/Grid.styl';
 import {BUTTON_ICON} from '../ButtonIcon/ButtonIcon';
 import buttonIconTheme from '../ButtonIcon/ButtonIcon.styl';
 
+import {PASSWORD_INPUT} from '../PasswordInput/PasswordInput';
+import passwordInputTheme from '../PasswordInput/PasswordInput.demo.styl';
+
+import {LINK} from '../Link/Link';
+import linkTheme from '../Link/Link.styl';
+
+import {TOGGLE_BUTTONS} from '../ToggleButtons/ToggleButtons';
+import toggleButtonsTheme from '../ToggleButtons/ToggleButtons.demo.styl';
+
 export default {
 	[INPUT]: inputTheme,
 	[BUTTON]: buttonTheme,
@@ -54,5 +63,17 @@ export default {
 	[VERTICAL_SCROLLBAR]: vertScrollbar,
 	[SCROLLABLE]: scrollableTheme,
 	[GRID]: gridTheme,
-	[BUTTON_ICON]: buttonIconTheme
+	[BUTTON_ICON]: buttonIconTheme,
+    [PASSWORD_INPUT]: {
+		container: passwordInputTheme.container,
+        Input: {
+            container: passwordInputTheme.input
+        },
+        RevealButton: {
+        	container: passwordInputTheme.button,
+			icon: passwordInputTheme.icon
+		}
+    },
+	[LINK]: linkTheme,
+    [TOGGLE_BUTTONS]: toggleButtonsTheme
 }

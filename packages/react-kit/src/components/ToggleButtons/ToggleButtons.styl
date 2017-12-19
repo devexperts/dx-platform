@@ -1,0 +1,19 @@
+.container {
+
+	&__wrapper {
+		display: block;
+	}
+	&__item {
+		&_active {
+			background-color: silver;
+			&:active:not(:disabled) {
+				top: 0;
+				background-color: silver;
+			}
+		}
+	}
+	&__vertical {
+		min-width: 75px;
+		display: block;
+	}
+}

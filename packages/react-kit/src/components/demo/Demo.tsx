@@ -1,11 +1,10 @@
 import React from 'react';
-import { themr, ThemeProvider as ThemrProvider } from 'react-css-themr';
-import * as PropTypes from 'prop-types';
-import { ThemeProvider, withTheme } from '../../utils/withTheme';
+import { withTheme } from '../../utils/withTheme';
+
+import { DefaultTheme } from '../DefaultTheme/DefaultTheme';
 
 import css from './Demo.styl';
 
-import theme from './theme';
 import {ObjectClean} from 'typelevel-ts';
 import {PartialKeys} from '@devexperts/utils/lib/object/object';
 
@@ -33,13 +32,11 @@ export type TDemoComponentProps = ObjectClean<PartialKeys<TFullDemoComponentProp
 export const DemoComponent: React.ComponentClass<TDemoComponentProps> = withTheme(DEMO, css)(RawDemoComponent);
 
 const Demo: React.SFC<Partial<TFullDemoComponentProps>> = props => (
-	<ThemrProvider theme={theme}>
-		<ThemeProvider theme={theme}>
-			<DemoComponent theme={props.theme}>
-				{props.children}
-			</DemoComponent>
-		</ThemeProvider>
-	</ThemrProvider>
+    <DefaultTheme>
+		<DemoComponent theme={props.theme}>
+            {props.children}
+		</DemoComponent>
+	</DefaultTheme>
 );
 
 export default Demo;
