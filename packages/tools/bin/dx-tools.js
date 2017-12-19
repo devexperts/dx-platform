@@ -14,6 +14,7 @@ switch (script) {
 	case 'watch-ts-transform':
     case 'build-ts-transform':
     case 'build-lib':
+	case 'watch-build-lib':
     case 'storybook':
     case 'clean': {
 

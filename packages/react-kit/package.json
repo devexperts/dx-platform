@@ -9,7 +9,8 @@
     "build": "dx-tools build-lib",
     "clean": "dx-tools clean",
     "prepublish": "npm run clean && npm run build",
-    "start": "dx-tools storybook"
+    "start": "dx-tools storybook",
+    "watch": "dx-tools watch-build-lib"
   },
   "repository": {
     "type": "git",

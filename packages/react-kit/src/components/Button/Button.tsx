@@ -29,7 +29,9 @@ export type TFullButtonProps = {
 	onMouseUp?: EventHandler<MouseEvent<HTMLButtonElement>>,
 	onClick?: EventHandler<MouseEvent<HTMLButtonElement>>,
 	tabIndex?: number
+
 };
+
 
 @PURE
 class RawButton extends React.Component<TFullButtonProps> {

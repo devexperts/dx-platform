@@ -8,7 +8,8 @@
     "build": "dx-tools build-ts-transform",
     "clean": "dx-tools clean",
     "prepublish": "npm run clean && npm run build",
-    "start": "dx-tools watch-ts-transform"
+    "start": "dx-tools watch-ts-transform",
+    "watch": "dx-tools watch-ts-transform"
   },
   "repository": {
     "type": "git",
