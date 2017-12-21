@@ -1,7 +1,7 @@
-import minimist from 'minimist';
+import * as minimist from 'minimist';
 import storybook from '../config/build/storybook';
-import webpack from 'webpack';
-import WDS from 'webpack-dev-server';
+import * as webpack from 'webpack';
+import * as WDS from 'webpack-dev-server';
 import * as ENV from '../config/env';
 
 import {createLogger} from '../utils/logger';
@@ -14,7 +14,7 @@ const host = argv['host'] || 'localhost';
 
 log('Starting...');
 
-const config = storybook(host, port);
+const config = storybook(host, port, false);
 const compiler = webpack(config);
 const server = new WDS(compiler, {
 	hot: true,

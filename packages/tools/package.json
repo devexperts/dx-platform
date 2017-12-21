@@ -4,7 +4,9 @@
   "description": "",
   "main": "lib/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "watch": "tsc -w --noEmitOnError"
   },
   "repository": {
     "type": "git",
@@ -21,11 +23,14 @@
   },
   "author": "devexperts",
   "license": "MPL-2.0",
+  "peerDependencies": {
+    "@types/node": "^8.0.57"
+  },
   "dependencies": {
     "@kadira/storybook": "^2.35.3",
-    "@types/node": "^8.0.57",
-    "@types/react": "^15.6.7",
+    "@types/react": "^15.6.10",
     "@types/react-dom": "^15.5.6",
+    "@types/webpack": "^1.12.36",
     "autoprefixer": "^7.2.1",
     "babel-loader": "^6.4.1",
     "babel-plugin-transform-class-properties": "^6.24.1",

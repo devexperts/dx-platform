@@ -1,6 +1,6 @@
-import gulp from 'gulp';
-import watch from 'gulp-watch';
-import batch from 'gulp-batch';
+import * as gulp from 'gulp';
+import * as watch from 'gulp-watch';
+import * as batch from 'gulp-batch';
 import {PKG, SRC_PATH} from '../config/env';
 import {createLogger} from '../utils/logger';
 import '../tasks/ts-babel';

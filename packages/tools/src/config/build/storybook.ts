@@ -1,8 +1,8 @@
 import * as ENV from '../env';
 import shared from './shared';
-import HtmlWebpackPlugin from 'html-webpack-plugin';
-import path from 'path';
-import webpack from 'webpack';
+import * as HtmlWebpackPlugin from 'html-webpack-plugin';
+import * as path from 'path';
+import * as webpack from 'webpack';
 
 const plugins = [
 	new webpack.DefinePlugin({
@@ -53,7 +53,7 @@ export default (host, port, standalone) => {
 				// ENV.POLYFILLS,
 				...(standalone ? [] : devChunks),
 				require.resolve('@kadira/storybook/dist/server/addons.js'),
-				require.resolve('../storybook/client.js'),
+                path.resolve(ENV.TOOLS_ROOT, 'resources/storybook/client.js')
 			]
 		},
 		resolve: {

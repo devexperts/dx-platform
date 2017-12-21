@@ -1,6 +1,6 @@
-import path from 'path';
-import * as ENV from './../env';
-import autoprefixer from 'autoprefixer';
+import * as path from 'path';
+import * as ENV from '../env';
+import * as autoprefixer from 'autoprefixer';
 
 const JS_PATTERN = /\.jsx?$/;
 const TS_PATTERN = /\.tsx?$/;

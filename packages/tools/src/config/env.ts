@@ -1,8 +1,8 @@
-import path from 'path';
-import fs from 'fs';
-let OVERRIDES = {};
+import * as path from 'path';
+import * as fs from 'fs';
+let OVERRIDES: any = {};
 
-export const TOOLS_ROOT = path.join(__dirname, '../');
+export const TOOLS_ROOT = path.join(__dirname, '../../');
 
 export const ROOT = process.cwd();
 

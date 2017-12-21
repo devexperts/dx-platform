@@ -1,4 +1,4 @@
-import gulp from 'gulp';
+import * as gulp from 'gulp';
 import {PKG} from '../config/env';
 import {createLogger} from '../utils/logger';
 import '../tasks/ts-babel';

@@ -1,5 +1,5 @@
 import {DIST_PATH, PKG} from '../config/env';
-import rimraf from 'rimraf';
+import * as rimraf from 'rimraf';
 import {createLogger} from '../utils/logger';
 
 const log = createLogger(PKG.name, 'clean');

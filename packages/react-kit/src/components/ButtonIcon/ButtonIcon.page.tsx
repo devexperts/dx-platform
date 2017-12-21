@@ -1,5 +1,5 @@
 import React from 'react';
-import {storiesOf} from '@devexperts/tools/utils/storybook';
+import {storiesOf} from '@devexperts/tools/lib/utils/storybook';
 import {ButtonIcon} from './ButtonIcon';
 import Demo from '../demo/Demo';
 import {ListItemTickIcon} from '@devexperts/icons/lib/list-item-tick-icon';

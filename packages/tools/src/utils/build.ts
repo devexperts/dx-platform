@@ -1,4 +1,4 @@
-import webpack from 'webpack';
+import * as webpack from 'webpack';
 import * as ENV from '../config/env';
 
 /**
@@ -21,7 +21,7 @@ export function build(config) {
 			}
 		});
 	})
-		.then(stats => {
+		.then((stats: any) => {
 			console.log('Done');
 			console.log(stats.toString(ENV.STATS));
 		})

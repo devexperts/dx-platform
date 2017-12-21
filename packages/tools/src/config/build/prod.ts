@@ -1,7 +1,7 @@
 import * as ENV from '../env';
 import shared from './shared';
 // import HtmlWebpackPlugin from 'html-webpack-plugin';
-import path from 'path';
+import * as path from 'path';
 // import webpack from 'webpack';
 // import ExtractTextPlugin from 'extract-text-webpack-plugin';
 
@@ -49,7 +49,7 @@ const plugins = [
 // };
 
 export default () => {
-	const config = shared();
+	const config :any = shared();
 
 	const index = [
 		path.resolve(ENV.SRC_PATH, 'index.tsx')

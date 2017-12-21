@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { PureComponent } from 'react';
-import { storiesOf } from '@devexperts/tools/utils/storybook';
+import { storiesOf } from '@devexperts/tools/lib/utils/storybook';
 import Demo from '../demo/Demo';
 import { Deferred } from './Deferred';
 

@@ -1,9 +1,9 @@
-import path from 'path';
+import * as path from 'path';
 import * as ENV from '../config/env'
-import gulp from 'gulp';
-import ts from 'gulp-typescript';
-import babel from 'gulp-babel';
-import merge from 'merge2';
+import * as gulp from 'gulp';
+import * as ts from 'gulp-typescript';
+import * as babel from 'gulp-babel';
+import * as merge from 'merge2';
 
 gulp.task("ts-babel", function () {
 	const tsProject = ts.createProject(path.join(ENV.ROOT, '/tsconfig.json'));

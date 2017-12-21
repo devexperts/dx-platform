@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+	"module": "commonjs",
+	"importHelpers": true,
+	"noImplicitAny": false,
+	"outDir": "lib",
+	"declaration": true,
+	"pretty": true,
+	"strictNullChecks": true,
+	"target": "es5",
+	"lib": [
+	  "dom",
+	  "es6",
+	  "scripthost",
+	  "es2015.symbol",
+	  "es2017.object",
+	  "es2016.array.include"
+	]
+  },
+  "include": [
+	"src/**/*"
+  ],
+  "exclude": [
+	"node_modules"
+  ]
+}
