@@ -1,6 +1,6 @@
 {
   "name": "@devexperts/tools",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "description": "",
   "main": "lib/index.js",
   "scripts": {
@@ -25,10 +25,10 @@
   "license": "MPL-2.0",
   "peerDependencies": {
     "@types/node": "^8.0.57",
-    "react": "^15.6.2",
-    "react-dom": "^15.6.2",
     "@types/react": "^15.6.10",
-    "@types/react-dom": "^15.5.6"
+    "@types/react-dom": "^15.5.6",
+    "react": "^15.6.2",
+    "react-dom": "^15.6.2"
   },
   "dependencies": {
     "@kadira/storybook": "^2.35.3",
