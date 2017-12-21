@@ -28,8 +28,10 @@ const loaders = [
 		loader: 'babel-loader',
 		include: [
 			ENV.SRC_PATH,
-			ENV.TOOLS_UTILS_PATH,
-			ENV.TOOLS_CONFIG_PATH
+			ENV.TOOLS_ROOT,
+		],
+		exclude: [
+            ENV.TOOLS_NODE_MODULES_PATH
 		]
 	},
 	//files
@@ -56,11 +58,13 @@ const loaders = [
 	{
 		test: TS_PATTERN,
 		loader: 'babel-loader!ts-loader',
-		include: [
-			ENV.SRC_PATH,
-			ENV.TOOLS_UTILS_PATH,
-			ENV.TOOLS_CONFIG_PATH
-		]
+        include: [
+            ENV.SRC_PATH,
+            ENV.TOOLS_ROOT,
+        ],
+        exclude: [
+            ENV.TOOLS_NODE_MODULES_PATH
+        ]
 	},
 	//css
 	// {

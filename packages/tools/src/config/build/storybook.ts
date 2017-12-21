@@ -53,7 +53,7 @@ export default (host, port, standalone) => {
 				// ENV.POLYFILLS,
 				...(standalone ? [] : devChunks),
 				require.resolve('@kadira/storybook/dist/server/addons.js'),
-                path.resolve(ENV.TOOLS_ROOT, 'resources/storybook/client.js')
+                require.resolve(`${ENV.TOOLS_ROOT}/resources/storybook/client.js`)
 			]
 		},
 		resolve: {

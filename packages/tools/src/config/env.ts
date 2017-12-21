@@ -13,9 +13,6 @@ if (fs.existsSync(path.resolve(ROOT, '.dx-tools'))) {
 export const NODE_MODULES_PATH = path.resolve(ROOT, 'node_modules');
 export const TOOLS_NODE_MODULES_PATH = path.resolve(TOOLS_ROOT, 'node_modules');
 
-export const TOOLS_CONFIG_PATH = path.resolve(TOOLS_ROOT, 'config');
-export const TOOLS_UTILS_PATH = path.resolve(TOOLS_ROOT, 'utils');
-
 export const PKG = require(path.join(ROOT, 'package.json'));
 
 export const SRC_PATH = OVERRIDES.SRC_PATH || path.resolve(ROOT, 'src');
