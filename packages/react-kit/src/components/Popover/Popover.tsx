@@ -8,6 +8,7 @@ import { PURE } from '../../utils/pure';
 import { BoundsUpdateDetector } from '../BoundsUpdateDetector/BoundsUpdateDetector';
 import { THROTTLE } from '@devexperts/utils/lib/function/throttle';
 
+import TPortalProps = ReactOverlays.Portal.TPortalProps;
 import { withTheme } from '../../utils/withTheme';
 import { ComponentClass, MouseEventHandler, ReactNode } from 'react';
 import { ObjectClean } from 'typelevel-ts';
@@ -47,7 +48,7 @@ export type TFullPopoverProps = {
 	onMouseDown?: MouseEventHandler<Element>,
 	placement: PopoverPlacement,
 	align: PopoverAlign,
-	container?: Element | null,
+	container?: TPortalProps['container'],
 	onRequestClose?: () => any,
 	hasArrow?: boolean,
 	theme: {
@@ -171,15 +172,17 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 		);
 
 		if (closeOnClickAway) {
-			child = <RootClose onRootClose={onRequestClose}>{child}</RootClose>;
-		}
-
-		if (container) {
-			child = <EventListener onScroll={this.onScroll} target={container}>{child}</EventListener>
+			child = (
+				<RootClose onRootClose={onRequestClose}>
+					{child}
+				</RootClose>
+			);
 		}
 
 		return (
-			<EventListener onResize={this.onResize} target="window">
+			<EventListener onResize={this.onResize}
+			               onScroll={this.onScroll}
+			               target="window">
 				<Portal container={container}>
 					{child}
 				</Portal>
@@ -252,7 +255,7 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 	onSizeUpdate = (newSize: TSize) => {
 		this._popoverSize = newSize;
 		this.updatePosition();
-	};
+	}
 
 	onResize = () => {
 		this.handleResize();
@@ -265,11 +268,11 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 
 	onScroll = () => {
 		this.handleScroll();
-	};
+	}
 
 	@THROTTLE(100)
 	handleScroll() {
-		this.props.onRequestClose && this.props.onRequestClose();
+		this.updatePosition();
 	}
 }
 
