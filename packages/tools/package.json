@@ -5,8 +5,10 @@
   "main": "lib/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc",
-    "watch": "tsc -w --noEmitOnError"
+    "build": "tsc --noEmitOnError",
+    "clean": "rimraf ./lib",
+    "watch": "tsc -w --noEmitOnError",
+    "prepublish": "npm run clean && npm run build"
   },
   "repository": {
     "type": "git",
@@ -24,13 +26,13 @@
   "author": "devexperts",
   "license": "MPL-2.0",
   "peerDependencies": {
-    "@types/node": "^8.0.57",
     "@types/react": "^15.6.10",
     "@types/react-dom": "^15.5.6",
     "react": "^15.6.2",
     "react-dom": "^15.6.2"
   },
   "dependencies": {
+	"@types/node": "^8.0.57",
     "@kadira/storybook": "^2.35.3",
     "@types/webpack": "^1.12.36",
     "autoprefixer": "^7.2.1",
