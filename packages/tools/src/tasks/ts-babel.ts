@@ -7,7 +7,7 @@ import * as merge from 'merge2';
 
 gulp.task("ts-babel", function () {
 	const tsProject = ts.createProject(path.join(ENV.ROOT, '/tsconfig.json'));
-	const tsResults = gulp.src(`${ENV.SRC_PATH}/**/*.ts?(x)`, { base: "./src" })
+	const tsResults = tsProject.src()
 		.pipe(tsProject());
 
 	return merge([
