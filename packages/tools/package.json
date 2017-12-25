@@ -1,6 +1,6 @@
 {
   "name": "@devexperts/tools",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "description": "",
   "main": "lib/index.js",
   "scripts": {
@@ -32,8 +32,8 @@
     "react-dom": "^15.6.2"
   },
   "dependencies": {
-	"@types/node": "^8.0.57",
     "@kadira/storybook": "^2.35.3",
+    "@types/node": "^8.0.57",
     "@types/webpack": "^1.12.36",
     "autoprefixer": "^7.2.1",
     "babel-loader": "^6.4.1",
