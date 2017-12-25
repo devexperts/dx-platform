@@ -32,12 +32,10 @@ type TWithRef<P extends TTargetProps, C> = TResultProps<P> & {
 	withRef?: Ref<C>
 };
 
-
-type WithRef<P extends TTargetProps, C extends ComponentType<P>> = P & {
-	withRef?: Ref<C>
-}
 type OmitTheme<P extends TTargetProps> = PartialKeys<P, 'theme'>;
-type TResult<P extends TTargetProps, C extends ComponentType<P>> = ComponentClass<OmitTheme<WithRef<P, C>>>;
+type TResult<P extends TTargetProps, C extends ComponentType<P>> = ComponentClass<OmitTheme<P & {
+	withRef?: Ref<any>
+}>>;
 
 //shortcuts
 type CC<P> = ComponentClass<P>;
