@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Component, ReactElement } from 'react';
 import { PURE } from '../../utils/pure';
+import { shallowEqual } from '@devexperts/utils/lib/object';
 
 type Handlers = {
 	[onEvent: string]: Function
@@ -22,12 +23,16 @@ export class EventListener extends Component<TEventListenerProps> {
 		this.addListeners();
 	}
 
-	componentWillUpdate() {
-		this.removeListeners();
+	componentWillUpdate(nextProps: TEventListenerProps) {
+		if (shouldResetListeners(this.props, nextProps)) {
+			this.removeListeners();
+		}
 	}
 
-	componentDidUpdate() {
-		this.addListeners();
+	componentDidUpdate(nextProps: TEventListenerProps) {
+		if (shouldResetListeners(this.props, nextProps)) {
+			this.addListeners();
+		}
 	}
 
 	componentWillUnmount() {
@@ -85,4 +90,10 @@ function getEventName(rawEventName: string, capture?: boolean): string {
 	const trimmedLeft = rawEventName.startsWith(ON_MARKER) ? rawEventName.substring(ON_MARKER.length) : rawEventName;
 	const trimmed = capture ? trimmedLeft.substring(0, trimmedLeft.length - CAPTURE_MARKER.length) : trimmedLeft;
 	return trimmed.toLowerCase();
+}
+
+function shouldResetListeners(prevProps: TEventListenerProps, nextProps: TEventListenerProps): boolean {
+	const {children: prevChildren, ...oldProps} = prevProps;
+	const {children: nextChildren, ...newProps} = nextProps;
+	return !shallowEqual(oldProps, newProps);
 }
