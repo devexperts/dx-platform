@@ -29,8 +29,8 @@ export class EventListener extends Component<TEventListenerProps> {
 		}
 	}
 
-	componentDidUpdate(nextProps: TEventListenerProps) {
-		if (shouldResetListeners(this.props, nextProps)) {
+	componentDidUpdate(prevProps: TEventListenerProps) {
+		if (shouldResetListeners(prevProps, this.props)) {
 			this.addListeners();
 		}
 	}
