@@ -13,7 +13,7 @@ import { stateful } from '../Control/Control';
 
 import * as selectoxPageCss from './Selectbox.page.styl';
 import {ObjectClean} from 'typelevel-ts';
-import {PartialKeys} from '@devexperts/utils/src/object/object';
+import {PartialKeys} from '@devexperts/utils/lib/object/object';
 const wideSelectboxTheme = {
 	container__anchor: selectoxPageCss.container__anchor
 };

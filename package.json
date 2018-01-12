@@ -1,5 +1,8 @@
 {
   "name": "@devexperts/platform",
+  "scripts": {
+    "lerna": "lerna"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/devex-web-frontend/dx-util.git"
