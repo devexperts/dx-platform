@@ -12,6 +12,7 @@
 	"declaration": true,
 	"pretty": true,
 	"strictNullChecks": true,
+	"strictFunctionTypes": true,
 	"suppressImplicitAnyIndexErrors": true,
 	"target": "es5",
 	"lib": [
