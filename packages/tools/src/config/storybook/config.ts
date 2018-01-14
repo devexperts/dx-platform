@@ -1,5 +1,6 @@
-import { configure } from '@storybook/react';
+import { configure, addDecorator } from '@storybook/react';
 import { setOptions }  from '@storybook/addon-options';
+import {withKnobs} from '@storybook/addon-knobs';
 
 setOptions({
 	name: 'Storybook',
@@ -12,6 +13,8 @@ setOptions({
 	hierarchySeparator: /\./,
 	hierarchyRootSeparator: /\|/,
 } as any);
+
+addDecorator(withKnobs);
 
 declare var SRC_PATH: string;
 
