@@ -114,6 +114,7 @@ import { stylusLoader } from '../loaders/stylus';
 // });
 
 const sharedConfig: webpack.Configuration = {
+	devtool: false,
 	output: {
 		pathinfo: true
 	},

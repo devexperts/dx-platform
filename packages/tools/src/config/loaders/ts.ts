@@ -2,6 +2,8 @@ import * as webpack from 'webpack';
 import * as ENV from '../env';
 const TS_PATTERN = /\.tsx?$/;
 
+import * as ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
+
 export const tsLoaderConfig: webpack.Configuration = {
     module: {
         rules: [
@@ -9,7 +11,12 @@ export const tsLoaderConfig: webpack.Configuration = {
                 test: TS_PATTERN,
                 use: [
                     require.resolve('babel-loader'),
-                    require.resolve('ts-loader')
+                    {
+                        loader: require.resolve('ts-loader'),
+                        options: {
+                            transpileOnly: true
+                        }
+                    }
                 ],
                 include: [
                     ENV.SRC_PATH,
@@ -20,5 +27,8 @@ export const tsLoaderConfig: webpack.Configuration = {
                 ]
             },
         ]
-    }
+    },
+    plugins: [
+        new ForkTsCheckerWebpackPlugin()
+    ]
 };
