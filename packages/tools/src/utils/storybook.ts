@@ -1,1 +1,2 @@
-export * from '@kadira/storybook';
+export * from '@storybook/react';
+export * from '@storybook/addon-actions';

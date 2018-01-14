@@ -38,9 +38,14 @@
     "react-dom": "^15.6.2"
   },
   "dependencies": {
-    "@kadira/storybook": "^2.35.3",
+    "@storybook/addon-actions": "^3.3.9",
+    "@storybook/addon-options": "^3.3.9",
+    "@storybook/react": "^3.3.9",
     "@types/node": "^8.0.57",
-    "@types/webpack": "^1.12.36",
+    "@types/storybook__addon-actions": "^3.0.1",
+    "@types/storybook__addon-options": "^3.2.0",
+    "@types/storybook__react": "^3.0.6",
+    "@types/webpack": "^3.8.2",
     "autoprefixer": "^7.2.1",
     "babel-loader": "^6.4.1",
     "babel-plugin-transform-class-properties": "^6.24.1",
@@ -63,16 +68,18 @@
     "json-loader": "^0.5.7",
     "merge2": "^1.2.0",
     "minimist": "^1.2.0",
+    "postcss-loader": "^2.0.10",
     "react-hot-loader": "^3.0.0-beta.7",
     "regenerator-runtime": "^0.11.0",
     "rimraf": "^2.6.2",
-    "style-loader": "^0.18.2",
+    "style-loader": "^0.19.1",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.1",
-    "ts-loader": "^2.3.7",
+    "ts-loader": "^3.2.0",
     "tslib": "^1.8.0",
     "typescript": "^2.6.2",
-    "webpack": "^1.15.0",
-    "webpack-dev-server": "^1.16.5"
+    "webpack": "^3.10.0",
+    "webpack-dev-server": "^2.10.1",
+    "webpack-merge": "^4.1.1"
   }
 }

@@ -17,6 +17,7 @@ import { ReactRef } from '../../utils/typings';
 import { EventListener } from '../EventListener/EventListener';
 import { RootClose } from '../RootClose/RootClose';
 
+
 type TSize = {
 	width: number,
 	height: number
