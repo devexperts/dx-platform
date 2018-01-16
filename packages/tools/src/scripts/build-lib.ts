@@ -1,12 +1,11 @@
 import * as gulp from 'gulp';
-import {PKG} from '../config/env';
-import {createLogger} from '../utils/logger';
 import '../tasks/ts-babel';
 import '../tasks/copy-stylus';
 
-const log = createLogger(PKG.name, 'build-lib');
+import {patchConsole} from '../utils/patchConsole';
 
-log('Starting prod...');
+patchConsole('build-lib');
+console.log('Starting prod...');
 
 gulp.start(['ts-babel', 'copy-stylus']);
 

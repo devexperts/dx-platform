@@ -1,12 +1,10 @@
 import {DIST_PATH, PKG} from '../config/env';
 import * as rimraf from 'rimraf';
-import {createLogger} from '../utils/logger';
+import {patchConsole} from '../utils/patchConsole';
 
-const log = createLogger(PKG.name, 'clean');
-
-log('started');
+patchConsole('clean');
 
 rimraf(DIST_PATH, (...args) => {
-	log(`removed: ${DIST_PATH}`)
+	console.log(`removed: ${DIST_PATH}`)
 });
 

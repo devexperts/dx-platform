@@ -1,19 +1,18 @@
 import * as gulp from 'gulp';
 import * as watch from 'gulp-watch';
 import * as batch from 'gulp-batch';
-import {PKG, SRC_PATH} from '../config/env';
-import {createLogger} from '../utils/logger';
+import {SRC_PATH} from '../config/env';
 import '../tasks/ts-babel';
 import '../tasks/copy-stylus';
+import {patchConsole} from '../utils/patchConsole';
 
-const log = createLogger(PKG.name, 'watch-build-lib');
-
-log('Start watching...');
+patchConsole('watch-build-lib');
+console.log('Start watching...');
 
 watch(`${SRC_PATH}/**/*`, batch(function(events, done) {
-	log('Rebuild started....');
+    console.log('Rebuild started....');
 	gulp.start(['ts-babel', 'copy-stylus'], function(...args) {
-		log('Rebuild completed');
+        console.log('Rebuild completed');
 		done()
 	});
 }));
