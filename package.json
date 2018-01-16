@@ -1,7 +1,8 @@
 {
   "name": "@devexperts/platform",
   "scripts": {
-    "lerna": "lerna"
+    "lerna": "lerna",
+    "start:commons": "lerna run --parallel watch"
   },
   "repository": {
     "type": "git",
