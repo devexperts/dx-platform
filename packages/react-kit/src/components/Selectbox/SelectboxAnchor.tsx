@@ -4,13 +4,15 @@ import { Button, TButtonProps, TFullButtonProps } from '../Button/Button';
 import { ComponentClass, ComponentType, ReactNode } from 'react';
 import { ObjectClean, ObjectOmit } from 'typelevel-ts';
 import { PartialKeys } from '@devexperts/utils/lib/object/object';
+import classnames from 'classnames';
 
 export type TFullSelectboxAnchorProps = ObjectOmit<TButtonProps, 'theme'> & {
 	theme: TFullButtonProps['theme'] & {
 		text?: string,
 		content?: string,
 		wrapperCaret?: string,
-		caret?: string
+		caret?: string,
+		container_isOpened?: string
 	},
 	isOpened?: boolean,
 	caretIcon?: React.ReactElement<any> | React.ReactText,
@@ -30,10 +32,13 @@ class RawSelectboxAnchor extends React.Component<TFullSelectboxAnchorProps> {
 			isLoading,
 			caretIcon,
 			onClick,
+			isOpened,
 		} = this.props;
 
 		const buttonTheme = {
-			container: theme.container
+			container: classnames(theme.container, {
+				[theme.container_isOpened as string]: isOpened
+			})
 		};
 
 		return (
