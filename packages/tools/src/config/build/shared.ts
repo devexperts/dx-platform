@@ -4,7 +4,6 @@ import * as merge from 'webpack-merge';
 import { tsLoaderConfig } from '../loaders/ts';
 import { cssLoader } from '../loaders/css';
 import { stylusLoader } from '../loaders/stylus';
-import { fileLoaderConfig } from '../loaders/file';
 
 const sharedConfig: webpack.Configuration = {
 	devtool: false,
@@ -22,7 +21,6 @@ const sharedConfig: webpack.Configuration = {
 export default  merge([
     tsLoaderConfig,
     sharedConfig,
-	fileLoaderConfig,
     cssLoader,
     stylusLoader
 ]);

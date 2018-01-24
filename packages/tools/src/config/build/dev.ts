@@ -2,7 +2,7 @@ import { SRC_PATH } from '../env';
 import * as merge from 'webpack-merge';
 import sharedConfig from './shared';
 import { htmlWebpackPlugin } from '../plugins/htmlWebpackPlugin';
-
+import { fileLoaderConfig } from '../loaders/file';
 import { Configuration } from 'webpack';
 
 const entryPoints: Configuration = {
@@ -14,9 +14,12 @@ const entryPoints: Configuration = {
 	]
 };
 
+
+
 export default merge([
 	entryPoints,
 	htmlWebpackPlugin,
-	sharedConfig
+	sharedConfig,
+	fileLoaderConfig
 ]);
 
