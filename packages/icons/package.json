@@ -1,6 +1,6 @@
 {
   "name": "@devexperts/icons",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "",
   "main": "lib",
   "mdoule": "src",
@@ -29,7 +29,7 @@
     "react-dom": "^15.6.2"
   },
   "devDependencies": {
-    "@devexperts/tools": "^0.6.0",
+    "@devexperts/tools": "^0.6.1",
     "@types/react": "^15.6.7",
     "@types/react-dom": "^15.5.6",
     "babel-plugin-transform-class-properties": "^6.24.1",
