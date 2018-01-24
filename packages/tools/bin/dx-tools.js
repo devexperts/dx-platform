@@ -11,6 +11,7 @@ switch (script) {
     case 'build-lib':
 	case 'watch-build-lib':
     case 'storybook':
+	case 'dev-server':
     case 'clean': {
 	    require(require.resolve('../lib/scripts/' + script));
         break;

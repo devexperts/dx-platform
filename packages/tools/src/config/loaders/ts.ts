@@ -1,10 +1,9 @@
-import * as webpack from 'webpack';
-import * as ENV from '../env';
+import { Configuration } from 'webpack';
 const TS_PATTERN = /\.tsx?$/;
 
 import * as ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 
-export const tsLoaderConfig: webpack.Configuration = {
+export const tsLoaderConfig: Configuration = {
     module: {
         rules: [
             {
@@ -17,13 +16,6 @@ export const tsLoaderConfig: webpack.Configuration = {
                             transpileOnly: true
                         }
                     }
-                ],
-                include: [
-                    ENV.SRC_PATH,
-                    ENV.TOOLS_ROOT,
-                ],
-                exclude: [
-                    ENV.TOOLS_NODE_MODULES_PATH
                 ]
             },
         ]
