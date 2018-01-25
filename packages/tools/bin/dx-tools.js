@@ -1,13 +1,14 @@
 #!/usr/bin/env node
 'use strict';
 
-const args = process.argv.slice(2);
+const [node, commmand, script, ...restArgs] = process.argv;
 
-const script = args[0];
+process.argv = [node, commmand, ...restArgs];
 
 switch (script) {
 	case 'watch-ts-transform':
     case 'build-ts-transform':
+	case 'build':
     case 'build-lib':
 	case 'watch-build-lib':
     case 'storybook':

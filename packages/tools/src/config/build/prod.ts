@@ -1,98 +1,91 @@
+import { SRC_PATH, ROOT } from '../env';
+import { Configuration } from 'webpack';
+import {
+	TS_PATTERN,
+	STYLUS_PATTERN,
+	CSS_PATTERN,
+	FILE_LOADER_EXCLUDES,
+	tsLoader,
+	babelLoader,
+	styleLoader,
+	stylusLoader,
+	cssLoader,
+	postcssLoader,
+	fileLoader
+} from '../webpack/loaders';
+
+import {
+	forkTSCheckerPlugin,
+	htmlPlugin,
+	cssExtractTextPlugin
+} from '../webpack/plugins';
 import * as ENV from '../env';
-import shared from './shared';
-// import HtmlWebpackPlugin from 'html-webpack-plugin';
-import * as path from 'path';
-// import webpack from 'webpack';
-// import ExtractTextPlugin from 'extract-text-webpack-plugin';
 
-// const css = new ExtractTextPlugin('css', '[name].css');
-// import DeclarationBundlerPlugin from 'declaration-bundler-webpack-plugin' ;
-
-const plugins = [
-	// new HtmlWebpackPlugin({
-	// 	filename: 'index.html',
-	// 	template: path.resolve(ENV.SRC_PATH, 'index.html'),
-	// 	inject: 'body'
-	// }),
-	// new webpack.DefinePlugin({
-	// 	'process.env': {
-	// 		NODE_ENV: '"production"'
-	// 	}
-	// }),
-	// new webpack.optimize.UglifyJsPlugin({
-	// 	mangle: false
-	// }),
-    // new DeclarationBundlerPlugin({
-    //     moduleName: pkg.name,
-    //     out: path.join('index.d.ts'),
-    // }),
-	// new SplitByPathPlugin([
-	// 	{
-	// 		name: 'vendor',
-	// 		path: [
-	// 			ENV.NODE_MODULES_PATH
-	// 		]
-	// 	}
-	// ], {
-	// 	manifest: 'manifest'
-	// })
-];
-
-// const patchCSSLoader = loaderOptions => {
-// 	return {
-// 		...loaderOptions,
-// 		loader: css.extract(
-// 			'style',
-// 			loaderOptions.loader.replace(/^style!/, '')
-// 		)
-// 	};
-// };
-
-export default () => {
-	const config :any = shared();
-
-	const index = [
-		path.resolve(ENV.SRC_PATH, 'index.tsx')
-	];
-
-	// const loaders = config.module.loaders.map(loader => {
-	// 	if (['css', 'css-modules', 'stylus', 'stylus-modules'].includes(loader.name)) {
-	// 		return patchCSSLoader(loader);
-	// 	}
-	// 	return loader;
-	// });
-
-	return {
-		...config,
-        externals: {
-            react: {
-                root: 'React',
-                commonjs2: 'react',
-                commonjs: 'react',
-                amd: 'react',
-            },
-            'react-dom': {
-                root: 'ReactDOM',
-                commonjs2: 'react-dom',
-                commonjs: 'react-dom',
-                amd: 'react-dom',
-            },
-        },
-		entry: {
-			...config.entry,
-			index
-		},
-		output: {
-			...config.output,
-			library: ENV.PKG.name,
-			libraryTarget: 'umd'
-		},
-		module: {
-			...config.module,
-		},
-		plugins: [
-			...config.plugins,
-			...plugins
+const devConfig: Configuration = {
+	resolve: {
+		symlinks: true,
+		extensions: ['.ts', '.tsx', '.js', '.jsx', '.styl'],
+	},
+	resolveLoader: {
+		modules: [ENV.TOOLS_NODE_MODULES_PATH]
+	},
+	entry: {
+		index: [
+			require.resolve(`${SRC_PATH}/index.tsx`),
 		]
-	};
+	},
+	output: {
+		path: `${ROOT}/build`,
+		filename: '[name].[chunkhash:8].js'
+	},
+	module: {
+		rules: [
+			{
+				oneOf: [
+					{
+						test: TS_PATTERN,
+						use: [
+							babelLoader,
+							tsLoader,
+						],
+					},
+					{
+						test: STYLUS_PATTERN,
+						use: cssExtractTextPlugin.extract({
+							fallback: styleLoader,
+							use: [
+								cssLoader,
+								postcssLoader,
+								stylusLoader,
+							]
+						})
+					},
+					{
+						test: CSS_PATTERN,
+						use: cssExtractTextPlugin.extract({
+							fallback: styleLoader,
+							use: [
+								cssLoader,
+								postcssLoader,
+							]
+						})
+					},
+					{
+						exclude: FILE_LOADER_EXCLUDES,
+						use: [
+							fileLoader,
+						],
+					} as any, // typings for webpack doesn't support default case properly
+				],
+			},
+		],
+	},
+	plugins: [
+		cssExtractTextPlugin,
+		htmlPlugin,
+		forkTSCheckerPlugin,
+	],
 };
+
+export {devConfig as default};
+
