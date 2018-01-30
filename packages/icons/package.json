@@ -25,8 +25,8 @@
   },
   "homepage": "https://github.com/devex-web-frontend/dx-platform#readme",
   "peerDependencies": {
-    "react": "^15.6.2",
-    "react-dom": "^15.6.2"
+    "react": ">=15.6.2",
+    "react-dom": ">=15.6.2"
   },
   "devDependencies": {
     "@devexperts/tools": "^0.6.3",

@@ -28,9 +28,9 @@
   "dependencies": {
     "@devexperts/icons": "^0.6.3",
     "@devexperts/utils": "^0.6.3",
-    "@types/classnames": "^2.2.3",
-    "@types/node": "^8.5.2",
-    "@types/prop-types": "^15.5.2",
+    "@types/classnames": ">=2.2.3",
+    "@types/node": ">=8.5.2",
+    "@types/prop-types": ">=15.5.2",
     "classnames": "^2.2.5",
     "date-fns": "^1.29.0",
     "element-resize-detector": "^1.1.12",
@@ -42,8 +42,8 @@
     "typelevel-ts": "^0.2.2"
   },
   "peerDependencies": {
-    "react": "^15.6.2",
-    "react-dom": "^15.6.2"
+    "react": ">=15.6.2",
+    "react-dom": ">=15.6.2"
   },
   "devDependencies": {
     "@devexperts/tools": "^0.6.3",
