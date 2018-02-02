@@ -14,10 +14,6 @@
   "author": "devexperts",
   "license": "MPL-2.0",
   "devDependencies": {
-    "lerna": "2.5.1",
-    "tslib": "^1.8.1"
-  },
-  "dependencies": {
-    "@types/extract-text-webpack-plugin": "^3.0.0"
+    "lerna": "2.5.1"
   }
 }

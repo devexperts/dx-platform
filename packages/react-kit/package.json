@@ -26,7 +26,6 @@
   },
   "homepage": "https://github.com/devex-web-frontend/dx-platform#readme",
   "dependencies": {
-    "@devexperts/icons": "^0.6.5",
     "@devexperts/utils": "^0.6.5",
     "@types/classnames": ">=2.2.3",
     "@types/node": ">=8.5.2",
