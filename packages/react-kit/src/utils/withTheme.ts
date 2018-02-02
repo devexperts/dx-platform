@@ -13,13 +13,6 @@ export type TTheme = {
 	[key: string]: TTheme | string | undefined
 };
 
-type TWithConfig = {
-	config?: {
-		name: string,
-		theme: TTheme
-	}
-};
-
 type TTargetProps = {
 	theme?: TTheme
 };
@@ -38,7 +31,6 @@ type TResult<P extends TTargetProps, C extends ComponentType<P>> = ComponentClas
 }>>;
 
 //shortcuts
-type CC<P> = ComponentClass<P>;
 type CT<P> = ComponentType<P>;
 
 export const withTheme = (name: string | symbol, defaultTheme: TTheme = {}) => {

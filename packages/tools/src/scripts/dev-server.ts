@@ -5,8 +5,6 @@ import { PKG, ROOT } from '../config/env';
 import * as webpack from 'webpack';
 import devConfig from '../config/build/dev';
 
-process.env.PUBLIC_URL = path.join(ROOT, 'public');
-
 import {
     choosePort,
     createCompiler,
@@ -14,7 +12,8 @@ import {
 } from 'react-dev-utils/WebpackDevServerUtils';
 import Signals = NodeJS.Signals;
 
-const isInteractive = process.stdout.isTTY;
+// const isInteractive = process.stdout.isTTY;
+process.env.PUBLIC_URL = path.join(ROOT, 'public');
 console.log('starting...');
 
 const serverConfig = {

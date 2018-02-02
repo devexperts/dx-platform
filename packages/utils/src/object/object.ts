@@ -1,4 +1,4 @@
-import { ObjectClean, ObjectOmit } from 'typelevel-ts';
+import { ObjectOmit } from 'typelevel-ts';
 
 export { is, shallowEqual } from './fb';
 import { is, hasOwnProperty } from './fb';

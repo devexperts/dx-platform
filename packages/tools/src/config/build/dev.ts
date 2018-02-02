@@ -20,7 +20,6 @@ import {
 } from '../webpack/plugins';
 import * as ENV from '../env';
 
-const entries = [];
 
 const devConfig: Configuration = {
 	resolve: {

@@ -11,7 +11,7 @@ console.log('Start watching...');
 
 watch(`${SRC_PATH}/**/*`, batch(function(events, done) {
     console.log('Rebuild started....');
-	gulp.start(['ts-babel', 'copy-stylus'], function(...args) {
+	gulp.start(['ts-babel', 'copy-stylus'], function() {
         console.log('Rebuild completed');
 		done()
 	});
