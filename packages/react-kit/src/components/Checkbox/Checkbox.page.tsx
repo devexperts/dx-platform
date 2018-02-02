@@ -3,7 +3,7 @@ import * as PropTypes from 'prop-types';
 import { PURE } from '../../utils/pure';
 import classnames from 'classnames';
 import Demo from '../demo/Demo';
-import {CheckboxTickIcon} from '@devexperts/icons/lib/checkbox-tick-icon';
+import { CheckboxTickIcon } from '../../icons/checkbox-tick-icon';
 
 import { Checkbox } from './Checkbox';
 import { storiesOf, action, knobs } from '@devexperts/tools/lib/utils/storybook';

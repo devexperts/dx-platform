@@ -5,13 +5,12 @@ import { ComponentClass, ComponentType } from 'react';
 import { withTheme } from '../../utils/withTheme';
 import { ObjectClean } from 'typelevel-ts';
 import { PartialKeys } from '@devexperts/utils/lib/object/object';
-import { TBaseIconProps } from '@devexperts/icons/lib/icon.component';
 
 export const BUTTON_ICON = Symbol('ButtonIcon');
 
 export type TFullButtonIconProps = ObjectClean<TButtonProps & {
 	Button: ComponentType<TButtonProps>,
-	icon: React.ReactElement<TBaseIconProps>,
+	icon: React.ReactNode,
 	theme: {
 		icon?: string
 	} & TButtonProps['theme']

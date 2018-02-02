@@ -15,7 +15,7 @@ export type TFullSelectboxAnchorProps = ObjectOmit<TButtonProps, 'theme'> & {
 		container_isOpened?: string
 	},
 	isOpened?: boolean,
-	caretIcon?: React.ReactElement<any> | React.ReactText,
+	caretIcon?: ReactNode,
 	value?: string | number,
 	valueText?: ReactNode
 };

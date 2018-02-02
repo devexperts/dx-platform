@@ -7,8 +7,8 @@ import { SelectboxAnchor, TFullSelectboxAnchorProps } from './SelectboxAnchor';
 import { MenuItem } from '../Menu/Menu';
 import { PURE } from '../../utils/pure';
 
-import {ListItemTickIcon} from '@devexperts/icons/lib/list-item-tick-icon';
-import {SmallDropDownArrowIcon} from '@devexperts/icons/lib/small-dropdown-arrow-icon';
+import { ListItemTickIcon } from '../../icons/list-item-tick-icon';
+import { SmallDropDownArrowIcon } from '../../icons/small-dropdown-arrow-icon';
 import { stateful } from '../Control/Control';
 
 import * as selectoxPageCss from './Selectbox.page.styl';

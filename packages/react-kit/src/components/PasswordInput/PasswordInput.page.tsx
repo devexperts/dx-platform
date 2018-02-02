@@ -6,8 +6,8 @@ import {PURE} from '../../utils/pure';
 
 import css from './PasswordInput.page.styl';
 
-import { ShowPasswordIcon } from '@devexperts/icons/lib/show-password-icon';
-import { HidePasswordIcon } from '@devexperts/icons/lib/hide-password-icon';
+import { ShowPasswordIcon } from '../../icons/show-password-icon';
+import { HidePasswordIcon } from '../../icons/hide-password-icon';
 
 const darkDemoTheme = {
 	container: css.container
