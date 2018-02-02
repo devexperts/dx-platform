@@ -1,6 +1,6 @@
 {
   "name": "@devexperts/tools",
-  "version": "0.6.5",
+  "version": "0.7.1",
   "description": "",
   "main": "lib/index.js",
   "scripts": {
