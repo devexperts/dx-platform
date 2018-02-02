@@ -15,10 +15,12 @@ import {
 } from '../webpack/loaders';
 
 import {
-	forkTSCheckerPlugin,
-	htmlPlugin
+	createForkTSCheckerPlugin,
+	createHtmlPlugin
 } from '../webpack/plugins';
 import * as ENV from '../env';
+
+const entries = [];
 
 const devConfig: Configuration = {
 	resolve: {
@@ -70,8 +72,8 @@ const devConfig: Configuration = {
 		],
 	},
 	plugins: [
-		htmlPlugin,
-		forkTSCheckerPlugin,
+		createHtmlPlugin(),
+		createForkTSCheckerPlugin(),
 	],
 };
 

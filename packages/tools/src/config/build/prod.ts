@@ -15,10 +15,12 @@ import {
 } from '../webpack/loaders';
 
 import {
-	forkTSCheckerPlugin,
-	htmlPlugin,
-	cssExtractTextPlugin
+	createForkTSCheckerPlugin,
+	createHtmlPlugin,
+	createCssExtractTextPlugin
 } from '../webpack/plugins';
+
+const cssExtractor = createCssExtractTextPlugin();
 import * as ENV from '../env';
 
 const devConfig: Configuration = {
@@ -51,7 +53,7 @@ const devConfig: Configuration = {
 					},
 					{
 						test: STYLUS_PATTERN,
-						use: cssExtractTextPlugin.extract({
+						use: cssExtractor.extract({
 							fallback: styleLoader,
 							use: [
 								cssLoader,
@@ -62,7 +64,7 @@ const devConfig: Configuration = {
 					},
 					{
 						test: CSS_PATTERN,
-						use: cssExtractTextPlugin.extract({
+						use: cssExtractor.extract({
 							fallback: styleLoader,
 							use: [
 								cssLoader,
@@ -81,9 +83,9 @@ const devConfig: Configuration = {
 		],
 	},
 	plugins: [
-		cssExtractTextPlugin,
-		htmlPlugin,
-		forkTSCheckerPlugin,
+		cssExtractor,
+		createHtmlPlugin(),
+		createForkTSCheckerPlugin(),
 	],
 };
 

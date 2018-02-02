@@ -42,28 +42,23 @@ async function prepare() {
     if (!port) {
         throw new Error(`Port ${program.port} already in use`);
     }
-    process.argv.push('--port', port.toString());
+    return port;
 }
 
-prepare().then(() => {
+prepare().then((port) => {
     const protocol = process.env.HTTPS === 'true' ? 'https' : 'http';
     const appName = PKG.name;
-    const urls = prepareUrls(protocol, program.host, program.port);
+    const urls = prepareUrls(protocol, program.host, port);
     // Create a webpack compiler that is configured with custom messages.
     const compiler = createCompiler(webpack, devConfig, appName, urls, false);
 
 	const devServer = new WebpackDevServer(compiler, serverConfig);
 
-	devServer.listen(program.port, program.host, err => {
+	devServer.listen(port, program.host, err => {
 		if (err) {
 			return console.log(err);
 		}
 		console.log('Starting the devlopment server...\n');
-		// if (isInteractive) {
-		// 	clearConsole();
-		// }
-		// console.log(chalk.cyan('Starting the development server...\n'));
-		// openBrowser(urls.localUrlForBrowser);
 	});
 
 	['SIGINT', 'SIGTERM'].forEach(function(sig) {
