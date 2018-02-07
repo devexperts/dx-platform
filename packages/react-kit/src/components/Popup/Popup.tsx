@@ -2,7 +2,7 @@ import * as React from 'react';
 import { PURE } from '../../utils/pure';
 import classnames from 'classnames';
 import Portal from 'react-overlays/lib/Portal';
-import PropTypes from 'prop-types';
+import * as PropTypes from 'prop-types';
 import { Component, MouseEventHandler, ReactNode } from 'react';
 import { ObjectClean } from 'typelevel-ts';
 import { PartialKeys } from '@devexperts/utils/lib/object/object';
