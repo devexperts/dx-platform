@@ -1,0 +1,29 @@
+.backdrop {
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	text-align: center;
+	
+	&:before {
+		content: '';
+		display: inline-block;
+		vertical-align: middle;
+		width: 0;
+		height: 100%;
+	}
+		
+	&:not(&_isModal) {
+		pointer-events: none;
+		.container {
+			pointer-events: auto;
+		}
+	}
+}
+	
+.container {
+	vertical-align: middle;
+	display: inline-block;
+	text-align: left;
+}
