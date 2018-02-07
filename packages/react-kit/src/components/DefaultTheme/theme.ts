@@ -49,6 +49,9 @@ import linkTheme from '../Link/Link.styl';
 import {TOGGLE_BUTTONS} from '../ToggleButtons/ToggleButtons';
 import toggleButtonsTheme from '../ToggleButtons/ToggleButtons.demo.styl';
 
+import { LOADING_INDICATION } from '../LoadingIndication/LoadingIndication';
+import loadingIndicationTheme from '../LoadingIndication/LoadingIndication.demo.styl';
+
 export default {
 	[INPUT]: inputTheme,
 	[BUTTON]: buttonTheme,
@@ -75,5 +78,6 @@ export default {
 		}
     },
 	[LINK]: linkTheme,
-    [TOGGLE_BUTTONS]: toggleButtonsTheme
+    [TOGGLE_BUTTONS]: toggleButtonsTheme,
+	[LOADING_INDICATION]: loadingIndicationTheme
 }

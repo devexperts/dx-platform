@@ -1,0 +1,8 @@
+@require './LoadingIndication.styl';
+
+.container {
+	transition: opacity 0.2s ease-out, visibility 0s ease-out 0.2s;
+	&_isVisible {
+		transition: opacity .5s ease-in, visibility 0s;
+	}
+}

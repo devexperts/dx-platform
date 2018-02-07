@@ -13,3 +13,4 @@ export const createForkTSCheckerPlugin = () => new ForkTsCheckerWebpackPlugin();
 export const createCssExtractTextPlugin = () => new ExtractTextPlugin({
 	filename: '[name].css',
 });
+
