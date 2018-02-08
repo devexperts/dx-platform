@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import classnames from 'classnames';
 
 import {
@@ -70,7 +70,7 @@ export class RawScrollable extends React.Component<TFullScrollableProps> {
 		const { theme } = this.props;
 		return {
 			size: getScrollbarSize(theme.container as string),
-			[SCROLLABLE_CONTEXT_EMITTER]: this._emitter
+			[SCROLLABLE_CONTEXT_EMITTER.toString()]: this._emitter
 		};
 	}
 

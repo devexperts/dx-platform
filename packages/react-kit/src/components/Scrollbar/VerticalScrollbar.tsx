@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import {Scrollbar, SCROLLBAR_TYPE, TScrollbarProps} from './Scrollbar';
 import {
 	EVENT_SCROLABLE,

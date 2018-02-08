@@ -37,7 +37,7 @@ export class Scrollbar<T> extends React.Component<TScrollbarProps & T, TScrollba
 	_track: HTMLDivElement | null;
 	_bar: HTMLDivElement;
 
-	static contextTypes = CONTEXT_TYPES;
+	static contextTypes: any = CONTEXT_TYPES;
 
 	state = {
 		isVisible: false
