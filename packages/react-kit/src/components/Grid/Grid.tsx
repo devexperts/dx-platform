@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import * as PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import prefix from '@devexperts/utils/lib/dom/prefix';
