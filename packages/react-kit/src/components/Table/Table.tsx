@@ -18,7 +18,7 @@ export type TTableTheme = {
 
 export type TFullTableProps = {
     theme: TTableTheme,
-	children: React.ReactNode
+	children?: React.ReactNode
 }
 
 export type TFullTableHeadProps = TFullTableProps;
