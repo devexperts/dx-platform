@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { storiesOf, action } from '@devexperts/tools/lib/utils/storybook';
 import { ResizeDetector } from './ResizeDetector';
 import Demo from '../demo/Demo';

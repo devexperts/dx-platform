@@ -4,7 +4,7 @@ import {
 	ComponentClass
 } from 'react';
 import { PURE } from '../../utils/pure';
-import classnames from 'classnames';
+import * as classnames from 'classnames';
 import { mergeThemes, withTheme } from '../../utils/withTheme';
 import { ObjectClean } from 'typelevel-ts';
 import { PartialKeys } from '@devexperts/utils/lib/object/object';

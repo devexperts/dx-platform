@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import {storiesOf} from '@devexperts/tools/lib/utils/storybook';
 import {
     Table,
@@ -8,7 +8,7 @@ import {
 	TableRow as Tr
 } from './Table';
 import Demo from '../demo/Demo';
-import css from './Table.page.styl';
+import * as css from './Table.page.styl';
 
 const firstTheme = {
 	cell: css.cell_first

@@ -1,5 +1,5 @@
 import {
-    Children, createElement, ComponentClass, Component, SFC, Ref, StatelessComponent, ReactElement,
+    Children, createElement, ComponentClass, Component, Ref,
     ComponentType
 } from 'react';
 import * as PropTypes from 'prop-types';

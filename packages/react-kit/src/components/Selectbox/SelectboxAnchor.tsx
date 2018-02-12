@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { PURE } from '../../utils/pure';
 import { Button, TButtonProps, TFullButtonProps } from '../Button/Button';
-import { ComponentClass, ComponentType, ReactNode } from 'react';
+import { ComponentClass, ReactNode } from 'react';
 import { ObjectClean, ObjectOmit } from 'typelevel-ts';
 import { PartialKeys } from '@devexperts/utils/lib/object/object';
-import classnames from 'classnames';
+import * as classnames from 'classnames';
 
 export type TFullSelectboxAnchorProps = ObjectOmit<TButtonProps, 'theme'> & {
 	theme: TFullButtonProps['theme'] & {

@@ -1,9 +1,9 @@
-import React from 'react';
+import * as React from 'react';
 import { storiesOf } from '@devexperts/tools/lib/utils/storybook';
 import Demo from '../demo/Demo';
 import { Menu, MenuItem, MenuItemGroup } from './Menu';
 
-import css from './Menu.page.styl';
+import * as css from './Menu.page.styl';
 
 const theme = {
 	container: css.list

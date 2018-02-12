@@ -1,9 +1,9 @@
-import React from 'react';
+import * as React from 'react';
 import { storiesOf } from '@devexperts/tools/lib/utils/storybook';
 import Demo from '../demo/Demo';
 import { List, ListItem, ListItemGroup } from './List';
 
-import css from './List.page.styl';
+import * as css from './List.page.styl';
 
 const theme = {
 	container: css.list

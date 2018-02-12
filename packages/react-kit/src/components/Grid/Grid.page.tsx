@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import {storiesOf} from '@devexperts/tools/lib/utils/storybook';
 import Demo from '../demo/Demo';
 import {PURE} from '../../utils/pure';
@@ -12,7 +12,7 @@ import {
 	GridCellAlignment
 } from './Grid';
 
-import css from './Grid.demo.styl';
+import * as css from './Grid.demo.styl';
 
 const gridTheme = {
 	container: css.container,

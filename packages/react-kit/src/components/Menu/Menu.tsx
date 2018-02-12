@@ -9,7 +9,7 @@ import { Component, ComponentClass, ComponentType, ReactElement, ReactNode, Reac
 import { ObjectClean } from 'typelevel-ts';
 import { PartialKeys } from '@devexperts/utils/lib/object/object';
 import { PURE } from '../../utils/pure';
-import classNames from 'classnames';
+import * as classnames from 'classnames';
 import { Pure } from '../Pure/Pure';
 import { ReactChildren } from '../../utils/typings';
 
@@ -75,7 +75,7 @@ class RawMenuItem extends Component<TFullMenuItemProps> {
 		if (isActive) {
 			theme = {
 				...theme,
-				item: classNames(theme.item, theme.item_active)
+				item: classnames(theme.item, theme.item_active)
 			};
 		}
 		return (

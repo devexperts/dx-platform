@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { PURE } from '../../utils/pure';
-import classnames from 'classnames';
+import * as classnames from 'classnames';
 import { MouseEvent, EventHandler, ComponentClass } from 'react';
 import { withTheme } from '../../utils/withTheme';
 import { PartialKeys } from '@devexperts/utils/lib/object/object';

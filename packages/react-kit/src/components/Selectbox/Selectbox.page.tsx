@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { storiesOf } from '@devexperts/tools/lib/utils/storybook';
 import Demo from '../demo/Demo';
 import { Button } from '../Button/Button';

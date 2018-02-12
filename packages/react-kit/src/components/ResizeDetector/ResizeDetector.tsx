@@ -5,7 +5,7 @@ import { ComponentClass } from 'react';
 import { ObjectClean } from 'typelevel-ts/lib';
 import { PartialKeys } from '@devexperts/utils/lib/object/object';
 
-import detectorFactory from 'element-resize-detector';
+import * as detectorFactory from 'element-resize-detector';
 import { raf } from '@devexperts/utils/lib/function/raf';
 
 export const NativeResizeDetector = detectorFactory({

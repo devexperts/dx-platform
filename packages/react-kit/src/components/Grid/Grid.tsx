@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
-import ReactDOM from 'react-dom';
+import * as ReactDOM from 'react-dom';
 import prefix from '@devexperts/utils/lib/dom/prefix';
 import { PURE } from '../../utils/pure';
 import { Pure } from '../Pure/Pure';
@@ -19,7 +19,7 @@ import {
 } from '../Table/Table';
 import Emitter from '@devexperts/utils/lib/emitter/Emitter';
 import { Scrollable } from '../Scrollable/Scrollable';
-import classnames from 'classnames';
+import * as classnames from 'classnames';
 import {ObjectClean, ObjectOmit} from 'typelevel-ts';
 import {PartialKeys} from "@devexperts/utils/lib/object/object";
 import {withTheme} from '../../utils/withTheme';

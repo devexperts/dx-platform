@@ -6,7 +6,7 @@ import { ComponentClass, ComponentType } from 'react';
 import { withTheme } from '../../utils/withTheme';
 import { LoadingIndicator, TLoadingIndicatorProps } from '../LoadingIndicator/LoadingIndicator';
 import { PURE } from '../../utils/pure';
-import cn from 'classnames';
+import * as cn from 'classnames';
 
 export const LOADING_INDICATION = Symbol('LoadingIndicaton');
 

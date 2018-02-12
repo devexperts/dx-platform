@@ -1,8 +1,8 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import Portal from 'react-overlays/lib/Portal';
+import * as Portal from 'react-overlays/lib/Portal';
 import prefix from '@devexperts/utils/lib/dom/prefix';
-import classnames from 'classnames';
+import * as classnames from 'classnames';
 
 import { PURE } from '../../utils/pure';
 import { BoundsUpdateDetector } from '../BoundsUpdateDetector/BoundsUpdateDetector';

@@ -1,10 +1,10 @@
-import React from 'react';
+import * as React from 'react';
 import Demo from '../demo/Demo';
 import {storiesOf, action} from '@devexperts/tools/lib/utils/storybook';
 import { PasswordInput } from './PasswordInput';
 import {PURE} from '../../utils/pure';
 
-import css from './PasswordInput.page.styl';
+import * as css from './PasswordInput.page.styl';
 
 import { ShowPasswordIcon } from '../../icons/show-password-icon';
 import { HidePasswordIcon } from '../../icons/hide-password-icon';

@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import Demo from '../demo/Demo';
 import { Button } from '../Button/Button';
 import { Popover, PopoverPlacement, PopoverAlign } from './Popover';
@@ -8,7 +8,7 @@ import { PURE } from '../../utils/pure';
 import { storiesOf } from '@devexperts/tools/lib/utils/storybook';
 import {stateful} from '../Control/Control';
 
-import css from './Popover.page.styl';
+import * as css from './Popover.page.styl';
 
 const buttonTheme = {
 	container: css.toggleButton

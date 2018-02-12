@@ -1,5 +1,5 @@
 import * as React from 'react';
-import classnames from 'classnames';
+import * as classnames from 'classnames';
 import { withTheme } from '../../utils/withTheme';
 import { ComponentClass, MouseEventHandler, ReactNode } from 'react';
 import { ObjectClean } from 'typelevel-ts';

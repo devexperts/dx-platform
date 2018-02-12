@@ -1,30 +1,5 @@
 {
-  "compilerOptions": {
-	"module": "commonjs",
-	"emitDecoratorMetadata": true,
-	"experimentalDecorators": true,
-	"importHelpers": true,
-	"jsx": "react",
-	"noImplicitAny": true,
-	"noImplicitReturns": true,
-	"noImplicitThis": true,
-	"outDir": "lib",
-	"declaration": true,
-	"pretty": true,
-	"strictNullChecks": true,
-	"strictFunctionTypes": true,
-	"suppressImplicitAnyIndexErrors": true,
-	"noUnusedLocals": true,
-	"target": "es5",
-	"lib": [
-	  "dom",
-	  "es6",
-	  "scripthost",
-	  "es2015.symbol",
-	  "es2017.object",
-	  "es2016.array.include"
-	]
-  },
+  "extends": "./node_modules/@devexperts/tools/settings/tsconfig.json",
   "include": [
 	"src/**/*"
   ],

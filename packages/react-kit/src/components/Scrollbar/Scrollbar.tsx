@@ -1,7 +1,7 @@
 import * as React from 'react';
-import ReactDOM from 'react-dom';
-import classnames from 'classnames';
-import {Bar} from './Bar';
+import * as ReactDOM from 'react-dom';
+import * as classnames from 'classnames';
+import { Bar } from './Bar';
 
 import {
 	CONTEXT_TYPES,
@@ -9,6 +9,7 @@ import {
 	SCROLLABLE_CONTEXT_EMITTER,
 } from '../Scrollable/Scrollable.const';
 import * as PropTypes from 'prop-types';
+import {ReactInstance} from 'react';
 
 export const SCROLLBAR = Symbol('Scrollbar');
 export enum SCROLLBAR_TYPE {

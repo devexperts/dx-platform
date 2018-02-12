@@ -1,9 +1,9 @@
-import React from 'react';
+import * as React from 'react';
 import {storiesOf} from '@devexperts/tools/lib/utils/storybook';
 import {ButtonIcon} from './ButtonIcon';
 import Demo from '../demo/Demo';
 import {ListItemTickIcon} from '../../icons/list-item-tick-icon';
-import css from './ButtonIcon.page.styl';
+import * as css from './ButtonIcon.page.styl';
 
 const buttonTheme = {
 	container: css.button,

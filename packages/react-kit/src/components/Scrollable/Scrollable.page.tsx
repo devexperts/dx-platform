@@ -1,8 +1,8 @@
-import React from 'react';
+import * as React from 'react';
 import { storiesOf } from '@devexperts/tools/lib/utils/storybook';
 import {Scrollable} from './Scrollable';
 import Demo from '../demo/Demo';
-import css from './Scrollable.page.styl';
+import * as css from './Scrollable.page.styl';
 import { PURE } from '../../utils/pure';
 import { Pure } from '../Pure/Pure';
 

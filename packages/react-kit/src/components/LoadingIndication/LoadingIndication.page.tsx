@@ -1,11 +1,11 @@
-import React from 'react';
+import * as React from 'react';
 import { storiesOf } from '@devexperts/tools/lib/utils/storybook';
 import Demo from '../demo/Demo';
 import { LoadingIndication } from './LoadingIndication';
 import { PURE } from '../../utils/pure';
 import { Button } from '../Button/Button';
 
-import css from './LoadingIndication.page.styl';
+import * as css from './LoadingIndication.page.styl';
 
 @PURE
 class LoadingIndicationPage extends React.Component {

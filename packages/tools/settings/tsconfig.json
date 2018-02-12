@@ -1,0 +1,27 @@
+{
+    "compilerOptions": {
+      "module": "commonjs",
+      "sourceMap": true,
+      "declaration": false,
+      "moduleResolution": "node",
+      "emitDecoratorMetadata": true,
+      "experimentalDecorators": true,
+      "forceConsistentCasingInFileNames": true,
+      "suppressImplicitAnyIndexErrors": true,
+      "noImplicitAny": true,
+      "noImplicitThis": true,
+      "jsx": "react",
+      "strictNullChecks": true,
+      "importHelpers": true,
+      "lib": [
+        "es2016",
+        "dom",
+        "es2017.object"
+      ],
+      "outDir": "dist",
+      "target": "es5",
+      "pretty": true,
+      "noUnusedLocals": true
+    }
+  }
+  

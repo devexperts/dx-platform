@@ -1,6 +1,6 @@
 import './reset.styl';
 
-import React from 'react';
+import * as React from 'react';
 import { ThemeProvider as ThemrProvider } from 'react-css-themr';
 import { ThemeProvider } from '../../utils/withTheme';
 
