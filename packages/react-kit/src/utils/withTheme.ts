@@ -1,3 +1,4 @@
+import * as React from 'react';
 import {
     Children, createElement, ComponentClass, Component, Ref,
     ComponentType
