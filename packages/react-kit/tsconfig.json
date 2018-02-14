@@ -1,8 +1,7 @@
 {
   "extends": "./node_modules/@devexperts/tools/settings/tsconfig.json",
   "compilerOptions": {
-	"noUnusedLocals": false,
-	"outDir": "lib"
+	"noUnusedLocals": false
   },
   "include": [
 	"typings/**/*",

@@ -1,8 +1,5 @@
 {
   "extends": "./node_modules/@devexperts/tools/settings/tsconfig.json",
-  "compilerOptions": {
-	"outDir": "lib"
-  },
   "include": [
 	"src/**/*"
   ],

@@ -9,8 +9,7 @@
     "clean": "dx-tools clean lib",
     "prepublish": "npm run clean && npm run build",
     "start": "npm run watch",
-    "watch": "dx-tools build-lib src lib -w",
-    "tst": "dx-tools"
+    "watch": "dx-tools build-lib src lib -w"
   },
   "repository": {
     "type": "git",

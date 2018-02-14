@@ -7,7 +7,10 @@ import { ROOT } from '../config/env';
 
 export const registerTSBabelTask = (src: string, dist: string) => {
 	return gulp.task("ts-babel", function () {
-		const tsProject = ts.createProject(path.join(ROOT, '/tsconfig.json'));
+		const tsProject = ts.createProject(
+			path.join(ROOT, '/tsconfig.json'), {
+				outDir: dist
+			});
 		const tsResults = tsProject.src()
 			.pipe(tsProject());
 
