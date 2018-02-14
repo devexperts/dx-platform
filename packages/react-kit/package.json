@@ -8,7 +8,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "dx-tools build-lib src lib",
     "clean": "dx-tools clean lib",
-    "prepublish": "npm run clean && npm run build",
+    "prepublishOnly": "npm run clean && npm run build",
     "start": "dx-tools storybook",
     "watch": "dx-tools build-lib src lib -w"
   },

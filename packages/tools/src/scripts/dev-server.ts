@@ -7,8 +7,6 @@ import devConfig from '../config/build/dev';
 import { getProgramForScript } from '../utils/program';
 import { Scripts } from './constants';
 
-const program = getProgramForScript(Scripts.DEV_SERVER);
-
 import {
     choosePort,
     createCompiler,
@@ -16,7 +14,8 @@ import {
 } from 'react-dev-utils/WebpackDevServerUtils';
 import Signals = NodeJS.Signals;
 
-// const isInteractive = process.stdout.isTTY;
+const program = getProgramForScript(Scripts.DEV_SERVER);
+
 process.env.PUBLIC_URL = path.join(ROOT, 'public');
 console.log('starting...');
 
@@ -33,43 +32,40 @@ const serverConfig = {
 	}
 };
 
-async function prepare() {
-    program
-        .option('-p --port [portnumber]', 'storybook port', (value) => parseInt(value, 10),8080)
-        .option('-h --host [hostname]', 'storybook host', 'localhost')
-        .parse(process.argv);
+program
+	.command('dev-server')
+	.option('-p --port [portnumber]', 'dev-server port', (value) => parseInt(value, 10),8080)
+	.option('-h --host [hostname]', 'dev-server host', 'localhost')
+	.action(function(options) {
+		return choosePort(options.host, options.port)
+			.then((port) => {
+				if (!port) {
+					throw new Error(`Port ${options.port} already in use`);
+				}
 
+				const protocol = process.env.HTTPS === 'true' ? 'https' : 'http';
+				const appName = PKG.name;
+				const urls = prepareUrls(protocol, options.host, port);
+				// Create a webpack compiler that is configured with custom messages.
+				const compiler = createCompiler(webpack, devConfig, appName, urls, false);
 
-    const port = await choosePort(program.host, program.port);
+				const devServer = new WebpackDevServer(compiler, serverConfig);
 
-    if (!port) {
-        throw new Error(`Port ${program.port} already in use`);
-    }
-    return port;
-}
+				devServer.listen(port, options.host, err => {
+					if (err) {
+						return console.log(err);
+					}
+					console.log('Starting the devlopment server...\n');
+				});
 
-prepare().then((port) => {
-    const protocol = process.env.HTTPS === 'true' ? 'https' : 'http';
-    const appName = PKG.name;
-    const urls = prepareUrls(protocol, program.host, port);
-    // Create a webpack compiler that is configured with custom messages.
-    const compiler = createCompiler(webpack, devConfig, appName, urls, false);
-
-	const devServer = new WebpackDevServer(compiler, serverConfig);
-
-	devServer.listen(port, program.host, err => {
-		if (err) {
-			return console.log(err);
-		}
-		console.log('Starting the devlopment server...\n');
-	});
-
-	['SIGINT', 'SIGTERM'].forEach(function(sig) {
-		process.on(sig as Signals, function() {
-			devServer.close();
-			process.exit();
-		});
+				['SIGINT', 'SIGTERM'].forEach(function(sig) {
+					process.on(sig as Signals, function() {
+						devServer.close();
+						process.exit();
+					});
+				});
+			});
 	});
 
 
-}).catch(err => console.log('errr', err));
+program.parse(process.argv);

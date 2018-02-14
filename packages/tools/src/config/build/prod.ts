@@ -23,7 +23,7 @@ import {
 const cssExtractor = createCssExtractTextPlugin();
 import * as ENV from '../env';
 
-const devConfig: Configuration = {
+const prodConfig: Configuration = {
 	resolve: {
 		symlinks: true,
 		extensions: ['.ts', '.tsx', '.js', '.jsx', '.styl'],
@@ -89,5 +89,5 @@ const devConfig: Configuration = {
 	],
 };
 
-export {devConfig as default};
+export {prodConfig as default};
 

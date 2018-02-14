@@ -8,7 +8,7 @@
     "build": "tsc --noEmitOnError",
     "clean": "rimraf ./lib",
     "watch": "tsc -w --noEmitOnError",
-    "prepublish": "npm run clean && npm run build"
+    "prepublishOnly": "npm run clean && npm run build"
   },
   "repository": {
     "type": "git",
