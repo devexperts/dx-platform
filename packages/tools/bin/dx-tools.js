@@ -3,15 +3,9 @@
 
 const { Command } = require('commander');
 const pkg = require('../package.json');
-const AVAILABLE_SCRIPTS = [
-	'build',
-	'build-lib',
-	'clean',
-	'dev-server',
-	'storybook',
-	'watch-build-lib'
-];
+const { Scripts } = require('../lib/scripts/constants');
 
+const AVAILABLE_SCRIPTS = Object.values(Scripts);
 const program = new Command();
 
 program

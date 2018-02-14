@@ -1,6 +1,19 @@
-import {TOOLS_PKG} from '../config/env';
+import { TOOLS_PKG } from '../config/env';
 
-import * as commander from 'commander';
 import {Command} from 'commander';
+import { Scripts } from '../scripts/constants';
 
-export const program: Command = commander.version(TOOLS_PKG.version);
+const registeredPrograms = {};
+
+const createProgramAndRegister = (script: Scripts) => {
+	const program = new Command();
+
+	registeredPrograms[script] = program;
+	program.version(TOOLS_PKG.version);
+
+	return program;
+};
+
+export const getProgramForScript = (script: Scripts) => {
+	return registeredPrograms[script] ? registeredPrograms[script] : createProgramAndRegister(script)
+};

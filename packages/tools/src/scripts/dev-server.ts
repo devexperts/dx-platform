@@ -1,9 +1,13 @@
 import * as path from 'path';
-import { program } from '../utils/program';
 import * as WebpackDevServer from 'webpack-dev-server';
 import { PKG, ROOT } from '../config/env';
 import * as webpack from 'webpack';
 import devConfig from '../config/build/dev';
+
+import { getProgramForScript } from '../utils/program';
+import { Scripts } from './constants';
+
+const program = getProgramForScript(Scripts.DEV_SERVER);
 
 import {
     choosePort,

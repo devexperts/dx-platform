@@ -1,6 +1,9 @@
 import * as path from 'path';
-import {program} from '../utils/program';
 import {choosePort} from 'react-dev-utils/WebpackDevServerUtils';
+import { getProgramForScript } from '../utils/program';
+import { Scripts } from './constants';
+
+const program = getProgramForScript(Scripts.STORYBOOK);
 
 console.log('starting...');
 

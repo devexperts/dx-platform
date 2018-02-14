@@ -1,13 +1,12 @@
 import * as path from 'path';
-import { ROOT, PKG } from '../config/env';
+import { ROOT } from '../config/env';
 import * as rimraf from 'rimraf';
+import { getProgramForScript } from '../utils/program';
+import { Scripts } from './constants';
 
-import { Command } from 'commander';
-
-const program = new Command();
+const program = getProgramForScript(Scripts.CLEAN);
 
 program
-	.version(PKG.version)
 	.command('clean <folder>')
 	.action(function(folder) {
 		const pathToRemove = path.join(ROOT, folder);

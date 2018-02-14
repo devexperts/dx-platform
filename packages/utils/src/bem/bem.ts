@@ -175,6 +175,7 @@ export default function bem(blockName: string, elementOrBlockModifiers?: any, el
 		return blockName; //block
 	}
 	return '';
+
 }
 
 /**
