@@ -1,9 +1,7 @@
 import * as path from 'path';
 import {program} from '../utils/program';
 import {choosePort} from 'react-dev-utils/WebpackDevServerUtils';
-import {patchConsole} from '../utils/patchConsole';
 
-patchConsole('storybook');
 console.log('starting...');
 
 async function prepare() {

@@ -1,10 +1,21 @@
-import {DIST_PATH} from '../config/env';
+import * as path from 'path';
+import { ROOT } from '../config/env';
 import * as rimraf from 'rimraf';
-import {patchConsole} from '../utils/patchConsole';
 
-patchConsole('clean');
+import { Command } from 'commander';
 
-rimraf(DIST_PATH, () => {
-	console.log(`removed: ${DIST_PATH}`)
-});
+const program = new Command();
+
+program
+	.command('clean <folder>')
+	.action(function(folder) {
+		const pathToRemove = path.join(ROOT, folder);
+
+		rimraf(pathToRemove, () => {
+			console.log(`removed: ${pathToRemove}`)
+		});
+	});
+
+
+program.parse(process.argv);
 

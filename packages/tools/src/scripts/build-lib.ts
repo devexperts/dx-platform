@@ -1,12 +1,8 @@
 import * as gulp from 'gulp';
 import '../tasks/ts-babel';
 import '../tasks/copy-stylus';
+import { PKG } from '../config/env';
 
-import {patchConsole} from '../utils/patchConsole';
-
-patchConsole('build-lib');
-console.log('Starting prod...');
+console.log(`Building package "${PKG.name}"`);
 
 gulp.start(['ts-babel', 'copy-stylus']);
-
-

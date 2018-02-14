@@ -5,11 +5,12 @@
   "main": "lib/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "dx-tools build-ts-transform",
-    "clean": "dx-tools clean",
+    "build": "dx-tools build-lib",
+    "clean": "dx-tools clean lib",
     "prepublish": "npm run clean && npm run build",
-    "start": "dx-tools watch-ts-transform",
-    "watch": "dx-tools watch-ts-transform"
+    "start": "npm run watch",
+    "watch": "dx-tools watch-build-lib",
+    "tst": "dx-tools"
   },
   "repository": {
     "type": "git",

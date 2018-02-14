@@ -1,24 +1,32 @@
 #!/usr/bin/env node
 'use strict';
 
-const [node, commmand, script, ...restArgs] = process.argv;
+const { Command } = require('commander');
+const pkg = require('../package.json');
+const AVAILABLE_SCRIPTS = [
+	'build',
+	'build-lib',
+	'clean',
+	'dev-server',
+	'storybook',
+	'watch-build-lib'
+];
 
-process.argv = [node, commmand, ...restArgs];
+const program = new Command();
 
-switch (script) {
-	case 'watch-ts-transform':
-    case 'build-ts-transform':
-	case 'build':
-    case 'build-lib':
-	case 'watch-build-lib':
-    case 'storybook':
-	case 'dev-server':
-    case 'clean': {
-	    require(require.resolve('../lib/scripts/' + script));
-        break;
-    }
-    default:
-        console.log('Unknown script "' + script + '".');
-        console.log('Perhaps you need to update @devexperts/tools?');
-        break;
-}
+program
+	.version(pkg.version);
+
+program
+	.command('* <script>')
+	.action(function(script) {
+		if (AVAILABLE_SCRIPTS.indexOf(script) > -1) {
+			require(`../lib/scripts/${script}.js`);
+		} else {
+			console.log(`Unknown script "${script}".`);
+			console.log('Perhaps you need to update @devexperts/tools?');
+		}
+
+	});
+
+program.parse(process.argv);
