@@ -1,6 +1,6 @@
 {
   "name": "@devexperts/tools",
-  "version": "0.8.2",
+  "version": "0.8.3-0",
   "description": "tool set for building FE projects",
   "main": "lib/index.js",
   "scripts": {
@@ -86,7 +86,7 @@
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.1",
     "ts-loader": "^3.2.0",
-    "tslib": "^1.8.0",
+    "tslib": "^1.9.0",
     "typescript": "^2.6.2",
     "webpack": "^3.10.0",
     "webpack-dev-server": "^2.10.1",

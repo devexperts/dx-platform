@@ -1,6 +1,6 @@
 {
   "name": "@devexperts/utils",
-  "version": "0.8.2",
+  "version": "0.8.3-0",
   "description": "",
   "main": "lib/index.js",
   "scripts": {
@@ -29,10 +29,10 @@
   },
   "homepage": "https://github.com/devex-web-frontend/dx-util#readme",
   "dependencies": {
-    "tslib": "^1.8.0",
+    "tslib": "^1.9.0",
     "typelevel-ts": "^0.2.2"
   },
   "devDependencies": {
-    "@devexperts/tools": "^0.8.2"
+    "@devexperts/tools": "^0.8.3-0"
   }
 }
