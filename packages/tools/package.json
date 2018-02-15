@@ -1,7 +1,7 @@
 {
   "name": "@devexperts/tools",
   "version": "0.8.2-0",
-  "description": "",
+  "description": "tool set for building FE projects",
   "main": "lib/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
