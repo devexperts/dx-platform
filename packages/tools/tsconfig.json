@@ -3,7 +3,7 @@
 	"module": "commonjs",
 	"importHelpers": true,
 	"noImplicitAny": false,
-	"outDir": "lib",
+	"outDir": "dist",
 	"declaration": true,
 	"pretty": true,
 	"strictNullChecks": true,

@@ -5,7 +5,7 @@ import { Popover, PopoverPlacement, PopoverAlign } from './Popover';
 import { Selectbox } from '../Selectbox/Selectbox';
 import { MenuItem } from '../Menu/Menu';
 import { PURE } from '../../utils/pure';
-import { storiesOf } from '@devexperts/tools/lib/utils/storybook';
+import { storiesOf } from '@devexperts/tools/dist/utils/storybook';
 import {stateful} from '../Control/Control';
 
 import * as css from './Popover.page.styl';

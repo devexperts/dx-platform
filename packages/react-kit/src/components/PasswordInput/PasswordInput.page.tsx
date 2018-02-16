@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Demo from '../demo/Demo';
-import {storiesOf, action} from '@devexperts/tools/lib/utils/storybook';
+import {storiesOf, action} from '@devexperts/tools/dist/utils/storybook';
 import { PasswordInput } from './PasswordInput';
 import {PURE} from '../../utils/pure';
 

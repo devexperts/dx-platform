@@ -3,7 +3,7 @@
 
 const { Command } = require('commander');
 const pkg = require('../package.json');
-const { Scripts } = require('../lib/scripts/constants');
+const { Scripts } = require('../dist/scripts/constants');
 
 const AVAILABLE_SCRIPTS = Object.values(Scripts);
 const program = new Command();
@@ -15,7 +15,7 @@ program
 	.command('* <script>')
 	.action(function(script) {
 		if (AVAILABLE_SCRIPTS.indexOf(script) > -1) {
-			require(`../lib/scripts/${script}.js`);
+			require(`../dist/scripts/${script}.js`);
 		} else {
 			console.log(`Unknown script "${script}".`);
 			console.log('Perhaps you need to update @devexperts/tools?');

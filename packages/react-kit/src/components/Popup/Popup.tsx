@@ -5,7 +5,7 @@ import * as Portal from 'react-overlays/lib/Portal';
 import * as PropTypes from 'prop-types';
 import { Component, MouseEventHandler, ReactNode } from 'react';
 import { ObjectClean } from 'typelevel-ts';
-import { PartialKeys } from '@devexperts/utils/lib/object/object';
+import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { withTheme } from '../../utils/withTheme';
 import { RootClose } from '../RootClose/RootClose';
 

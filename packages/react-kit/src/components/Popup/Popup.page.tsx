@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Popup } from './Popup';
-import { storiesOf } from '@devexperts/tools/lib/utils/storybook';
+import { storiesOf } from '@devexperts/tools/dist/utils/storybook';
 import { PURE } from '../../utils/pure';
 import Demo from '../demo/Demo';
 import { Button } from '../Button/Button';

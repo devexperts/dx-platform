@@ -3,7 +3,7 @@ import { PURE } from '../../utils/pure';
 import { Button, TButtonProps, TFullButtonProps } from '../Button/Button';
 import { ComponentClass, ReactNode } from 'react';
 import { ObjectClean, ObjectOmit } from 'typelevel-ts';
-import { PartialKeys } from '@devexperts/utils/lib/object/object';
+import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import * as classnames from 'classnames';
 
 export type TFullSelectboxAnchorProps = ObjectOmit<TButtonProps, 'theme'> & {

@@ -7,7 +7,7 @@ import { Popover, TPopoverProps } from '../Popover/Popover';
 import { ReactRef, WithInnerRef } from '../../utils/typings';
 import { withTheme } from '../../utils/withTheme';
 import { ObjectClean } from 'typelevel-ts';
-import { PartialKeys } from '@devexperts/utils/lib/object/object';
+import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { TControlProps } from '../Control/Control';
 
 export const DROPDOWN = Symbol('Dropdown');

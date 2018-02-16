@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { ObjectClean } from 'typelevel-ts';
-import { PartialKeys } from '@devexperts/utils/lib/object/object';
+import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { ComponentClass, ComponentType } from 'react';
 
 import { withTheme } from '../../utils/withTheme';

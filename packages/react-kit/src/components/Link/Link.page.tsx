@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { storiesOf } from '@devexperts/tools/lib/utils/storybook';
+import { storiesOf } from '@devexperts/tools/dist/utils/storybook';
 import Demo from '../demo/Demo';
 import { Link } from './Link';
 

@@ -3,7 +3,7 @@ import { PURE } from '../../utils/pure';
 import * as classnames from 'classnames';
 import { withTheme } from '../../utils/withTheme';
 import {ObjectClean} from "typelevel-ts/lib";
-import {PartialKeys} from '@devexperts/utils/lib/object/object';
+import {PartialKeys} from '@devexperts/utils/dist/object/object';
 
 export const TABLE = Symbol('Table');
 

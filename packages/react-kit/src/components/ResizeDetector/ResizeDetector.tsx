@@ -3,10 +3,10 @@ import { PURE } from '../../utils/pure';
 import { withTheme } from '../../utils/withTheme';
 import { ComponentClass } from 'react';
 import { ObjectClean } from 'typelevel-ts/lib';
-import { PartialKeys } from '@devexperts/utils/lib/object/object';
+import { PartialKeys } from '@devexperts/utils/dist/object/object';
 
 import * as detectorFactory from 'element-resize-detector';
-import { raf } from '@devexperts/utils/lib/function/raf';
+import { raf } from '@devexperts/utils/dist/function/raf';
 
 export const NativeResizeDetector = detectorFactory({
 	strategy: 'scroll'

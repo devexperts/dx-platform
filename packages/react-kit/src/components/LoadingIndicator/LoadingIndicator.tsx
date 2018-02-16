@@ -2,7 +2,7 @@ import * as React from 'react';
 import { PURE } from '../../utils/pure';
 import { withTheme } from '../../utils/withTheme';
 import { ObjectClean } from 'typelevel-ts';
-import { PartialKeys } from '@devexperts/utils/lib/object/object';
+import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { ComponentClass, ComponentType } from 'react';
 
 export const LOADING_INDICATOR = Symbol('LoadingIndicator');

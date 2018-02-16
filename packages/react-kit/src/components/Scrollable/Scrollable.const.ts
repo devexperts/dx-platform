@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Emitter from '@devexperts/utils/lib/emitter/Emitter';
+import Emitter from '@devexperts/utils/dist/emitter/Emitter';
 import * as PropTypes from 'prop-types';
 
 export const EVENT_SCROLABLE = {

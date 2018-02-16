@@ -6,7 +6,7 @@ import Demo from '../demo/Demo';
 import { CheckboxTickIcon } from '../../icons/checkbox-tick-icon';
 
 import { Checkbox } from './Checkbox';
-import { storiesOf, action, knobs } from '@devexperts/tools/lib/utils/storybook';
+import { storiesOf, action, knobs } from '@devexperts/tools/dist/utils/storybook';
 
 import * as css from './Checkbox.page.styl';
 

@@ -4,7 +4,7 @@ import {ButtonIcon, TButtonIconProps} from '../ButtonIcon/ButtonIcon';
 import {Input as BaseInput, TInputProps} from '../input/Input';
 import {ObjectClean} from 'typelevel-ts';
 import {withTheme} from '../../utils/withTheme';
-import {PartialKeys} from '@devexperts/utils/lib/object/object';
+import {PartialKeys} from '@devexperts/utils/dist/object/object';
 
 export const PASSWORD_INPUT = Symbol('PasswordInput');
 

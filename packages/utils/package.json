@@ -5,11 +5,11 @@
   "main": "lib/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "dx-tools build-lib src lib",
-    "clean": "dx-tools clean lib",
-    "prepublishOnly": "npm run clean && npm run build",
+    "build": "dx-tools build-lib src dist",
+    "clean": "dx-tools clean dist",
+    "prepare": "npm run clean && npm run build",
     "start": "npm run watch",
-    "watch": "dx-tools build-lib src lib -w"
+    "watch": "dx-tools build-lib src dist -w"
   },
   "repository": {
     "type": "git",
@@ -20,10 +20,6 @@
   },
   "author": "devexperts",
   "license": "MPL-2.0",
-  "files": [
-    "lib"
-  ],
-  "typings": "lib/index.d.ts",
   "bugs": {
     "url": "https://github.coxm/devex-web-frontend/dx-util/issues"
   },

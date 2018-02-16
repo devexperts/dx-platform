@@ -8,7 +8,7 @@ import {PURE} from '../../utils/pure';
 import * as PropTypes from 'prop-types';
 import {withTheme} from '../../utils/withTheme';
 import {ObjectClean} from 'typelevel-ts';
-import {PartialKeys} from '@devexperts/utils/lib/object/object';
+import {PartialKeys} from '@devexperts/utils/dist/object/object';
 
 export const VERTICAL_SCROLLBAR = Symbol('VerticalScrollbar');
 

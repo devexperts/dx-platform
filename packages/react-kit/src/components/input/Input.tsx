@@ -8,7 +8,7 @@ import {
 	WheelEventHandler
 } from 'react';
 import { ObjectClean } from 'typelevel-ts';
-import { PartialKeys } from '@devexperts/utils/lib/object/object';
+import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { withTheme } from '../../utils/withTheme';
 
 export const INPUT = Symbol('Input');

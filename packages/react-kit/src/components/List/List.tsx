@@ -3,7 +3,7 @@ import * as classnames from 'classnames';
 import { withTheme } from '../../utils/withTheme';
 import { ComponentClass, MouseEventHandler, ReactNode } from 'react';
 import { ObjectClean } from 'typelevel-ts';
-import { PartialKeys } from '@devexperts/utils/lib/object/object';
+import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { PURE } from '../../utils/pure';
 
 export const LIST = Symbol('List');

@@ -6,7 +6,7 @@ import { DefaultTheme } from '../DefaultTheme/DefaultTheme';
 import * as css from './Demo.styl';
 
 import {ObjectClean} from 'typelevel-ts';
-import {PartialKeys} from '@devexperts/utils/lib/object/object';
+import {PartialKeys} from '@devexperts/utils/dist/object/object';
 
 const DEMO = Symbol();
 

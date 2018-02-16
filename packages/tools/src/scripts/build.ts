@@ -2,7 +2,6 @@ import { getProgramForScript } from '../utils/program';
 import { Scripts } from './constants';
 
 const defaultConfig = require.resolve('../config/build/prod');
-console.log('sad', defaultConfig);
 
 const program = getProgramForScript(Scripts.BUILD);
 

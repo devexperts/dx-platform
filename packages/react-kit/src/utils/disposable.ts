@@ -1,4 +1,4 @@
-import { DISPOSABLE as fdisposable } from '@devexperts/utils/lib/function/disposable';
+import { DISPOSABLE as fdisposable } from '@devexperts/utils/dist/function/disposable';
 
 export function DISPOSABLE<T extends Function>(target: T): T {
 	const disposable = fdisposable(target);

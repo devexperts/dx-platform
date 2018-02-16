@@ -9,7 +9,7 @@ import {
 import {PURE} from '../../utils/pure';
 import * as PropTypes from 'prop-types';
 import {ObjectClean} from 'typelevel-ts';
-import {PartialKeys} from '@devexperts/utils/lib/object/object';
+import {PartialKeys} from '@devexperts/utils/dist/object/object';
 import {withTheme} from '../../utils/withTheme';
 
 export const HORIZONTAL_SCROLLBAR = Symbol('HorizontalScrollbar');

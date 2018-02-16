@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { storiesOf } from '@devexperts/tools/lib/utils/storybook';
+import { storiesOf } from '@devexperts/tools/dist/utils/storybook';
 import Demo from '../demo/Demo';
 import { Button } from '../Button/Button';
 import { Selectbox, TFullSelectboxProps } from './Selectbox';
@@ -13,7 +13,7 @@ import { stateful } from '../Control/Control';
 
 import * as selectoxPageCss from './Selectbox.page.styl';
 import {ObjectClean} from 'typelevel-ts';
-import {PartialKeys} from '@devexperts/utils/lib/object/object';
+import {PartialKeys} from '@devexperts/utils/dist/object/object';
 const wideSelectboxTheme = {
 	container__anchor: selectoxPageCss.container__anchor
 };

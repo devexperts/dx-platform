@@ -4,7 +4,7 @@ import { PURE } from '../../utils/pure';
 import { ComponentClass, ComponentType } from 'react';
 import { withTheme } from '../../utils/withTheme';
 import { ObjectClean } from 'typelevel-ts';
-import { PartialKeys } from '@devexperts/utils/lib/object/object';
+import { PartialKeys } from '@devexperts/utils/dist/object/object';
 
 export const BUTTON_ICON = Symbol('ButtonIcon');
 

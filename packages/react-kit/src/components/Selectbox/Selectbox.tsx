@@ -7,11 +7,11 @@ import * as classnames from 'classnames';
 import { withTheme } from '../../utils/withTheme';
 import { Component, ComponentClass, ComponentType, ReactElement, ReactNode, ReactText } from 'react';
 import { ObjectClean } from 'typelevel-ts';
-import { PartialKeys } from '@devexperts/utils/lib/object/object';
+import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { TControlProps } from '../Control/Control';
 import { NativeResizeDetector } from '../ResizeDetector/ResizeDetector';
 import { findDOMNode } from 'react-dom';
-import { raf } from '@devexperts/utils/lib/function/raf';
+import { raf } from '@devexperts/utils/dist/function/raf';
 
 export const SELECTBOX = Symbol('Selectbox');
 

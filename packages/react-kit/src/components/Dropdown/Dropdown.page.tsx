@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { storiesOf } from '@devexperts/tools/lib/utils/storybook';
+import { storiesOf } from '@devexperts/tools/dist/utils/storybook';
 import { Demo } from '../demo/Demo';
 import { Dropdown } from './Dropdown';
 import { Component, MouseEventHandler, ReactNode, SFC } from 'react';

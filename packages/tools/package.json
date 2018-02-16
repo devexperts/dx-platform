@@ -6,9 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc --noEmitOnError",
-    "clean": "rimraf ./lib",
+    "clean": "rimraf ./dist",
     "watch": "tsc -w --noEmitOnError",
-    "prepublishOnly": "npm run clean && npm run build"
+    "prepare": "npm run clean && npm run build"
   },
   "repository": {
     "type": "git",

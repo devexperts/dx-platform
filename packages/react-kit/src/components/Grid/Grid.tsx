@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
 import * as ReactDOM from 'react-dom';
-import prefix from '@devexperts/utils/lib/dom/prefix';
+import prefix from '@devexperts/utils/dist/dom/prefix';
 import { PURE } from '../../utils/pure';
 import { Pure } from '../Pure/Pure';
 import {
@@ -17,11 +17,11 @@ import {
     TFullTableCellProps,
     TFullTableHeadProps, TTableHeadProps, TTableRowProps, TTableCellProps, TTableTheme
 } from '../Table/Table';
-import Emitter from '@devexperts/utils/lib/emitter/Emitter';
+import Emitter from '@devexperts/utils/dist/emitter/Emitter';
 import { Scrollable } from '../Scrollable/Scrollable';
 import * as classnames from 'classnames';
 import {ObjectClean, ObjectOmit} from 'typelevel-ts';
-import {PartialKeys} from "@devexperts/utils/lib/object/object";
+import {PartialKeys} from "@devexperts/utils/dist/object/object";
 import {withTheme} from '../../utils/withTheme';
 
 export const GRID = Symbol('Grid');

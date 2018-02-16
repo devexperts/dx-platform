@@ -1,18 +1,18 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import * as Portal from 'react-overlays/lib/Portal';
-import prefix from '@devexperts/utils/lib/dom/prefix';
+import prefix from '@devexperts/utils/dist/dom/prefix';
 import * as classnames from 'classnames';
 
 import { PURE } from '../../utils/pure';
 import { BoundsUpdateDetector } from '../BoundsUpdateDetector/BoundsUpdateDetector';
-import { THROTTLE } from '@devexperts/utils/lib/function/throttle';
+import { THROTTLE } from '@devexperts/utils/dist/function/throttle';
 
 import TPortalProps = ReactOverlays.Portal.TPortalProps;
 import { withTheme } from '../../utils/withTheme';
 import { ComponentClass, MouseEventHandler, ReactNode } from 'react';
 import { ObjectClean } from 'typelevel-ts';
-import { PartialKeys } from '@devexperts/utils/lib/object/object';
+import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { ReactRef } from '../../utils/typings';
 import { EventListener } from '../EventListener/EventListener';
 import { RootClose } from '../RootClose/RootClose';
