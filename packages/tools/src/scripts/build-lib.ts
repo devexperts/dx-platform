@@ -1,6 +1,6 @@
 import * as gulp from 'gulp';
 import { registerTSBabelTask } from '../tasks/ts-babel';
-import { registerCopyStyusTask } from '../tasks/copy-stylus';
+import { registerCopyFilesTask } from '../tasks/copy-files';
 import * as watch from 'gulp-watch';
 import * as batch from 'gulp-batch';
 import { getProgramForScript } from '../utils/program';
@@ -18,25 +18,25 @@ program
 		const DIST_PATH = path.join(ROOT, dist);
 
 		registerTSBabelTask(SRC_PATH, DIST_PATH);
-		registerCopyStyusTask(SRC_PATH, DIST_PATH);
+		registerCopyFilesTask(SRC_PATH, DIST_PATH);
 
 
 		if (options.watch) {
 			console.log(`Watching library "${PKG.name}"`);
 
-			gulp.start(['ts-babel', 'copy-stylus']);
+			gulp.start(['ts-babel', 'copy-files']);
 
 			watch(`${SRC_PATH}/**/*`, batch(function(events, done) {
 				console.log('Rebuild started....');
 
-				gulp.start(['ts-babel', 'copy-stylus'], function() {
+				gulp.start(['ts-babel', 'copy-filess'], function() {
 					console.log('Rebuild completed');
 					done()
 				});
 			}));
 		} else {
 			console.log(`Building library "${PKG.name}"`);
-			gulp.start(['ts-babel', 'copy-stylus']);
+			gulp.start(['ts-babel', 'copy-files']);
 		}
 	});
 
