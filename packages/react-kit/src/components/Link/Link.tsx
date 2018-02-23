@@ -13,6 +13,7 @@ export type TFullLinkProps = {
 	href?: string,
 	target?: string,
 	rel?: string,
+	download?: string,
 	isDisabled?: boolean,
 	processEmptyHash?: boolean,
 	onClick?: EventHandler<MouseEvent<HTMLAnchorElement>>,
@@ -25,7 +26,7 @@ export type TFullLinkProps = {
 @PURE
 class RawLink extends React.Component<TFullLinkProps> {
 	render() {
-		const { isDisabled, rel, href, target, children, theme } = this.props;
+		const { isDisabled, rel, href, target, children, theme, download } = this.props;
 
 		const className = classnames(
 			theme.container,
@@ -36,6 +37,7 @@ class RawLink extends React.Component<TFullLinkProps> {
 
 		return (
 			<a href={href}
+			   download={download}
 			   rel={rel}
 			   target={target}
 			   onClick={this.onClick}
