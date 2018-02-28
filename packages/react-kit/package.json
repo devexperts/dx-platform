@@ -1,6 +1,6 @@
 {
   "name": "@devexperts/react-kit",
-  "version": "0.9.0-1",
+  "version": "0.9.0-2",
   "description": "",
   "main": "lib",
   "module": "src",
@@ -26,7 +26,7 @@
   },
   "homepage": "https://github.com/devex-web-frontend/dx-platform#readme",
   "dependencies": {
-    "@devexperts/utils": "^0.9.0-1",
+    "@devexperts/utils": "^0.9.0-2",
     "@types/classnames": ">=2.2.3",
     "@types/node": ">=8.5.2",
     "@types/prop-types": ">=15.5.2",
@@ -45,7 +45,7 @@
     "react-dom": ">=15.6.2"
   },
   "devDependencies": {
-    "@devexperts/tools": "^0.9.0-1",
+    "@devexperts/tools": "^0.9.0-2",
     "@types/jest": "^21.1.8",
     "@types/react": "^15.6.7",
     "@types/react-dom": "^15.5.6",
