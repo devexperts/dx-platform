@@ -29,7 +29,7 @@ program
 			watch(`${SRC_PATH}/**/*`, batch(function(events, done) {
 				console.log('Rebuild started....');
 
-				gulp.start(['ts-babel', 'copy-filess'], function() {
+				gulp.start(['ts-babel', 'copy-files'], function() {
 					console.log('Rebuild completed');
 					done()
 				});
