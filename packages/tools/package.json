@@ -1,6 +1,6 @@
 {
   "name": "@devexperts/tools",
-  "version": "0.9.0-2",
+  "version": "0.9.0",
   "description": "tool set for building FE projects",
   "main": "lib/index.js",
   "scripts": {
