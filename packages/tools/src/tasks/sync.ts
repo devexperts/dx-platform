@@ -1,16 +1,18 @@
 import { spawnStreaming } from '../utils/child-process.utils';
 import { ExecaChildProcess } from 'execa';
+import * as path from 'path'
 
-export const startTransform: (src: string, dist: string, tsconfig: string, isWatch: boolean) => ExecaChildProcess =
-	(src, dist, tsconfig, isWatch) => {
+export const startSync: (src: string, dist: string, isWatch: boolean) => ExecaChildProcess =
+	(src, dist, isWatch) => {
 
-	const args = ['-p', tsconfig, '--outDir', dist];
+	const srcFolder = path.relative(process.cwd(), src);
+	const distFolder = path.relative(process.cwd(), dist);
+
+	const args = [`-d=false`,`${srcFolder}/**/*`, `!${srcFolder}/**/*.{ts,tsx}`, `${distFolder}`];
 
 	if (isWatch) {
 		args.push('-w');
-	} else {
-		args.push('--diagnostics')
 	}
 
-	return spawnStreaming(`${require.resolve('typescript/bin/tsc')}`, 'tsc', args);
+	return spawnStreaming(`${require.resolve('sync-glob/bin/sync-glob')}`, 'sync-glob', args);
 };
