@@ -1,6 +1,6 @@
 {
   "name": "@devexperts/tools",
-  "version": "0.9.2-0",
+  "version": "0.9.2",
   "description": "tool set for building FE projects",
   "main": "lib/index.js",
   "scripts": {
@@ -32,10 +32,10 @@
     "react-dom": ">=15.6.2"
   },
   "devDependencies": {
-    "@types/react": "^15.6.10",
-    "@types/react-dom": "^15.5.6",
     "@types/chalk": "^2.2.0",
     "@types/execa": "^0.8.1",
+    "@types/react": "^15.6.10",
+    "@types/react-dom": "^15.5.6",
     "react": "^15.6.2",
     "react-dom": "^15.6.2"
   },
