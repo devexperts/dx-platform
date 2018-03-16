@@ -1,5 +1,5 @@
-import { SRC_PATH, ROOT } from '../env';
-import { Configuration } from 'webpack';
+import { SRC_PATH } from '../env';
+import { Configuration, DefinePlugin } from 'webpack';
 import {
 	TS_PATTERN,
 	STYLUS_PATTERN,
@@ -11,19 +11,16 @@ import {
 	stylusLoader,
 	cssLoader,
 	postcssLoader,
-	fileLoader
+	urlLoader
 } from '../webpack/loaders';
 
 import {
 	createForkTSCheckerPlugin,
-	createHtmlPlugin,
-	createCssExtractTextPlugin
 } from '../webpack/plugins';
-
-const cssExtractor = createCssExtractTextPlugin();
 import * as ENV from '../env';
 
-const prodConfig: Configuration = {
+
+const devConfig: Configuration = {
 	resolve: {
 		symlinks: true,
 		extensions: ['.ts', '.tsx', '.js', '.jsx', '.styl'],
@@ -31,15 +28,9 @@ const prodConfig: Configuration = {
 	resolveLoader: {
 		modules: [ENV.TOOLS_NODE_MODULES_PATH]
 	},
-	entry: {
-		index: [
-			require.resolve(`${SRC_PATH}/index.tsx`),
-		]
-	},
-	output: {
-		path: `${ROOT}/build`,
-		filename: '[name].[chunkhash:8].js'
-	},
+	entry: [
+		require.resolve(`${SRC_PATH}/index.tsx`),
+	],
 	module: {
 		rules: [
 			{
@@ -53,29 +44,25 @@ const prodConfig: Configuration = {
 					},
 					{
 						test: STYLUS_PATTERN,
-						use: cssExtractor.extract({
-							fallback: styleLoader,
-							use: [
-								cssLoader,
-								postcssLoader,
-								stylusLoader,
-							]
-						})
+						use: [
+							styleLoader,
+							cssLoader,
+							postcssLoader,
+							stylusLoader,
+						],
 					},
 					{
 						test: CSS_PATTERN,
-						use: cssExtractor.extract({
-							fallback: styleLoader,
-							use: [
-								cssLoader,
-								postcssLoader,
-							]
-						})
+						use: [
+							styleLoader,
+							cssLoader,
+							postcssLoader,
+						],
 					},
 					{
 						exclude: FILE_LOADER_EXCLUDES,
 						use: [
-							fileLoader,
+							urlLoader,
 						],
 					} as any, // typings for webpack doesn't support default case properly
 				],
@@ -83,11 +70,12 @@ const prodConfig: Configuration = {
 		],
 	},
 	plugins: [
-		cssExtractor,
-		createHtmlPlugin(),
 		createForkTSCheckerPlugin(),
+		new DefinePlugin({
+			ROOT_FOLDER: JSON.stringify(ENV.ROOT),
+		}),
 	],
 };
 
-export {prodConfig as default};
+export {devConfig as default};
 

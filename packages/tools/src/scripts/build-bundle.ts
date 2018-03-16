@@ -1,12 +1,12 @@
 import { getProgramForScript } from '../utils/program';
 import { Scripts } from './constants';
 
-const defaultConfig = require.resolve('../config/build/prod');
+const defaultConfig = require.resolve('../config/build/bundle');
 
 const program = getProgramForScript(Scripts.BUILD);
 
 program
-	.command('build')
+	.command('build-bundle')
 	.option('-c, --config [config]', 'path to webpack config', defaultConfig)
 	.action(function(options) {
 		const [node, bin] = program.rawArgs;
