@@ -46,7 +46,12 @@ export const postcssLoader: Loader = {
 };
 
 export const stylusLoader: Loader = {
-	loader: require.resolve('stylus-loader')
+	loader: require.resolve('stylus-loader'),
+	options: {
+		nocheck: true,
+		'include css': true,
+		'resolve url': true,
+	}
 };
 
 // file-loaders

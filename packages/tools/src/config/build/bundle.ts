@@ -1,4 +1,4 @@
-import { SRC_PATH } from '../env';
+import {ROOT, SRC_PATH} from '../env';
 import { Configuration, DefinePlugin } from 'webpack';
 import {
 	TS_PATTERN,
@@ -20,7 +20,7 @@ import {
 import * as ENV from '../env';
 
 
-const devConfig: Configuration = {
+const bundleConfig: Configuration = {
 	resolve: {
 		symlinks: true,
 		extensions: ['.ts', '.tsx', '.js', '.jsx', '.styl'],
@@ -61,21 +61,23 @@ const devConfig: Configuration = {
 					},
 					{
 						exclude: FILE_LOADER_EXCLUDES,
-						use: [
-							urlLoader,
-						],
+						use: urlLoader,
 					} as any, // typings for webpack doesn't support default case properly
 				],
 			},
 		],
 	},
+	output: {
+		path: `${ROOT}/build`,
+		filename: '[name].bundle.js'
+	},
 	plugins: [
 		createForkTSCheckerPlugin(),
 		new DefinePlugin({
-			ROOT_FOLDER: JSON.stringify(ENV.ROOT),
+			ROOT_FOLDER: JSON.stringify(ROOT),
 		}),
 	],
 };
 
-export {devConfig as default};
+export {bundleConfig as default};
 

@@ -3,5 +3,6 @@ export enum Scripts {
 	BUILD_LIB = 'build-lib',
 	CLEAN = 'clean',
 	DEV_SERVER = 'dev-server',
-	STORYBOOK = 'storybook'
+	STORYBOOK = 'storybook',
+	BUILD_BUNDLE = 'build-bundle',
 }
