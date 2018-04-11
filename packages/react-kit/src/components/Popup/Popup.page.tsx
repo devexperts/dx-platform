@@ -83,7 +83,7 @@ class PopupPage extends React.Component {
 					       shouldCloseOnClickAway={shouldCloseOnClickAway}
 					       onRequestClose={this.onPopupRequestClose}
 					       isOpened={isOpened}
-							container={container}>
+					>
 						<div>popup content</div>
 						<Stateful placeholder="Choose your hero">
 							<MenuItem value="superman">Superman</MenuItem>

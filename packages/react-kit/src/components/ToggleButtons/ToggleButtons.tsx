@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {
-	Component, PropTypes, Children, ReactElement, ReactChild, EventHandler, MouseEventHandler,
-	ComponentClass
+    Component, ReactElement,
+    ComponentClass, ReactText
 } from 'react';
 import { PURE } from '../../utils/pure';
 import * as classnames from 'classnames';
@@ -44,21 +44,6 @@ type TToggleButtonsState = {
 
 @PURE
 class RawToggleButtons extends Component<TFullToggleButtonsProps, TToggleButtonsState> {
-	static propTypes = {
-		children: PropTypes.arrayOf(PropTypes.element),
-		isDisabled: PropTypes.bool,
-		isVertical: PropTypes.bool,
-		toggleIndex: PropTypes.number,
-		defaultIndex: PropTypes.number,
-		onChange: PropTypes.func,
-		theme: PropTypes.shape({
-			container: PropTypes.string,
-			container__wrapper: PropTypes.string,
-			container__vertical: PropTypes.string,
-			container__item: PropTypes.string,
-			container__item_active: PropTypes.string
-		})
-	};
 
 	state = {
 		toggleIndex: 0

@@ -8,10 +8,7 @@ import {
 	EVENT_SCROLABLE,
 	SCROLLABLE_CONTEXT_EMITTER,
 } from '../Scrollable/Scrollable.const';
-import * as PropTypes from 'prop-types';
-import {ReactInstance} from 'react';
 
-export const SCROLLBAR = Symbol('Scrollbar');
 export enum SCROLLBAR_TYPE {
 	HORIZONTAL = 'HORIZONTAL',
 	VERTICAL = 'VERTICAL'
@@ -44,8 +41,8 @@ export class Scrollbar<T> extends React.Component<TScrollbarProps & T, TScrollba
 		isVisible: false
 	}
 
-	constructor(...args: any[]) {
-		super(...args);
+	constructor(props: TScrollbarProps & T, context: any) {
+		super(props, context);
 		const {container} = this.props;
 		this._container = container;
 	}
@@ -93,7 +90,7 @@ export class Scrollbar<T> extends React.Component<TScrollbarProps & T, TScrollba
 				>
 					<Bar
 						{...barProps}
-						ref={(el: Bar) => this._bar = ReactDOM.findDOMNode(el)}
+						ref={(el: Bar) => this._bar = ReactDOM.findDOMNode(el) as HTMLDivElement}
 					/>
 				</div>
 			</div>

@@ -1,6 +1,5 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import * as Portal from 'react-overlays/lib/Portal';
 import prefix from '@devexperts/utils/dist/dom/prefix';
 import * as classnames from 'classnames';
 
@@ -8,7 +7,6 @@ import { PURE } from '../../utils/pure';
 import { BoundsUpdateDetector } from '../BoundsUpdateDetector/BoundsUpdateDetector';
 import { THROTTLE } from '@devexperts/utils/dist/function/throttle';
 
-import TPortalProps = ReactOverlays.Portal.TPortalProps;
 import { withTheme } from '../../utils/withTheme';
 import { ComponentClass, MouseEventHandler, ReactNode } from 'react';
 import { ObjectClean } from 'typelevel-ts';
@@ -16,6 +14,7 @@ import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { ReactRef } from '../../utils/typings';
 import { EventListener } from '../EventListener/EventListener';
 import { RootClose } from '../RootClose/RootClose';
+import { createPortal } from "react-dom";
 
 
 type TSize = {
@@ -49,7 +48,6 @@ export type TFullPopoverProps = {
 	onMouseDown?: MouseEventHandler<Element>,
 	placement: PopoverPlacement,
 	align: PopoverAlign,
-	container?: TPortalProps['container'],
 	onRequestClose?: () => any,
 	hasArrow?: boolean,
 	theme: {
@@ -86,6 +84,14 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 	private _anchor?: Element;
 	private _popover: Element;
 	private _popoverSize: TSize;
+    private rootElement: Element;
+
+    constructor(props: TFullPopoverProps) {
+    	super(props);
+
+        this.rootElement = document.createElement('div');
+        document.body.appendChild(this.rootElement);
+	}
 
 	componentDidMount() {
 		if (this.props.isOpened) {
@@ -96,6 +102,10 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 			this.updatePosition();
 		}
 	}
+
+	componentWillUnmount() {
+        document.body.removeChild(this.rootElement);
+    }
 
 	componentWillReceiveProps(nextProps: TFullPopoverProps) {
 		if (nextProps.isOpened && nextProps.anchor) {
@@ -116,7 +126,6 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 
 	render() {
 		const {
-			container,
 			closeOnClickAway,
 			theme,
 			hasArrow,
@@ -180,19 +189,18 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 			);
 		}
 
-		return (
-			<EventListener onResize={this.onResize}
-			               onScroll={this.onScroll}
-			               target="window">
-				<Portal container={container}>
-					{child}
-				</Portal>
-			</EventListener>
+		child = (
+            <EventListener onResize={this.onResize}
+                onScroll={this.onScroll}
+                target="window">
+                {child}
+            </EventListener>
 		);
+		return createPortal(child, this.rootElement);
 	}
 
 	getPopoverSize(): TSize {
-		const popover: HTMLElement = ReactDOM.findDOMNode(this._popover);
+		const popover = ReactDOM.findDOMNode(this._popover) as HTMLElement;
 		return {
 			height: popover.offsetHeight,
 			width: popover.offsetWidth

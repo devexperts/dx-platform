@@ -19,7 +19,7 @@ export class BoundsUpdateDetector extends React.Component<TBoundsUpdateDetectorP
 	}
 
 	getSize() {
-		const element = ReactDOM.findDOMNode<HTMLElement>(this);
+		const element = ReactDOM.findDOMNode(this) as HTMLElement;
 		return {
 			width: element.offsetWidth,
 			height: element.offsetHeight
