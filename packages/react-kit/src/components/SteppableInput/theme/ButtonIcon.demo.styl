@@ -1,0 +1,43 @@
+@require './ButtonIcon.styl';
+
+.container {
+	box-sizing: border-box;
+	width: 17px;
+	height: @width;
+	text-align: center;
+	padding: 0;
+	color: #fff;
+	margin: 2px;
+	margin-left: 0;
+	
+	&:not(&_flat) {
+		border-width: 1px;
+		border-style: solid;
+		border-color: rgba(#fff, .08) rgba(#fff, .06) rgba(#fff, .04) rgba(#fff, .06);
+		background-color: #4a4540;
+		box-shadow: none;
+		
+		&:not(:disabled):hover {
+			background-color: #635e58;
+			border-color: rgba(#fff, .08) rgba(#fff, .06) rgba(#fff, .04) rgba(#fff, .06);
+			box-shadow: none;
+		}
+			
+		&:not(:disabled):active {
+			background-color: #423d3a;
+			border-color: rgba(#000, .1) rgba(#000, .14) rgba(#000, .18) rgba(#000, .14);
+			box-shadow: none;
+		}
+	}
+	
+	&:disabled,
+	&[disabled] {
+		background-color: silver;
+	}
+}
+	
+.icon {
+	width: 7px;
+	height: @width;
+	margin: 0 auto;
+}

@@ -14,8 +14,12 @@ export function createControlProps<TValue>(valueType: Requireable<TValue>) {
 export enum KeyCode {
 	Escape = 27,
 	Left = 37,
+	Up = 38,
+	Down = 40,
 	Right = 39,
 	Delete = 46,
+	Tab = 9,
+	Enter = 13,
 	Backspace = 8,
 	N0 = 48,
 	N1 = 49,
