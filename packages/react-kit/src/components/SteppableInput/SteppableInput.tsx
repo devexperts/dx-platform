@@ -25,9 +25,9 @@ export type TFullSteppableInputProps = TPickedInputProps & {
 	onIncrement?: Function,
 	onDecrement?: Function,
 	onClear?: Function,
-	IncrementIcon: React.ComponentClass<any> | React.StatelessComponent<any>,
-	DecrementIcon: React.ComponentClass<any> | React.StatelessComponent<any>,
-	ClearIcon: React.ComponentClass<any> | React.StatelessComponent<any>,
+	incrementIcon: React.ComponentClass<any> | React.StatelessComponent<any>,
+	decrementIcon: React.ComponentClass<any> | React.StatelessComponent<any>,
+	clearIcon: React.ComponentClass<any> | React.StatelessComponent<any>,
 	children?: any,
 	Input: React.ComponentClass<TInputProps> | React.SFC<TInputProps>,
 	ButtonIcon: React.ComponentClass<TButtonIconProps> | React.SFC<TButtonIconProps>,
@@ -67,9 +67,9 @@ class RawSteppableInput extends React.Component<TFullSteppableInputProps, TStepp
 			theme,
 			children,
 			tabIndex,
-			DecrementIcon,
-			IncrementIcon,
-			ClearIcon,
+			decrementIcon,
+			incrementIcon,
+			clearIcon,
 			onIncrement,
 			onDecrement,
 			onClear,
@@ -94,8 +94,8 @@ class RawSteppableInput extends React.Component<TFullSteppableInputProps, TStepp
 				   tabIndex={(isFocused || isDisabled ) ? -1 : (tabIndex || 0)}>
 				<div className={theme.inner}>
 					{children}
-					{onClear && ClearIcon && (
-						<ButtonIcon icon={<ClearIcon />}
+					{onClear && clearIcon && (
+						<ButtonIcon icon={clearIcon}
 									isFlat={true}
 									theme={theme.ClearButtonIcon}
 									onClick={this.onClearClick}
@@ -103,9 +103,9 @@ class RawSteppableInput extends React.Component<TFullSteppableInputProps, TStepp
 									isDisabled={isDisabled}
 									tabIndex={-1}/>
 					)}
-					{onDecrement && DecrementIcon && (
+					{onDecrement && decrementIcon && (
 						<Holdable onHold={onDecrement}>
-							<ButtonIcon icon={<DecrementIcon />}
+							<ButtonIcon icon={decrementIcon}
 										theme={theme.ButtonIcon}
 										onClick={this.onDecrementClick}
 										onMouseDown={this.onButtonMouseDown}
@@ -113,9 +113,9 @@ class RawSteppableInput extends React.Component<TFullSteppableInputProps, TStepp
 										tabIndex={-1}/>
 						</Holdable>
 					)}
-					{onIncrement && IncrementIcon && (
+					{onIncrement && incrementIcon && (
 						<Holdable onHold={onIncrement}>
-							<ButtonIcon icon={<IncrementIcon />}
+							<ButtonIcon icon={incrementIcon}
 										theme={theme.ButtonIcon}
 										onClick={this.onIncrementClick}
 										onMouseDown={this.onButtonMouseDown}

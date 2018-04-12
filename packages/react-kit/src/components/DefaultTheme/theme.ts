@@ -60,6 +60,9 @@ import * as steppableInput from '../SteppableInput/theme/SteppableInput.styl';
 import * as steppableInputInput from '../SteppableInput/theme/Input.styl';
 import * as steppableInputButtonIcon from '../SteppableInput/theme/ButtonIcon.styl';
 
+import { TIME_INPUT } from '../TimeInput/TimeInput';
+import * as timeInput from '../TimeInput/theme/TimeInput.styl';
+
 export default {
 	[INPUT]: inputTheme,
 	[BUTTON]: buttonTheme,
@@ -81,6 +84,7 @@ export default {
 		ButtonIcon: steppableInputButtonIcon,
 		ClearButtonIcon: steppableInputButtonIcon
 	},
+	[TIME_INPUT]: timeInput,
 	[PASSWORD_INPUT]: {
 		container: passwordInputTheme.container,
 		Input: {

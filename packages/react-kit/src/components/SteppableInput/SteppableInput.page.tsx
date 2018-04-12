@@ -21,9 +21,9 @@ class DemoInput extends React.Component<any, any> {
 								onClear={onClear}
 								error={error}
 								onFocus={this.onFocus}
-								ClearIcon={ClearIcon}
-								DecrementIcon={DecreaseIcon}
-								IncrementIcon={AddIcon}
+								clearIcon={ClearIcon}
+								decrementIcon={DecreaseIcon}
+								incrementIcon={AddIcon}
 								isDisabled={isDisabled} >
 					<input className={pageTheme.customInput}
 						   tabIndex={-1}
