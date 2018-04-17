@@ -1,9 +1,13 @@
 import * as React from 'react';
 import { Moment } from 'moment';
-import * as moment from 'moment';
-import Week from './Week';
 import { PURE } from '../../utils/pure';
+import { ObjectClean } from 'typelevel-ts';
+import { withTheme } from '../../utils/withTheme';
+import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { TCalendarTheme } from './Calendar.types';
+import { Week } from './Week';
+
+export const MONTH = Symbol('Month');
 
 export type TFullMonthProps = {
 	selectedDate: Moment,
@@ -21,7 +25,7 @@ export type TFullMonthProps = {
 }
 
 @PURE
-export default class Month extends React.Component<TFullMonthProps> {
+class RawMonth extends React.Component<TFullMonthProps> {
 
 	render() {
 		const {
@@ -75,3 +79,6 @@ export default class Month extends React.Component<TFullMonthProps> {
 		);
 	}
 }
+
+export type TMonthProps = ObjectClean<PartialKeys<TFullMonthProps, 'theme'>>;
+export const Month: React.ComponentClass<TMonthProps> = withTheme(MONTH)(RawMonth);

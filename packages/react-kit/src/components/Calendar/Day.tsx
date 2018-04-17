@@ -1,13 +1,18 @@
 import * as React from 'react';
 import * as classnames from 'classnames';
 import { PURE } from '../../utils/pure';
+import { ObjectClean } from 'typelevel-ts';
+import { withTheme } from '../../utils/withTheme';
+import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { TCalendarTheme } from './Calendar.types';
 import { Button } from '../Button/Button';
 import { Moment } from 'moment';
 
+export const DAY = Symbol('Day');
+
 export type TFullDayProps = {
 	value: Moment,
-	onChange: any,
+	onChange: (date: string) => void,
 	dayFormat: string,
 	isDisabled: boolean,
 	isCurrent: boolean,
@@ -16,7 +21,7 @@ export type TFullDayProps = {
 }
 
 @PURE
-export default class Day extends React.Component<TFullDayProps> {
+class RawDay extends React.Component<TFullDayProps> {
 	static defaultProps = {
 		isDisabled: false,
 		isCurrent: false,
@@ -57,3 +62,6 @@ export default class Day extends React.Component<TFullDayProps> {
 		this.props.onChange(this.props.value.format());
 	}
 }
+
+export type TDayProps = ObjectClean<PartialKeys<TFullDayProps, 'theme' | 'isDisabled' | 'isCurrent' | 'isSelected'>>;
+export const Day: React.ComponentClass<TDayProps> = withTheme(DAY)(RawDay);

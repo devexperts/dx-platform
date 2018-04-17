@@ -3,19 +3,24 @@ import { Moment } from 'moment';
 import {ButtonIcon} from '../ButtonIcon/ButtonIcon';
 import { PURE } from '../../utils/pure';
 import { TCalendarTheme } from './Calendar.types';
+import { ObjectClean } from 'typelevel-ts';
+import { withTheme } from '../../utils/withTheme';
+import { PartialKeys } from '@devexperts/utils/dist/object/object';
 
-export type TFullDayProps = {
+export const CALENDAR_HEADER = Symbol('CalendarHeader');
+
+export type TFullCalendarHeaderProps = {
 	value: Moment,
 	onChange: any,
 	locale: string,
 	headerDateFormat: string,
-	previousMonthIcon:  React.ComponentClass<any> | React.StatelessComponent<any>,,
-	nextMonthIcon:  React.ComponentClass<any> | React.StatelessComponent<any>,,
+	previousMonthIcon: React.ReactElement<any>,
+	nextMonthIcon: React.ReactElement<any>,
 	theme: TCalendarTheme
 }
 
 @PURE
-export default class CalendarHeader extends React.Component<TFullDayProps> {
+class RawCalendarHeader extends React.Component<TFullCalendarHeaderProps> {
 	render() {
 		const {
 			theme,
@@ -46,3 +51,5 @@ export default class CalendarHeader extends React.Component<TFullDayProps> {
 	}
 }
 
+export type TCalendarHeaderProps = ObjectClean<PartialKeys<TFullCalendarHeaderProps, 'theme'>>;
+export const CalendarHeader: React.ComponentClass<TCalendarHeaderProps> = withTheme(CALENDAR_HEADER)(RawCalendarHeader);

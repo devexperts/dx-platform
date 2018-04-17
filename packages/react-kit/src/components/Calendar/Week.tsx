@@ -1,9 +1,14 @@
 import * as React from 'react';
 import { Moment } from 'moment';
-import Day from './Day';
 import { PURE } from '../../utils/pure';
 import { TCalendarTheme } from './Calendar.types';
+import { ObjectClean } from 'typelevel-ts';
+import { withTheme } from '../../utils/withTheme';
+import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { isDateValid } from '../../utils/date';
+import { Day } from './Day';
+
+export const WEEK = Symbol('Week');
 
 export type TFullWeekProps = {
 	from: Moment,
@@ -14,13 +19,13 @@ export type TFullWeekProps = {
 	startOfMonth: Moment,
 	endOfMonth: Moment,
 	currentDate: Moment,
-	onChange: any,
+	onChange: (date: string) => void,
 	theme: TCalendarTheme,
 	Day: React.ComponentClass<any> | React.SFC<any>,
 }
 
 @PURE
-export default class Week extends React.Component<TFullWeekProps> {
+class RawWeek extends React.Component<TFullWeekProps> {
 	render() {
 		const {
 			theme,
@@ -35,7 +40,7 @@ export default class Week extends React.Component<TFullWeekProps> {
 			selectedDate,
 			Day
 		} = this.props;
-
+		
 		return (
 			<div className={theme.week}>
 				{Array.from(new Array(7).keys()).map(i => {
@@ -62,3 +67,6 @@ export default class Week extends React.Component<TFullWeekProps> {
 		);
 	}
 }
+
+export type TWeekProps = ObjectClean<PartialKeys<TFullWeekProps, 'theme'>>;
+export const Week: React.ComponentClass<TWeekProps> = withTheme(WEEK)(RawWeek);

@@ -1,15 +1,16 @@
 import * as React from 'react';
 import * as moment from 'moment';
-import Month from './Month';
-import Week from './Week';
-import Day from './Day';
 import { PURE } from '../../utils/pure';
-import {ObjectClean} from 'typelevel-ts';
-import {withTheme} from '../../utils/withTheme';
-import {PartialKeys} from '@devexperts/utils/dist/object/object';
-import CalendarHeader from './CalendarHeader';
+import { ObjectClean } from 'typelevel-ts';
+import { withTheme } from '../../utils/withTheme';
+import { PartialKeys } from '@devexperts/utils/dist/object/object';
+import { CalendarHeader, TCalendarHeaderProps } from './CalendarHeader';
 import { TCalendarTheme } from './Calendar.types';
 import { Moment } from 'moment';
+import { Month, TMonthProps } from './Month';
+import { Day, TDayProps } from './Day';
+import { TWeekProps, Week } from './Week';
+import { ComponentType } from 'react';
 
 export const CALENDAR = Symbol('Calendar');
 
@@ -18,18 +19,18 @@ export type TFullCalendarProps = {
 	headerDateFormat: string,
 	headerDayFormat: string,
 	dayFormat: string,
-	onChangeDisplayed: any,
-	onChange: any,
-	min: any, // ISO
-	max: any, // ISO
-	previousMonthIcon: string,
-	nextMonthIcon: string,
+	onChangeDisplayed: (displayedDate: Moment) => void,
+	onChange: (value: string) => void,
+	min: string, // ISO
+	max: string, // ISO
+	previousMonthIcon: React.ReactElement<any>,
+	nextMonthIcon: React.ReactElement<any>,
 	locale: string,
 	theme: TCalendarTheme,
 	CalendarHeader: any,
-	Month: any,
-	Week: any,
-	Day: any,
+	Month: ComponentType<TMonthProps>,
+	Week: ComponentType<TWeekProps>,
+	Day: ComponentType<TDayProps>,
 }
 
 @PURE
@@ -39,9 +40,8 @@ export default class RawCalendar extends React.Component<TFullCalendarProps> {
 		Month,
 		Week,
 		Day,
-		onChange: () => console.log('t'),
-		min: null,
-		max: null,
+		min: '',
+		max: '',
 		headerDateFormat: 'MMM YYYY',
 		dayFormat: 'D',
 		headerDayFormat: 'ddd',
@@ -113,5 +113,5 @@ export default class RawCalendar extends React.Component<TFullCalendarProps> {
 	}
 }
 
-export type TCalendarProps = ObjectClean<PartialKeys<TFullCalendarProps, 'theme'>>;
+export type TCalendarProps = ObjectClean<PartialKeys<TFullCalendarProps, 'theme' | 'CalendarHeader' | 'Month' | 'locale' | 'Week' | 'Day' | 'min' | 'max' | 'headerDateFormat' | 'headerDayFormat' | 'dayFormat'>>;
 export const Calendar: React.ComponentClass<TCalendarProps> = withTheme(CALENDAR)(RawCalendar);
