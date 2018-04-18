@@ -1,7 +1,7 @@
 import * as React from 'react';
+import * as ReactDOM from 'react-dom';
 import { PURE } from '../../utils/pure';
 import * as classnames from 'classnames';
-import * as Portal from 'react-overlays/lib/Portal';
 import * as PropTypes from 'prop-types';
 import { Component, MouseEventHandler, ReactNode } from 'react';
 import { ObjectClean } from 'typelevel-ts';
@@ -30,20 +30,24 @@ export type TRawPopupProps = {
 
 	shouldCloseOnClickAway?: boolean,
 	onRequestClose?: () => any,
-
-	container: ReactOverlays.Portal.TPortalProps['container']
-};
-
-export const POPUP_THEME_SHAPE_OBJECT = {
-	container: PropTypes.string,
-	header: PropTypes.string,
-	body: PropTypes.string,
-	footer: PropTypes.string
 };
 
 @PURE
 class RawPopup extends Component<TRawPopupProps> {
 	private backdrop: Element | null;
+
+	private rootElement: Element;
+
+	constructor(props: TRawPopupProps) {
+		super(props);
+
+		this.rootElement = document.createElement('div');
+		document.body.appendChild(this.rootElement);
+	}
+
+    componentWillUnmount() {
+        document.body.removeChild(this.rootElement);
+    }
 
 	render() {
 		const {
@@ -52,7 +56,6 @@ class RawPopup extends Component<TRawPopupProps> {
 			children,
 			footer,
 			isModal,
-			container,
 			isOpened,
 			shouldCloseOnClickAway,
 			onRequestClose
@@ -86,23 +89,7 @@ class RawPopup extends Component<TRawPopupProps> {
 			</RootClose>
 		);
 
-		// //if popup is modal then it should be closed only on click on backdrop
-		// //if popup isn't modal then backdrop has pointer-events: none and click should be detected by RootClose
-		// if (shouldCloseOnClickAway) {
-		// 	child = (
-		// 		<RootClose ignoreClick={isModal}>
-		// 			{child}
-		// 		</RootClose>
-		// 	);
-		// }
-
-		child = (
-			<Portal container={container}>
-				{child}
-			</Portal>
-		);
-
-		return child;
+		return ReactDOM.createPortal(child, this.rootElement);
 	}
 
 	private handleBackdropClick: MouseEventHandler<HTMLElement> = e => {

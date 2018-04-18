@@ -1,7 +1,6 @@
-import * as React from 'react';
 import {
     Children, createElement, ComponentClass, Component, Ref,
-    ComponentType
+    ComponentType, ReactElement
 } from 'react';
 import * as PropTypes from 'prop-types';
 import { ObjectOmit } from 'typelevel-ts';
@@ -62,7 +61,19 @@ export const withTheme = (name: string | symbol, defaultTheme: TTheme = {}) => {
 
 			render() {
 				const themr = this.context.themr && this.context.themr.theme && this.context.themr.theme[name];
-				const { withRef, theme, ...rest } = this.props;
+
+				/* BROKEN TYPES HERE
+				* the next 4 lines may be replaced by `const { withRef, theme, ...rest }= this.props;`
+				* but TS cannot get `rest` type from generic `this.props` type
+				* details:
+				* issue https://github.com/Microsoft/TypeScript/issues/10727
+				* PR https://github.com/Microsoft/TypeScript/pull/13288
+				*/
+				const { withRef, theme }= this.props;
+				const rest: any = Object.assign({}, this.props);
+                delete rest.withRef;
+                delete rest.theme;
+
 				const props = {
 					...rest,
 					ref: withRef,
@@ -79,7 +90,7 @@ export const withTheme = (name: string | symbol, defaultTheme: TTheme = {}) => {
 
 		Themed[THEME_CONFIG_KEY] = config;
 
-		return Themed;
+		return Themed as any; // type does not match because of `rest` issue above
 	}
 
 	return decorate;

@@ -7,7 +7,6 @@ import {
 } from '../Scrollable/Scrollable.const';
 
 import {PURE} from '../../utils/pure';
-import * as PropTypes from 'prop-types';
 import {ObjectClean} from 'typelevel-ts';
 import {PartialKeys} from '@devexperts/utils/dist/object/object';
 import {withTheme} from '../../utils/withTheme';

@@ -141,7 +141,7 @@ class RawInput extends React.Component<TFullInputProps, TInputState> {
 
 	onFocus = (e: React.FocusEvent<HTMLElement>) => {
 		if (!this.props.isDisabled && !this.state.isFocused && !this.isFocusingOnInput && this.input) {
-			const input = ReactDOM.findDOMNode<HTMLInputElement>(this.input);
+			const input = ReactDOM.findDOMNode(this.input) as HTMLElement;
 			if (input) {
 				this.isFocusingOnInput = true;
 				input.focus();
