@@ -4,7 +4,8 @@
     "lerna": "lerna",
     "lerna:update": "npm run lerna -- clean && npm run lerna -- bootstrap",
     "start": "lerna run --parallel watch",
-    "start:storybook": "cd packages/react-kit && npm run start"
+    "start:storybook": "cd packages/react-kit && npm run start",
+    "build": "cd packages/react-kit && npm run build"
   },
   "repository": {
     "type": "git",

@@ -1,0 +1,6 @@
+install:
+  - npm i
+  - npm run lerna bootstrap
+
+script:
+  - npm build
