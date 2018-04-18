@@ -40,6 +40,7 @@ class RawButton extends React.Component<TFullButtonProps> {
 	};
 
 	render() {
+		const a: string = 1;		
 		const {
 			theme,
 			style,
