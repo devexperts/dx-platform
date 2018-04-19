@@ -7,7 +7,8 @@
     "start:storybook": "cd packages/react-kit && npm run start",
     "build:kit": "cd packages/react-kit && npm run build",
     "build:tools": "cd packages/tools && npm run build",
-    "build": "npm run build:tools && npm run build:kit"
+    "build": "npm run build:tools && npm run build:kit",
+    "test": "cd packages/react-kit && npm run test"
   },
   "repository": {
     "type": "git",
