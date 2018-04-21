@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { ComponentClass, PureComponent, ReactElement } from 'react';
 import { ObjectClean } from 'typelevel-ts';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';

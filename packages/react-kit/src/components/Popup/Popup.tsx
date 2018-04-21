@@ -2,7 +2,6 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { PURE } from '../../utils/pure';
 import * as classnames from 'classnames';
-import * as PropTypes from 'prop-types';
 import { Component, MouseEventHandler, ReactNode } from 'react';
 import { ObjectClean } from 'typelevel-ts';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';

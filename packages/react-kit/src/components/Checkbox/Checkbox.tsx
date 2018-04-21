@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Component, EventHandler, ChangeEvent, ComponentClass, ChangeEventHandler } from 'react';
+import { Component, ComponentClass, ChangeEventHandler } from 'react';
 import { PURE } from '../../utils/pure';
 import * as classnames from 'classnames';
 
