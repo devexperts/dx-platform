@@ -1,12 +1,11 @@
 import * as React from 'react';
-import * as PropTypes from 'prop-types';
 import { PURE } from '../../utils/pure';
 import * as classnames from 'classnames';
 import Demo from '../demo/Demo';
 import { CheckboxTickIcon } from '../../icons/checkbox-tick-icon';
 
 import { Checkbox } from './Checkbox';
-import { storiesOf, action, knobs } from '@devexperts/tools/dist/utils/storybook';
+import { storiesOf, knobs } from '@devexperts/tools/dist/utils/storybook';
 
 import * as css from './Checkbox.page.styl';
 

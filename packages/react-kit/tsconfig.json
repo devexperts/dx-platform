@@ -1,8 +1,6 @@
 {
   "extends": "./node_modules/@devexperts/tools/settings/tsconfig.json",
   "compilerOptions": {
-	"noUnusedLocals": false,
-	"strictNullChecks": true,
 	"lib": [
 	  "es2016",
 	  "dom",

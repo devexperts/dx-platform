@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { Component, ReactElement } from 'react';
 import { PURE } from '../../utils/pure';
 import { shallowEqual } from '@devexperts/utils/dist/object';

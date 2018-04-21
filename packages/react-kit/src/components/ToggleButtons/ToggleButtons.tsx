@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {
     Component, ReactElement,
-    ComponentClass, ReactText
+    ComponentClass
 } from 'react';
 import { PURE } from '../../utils/pure';
 import * as classnames from 'classnames';

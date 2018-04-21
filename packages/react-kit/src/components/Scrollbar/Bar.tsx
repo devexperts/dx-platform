@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { PURE } from '../../utils/pure';
 import { EventListener, TEventListenerProps } from '../EventListener/EventListener';
-import * as PropTypes from 'prop-types';
 import {ObjectOmit} from 'typelevel-ts';
 
 export type TBarProps = {
