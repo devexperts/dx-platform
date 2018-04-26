@@ -66,6 +66,9 @@ import * as timeInput from '../TimeInput/theme/TimeInput.styl';
 import { CALENDAR } from '../Calendar/Calendar';
 import * as calendarTheme from '../Calendar/Calendar.styl';
 
+import { AUTOCOMPLETE } from '../Autocomplete/Autocomplete';
+import * as autocompleteTheme from '../Autocomplete/Autocomplete.styl';
+
 export default {
 	[INPUT]: inputTheme,
 	[BUTTON]: buttonTheme,
@@ -80,6 +83,7 @@ export default {
 	[HORIZONTAL_SCROLLBAR]: horScrollbar,
 	[VERTICAL_SCROLLBAR]: vertScrollbar,
 	[SCROLLABLE]: scrollableTheme,
+	[AUTOCOMPLETE]: autocompleteTheme,
 	[GRID]: gridTheme,
 	[BUTTON_ICON]: buttonIconTheme,
 	[STEPPABLE_INPUT]: {
