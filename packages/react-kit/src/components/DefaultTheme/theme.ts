@@ -76,6 +76,8 @@ import * as autocompleteTheme from '../Autocomplete/Autocomplete.styl';
 import { DATE_PICKER } from '../DatePicker/DatePicker';
 import * as datePickerTheme from '../DatePicker/DatePicker.styl';
 
+import { EXPANDABLE } from '../Expandable/Expandable';
+import * as expandableTheme from '../Expandable/Expandable.demo.styl';
 
 export default {
 	[INPUT]: inputTheme,
@@ -88,6 +90,7 @@ export default {
 	[DATE_PICKER]: datePickerTheme,
 	[MENU]: menuTheme,
 	[SELECTBOX]: selectBoxTheme,
+	[EXPANDABLE]: expandableTheme,
 	[TABLE]: tableTheme,
 	[HORIZONTAL_SCROLLBAR]: horScrollbar,
 	[VERTICAL_SCROLLBAR]: vertScrollbar,
