@@ -6,18 +6,9 @@ import * as moment from 'moment';
 import { DatePicker } from './DatePicker';
 import * as css from './DatePicker.page.styl';
 import { stateful } from '../Control/Control';
-
+import { CalendarIcon } from '../../icons/calendar-icon';
 
 const value = new Date().toISOString();
-
-class FakeIcon extends React.Component {
-	render() {
-		const { text } = this.props;
-		return (
-			<div>{text}</div>
-		)
-	}
-}
 
 const CustomLabelField = (props: any) => {
 	const onContextMenu = e => {
@@ -45,12 +36,12 @@ const Stateful = stateful()(DatePicker);
 storiesOf('DatePicker', module)
 	.add('default', () => (
 		<Demo>
-			<Stateful defaultValue={value} openCalendarIcon={<FakeIcon text="Op"/>}/>
+			<Stateful defaultValue={value} openCalendarIcon={CalendarIcon}/>
 		</Demo>
 	))
 	.add('custom label', () => (
 		<Demo>
-			<Stateful defaultValue={value} placeholder="Not selected" openCalendarIcon={<FakeIcon text="Op"/>}
+			<Stateful defaultValue={value} placeholder="Not selected" openCalendarIcon={CalendarIcon}
 			          fieldComponent={CustomLabelField} fieldDateFormat="MMMM YYYY"
 			          headerDateFormat="YYYY, MMMM"
 			          dayFormat="DD"/>

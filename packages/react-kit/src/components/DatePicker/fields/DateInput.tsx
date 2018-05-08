@@ -39,8 +39,6 @@ class RawDatePickerDateInput extends React.Component<TDatePickerDateInputFullPro
 		displayedDate: this.formatDateForView(this.props)
 	}
 
-	private _input: any;
-
 	componentWillReceiveProps(newProps: TDatePickerDateInputFullProps) {
 		this.setState({
 			displayedDate: this.formatDateForView(newProps)
@@ -58,19 +56,18 @@ class RawDatePickerDateInput extends React.Component<TDatePickerDateInputFullPro
 
 		const inputTheme = {
 			container: classnames(theme.field, {
-				[theme.field_invalid]: isInvalid
+				[theme.field_invalid as string]: isInvalid
 			})
 		};
 
 		return (
-			<Input ref={e => this._input = ReactDOM.findDOMNode(e)}
-			       value={this.state.displayedDate}
+			<Input value={this.state.displayedDate}
 			       theme={inputTheme}
 			       onClick={this.onClick}
 			       onValueChange={this.onChange}
 			       onBlur={this.onBlur}
 			       onKeyDown={this.onKeyDown}
-			       disabled={isDisabled}/>
+			       isDisabled={isDisabled}/>
 		);
 	}
 
@@ -86,24 +83,24 @@ class RawDatePickerDateInput extends React.Component<TDatePickerDateInputFullPro
 		}
 	}
 
-	private onClick = (e: any) => {
+	private onClick = () => {
 		const {isDatePickerOpened} = this.props;
 		if (!isDatePickerOpened) {
 			this.props.openDatePicker();
 		}
 	}
 
-	private onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+	private onChange = (value: string) => {
 		this.setState({
-			displayedDate: e.target.value
+			displayedDate: value
 		});
 	}
 
-	onBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+	private onBlur = (e: React.FocusEvent<HTMLInputElement>) => {
 		this.setNewValue(e.target.value);
 	}
 
-	onKeyDown = (e: any) => {
+	private onKeyDown = (e: any) => {
 		if (e.keyCode === KeyCode.Enter) {
 			this.setNewValue(e.target.value);
 			this.props.closeDatePicker();
