@@ -64,7 +64,11 @@ import { TIME_INPUT } from '../TimeInput/TimeInput';
 import * as timeInput from '../TimeInput/theme/TimeInput.styl';
 
 import { CALENDAR } from '../Calendar/Calendar';
-import * as calendarTheme from '../Calendar/Calendar.styl';
+import * as calendarTheme from '../Calendar/Calendar.demo.styl';
+
+import { DATE_INPUT } from '../DateInput/DateInput';
+import * as dateInputTheme from '../DateInput/theme/DateInput.demo.styl';
+import * as dateInputButtonIconTheme from '../DateInput/theme/ButtonIcon.demo.styl';
 
 import { AUTOCOMPLETE } from '../Autocomplete/Autocomplete';
 import * as autocompleteTheme from '../Autocomplete/Autocomplete.styl';
@@ -86,6 +90,11 @@ export default {
 	[AUTOCOMPLETE]: autocompleteTheme,
 	[GRID]: gridTheme,
 	[BUTTON_ICON]: buttonIconTheme,
+	[DATE_INPUT]: {
+		...dateInputTheme,
+		ButtonIcon: dateInputButtonIconTheme,
+		CalendarButtonIcon: dateInputButtonIconTheme
+	},
 	[STEPPABLE_INPUT]: {
 		...steppableInput,
 		Input: steppableInputInput,
