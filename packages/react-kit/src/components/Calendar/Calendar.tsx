@@ -19,7 +19,7 @@ export type TFullCalendarProps = {
 	headerDateFormat: string,
 	headerDayFormat: string,
 	dayFormat: string,
-	onChangeDisplayed: (displayedDate: Moment) => void,
+	onChangeDisplayed?: (displayedDate: Moment) => void,
 	onChange: (value: string) => void,
 	min: string, // ISO
 	max: string, // ISO

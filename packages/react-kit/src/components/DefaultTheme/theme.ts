@@ -73,6 +73,10 @@ import * as dateInputButtonIconTheme from '../DateInput/theme/ButtonIcon.demo.st
 import { AUTOCOMPLETE } from '../Autocomplete/Autocomplete';
 import * as autocompleteTheme from '../Autocomplete/Autocomplete.styl';
 
+import { DATE_PICKER } from '../DatePicker/DatePicker';
+import * as datePickerTheme from '../DatePicker/DatePicker.styl';
+
+
 export default {
 	[INPUT]: inputTheme,
 	[BUTTON]: buttonTheme,
@@ -81,6 +85,7 @@ export default {
 	[POPOVER]: popoverTheme,
 	[LIST]: listTheme,
 	[CALENDAR]: calendarTheme,
+	[DATE_PICKER]: datePickerTheme,
 	[MENU]: menuTheme,
 	[SELECTBOX]: selectBoxTheme,
 	[TABLE]: tableTheme,
