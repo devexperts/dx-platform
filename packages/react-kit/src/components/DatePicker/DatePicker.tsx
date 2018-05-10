@@ -189,5 +189,19 @@ class RawDatePicker extends React.Component<TFullDatePickerProps, TDatePickerSta
 	onIconClick = () => this.openDatePicker();
 }
 
-export type TDatePickerProps = ObjectClean<PartialKeys<TFullDatePickerProps, 'theme'>>;
+export type TDatePickerProps = ObjectClean<PartialKeys<TFullDatePickerProps,
+	| 'value'
+	| 'theme'
+	| 'min'
+	| 'max'
+	| 'fieldDateFormat'
+	| 'headerDateFormat'
+	| 'dayFormat'
+	| 'headerDayFormat'
+	| 'locale'
+	| 'calendarTheme'
+	| 'withField'
+	| 'fieldComponent'
+	| 'isDisabled'
+	| 'placeholder'>>;
 export const DatePicker: ComponentClass<TDatePickerProps> = withTheme(DATE_PICKER)(RawDatePicker);
