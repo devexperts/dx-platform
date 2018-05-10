@@ -43,9 +43,9 @@ class DateInputPage extends React.Component<any, TState> {
 						Controlled
 					</h1>
 					<DateInput onValueChange={this.onControlledChange}
-					           clearIcon={ClearIcon}
-					           incrementIcon={AddIcon}
-					           decrementIcon={DecreaseIcon}
+					           clearIcon={<ClearIcon />}
+					           incrementIcon={<AddIcon />}
+					           decrementIcon={<DecreaseIcon />}
 					           onClear={this.onControlledClear}
 					           error={error}
 					           value={this.state.value}/>
@@ -53,26 +53,26 @@ class DateInputPage extends React.Component<any, TState> {
 				</section>
 				<section>
 					<h1>without Calendar</h1>
-					<Stateful decrementIcon={DecreaseIcon}
+					<Stateful decrementIcon={<DecreaseIcon />}
 					          isDisabled={isDisabled}
-					          incrementIcon={AddIcon}
-					          clearIcon={ClearIcon}
+					          incrementIcon={<AddIcon />}
+					          clearIcon={<ClearIcon />}
 					          error={error}
 					          onValueChange={onChange}
 					          onClear={onClear}
 					          defaultValue={new Date()}/>
-					<Stateful decrementIcon={DecreaseIcon}
+					<Stateful decrementIcon={<DecreaseIcon />}
 					          isDisabled={isDisabled}
-					          incrementIcon={AddIcon}
-					          clearIcon={ClearIcon}
+					          incrementIcon={<AddIcon />}
+					          clearIcon={<ClearIcon />}
 					          onValueChange={onChange}
 					          error={error}
 					          onClear={onClear}
 					          defaultValue={new Date()}/>
-					<Stateful decrementIcon={DecreaseIcon}
+					<Stateful decrementIcon={<DecreaseIcon />}
 					          isDisabled={isDisabled}
-					          incrementIcon={AddIcon}
-					          clearIcon={ClearIcon}
+					          incrementIcon={<AddIcon />}
+					          clearIcon={<ClearIcon />}
 					          onValueChange={onChange}
 					          error={error}
 					          onClear={onClear}
@@ -80,22 +80,22 @@ class DateInputPage extends React.Component<any, TState> {
 				</section>
 				<section>
 					<h1>with calendar</h1>
-					<Stateful decrementIcon={DecreaseIcon}
-					          incrementIcon={AddIcon}
+					<Stateful decrementIcon={<DecreaseIcon />}
+					          incrementIcon={<AddIcon />}
 					          isDisabled={isDisabled}
 					          error={error}
-					          clearIcon={ClearIcon}
-					          calendarIcon={CalendarIcon}
+					          clearIcon={<ClearIcon />}
+					          calendarIcon={<CalendarIcon />}
 					          onValueChange={onChange}
 					          onClear={onClear}
 					          Calendar={Calendar}
 					          defaultValue={new Date()}/>
-					<Stateful decrementIcon={DecreaseIcon}
-					          incrementIcon={AddIcon}
+					<Stateful decrementIcon={<DecreaseIcon />}
+					          incrementIcon={<AddIcon />}
 					          isDisabled={isDisabled}
-					          clearIcon={ClearIcon}
+					          clearIcon={<ClearIcon />}
 					          error={error}
-					          calendarIcon={CalendarIcon}
+					          calendarIcon={<CalendarIcon />}
 					          onValueChange={onChange}
 					          onClear={onClear}
 					          Calendar={Calendar}

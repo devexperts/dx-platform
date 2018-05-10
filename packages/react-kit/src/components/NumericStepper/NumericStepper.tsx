@@ -15,10 +15,7 @@ export type TNumericStepperOwnProps = TSteppableInputProps & TControlProps<any> 
 	max: number,
 	parser?: any,
 	formatter?: any,
-	manualEdit: boolean,
-	incrementIcon: React.ComponentClass<any> | React.StatelessComponent<any>,
-	decrementIcon: React.ComponentClass<any> | React.StatelessComponent<any>,
-	clearIcon: React.ComponentClass<any> | React.StatelessComponent<any>,
+	manualEdit: boolean
 };
 
 export type TNumericStepperFullProps = TNumericStepperOwnProps & {

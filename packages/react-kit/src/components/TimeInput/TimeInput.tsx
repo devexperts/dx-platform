@@ -20,11 +20,7 @@ export enum ActiveSection {
 	Minutes
 }
 
-export type TTimeInputOwnProps = TSteppableInputProps & TControlProps<TTime | null> & {
-	incrementIcon: React.ComponentClass<any> | React.StatelessComponent<any>,
-	decrementIcon: React.ComponentClass<any> | React.StatelessComponent<any>,
-	clearIcon: React.ComponentClass<any> | React.StatelessComponent<any>,
-};
+export type TTimeInputOwnProps = TSteppableInputProps & TControlProps<TTime | null>;
 
 export type TTimeInputFullProps = TTimeInputOwnProps & {
 	SteppableInput: React.ComponentClass<TSteppableInputProps> | React.SFC<TSteppableInputProps>,

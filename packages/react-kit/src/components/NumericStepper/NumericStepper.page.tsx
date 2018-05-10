@@ -6,7 +6,6 @@ import { AddIcon } from '../../icons/add-icon';
 import { DecreaseIcon } from '../../icons/decrease-icon';
 import { SmallCrossIcon  as ClearIcon } from '../../icons/small-cross-icon';
 
-const log = action('change');
 const dollarFormatter = (value: string | number) => `$${value}`;
 const dollarParser = (input: string) => {
 	const newValue = parseInt(input.replace(/\D/g, ''), 10);
@@ -20,34 +19,34 @@ const StatefulStepper = stateful()(NumericStepper);
 storiesOf('NumericStepper', module)
 	.add('default', () => (
 		<Demo>
-			<StatefulStepper decrementIcon={DecreaseIcon}
-			                 incrementIcon={AddIcon}
+			<StatefulStepper decrementIcon={<DecreaseIcon />}
+			                 incrementIcon={<AddIcon />}
 			                 min={0}
 			                 step={1}
-			                 clearIcon={ClearIcon}
+			                 clearIcon={<ClearIcon />}
 			                 defaultValue={5}/>
 		</Demo>
 	))
 	.add('disabled', () => (
 		<Demo>
-			<StatefulStepper decrementIcon={DecreaseIcon}
-			                 incrementIcon={AddIcon}
+			<StatefulStepper decrementIcon={<DecreaseIcon />}
+			                 incrementIcon={<AddIcon />}
 			                 isDisabled={true}
 			                 min={0}
 			                 step={1}
-			                 clearIcon={ClearIcon}
+			                 clearIcon={<ClearIcon />}
 			                 defaultValue={5}/>
 		</Demo>
 	))
 	.add('with custom formatter', () => (
 		<Demo>
-			<StatefulStepper decrementIcon={DecreaseIcon}
-			                 incrementIcon={AddIcon}
+			<StatefulStepper decrementIcon={<DecreaseIcon />}
+			                 incrementIcon={<AddIcon />}
 			                 min={0}
 			                 step={1}
 			                 parser={dollarParser}
 			                 formatter={dollarFormatter}
-			                 clearIcon={ClearIcon}
+			                 clearIcon={<ClearIcon />}
 			                 defaultValue={5}/>
 		</Demo>
 	))

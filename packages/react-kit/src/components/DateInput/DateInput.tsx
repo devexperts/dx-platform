@@ -30,7 +30,7 @@ export type TCalendarProps = TDateValueProps & {
 type TDateInputOwnProps = TSteppableInputProps & TDateValueProps & {
 	min?: Date,
 	max?: Date,
-	calendarIcon?: React.ComponentClass<any> | React.StatelessComponent<any>,
+	calendarIcon?: React.ReactElement<any>,
 	onClear?: Function,
 	target?: Element
 	Calendar?: React.ComponentClass<TCalendarProps> | React.SFC<TCalendarProps>,

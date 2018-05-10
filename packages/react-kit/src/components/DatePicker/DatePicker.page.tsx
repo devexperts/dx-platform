@@ -6,9 +6,12 @@ import * as moment from 'moment';
 import { DatePicker } from './DatePicker';
 import * as css from './DatePicker.page.styl';
 import { stateful } from '../Control/Control';
-import { CalendarIcon } from '../../icons/calendar-icon';
-import { AddIcon } from '../../icons/add-icon';
-import { DecreaseIcon } from '../../icons/decrease-icon';
+
+
+import { MoveLeftIcon as PreviousMonthIcon } from '../../icons/move-left-icon';
+import { MoveRightIcon  as NextMonthIcon } from '../../icons/move-right-icon';
+import { OpenCalendarIcon } from '../../icons/open-calendar-icon';
+
 
 const value = new Date().toISOString();
 
@@ -38,15 +41,16 @@ const Stateful = stateful()(DatePicker);
 storiesOf('DatePicker', module)
 	.add('default', () => (
 		<Demo>
-			<Stateful defaultValue={value} openCalendarIcon={CalendarIcon} previousMonthIcon={DecreaseIcon}
-			          nextMonthIcon={AddIcon}/>
+			<Stateful defaultValue={value} openCalendarIcon={<OpenCalendarIcon/>}
+			          previousMonthIcon={<PreviousMonthIcon/>}
+			          nextMonthIcon={<NextMonthIcon/>} />
 		</Demo>
 	))
 	.add('custom label', () => (
 		<Demo>
-			<Stateful defaultValue={value} placeholder="Not selected" openCalendarIcon={CalendarIcon}
-			          previousMonthIcon={DecreaseIcon}
-			          nextMonthIcon={AddIcon}
+			<Stateful defaultValue={value} placeholder="Not selected" openCalendarIcon={<OpenCalendarIcon/>}
+			          previousMonthIcon={<PreviousMonthIcon/>}
+			          nextMonthIcon={<NextMonthIcon/>}
 			          fieldComponent={CustomLabelField} fieldDateFormat="MMMM YYYY"
 			          headerDateFormat="YYYY, MMMM"
 			          dayFormat="DD"/>

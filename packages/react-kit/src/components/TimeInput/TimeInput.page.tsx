@@ -24,11 +24,11 @@ class TimeInputPage extends React.Component<any, any> {
 			<Demo>
 				<input type="time" id="time"/>
 				<div>
-					<TimeInput decrementIcon={DecreaseIcon}
+					<TimeInput decrementIcon={<DecreaseIcon />}
 							   isDisabled={this.props.isDisabled}
-							   incrementIcon={AddIcon}
+							   incrementIcon={<AddIcon />}
 							   error={this.props.error}
-							   clearIcon={ClearIcon}
+							   clearIcon={<ClearIcon />}
 							   onValueChange={this.onTimeInputChange}
 							   value={this.state.value}/>
 					<Button onClick={this.onClearClick}>clear</Button>

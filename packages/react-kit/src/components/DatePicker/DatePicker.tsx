@@ -23,9 +23,9 @@ type TFullDatePickerProps = {
 	min: string,
 	max: string,
 
-	openCalendarIcon?: React.ComponentClass<any> | React.StatelessComponent<any>,
-	previousMonthIcon: TCalendarProps['previousMonthIcon'],
-	nextMonthIcon: TCalendarProps['nextMonthIcon'],
+	openCalendarIcon?: React.ReactElement<any>,
+	previousMonthIcon: React.ReactElement<any>,
+	nextMonthIcon: React.ReactElement<any>,
 
 	withField: boolean,
 	fieldComponent: any,
