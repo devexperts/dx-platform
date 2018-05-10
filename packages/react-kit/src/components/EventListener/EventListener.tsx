@@ -1,4 +1,4 @@
-import { Component, ReactElement } from 'react';
+import * as React from 'react';
 import { PURE } from '../../utils/pure';
 import { shallowEqual } from '@devexperts/utils/dist/object';
 
@@ -7,17 +7,17 @@ type Handlers = {
 };
 
 export type TEventListenerProps = {
-	[onEvent: string]: Function | boolean | string | object | undefined,
 	capture?: boolean,
 	target: EventTarget | string,
-	children: ReactElement<any>
+	children: React.ReactElement<any>,
+	[onEvent: string]: Function | boolean | string | object | undefined,
 };
 
 const ON_MARKER = 'on';
 const CAPTURE_MARKER = 'Capture';
 
 @PURE
-export class EventListener extends Component<TEventListenerProps> {
+export class EventListener extends React.Component<TEventListenerProps> {
 	componentDidMount() {
 		this.addListeners();
 	}
