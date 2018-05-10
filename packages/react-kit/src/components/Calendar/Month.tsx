@@ -5,7 +5,8 @@ import { ObjectClean } from 'typelevel-ts';
 import { withTheme } from '../../utils/withTheme';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { TCalendarTheme } from './Calendar.types';
-import { Week } from './Week';
+import { TWeekProps, Week } from './Week';
+import { TDayProps } from './Day';
 
 export const MONTH = Symbol('Month');
 
@@ -20,8 +21,8 @@ export type TFullMonthProps = {
 	headerDayFormat: string,
 	dayFormat: string,
 	theme: TCalendarTheme,
-	Day: React.ComponentClass<any> | React.SFC<any>,
-	Week: React.ComponentClass<any> | React.SFC<any>,
+	Day: React.ComponentType<TDayProps>,
+	Week: React.ComponentType<TWeekProps>,
 }
 
 @PURE
