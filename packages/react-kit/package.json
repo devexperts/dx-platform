@@ -37,7 +37,9 @@
     "prop-types": "^15.6.0",
     "react-css-themr": "^2.1.2",
     "tslib": "^1.9.0",
-    "typelevel-ts": "^0.2.2"
+    "typelevel-ts": "^0.2.2",
+    "hoist-non-react-statics": "^2.5.0",
+    "rxjs": "~5.5.2"
   },
   "peerDependencies": {
     "react": ">=16.3.1",
