@@ -1,7 +1,7 @@
 import Demo from '../demo/Demo';
 import {Button} from './Button';
 import * as React from 'react';
-import { storiesOf, action } from '@devexperts/tools/dist/utils/storybook';
+import { storiesOf } from '@devexperts/tools/dist/utils/storybook';
 
 const demoStyle = {
 	fontWeight: 'bold',

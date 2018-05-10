@@ -1,6 +1,6 @@
 import {
     Children, createElement, ComponentClass, Component, Ref,
-    ComponentType, ReactElement
+    ComponentType
 } from 'react';
 import * as PropTypes from 'prop-types';
 import { ObjectOmit } from 'typelevel-ts';
