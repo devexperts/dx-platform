@@ -50,7 +50,7 @@ export class RawScrollable extends React.Component<TFullScrollableProps> {
 		HorizontalScrollbar: BaseHorizontalScrollbar
 	};
 
-	static childContextTypes = CONTEXT_TYPES;
+	static childContextTypes: any = CONTEXT_TYPES;
 
 	_withHorizontalScrollbar = false;
 	_withVerticalScrollbar = false;
