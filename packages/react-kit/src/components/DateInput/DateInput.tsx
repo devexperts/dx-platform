@@ -19,7 +19,7 @@ import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { PURE } from '../../utils/pure';
 import { Popover } from '../Popover/Popover';
 
-type TDateValueProps = TControlProps<Date | null | undefined>;
+export type TDateValueProps = TControlProps<Date | null | undefined>;
 
 export type TCalendarProps = TDateValueProps & {
 	onMouseDown?: React.EventHandler<React.MouseEvent<Element>>,
@@ -27,7 +27,7 @@ export type TCalendarProps = TDateValueProps & {
 	max?: Date
 };
 
-type TDateInputOwnProps = TSteppableInputProps & TDateValueProps & {
+export type TDateInputOwnProps = TSteppableInputProps & TDateValueProps & {
 	min?: Date,
 	max?: Date,
 	calendarIcon?: React.ReactElement<any>,
@@ -36,12 +36,12 @@ type TDateInputOwnProps = TSteppableInputProps & TDateValueProps & {
 	Calendar?: React.ComponentClass<TCalendarProps> | React.SFC<TCalendarProps>,
 };
 
-type TDateDefaultProps = {
+export type TDateDefaultProps = {
 	SteppableInput: React.ComponentClass<TSteppableInputProps> | React.SFC<TSteppableInputProps>,
 	ButtonIcon: React.ComponentClass<TButtonIconProps>
 };
 
-type TDateInputInjectedProps = {
+export type TDateInputInjectedProps = {
 	theme: {
 		inner?: string,
 		inner_isFilled?: string,
@@ -54,7 +54,7 @@ type TDateInputInjectedProps = {
 	}
 };
 
-type TDateInputFullProps = TDateInputOwnProps & TDateInputInjectedProps & TDateDefaultProps;
+export type TDateInputFullProps = TDateInputOwnProps & TDateInputInjectedProps & TDateDefaultProps;
 
 enum ActiveSection {
 	Day,

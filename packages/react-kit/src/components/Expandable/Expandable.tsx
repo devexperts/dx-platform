@@ -10,7 +10,7 @@ import { TControlProps } from '../Control/Control';
 
 export const EXPANDABLE = Symbol('Expandable');
 
-type TFullExpandableProps = TControlProps<boolean | null> & {
+export type TFullExpandableProps = TControlProps<boolean | null> & {
 	theme: {
 		container?: string,
 		handler?: string,

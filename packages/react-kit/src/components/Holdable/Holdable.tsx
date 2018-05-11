@@ -4,7 +4,7 @@ import { ReactElement, EventHandler, MouseEvent, TouchEvent, ComponentClass } fr
 import { ObjectClean } from 'typelevel-ts/lib';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
 
-type THoldableChildProps = {
+export type THoldableChildProps = {
 	onMouseDown: EventHandler<MouseEvent<Element>>,
 	onMouseUp: EventHandler<MouseEvent<Element>>,
 	onMouseLeave: EventHandler<MouseEvent<Element>>
