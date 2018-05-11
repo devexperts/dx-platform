@@ -2,9 +2,11 @@
   "name": "@devexperts/platform",
   "scripts": {
     "lerna": "lerna",
+    "lerna:bootstrap": "npm run lerna -- bootstrap",
     "lerna:update": "npm run lerna -- clean && npm run lerna -- bootstrap",
     "start": "lerna run --parallel watch",
     "start:storybook": "cd packages/react-kit && npm run start",
+    "postinstall": "lerna bootstrap",
     "build:kit": "cd packages/react-kit && npm run build",
     "build:tools": "cd packages/tools && npm run build",
     "build": "npm run build:tools && npm run build:kit",
