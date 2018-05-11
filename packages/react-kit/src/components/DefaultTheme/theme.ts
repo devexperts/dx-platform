@@ -63,9 +63,6 @@ import * as steppableInputButtonIcon from '../SteppableInput/theme/ButtonIcon.st
 import { TIME_INPUT } from '../TimeInput/TimeInput';
 import * as timeInput from '../TimeInput/theme/TimeInput.styl';
 
-import { CALENDAR } from '../Calendar/Calendar';
-import * as calendarTheme from '../Calendar/Calendar.demo.styl';
-
 import { DATE_INPUT } from '../DateInput/DateInput';
 import * as dateInputTheme from '../DateInput/theme/DateInput.demo.styl';
 import * as dateInputButtonIconTheme from '../DateInput/theme/ButtonIcon.demo.styl';
@@ -83,7 +80,6 @@ export default {
 	[CHECKBOX]: checkboxTheme,
 	[POPOVER]: popoverTheme,
 	[LIST]: listTheme,
-	[CALENDAR]: calendarTheme,
 	[MENU]: menuTheme,
 	[SELECTBOX]: selectBoxTheme,
 	[EXPANDABLE]: expandableTheme,
