@@ -21,11 +21,6 @@ export type TNumericStepperOwnProps = TSteppableInputProps & TControlProps<any> 
 export type TNumericStepperFullProps = TNumericStepperOwnProps & {
 	SteppableInput: React.ComponentClass<TSteppableInputProps> | React.SFC<TSteppableInputProps>,
 	theme: {
-		inner?: string,
-		inner_isFilled?: string,
-		section?: string,
-		section_isActive?: string,
-		separator?: string,
 		SteppableInput?: TSteppableInputProps['theme'],
 		Input?: TInputProps['theme'],
 	}
@@ -37,6 +32,45 @@ type TNumericStepperState = {
 }
 
 class RawNumericStepper extends React.Component<TNumericStepperFullProps, TNumericStepperState> {
+	static propTypes: any = {
+		value(props: TNumericStepperFullProps) {
+			const { value, min, max } = props;
+			const type = typeof value;
+
+			if (type === 'number' && (value < min || value > max)) {
+				throw new Error(
+					`Value: ${value} should be greater than min: ${min} and lower than max: ${max}`
+				);
+			}
+		},
+		min(props: TNumericStepperFullProps) {
+			const {min, max} = props;
+			const type = typeof min;
+			if (type !== 'undefined') {
+				if (type !== 'number') {
+					throw new Error('Min should be a number');
+				} else {
+					if (min >= max) {
+						throw new Error('Invalid min value. Min value should be lower than max');
+					}
+				}
+			}
+		},
+		max(props: TNumericStepperFullProps) {
+			const {min, max} = props;
+			const type = typeof max;
+			if (type !== 'undefined') {
+				if (type !== 'number') {
+					throw new Error('Max should be a string or a number');
+				} else {
+					if (max <= min) {
+						throw new Error('Invalid Max value. Max value should be greater than min');
+					}
+				}
+			}
+		}
+	}
+
 	static defaultProps = {
 		step: 1,
 		manualEdit: true,
@@ -67,30 +101,40 @@ class RawNumericStepper extends React.Component<TNumericStepperFullProps, TNumer
 	}
 
 	render() {
-		const { displayedValue: value } = this.state;
+		const { displayedValue } = this.state;
 
 		const {
 			theme,
 			decrementIcon,
 			incrementIcon,
+			value,
 			isDisabled,
 			clearIcon,
-			error,
+			min,
+			max,
 			SteppableInput
 		} = this.props;
 
+        const hasError = isNaN(value) || value < min || value > max;
+
 		return (
 			<SteppableInput isDisabled={isDisabled}
-							error={error}
-							theme={theme.SteppableInput}
-							onDecrement={this.onDecrement}
-							onIncrement={this.onIncrement}
-							decrementIcon={decrementIcon}
-							incrementIcon={incrementIcon}
-							clearIcon={clearIcon}>
-				<Input type="text" onKeyDown={this.onKeyDown} onFocus={this.onFocus} onWheel={this.onWheel}
-				       theme={theme.Input} isDisabled={isDisabled} value={`${value}`} onBlur={this.onBlur}
-				       onValueChange={() => console.log('test')}/>
+			                error={hasError}
+			                theme={theme.SteppableInput}
+			                onDecrement={this.onDecrement}
+			                onIncrement={this.onIncrement}
+			                decrementIcon={decrementIcon}
+			                incrementIcon={incrementIcon}
+			                clearIcon={clearIcon}>
+				<Input type="text"
+				       onKeyDown={this.onKeyDown}
+				       onFocus={this.onFocus}
+				       onWheel={this.onWheel}
+				       tabIndex={-1}
+				       error={hasError}
+				       theme={theme.Input} isDisabled={isDisabled} value={`${displayedValue}`}
+				       onBlur={this.onBlur}
+				       onValueChange={this.onInputChange}/>
 			</SteppableInput>
 		);
 	}
@@ -103,6 +147,17 @@ class RawNumericStepper extends React.Component<TNumericStepperFullProps, TNumer
 			case KeyCode.Down:
 				this.decrease();
 				break;
+		}
+	}
+
+	private onInputChange = (value: string) => {
+		if (!this.props.manualEdit) {
+			return;
+		}
+		if (this.state.isFocused) {
+			this.setState({
+				displayedValue: value
+			});
 		}
 	}
 
@@ -156,7 +211,7 @@ class RawNumericStepper extends React.Component<TNumericStepperFullProps, TNumer
 	}
 
 	private onBlur = (event: React.FocusEvent<HTMLInputElement>) => {
-		const {manualEdit, onValueChange} = this.props;
+		const { manualEdit, onValueChange } = this.props;
 		if (!manualEdit) {
 			return;
 		}
@@ -203,5 +258,5 @@ class RawNumericStepper extends React.Component<TNumericStepperFullProps, TNumer
 
 }
 
-export type TNumericStepperProps = ObjectClean<PartialKeys<TNumericStepperFullProps, 'theme' | 'SteppableInput' | 'step' | 'max' | 'min' | 'manualEdit' >>;
+export type TNumericStepperProps = ObjectClean<PartialKeys<TNumericStepperFullProps, 'theme' | 'SteppableInput' | 'step' | 'max' | 'min' | 'manualEdit'>>;
 export const NumericStepper: ComponentClass<TNumericStepperProps> = withTheme(NUMERIC_STEPPER)(RawNumericStepper);

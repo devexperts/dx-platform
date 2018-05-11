@@ -21,7 +21,7 @@ storiesOf('NumericStepper', module)
 		<Demo>
 			<StatefulStepper decrementIcon={<DecreaseIcon />}
 			                 incrementIcon={<AddIcon />}
-			                 min={0}
+			                 min={-10}
 			                 step={1}
 			                 clearIcon={<ClearIcon />}
 			                 defaultValue={5}/>
