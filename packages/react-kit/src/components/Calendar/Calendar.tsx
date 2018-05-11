@@ -4,7 +4,7 @@ import { PURE } from '../../utils/pure';
 import { ObjectClean } from 'typelevel-ts';
 import { withTheme } from '../../utils/withTheme';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
-import { CalendarHeader, TCalendarHeaderProps } from './CalendarHeader';
+import { CalendarHeader } from './CalendarHeader';
 import { TCalendarTheme } from './Calendar.types';
 import { Moment } from 'moment';
 import { Month, TMonthProps } from './Month';

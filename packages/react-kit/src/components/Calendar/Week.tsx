@@ -6,7 +6,6 @@ import { ObjectClean } from 'typelevel-ts';
 import { withTheme } from '../../utils/withTheme';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { isDateValid } from '../../utils/date';
-import { Day } from './Day';
 
 export const WEEK = Symbol('Week');
 

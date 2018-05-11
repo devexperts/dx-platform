@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as classnames from 'classnames';
 import { ExpandableHandler, TExpandableHandlerProps } from './ExpandableHandler';
 import { PURE } from '../../utils/pure';
-import { ComponentClass, ReactElement } from 'react';
+import { ComponentClass } from 'react';
 import { withTheme } from '../../utils/withTheme';
 import { ObjectClean } from 'typelevel-ts';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';

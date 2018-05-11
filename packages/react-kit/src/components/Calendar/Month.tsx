@@ -5,7 +5,7 @@ import { ObjectClean } from 'typelevel-ts';
 import { withTheme } from '../../utils/withTheme';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { TCalendarTheme } from './Calendar.types';
-import { TWeekProps, Week } from './Week';
+import { TWeekProps } from './Week';
 import { TDayProps } from './Day';
 
 export const MONTH = Symbol('Month');

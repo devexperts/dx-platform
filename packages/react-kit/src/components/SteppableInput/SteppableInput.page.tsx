@@ -5,7 +5,7 @@ import * as pageTheme from './theme/SteppableInput.page.styl';
 import { AddIcon } from '../../icons/add-icon';
 import { DecreaseIcon } from '../../icons/decrease-icon';
 import { SmallCrossIcon as ClearIcon } from '../../icons/small-cross-icon';
-import { SteppableInput, TSteppableInputProps } from './SteppableInput';
+import { SteppableInput } from './SteppableInput';
 import { Demo } from '../demo/Demo';
 
 class DemoInput extends React.Component<any, any> {

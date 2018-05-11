@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { withTheme } from '../../utils/withTheme';
-import { ComponentClass, ReactText, SFC } from 'react';
+import { ComponentClass, SFC } from 'react';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { ObjectClean } from 'typelevel-ts';
-import { Menu, MenuItem, TMenuItemProps, TMenuProps } from '../Menu/Menu';
+import { Menu, TMenuProps } from '../Menu/Menu';
 import { Input, TInputProps } from '../input/Input';
 import { Popover, TPopoverProps } from '../Popover/Popover';
 import { Pure } from '../Pure/Pure';
@@ -42,7 +42,7 @@ class RawAutocomplete extends React.Component<TFullAutocompleteProps> {
 	};
 
 	private input: any;
-	private isFocused = false;
+	isFocused = false;
 
 	render() {
 		const {
@@ -101,7 +101,7 @@ class RawAutocomplete extends React.Component<TFullAutocompleteProps> {
 		//keyDown may be fired from menu, don't call props handler
 		if ((e.keyCode || e.which) === KeyCode.Tab) {
 			//loose focus on tab press
-			//this._isFocused = false;
+			this.isFocused = false;
 			this.setState({
 				isOpened: false
 			});

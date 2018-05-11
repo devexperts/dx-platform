@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { storiesOf, action } from '@devexperts/tools/dist/utils/storybook';
+import { storiesOf } from '@devexperts/tools/dist/utils/storybook';
 import { Demo } from '../demo/Demo';
 import { NumericStepper } from './NumericStepper';
 import { AddIcon } from '../../icons/add-icon';

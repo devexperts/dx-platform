@@ -1,5 +1,4 @@
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
 import * as moment from 'moment';
 import * as classnames from 'classnames';
 import { Input, TInputProps } from '../../input/Input';
