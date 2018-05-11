@@ -27,7 +27,6 @@ const footer = (
 );
 
 const Stateful = stateful()(Selectbox);
-const container = document.getElementById('root')
 
 @PURE
 class PopupPage extends React.Component {

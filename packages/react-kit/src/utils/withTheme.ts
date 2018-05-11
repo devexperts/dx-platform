@@ -1,7 +1,9 @@
-import {
-    Children, createElement, ComponentClass, Component, Ref,
-    ComponentType, ReactElement
-} from 'react';
+import * as React from 'react';
+
+// import {
+//     Children, createElement, ComponentClass, Component, Ref,
+//     ComponentType
+// } from 'react';
 import * as PropTypes from 'prop-types';
 import { ObjectOmit } from 'typelevel-ts';
 import {PartialKeys} from '@devexperts/utils/dist/object/object';
@@ -22,16 +24,16 @@ type TResultProps<P extends TTargetProps> = ObjectOmit<P, 'theme'> & {
 };
 
 type TWithRef<P extends TTargetProps, C> = TResultProps<P> & {
-	withRef?: Ref<C>
+	withRef?: React.Ref<C>
 };
 
 type OmitTheme<P extends TTargetProps> = PartialKeys<P, 'theme'>;
-type TResult<P extends TTargetProps, C extends ComponentType<P>> = ComponentClass<OmitTheme<P & {
-	withRef?: Ref<any>
+type TResult<P extends TTargetProps, C extends React.ComponentType<P>> = React.ComponentClass<OmitTheme<P & {
+	withRef?: React.Ref<any>
 }>>;
 
 //shortcuts
-type CT<P> = ComponentType<P>;
+type CT<P> = React.ComponentType<P>;
 
 export const withTheme = (name: string | symbol, defaultTheme: TTheme = {}) => {
 	function decorate<P extends TTargetProps>(Target: CT<P>): TResult<P, CT<P>> {
@@ -48,7 +50,7 @@ export const withTheme = (name: string | symbol, defaultTheme: TTheme = {}) => {
 			theme: defaultTheme
 		};
 
-		class Themed extends Component<TWithRef<P, ComponentClass<TResultProps<P>>>, never> {
+		class Themed extends React.Component<TWithRef<P, React.ComponentClass<TResultProps<P>>>, never> {
 			static displayName = `Themed(${Target.displayName || Target.name})`;
 
 			static contextTypes = {
@@ -84,7 +86,7 @@ export const withTheme = (name: string | symbol, defaultTheme: TTheme = {}) => {
 						(theme || {}) as TTheme
 					)
 				};
-				return createElement(Target as any, props);
+				return React.createElement(Target as any, props);
 			}
 		}
 
@@ -191,13 +193,13 @@ export type TThemeProviderProps = {
 	}
 };
 
-export class ThemeProvider extends Component<TThemeProviderProps> {
+export class ThemeProvider extends React.Component<TThemeProviderProps> {
 	static childContextTypes = {
 		[THEME_CONTEXT_KEY.toString()]: PropTypes.object
 	};
 
 	render() {
-		return Children.only(this.props.children);
+		return React.Children.only(this.props.children);
 	}
 
 	getChildContext() {

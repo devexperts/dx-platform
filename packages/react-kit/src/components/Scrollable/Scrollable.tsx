@@ -14,7 +14,6 @@ import {HorizontalScrollbar as BaseHorizontalScrollbar, THorizontalScrollbarProp
 import {VerticalScrollbar as BaseVerticalScrollbar, TVerticalScrollbarProps} from '../Scrollbar/VerticalScrollbar';
 
 import getScrollbarSize from '../Scrollbar/Scrollbar.util';
-import * as PropTypes from 'prop-types';
 import {withTheme} from '../../utils/withTheme';
 import {ObjectClean} from 'typelevel-ts';
 import {PartialKeys} from '@devexperts/utils/dist/object/object';
@@ -51,7 +50,7 @@ export class RawScrollable extends React.Component<TFullScrollableProps> {
 		HorizontalScrollbar: BaseHorizontalScrollbar
 	};
 
-	static childContextTypes = CONTEXT_TYPES;
+	static childContextTypes: any = CONTEXT_TYPES;
 
 	_withHorizontalScrollbar = false;
 	_withVerticalScrollbar = false;
