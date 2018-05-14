@@ -5,7 +5,7 @@
   "main": "lib",
   "module": "src",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "dx-tools build-lib src dist --failOnError",
     "build": "dx-tools build-lib src dist",
     "clean": "dx-tools clean dist",
     "prepare": "npm run clean && npm run build",
@@ -37,7 +37,9 @@
     "prop-types": "^15.6.0",
     "react-css-themr": "^2.1.2",
     "tslib": "^1.9.0",
-    "typelevel-ts": "^0.2.2"
+    "typelevel-ts": "^0.2.2",
+    "hoist-non-react-statics": "^2.5.0",
+    "rxjs": "~5.5.2"
   },
   "peerDependencies": {
     "react": ">=16.3.1",
