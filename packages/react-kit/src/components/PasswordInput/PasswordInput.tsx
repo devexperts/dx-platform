@@ -5,6 +5,7 @@ import {Input as BaseInput, TInputProps} from '../input/Input';
 import {ObjectClean} from 'typelevel-ts';
 import {withTheme} from '../../utils/withTheme';
 import {PartialKeys} from '@devexperts/utils/dist/object/object';
+import { ComponentType } from 'react';
 
 export const PASSWORD_INPUT = Symbol('PasswordInput');
 
@@ -17,8 +18,8 @@ export type TFullPasswordInputProps = TInputProps & {
 	Button?: React.ComponentClass<TButtonIconProps>,
     Input?: React.ComponentClass<TInputProps>,
 	isDisabled?: boolean,
-	IconShow: React.ComponentClass<any> | React.StatelessComponent<any>,
-	IconHide: React.ComponentClass<any> | React.StatelessComponent<any>,
+	IconShow: ComponentType<any>,
+	IconHide: ComponentType<any>,
     isRevealed: boolean,
 	onReveal: (isRevealed: boolean) => void
 };
