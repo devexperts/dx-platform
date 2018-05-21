@@ -8,16 +8,16 @@ import * as classnames from 'classnames';
 
 export type TFullSelectboxAnchorProps = ObjectOmit<TButtonProps, 'theme'> & {
 	theme: TFullButtonProps['theme'] & {
-		text?: string,
-		content?: string,
-		wrapperCaret?: string,
-		caret?: string,
-		container_isOpened?: string
-	},
-	isOpened?: boolean,
-	caretIcon?: ReactNode,
-	value?: string | number,
-	valueText?: ReactNode
+		text?: string;
+		content?: string;
+		wrapperCaret?: string;
+		caret?: string;
+		container_isOpened?: string;
+	};
+	isOpened?: boolean;
+	caretIcon?: ReactNode;
+	value?: string | number;
+	valueText?: ReactNode;
 };
 
 @PURE
@@ -37,23 +37,20 @@ class RawSelectboxAnchor extends React.Component<TFullSelectboxAnchorProps> {
 
 		const buttonTheme = {
 			container: classnames(theme.container, {
-				[theme.container_isOpened as string]: isOpened
-			})
+				[theme.container_isOpened as string]: isOpened,
+			}),
 		};
 
 		return (
-			<Button onClick={onClick}
-			        isDisabled={isDisabled}
-			        isLoading={isLoading}
-			        isPrimary={isPrimary}
-			        theme={buttonTheme}>
+			<Button
+				onClick={onClick}
+				isDisabled={isDisabled}
+				isLoading={isLoading}
+				isPrimary={isPrimary}
+				theme={buttonTheme}>
 				<div className={theme.content}>
-					<div className={theme.text}>
-						{valueText}
-					</div>
-					<div className={theme.caret}>
-                        {caretIcon}
-					</div>
+					<div className={theme.text}>{valueText}</div>
+					<div className={theme.caret}>{caretIcon}</div>
 				</div>
 				{children}
 			</Button>

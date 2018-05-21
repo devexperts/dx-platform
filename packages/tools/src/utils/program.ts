@@ -1,6 +1,6 @@
 import { TOOLS_PKG } from '../config/env';
 
-import {Command} from 'commander';
+import { Command } from 'commander';
 import { Scripts } from '../scripts/constants';
 
 const registeredPrograms = {};
@@ -15,5 +15,5 @@ const createProgramAndRegister = (script: Scripts) => {
 };
 
 export const getProgramForScript = (script: Scripts) => {
-	return registeredPrograms[script] ? registeredPrograms[script] : createProgramAndRegister(script)
+	return registeredPrograms[script] ? registeredPrograms[script] : createProgramAndRegister(script);
 };

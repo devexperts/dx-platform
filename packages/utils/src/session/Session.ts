@@ -9,7 +9,7 @@ const EVENT_KEY = '__SESSION_EVENT__';
  * @enum
  */
 export const E_SESSION = {
-	REQUEST: 'E_SESSION:REQUEST'
+	REQUEST: 'E_SESSION:REQUEST',
 };
 
 /**
@@ -36,9 +36,7 @@ export class Session extends Emitter {
 		super();
 		if (typeof window !== 'undefined') {
 			window.addEventListener('storage', this._onStorage);
-			this['_using']([
-				() => window.removeEventListener('storage', this._onStorage)
-			]);
+			this['_using']([() => window.removeEventListener('storage', this._onStorage)]);
 		}
 	}
 
@@ -52,7 +50,7 @@ export class Session extends Emitter {
 		const data = JSON.stringify({
 			receiver_sid: sid,
 			messageType,
-			payload
+			payload,
 		});
 		if (typeof window !== 'undefined') {
 			window.localStorage.setItem(EVENT_KEY, data);
@@ -73,14 +71,13 @@ export class Session extends Emitter {
 				if (event.newValue) {
 					value = JSON.parse(event.newValue);
 				}
-			} catch (e) {
-			}
+			} catch (e) {}
 			if (value && value.receiver_sid === id) {
 				this._emit(E_SESSION.REQUEST, value.messageType, value.payload);
 				this._emit(value.messageType, value.payload);
 			}
 		}
-	}
+	};
 }
 
 export default new Session();

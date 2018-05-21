@@ -3,14 +3,14 @@ import { PURE } from '../../utils/pure';
 import { shallowEqual } from '@devexperts/utils/dist/object';
 
 type Handlers = {
-	[onEvent: string]: Function
+	[onEvent: string]: Function;
 };
 
 export type TEventListenerProps = {
-	capture?: boolean,
-	target: EventTarget | string,
-	children: React.ReactElement<any>,
-	[onEvent: string]: Function | boolean | string | object | undefined,
+	capture?: boolean;
+	target: EventTarget | string;
+	children: React.ReactElement<any>;
+	[onEvent: string]: Function | boolean | string | object | undefined;
 };
 
 const ON_MARKER = 'on';
@@ -92,7 +92,7 @@ function getEventName(rawEventName: string, capture?: boolean): string {
 }
 
 function shouldResetListeners(prevProps: TEventListenerProps, nextProps: TEventListenerProps): boolean {
-	const {children: prevChildren, ...oldProps} = prevProps;
-	const {children: nextChildren, ...newProps} = nextProps;
+	const { children: prevChildren, ...oldProps } = prevProps;
+	const { children: nextChildren, ...newProps } = nextProps;
 	return !shallowEqual(oldProps, newProps);
 }

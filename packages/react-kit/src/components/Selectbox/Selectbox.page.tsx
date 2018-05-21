@@ -12,32 +12,30 @@ import { SmallDropDownArrowIcon } from '../../icons/small-dropdown-arrow-icon';
 import { stateful } from '../Control/Control';
 
 import * as selectoxPageCss from './Selectbox.page.styl';
-import {ObjectClean} from 'typelevel-ts';
-import {PartialKeys} from '@devexperts/utils/dist/object/object';
+import { ObjectClean } from 'typelevel-ts';
+import { PartialKeys } from '@devexperts/utils/dist/object/object';
 const wideSelectboxTheme = {
-	container__anchor: selectoxPageCss.container__anchor
+	container__anchor: selectoxPageCss.container__anchor,
 };
 
 class DemoSelectboxAnchor extends React.Component<TFullSelectboxAnchorProps> {
 	render() {
 		const newProps = {
 			...this.props,
-			isPrimary: true
+			isPrimary: true,
 		};
-		return <SelectboxAnchor {...newProps}/>;
+		return <SelectboxAnchor {...newProps} />;
 	}
 }
 
-class DemoSelectbox extends React.Component<ObjectClean<PartialKeys<TFullSelectboxProps,
-    | 'theme'
-    | 'Anchor'
-    | 'Menu'
-    | 'Popover'>>> {
+class DemoSelectbox extends React.Component<
+	ObjectClean<PartialKeys<TFullSelectboxProps, 'theme' | 'Anchor' | 'Menu' | 'Popover'>>
+> {
 	render() {
 		const newProps = {
 			...this.props,
 			AnchorComponent: DemoSelectboxAnchor,
-			caretIcon: <SmallDropDownArrowIcon/>,
+			caretIcon: <SmallDropDownArrowIcon />,
 		};
 
 		return <Selectbox {...newProps} />;
@@ -47,51 +45,52 @@ class DemoSelectbox extends React.Component<ObjectClean<PartialKeys<TFullSelectb
 const Stateful = stateful()(DemoSelectbox);
 
 type TPageState = {
-	hero: string
-}
+	hero: string;
+};
 
 @PURE
 class SelectboxPage extends React.Component<{}, TPageState> {
 	state = {
-		hero: ''
-	}
+		hero: '',
+	};
 
 	render() {
 		return (
 			<Demo>
 				<div>
-					<Stateful placeholder="Choose your hero"
-					          selectedIcon={<ListItemTickIcon/>}
-					          onValueChange={this.onHeroChange}
-					          caretIcon={<SmallDropDownArrowIcon/>}>
+					<Stateful
+						placeholder="Choose your hero"
+						selectedIcon={<ListItemTickIcon />}
+						onValueChange={this.onHeroChange}
+						caretIcon={<SmallDropDownArrowIcon />}>
 						<MenuItem value="superman">Superman</MenuItem>
 						<MenuItem value="batman">Batman</MenuItem>
 						<MenuItem value="flash">Flash</MenuItem>
 					</Stateful>
-					<DemoSelectbox placeholder="Controlled by left"
-					               value={this.state.hero}
-								   theme={{}}
-								   selectedIcon={<ListItemTickIcon/>}
-					               onValueChange={this.onHeroChange}
-								   caretIcon={<SmallDropDownArrowIcon/>}>
+					<DemoSelectbox
+						placeholder="Controlled by left"
+						value={this.state.hero}
+						theme={{}}
+						selectedIcon={<ListItemTickIcon />}
+						onValueChange={this.onHeroChange}
+						caretIcon={<SmallDropDownArrowIcon />}>
 						<MenuItem value="superman">Superman</MenuItem>
 						<MenuItem value="batman">Batman</MenuItem>
 						<MenuItem value="flash">Flash</MenuItem>
 					</DemoSelectbox>
-					<Stateful placeholder="Loading"
-					          isDisabled={true}
-					          isLoading={true}>
+					<Stateful placeholder="Loading" isDisabled={true} isLoading={true}>
 						<MenuItem value="dummy">Dummy</MenuItem>
 					</Stateful>
 					<Button onClick={this.onResetClick}>Reset</Button>
 				</div>
 				<section>
 					Sync width
-					<Stateful placeholder="Choose your hero"
-					          shouldSyncWidth={true}
-					          theme={wideSelectboxTheme}
-							  selectedIcon={<ListItemTickIcon/>}
-							  caretIcon={<SmallDropDownArrowIcon/>}>
+					<Stateful
+						placeholder="Choose your hero"
+						shouldSyncWidth={true}
+						theme={wideSelectboxTheme}
+						selectedIcon={<ListItemTickIcon />}
+						caretIcon={<SmallDropDownArrowIcon />}>
 						<MenuItem value="superman">Superman</MenuItem>
 						<MenuItem value="batman">Batman</MenuItem>
 						<MenuItem value="flash">Flash</MenuItem>
@@ -103,15 +102,15 @@ class SelectboxPage extends React.Component<{}, TPageState> {
 
 	onHeroChange = (hero: string) => {
 		this.setState({
-			hero
+			hero,
 		});
-	}
+	};
 
 	onResetClick = () => {
 		this.setState({
-			hero: ''
+			hero: '',
 		});
-	}
+	};
 }
 
-storiesOf('Selectbox', module).add('default', () => <SelectboxPage/>);
+storiesOf('Selectbox', module).add('default', () => <SelectboxPage />);

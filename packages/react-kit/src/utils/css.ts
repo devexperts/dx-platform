@@ -13,7 +13,7 @@ const CONTEXT = {};
  */
 export function CSS(cssModule = {}): any {
 	console.warn('CSS decorator is deprecated. Use react-css-themr');
-	return function (target: any): any {
+	return function(target: any): any {
 		//noinspection JSUnresolvedVariable
 		const oldComponentWillMount = target.prototype.componentWillMount;
 		//noinspection JSUnresolvedVariable
@@ -27,7 +27,7 @@ export function CSS(cssModule = {}): any {
 
 		//mix parent with current css module and set on current prototype
 		//prototype assignment is not chained - so we'll set only on current prototype
-		const original = target.prototype[CSS_DECORATOR_STORAGE] = concatObjectValues(parentCss, cssModule);
+		const original = (target.prototype[CSS_DECORATOR_STORAGE] = concatObjectValues(parentCss, cssModule));
 
 		//create lifecycle methods
 
@@ -126,7 +126,7 @@ function composeContext<F extends Function>(method: F, context: {}) {
 	if (method[CSS_DECORATOR_OVERRIDE_MARKER]) {
 		//call in special context to differ from usual call
 		return Object.assign(CONTEXT, {
-			context
+			context,
 		});
 	}
 	return context;

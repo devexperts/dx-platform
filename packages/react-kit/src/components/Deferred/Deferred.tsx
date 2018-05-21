@@ -3,22 +3,22 @@ import { ObjectClean } from 'typelevel-ts';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
 
 export type TRawDeferredProps = {
-	render: () => ReactElement<any>,
-	children?: ReactElement<any>,
-	delay: number
+	render: () => ReactElement<any>;
+	children?: ReactElement<any>;
+	delay: number;
 };
 
 type TDeferredState = {
-	isResolved: boolean
+	isResolved: boolean;
 };
 
 class RawDeferred extends PureComponent<TRawDeferredProps, TDeferredState> {
 	static defaultProps = {
-		delay: 0
+		delay: 0,
 	};
 
 	readonly state = {
-		isResolved: false
+		isResolved: false,
 	};
 
 	private timeout: number;
@@ -40,13 +40,13 @@ class RawDeferred extends PureComponent<TRawDeferredProps, TDeferredState> {
 	render() {
 		const { isResolved } = this.state;
 		const { render, children } = this.props;
-		return isResolved ? render() : (children || null) as null; //weird React typings...
+		return isResolved ? render() : ((children || null) as null); //weird React typings...
 	}
 
 	private delay() {
 		this.timeout = window.setTimeout(() => {
 			this.setState({
-				isResolved: true
+				isResolved: true,
 			});
 		}, this.props.delay);
 	}

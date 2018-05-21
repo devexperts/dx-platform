@@ -16,7 +16,8 @@ function fixScrollStyles(scrollbarContainerClassName: string) {
 
 	styleFixEl.type = 'text/css';
 
-	if (styleFixEl.styleSheet) { // IE < 11
+	if (styleFixEl.styleSheet) {
+		// IE < 11
 		styleFixEl.styleSheet.cssText = styleFixText;
 	} else {
 		styleFixEl.innerHTML = styleFixText;
@@ -30,8 +31,8 @@ function fixScrollStyles(scrollbarContainerClassName: string) {
 }
 
 let scrollbarSize: {
-	width: number
-	height: number
+	width: number;
+	height: number;
 };
 
 /**
@@ -56,7 +57,7 @@ function getScrollbarSize(scrollbarContainerClassName: string) {
 		document.body.appendChild(dummy);
 		scrollbarSize = {
 			width: dummy.offsetWidth - dummy.clientWidth,
-			height: dummy.offsetHeight - dummy.clientHeight
+			height: dummy.offsetHeight - dummy.clientHeight,
 		};
 		document.body.removeChild(dummy);
 	}

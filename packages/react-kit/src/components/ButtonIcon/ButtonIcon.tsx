@@ -8,25 +8,24 @@ import { PartialKeys } from '@devexperts/utils/dist/object/object';
 
 export const BUTTON_ICON = Symbol('ButtonIcon');
 
-export type TFullButtonIconProps = ObjectClean<TButtonProps & {
-	Button: ComponentType<TButtonProps>,
-	icon: React.ReactNode,
-	theme: {
-		icon?: string
-	} & TButtonProps['theme']
-}>;
+export type TFullButtonIconProps = ObjectClean<
+	TButtonProps & {
+		Button: ComponentType<TButtonProps>;
+		icon: React.ReactNode;
+		theme: {
+			icon?: string;
+		} & TButtonProps['theme'];
+	}
+>;
 
 @PURE
 class RawButtonIcon extends React.Component<TFullButtonIconProps> {
-
 	render() {
 		const { theme, Button = BasicButton, children, icon, ...props } = this.props;
 
 		return (
 			<Button {...props} theme={theme}>
-				<span className={theme.icon}>
-					{icon}
-				</span>
+				<span className={theme.icon}>{icon}</span>
 				{children}
 			</Button>
 		);

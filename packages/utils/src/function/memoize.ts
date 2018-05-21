@@ -6,28 +6,43 @@ export const MEMOIZE_CLEAR_FUNCTION = Symbol('MEMOIZE_CLEAR_FUNCTION');
 /**
  * Memoizes function for passed arguments
  */
-export function memoize<A>(this: any, fn: () => A): {
-	(): A,
-	[key: string]: () => A,
+export function memoize<A>(
+	this: any,
+	fn: () => A,
+): {
+	(): A;
+	[key: string]: () => A;
 };
-export function memoize<A, B>(this: any, fn: (a: A) => B): {
-	(a: A): B,
-	[key: string]: (a: A) => B,
+export function memoize<A, B>(
+	this: any,
+	fn: (a: A) => B,
+): {
+	(a: A): B;
+	[key: string]: (a: A) => B;
 };
-export function memoize<A, B, C>(this: any, fn: (a: A, b: B) => C): {
-	(a: A, b: B): C,
-	[key: string]: (a: A, b: B) => C,
+export function memoize<A, B, C>(
+	this: any,
+	fn: (a: A, b: B) => C,
+): {
+	(a: A, b: B): C;
+	[key: string]: (a: A, b: B) => C;
 };
-export function memoize<A, B, C, D>(this: any, fn: (a: A, b: B, c: C) => D): {
-	(a: A, b: B, c: C): D,
-	[key: string]: (a: A, b: B, c: C) => D,
+export function memoize<A, B, C, D>(
+	this: any,
+	fn: (a: A, b: B, c: C) => D,
+): {
+	(a: A, b: B, c: C): D;
+	[key: string]: (a: A, b: B, c: C) => D;
 };
-export function memoize<A, B, C, D, E>(this: any, fn: (a: A, b: B, c: C, d: D) => E): {
-	(a: A, b: B, c: C, d: D): E,
-	[key: string]: (a: A, b: B, c: C, d: D) => E,
+export function memoize<A, B, C, D, E>(
+	this: any,
+	fn: (a: A, b: B, c: C, d: D) => E,
+): {
+	(a: A, b: B, c: C, d: D): E;
+	[key: string]: (a: A, b: B, c: C, d: D) => E;
 } {
 	const storage = {};
-	const result = function (this: any) {
+	const result = function(this: any) {
 		const args = Array.prototype.slice.call(arguments);
 		const key = serialize(args);
 		if (typeof storage[key] === 'undefined') {
@@ -37,7 +52,7 @@ export function memoize<A, B, C, D, E>(this: any, fn: (a: A, b: B, c: C, d: D) =
 	}.bind(this);
 
 	//inject clearer
-	result[MEMOIZE_CLEAR_FUNCTION] = function () {
+	result[MEMOIZE_CLEAR_FUNCTION] = function() {
 		const args = Array.prototype.slice.call(arguments);
 		const key = serialize(args);
 		delete storage[key];

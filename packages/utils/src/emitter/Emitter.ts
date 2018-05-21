@@ -1,5 +1,5 @@
 export type IEmitterEvents<F extends Function = Function> = {
-	[key: string]: F[]
+	[key: string]: F[];
 };
 
 /**

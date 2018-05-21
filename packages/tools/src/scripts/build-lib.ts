@@ -3,8 +3,8 @@ import { Scripts } from './constants';
 import { ROOT } from '../config/env';
 import * as path from 'path';
 
-import {startTransform} from '../tasks/ts-transform';
-import {startSync} from '../tasks/sync';
+import { startTransform } from '../tasks/ts-transform';
+import { startSync } from '../tasks/sync';
 
 const program = getProgramForScript(Scripts.BUILD_LIB);
 

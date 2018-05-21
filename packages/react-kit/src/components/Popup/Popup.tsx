@@ -12,23 +12,23 @@ export const POPUP = Symbol('Popup');
 
 export type TRawPopupProps = {
 	theme: {
-		container?: string,
-		header?: string,
-		body?: string,
-		footer?: string,
-		backdrop?: string,
-		backdrop_isModal?: string,
-		backdrop_closeOnClickAway?: string,
-	},
-	children: ReactNode,
-	header?: ReactNode,
-	footer?: ReactNode,
+		container?: string;
+		header?: string;
+		body?: string;
+		footer?: string;
+		backdrop?: string;
+		backdrop_isModal?: string;
+		backdrop_closeOnClickAway?: string;
+	};
+	children: ReactNode;
+	header?: ReactNode;
+	footer?: ReactNode;
 
-	isModal?: boolean,
-	isOpened?: boolean,
+	isModal?: boolean;
+	isOpened?: boolean;
 
-	shouldCloseOnClickAway?: boolean,
-	onRequestClose?: () => any,
+	shouldCloseOnClickAway?: boolean;
+	onRequestClose?: () => any;
 };
 
 @PURE
@@ -44,9 +44,9 @@ class RawPopup extends Component<TRawPopupProps> {
 		document.body.appendChild(this.rootElement);
 	}
 
-    componentWillUnmount() {
-        document.body.removeChild(this.rootElement);
-    }
+	componentWillUnmount() {
+		document.body.removeChild(this.rootElement);
+	}
 
 	render() {
 		const {
@@ -57,28 +57,24 @@ class RawPopup extends Component<TRawPopupProps> {
 			isModal,
 			isOpened,
 			shouldCloseOnClickAway,
-			onRequestClose
+			onRequestClose,
 		} = this.props;
 
 		if (!isOpened) {
 			return null;
 		}
 
-		const backdropClassName = classnames(
-			theme.backdrop,
-			{
-				[theme.backdrop_isModal as string]: isModal,
-				[theme.backdrop_closeOnClickAway as string]: shouldCloseOnClickAway
-			}
-		);
+		const backdropClassName = classnames(theme.backdrop, {
+			[theme.backdrop_isModal as string]: isModal,
+			[theme.backdrop_closeOnClickAway as string]: shouldCloseOnClickAway,
+		});
 
 		let child = (
-			<RootClose onRootClose={onRequestClose}
-			           ignoreKeyUp={!shouldCloseOnClickAway}
-			           ignoreClick={!shouldCloseOnClickAway || isModal}>
-				<div className={backdropClassName}
-				     ref={el => this.backdrop = el}
-				     onClick={this.handleBackdropClick}>
+			<RootClose
+				onRootClose={onRequestClose}
+				ignoreKeyUp={!shouldCloseOnClickAway}
+				ignoreClick={!shouldCloseOnClickAway || isModal}>
+				<div className={backdropClassName} ref={el => (this.backdrop = el)} onClick={this.handleBackdropClick}>
 					<div className={theme.container}>
 						{header && <div className={theme.header}>{header}</div>}
 						{<div className={theme.body}>{children}</div>}
@@ -104,7 +100,7 @@ class RawPopup extends Component<TRawPopupProps> {
 			}
 			//if popup isn't modal then it's closed by RootClose
 		}
-	}
+	};
 }
 
 export type TPopupProps = ObjectClean<PartialKeys<TRawPopupProps, 'theme'>>;

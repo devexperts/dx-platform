@@ -3,7 +3,7 @@ import prefix from '../prefix';
 describe('prefix', () => {
 	const styles = {
 		test: 'foo',
-		transform: 'foo'
+		transform: 'foo',
 	};
 	const prefixed = prefix(styles);
 	it('should return new copy if vendor keys found', () => {
@@ -19,7 +19,7 @@ describe('prefix', () => {
 			WebKitTransform: 'foo',
 			MozTransform: 'foo',
 			msTransform: 'foo',
-			OTransform: 'foo'
+			OTransform: 'foo',
 		});
 	});
 });

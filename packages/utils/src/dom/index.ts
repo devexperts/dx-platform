@@ -1,2 +1,2 @@
-export * from './dom'
+export * from './dom';
 export * from './prefix';

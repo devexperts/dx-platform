@@ -23,11 +23,10 @@ export function PURE<T extends Function>(target: T): T {
 	 * @param {*} newState
 	 * @returns {boolean}
 	 */
-	target.prototype.shouldComponentUpdate = function (newProps: {}, newState: {}): boolean {
+	target.prototype.shouldComponentUpdate = function(newProps: {}, newState: {}): boolean {
 		//check original shoulComponentUpdate
 		const shouldUpdateByOriginal =
-			!oldShouldComponentUpdate ||
-			oldShouldComponentUpdate.call(this, newProps, newState);
+			!oldShouldComponentUpdate || oldShouldComponentUpdate.call(this, newProps, newState);
 
 		//check props.theme which can be set by react-css-themr
 		const shouldCheckTheme = !!newProps['theme'];

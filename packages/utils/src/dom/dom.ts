@@ -3,7 +3,7 @@ import { capitalize } from '../string/string';
 /**
  * Get bounding client rect of given element
  */
-export function getBoundingClientRect(element: HTMLElement): ClientRect & { middle: number, center: number } {
+export function getBoundingClientRect(element: HTMLElement): ClientRect & { middle: number; center: number } {
 	const rect = element.getBoundingClientRect();
 	const { top, left, right, bottom } = rect;
 	let { width, height } = rect;
@@ -19,7 +19,7 @@ export function getBoundingClientRect(element: HTMLElement): ClientRect & { midd
 		width,
 		height,
 		middle: left + width / 2,
-		center: top + height / 2
+		center: top + height / 2,
 	};
 }
 
@@ -72,16 +72,17 @@ export function canUseDOM(): boolean {
  * Checks if context contains node in the DOM tree
  * @see https://github.com/react-bootstrap/dom-helpers/blob/master/src/query/contains.js
  */
-export const contains: (context: Node, node: Node) => boolean =
-	!canUseDOM() ? fallback : (context, node) => {
-		if (context.contains) {
-			return context.contains(node);
-		} else if (context.compareDocumentPosition) {
-			return context === node || !!(context.compareDocumentPosition(node) & 16); //tslint:disable-line no-bitwise
-		} else {
-			return fallback(context, node);
-		}
-	};
+export const contains: (context: Node, node: Node) => boolean = !canUseDOM()
+	? fallback
+	: (context, node) => {
+			if (context.contains) {
+				return context.contains(node);
+			} else if (context.compareDocumentPosition) {
+				return context === node || !!(context.compareDocumentPosition(node) & 16); //tslint:disable-line no-bitwise
+			} else {
+				return fallback(context, node);
+			}
+	  };
 
 /**
  * @see  https://github.com/react-bootstrap/dom-helpers/blob/master/src/query/contains.js

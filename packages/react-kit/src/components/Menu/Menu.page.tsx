@@ -6,11 +6,11 @@ import { Menu, MenuItem, MenuItemGroup } from './Menu';
 import * as css from './Menu.page.styl';
 
 const theme = {
-	container: css.list
+	container: css.list,
 };
 
-const Item = (props: any) => <MenuItem {...props} theme={theme}/>;
-const Group = (props: any) => <MenuItemGroup {...props} theme={theme}/>;
+const Item = (props: any) => <MenuItem {...props} theme={theme} />;
+const Group = (props: any) => <MenuItemGroup {...props} theme={theme} />;
 
 const onItemSelect = (value: any) => {
 	console.log('selected', value);

@@ -5,12 +5,12 @@ import Demo from '../demo/Demo';
 import { Deferred } from './Deferred';
 
 type TDeferredPageState = {
-	counter: number
+	counter: number;
 };
 
 class DeferredPage extends PureComponent<{}, TDeferredPageState> {
 	readonly state = {
-		counter: 0
+		counter: 0,
 	};
 
 	private interval: number;
@@ -18,7 +18,7 @@ class DeferredPage extends PureComponent<{}, TDeferredPageState> {
 	componentWillMount() {
 		this.interval = window.setInterval(() => {
 			this.setState({
-				counter: this.state.counter + 1
+				counter: this.state.counter + 1,
 			});
 		}, 3000);
 	}
@@ -31,14 +31,10 @@ class DeferredPage extends PureComponent<{}, TDeferredPageState> {
 		return (
 			<Demo>
 				<div>Additional content will render in 2 seconds...</div>
-				<Deferred render={() => <div>I'm heavy timer: {this.state.counter}</div>}
-				          delay={2000}/>
+				<Deferred render={() => <div>I'm heavy timer: {this.state.counter}</div>} delay={2000} />
 			</Demo>
 		);
 	}
 }
 
-storiesOf('Deferred', module)
-	.add('default', () => (
-		<DeferredPage/>
-	));
+storiesOf('Deferred', module).add('default', () => <DeferredPage />);

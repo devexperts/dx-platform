@@ -5,26 +5,22 @@ import { DefaultTheme } from '../DefaultTheme/DefaultTheme';
 
 import * as css from './Demo.styl';
 
-import {ObjectClean} from 'typelevel-ts';
-import {PartialKeys} from '@devexperts/utils/dist/object/object';
+import { ObjectClean } from 'typelevel-ts';
+import { PartialKeys } from '@devexperts/utils/dist/object/object';
 
 const DEMO = Symbol();
 
 export type TFullDemoComponentProps = JSX.IntrinsicAttributes & {
 	theme: {
-		container?: string
-	}
-}
+		container?: string;
+	};
+};
 
 class RawDemoComponent extends React.Component<TFullDemoComponentProps> {
 	render() {
 		const { children, theme } = this.props;
 
-		return (
-			<section className={theme.container}>
-				{children}
-			</section>
-		);
+		return <section className={theme.container}>{children}</section>;
 	}
 }
 
@@ -32,14 +28,10 @@ export type TDemoComponentProps = ObjectClean<PartialKeys<TFullDemoComponentProp
 export const DemoComponent: React.ComponentClass<TDemoComponentProps> = withTheme(DEMO, css)(RawDemoComponent);
 
 const Demo: React.SFC<Partial<TFullDemoComponentProps>> = props => (
-    <DefaultTheme>
-		<DemoComponent theme={props.theme}>
-            {props.children}
-		</DemoComponent>
+	<DefaultTheme>
+		<DemoComponent theme={props.theme}>{props.children}</DemoComponent>
 	</DefaultTheme>
 );
 
 export default Demo;
-export {
-	Demo
-};
+export { Demo };

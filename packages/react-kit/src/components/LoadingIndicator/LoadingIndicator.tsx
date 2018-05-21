@@ -9,8 +9,8 @@ export const LOADING_INDICATOR = Symbol('LoadingIndicator');
 
 export type TFullLoadingIndicatorProps = {
 	theme: {
-		container?: string
-	}
+		container?: string;
+	};
 };
 
 @PURE
@@ -18,12 +18,11 @@ class RawLoadingIndicator extends React.Component<TFullLoadingIndicatorProps> {
 	render() {
 		const { theme } = this.props;
 
-		return (
-			<div className={theme.container}></div>
-		);
+		return <div className={theme.container} />;
 	}
 }
 
 export type TLoadingIndicatorProps = ObjectClean<PartialKeys<TFullLoadingIndicatorProps, 'theme'>>;
-export const LoadingIndicator: ComponentClass<TLoadingIndicatorProps> =
-	withTheme(LOADING_INDICATOR)(RawLoadingIndicator);
+export const LoadingIndicator: ComponentClass<TLoadingIndicatorProps> = withTheme(LOADING_INDICATOR)(
+	RawLoadingIndicator,
+);

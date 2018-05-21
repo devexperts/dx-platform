@@ -1,7 +1,8 @@
 /**
  * @template TFSActionPayload
  */
-function TFSAction() { //eslint-disable-line no-empty-function
+function TFSAction() {
+	//eslint-disable-line no-empty-function
 }
 /**
  * @type {string|String}
@@ -33,4 +34,4 @@ TFSAction.prototype.error = null;
  * @typedef {function(dispatch:TThunkActionDispatch, getState:function():*):TThunkActionResult} TThunkAction
  */
 
-export {TFSAction};
+export { TFSAction };

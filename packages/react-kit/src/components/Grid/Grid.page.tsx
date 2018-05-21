@@ -1,16 +1,9 @@
 import * as React from 'react';
-import {storiesOf} from '@devexperts/tools/dist/utils/storybook';
+import { storiesOf } from '@devexperts/tools/dist/utils/storybook';
 import Demo from '../demo/Demo';
-import {PURE} from '../../utils/pure';
+import { PURE } from '../../utils/pure';
 
-import {
-	Grid,
-	GridHead as Head,
-	GridBody as Body,
-	GridRow as Row,
-	GridCell as Cell,
-	GridCellAlignment
-} from './Grid';
+import { Grid, GridHead as Head, GridBody as Body, GridRow as Row, GridCell as Cell, GridCellAlignment } from './Grid';
 
 import * as css from './Grid.demo.styl';
 
@@ -25,15 +18,15 @@ const gridTheme = {
 	gridCell__content_center: css.gridCell__content_center,
 	gridCell__content_right: css.gridCell__content_right,
 	horizontal_scrollbar__bar: css.horizontal_scrollbar__bar,
-	vertical_scrollbar__bar: css.vertical_scrollbar__bar
+	vertical_scrollbar__bar: css.vertical_scrollbar__bar,
 };
 
 @PURE
 class GridPage extends React.Component {
 	state = {
 		isLong: true,
-		counter: 0
-	}
+		counter: 0,
+	};
 
 	_interval1: any;
 	_interval2: any;
@@ -47,7 +40,7 @@ class GridPage extends React.Component {
 
 		this._interval2 = setInterval(() => {
 			this.setState({
-				counter: this.state.counter + 1
+				counter: this.state.counter + 1,
 			});
 		}, 1000);
 	}
@@ -63,7 +56,9 @@ class GridPage extends React.Component {
 				<Grid theme={gridTheme}>
 					<Head theme={gridTheme}>
 						<Row>
-							<Cell align={GridCellAlignment.LEFT} theme={gridTheme}>1</Cell>
+							<Cell align={GridCellAlignment.LEFT} theme={gridTheme}>
+								1
+							</Cell>
 							<Cell theme={gridTheme}>
 								{this.state.isLong ? '2_______________________________________' : '2'}
 							</Cell>
@@ -73,7 +68,9 @@ class GridPage extends React.Component {
 					<Body theme={gridTheme}>
 						{Array.from(new Array(20), () => 0).map((_, i) => (
 							<Row key={i}>
-								<Cell align={GridCellAlignment.LEFT} theme={gridTheme}>{this.state.counter}</Cell>
+								<Cell align={GridCellAlignment.LEFT} theme={gridTheme}>
+									{this.state.counter}
+								</Cell>
 								<Cell theme={gridTheme}>2</Cell>
 								<Cell theme={gridTheme}>3_______________________________________</Cell>
 							</Row>
@@ -85,4 +82,4 @@ class GridPage extends React.Component {
 	}
 }
 
-storiesOf('Grid', module).add('default', () => <GridPage/>);
+storiesOf('Grid', module).add('default', () => <GridPage />);

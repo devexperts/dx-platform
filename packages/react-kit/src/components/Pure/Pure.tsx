@@ -2,8 +2,8 @@ import * as React from 'react';
 import { shouldComponentUpdate } from '../../utils/pure';
 
 export type TPureProps = {
-	[key: string]: any,
-	children: Function
+	[key: string]: any;
+	children: Function;
 };
 
 export class Pure extends React.Component<TPureProps> {

@@ -1,8 +1,8 @@
 import * as React from 'react';
 import Demo from '../demo/Demo';
-import {storiesOf, action} from '@devexperts/tools/dist/utils/storybook';
+import { storiesOf, action } from '@devexperts/tools/dist/utils/storybook';
 import { PasswordInput } from './PasswordInput';
-import {PURE} from '../../utils/pure';
+import { PURE } from '../../utils/pure';
 
 import * as css from './PasswordInput.page.styl';
 
@@ -10,19 +10,18 @@ import { ShowPasswordIcon } from '../../icons/show-password-icon';
 import { HidePasswordIcon } from '../../icons/hide-password-icon';
 
 const darkDemoTheme = {
-	container: css.container
+	container: css.container,
 };
 
 @PURE
 class PasswordInputPage extends React.Component {
-
 	state = {
 		value: 'test',
-		isRevealed: false
+		isRevealed: false,
 	};
 
 	render() {
-		const {isRevealed} = this.state;
+		const { isRevealed } = this.state;
 		return (
 			<Demo theme={darkDemoTheme}>
 				<main>
@@ -33,7 +32,8 @@ class PasswordInputPage extends React.Component {
 							value={this.state.value}
 							onReveal={this.onReveal}
 							isRevealed={isRevealed}
-							IconHide={HidePasswordIcon}/>
+							IconHide={HidePasswordIcon}
+						/>
 					</section>
 				</main>
 			</Demo>
@@ -41,19 +41,19 @@ class PasswordInputPage extends React.Component {
 	}
 
 	onChange = (value: string) => {
-        action('value changed')(value);
+		action('value changed')(value);
 
 		this.setState({
-			value
+			value,
 		});
-	}
+	};
 
 	onReveal = (isRevealed: boolean) => {
-        action('isRevealed changed')(isRevealed);
+		action('isRevealed changed')(isRevealed);
 		this.setState({
-			isRevealed
+			isRevealed,
 		});
-	}
+	};
 }
 
-storiesOf('PasswordInput', module).add('default', () => <PasswordInputPage/>);
+storiesOf('PasswordInput', module).add('default', () => <PasswordInputPage />);

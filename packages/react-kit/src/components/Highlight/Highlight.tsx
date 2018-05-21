@@ -9,19 +9,19 @@ import { ComponentClass, ReactNode } from 'react';
 export const HIGHLIGHT = Symbol('Mark');
 
 export type TFullHighlightProps = {
-	search: string,
-	children: string,
+	search: string;
+	children: string;
 	theme: {
-		mark?: string,
-		container?: string
-	}
+		mark?: string;
+		container?: string;
+	};
 };
 
 @PURE
 class RawHighlight extends React.Component<TFullHighlightProps> {
 	static defaultProps = {
 		children: '',
-		search: ''
+		search: '',
 	};
 
 	render() {
@@ -34,17 +34,21 @@ class RawHighlight extends React.Component<TFullHighlightProps> {
 			const splitted = split(children, search, false);
 			result = splitted.reduce<ReactNode[]>((acc, el, i) => {
 				if (el.trim() !== '') {
-					acc.push(i % 2 ? <mark className={theme.mark} key={i}>{el}</mark> : el);
+					acc.push(
+						i % 2 ? (
+							<mark className={theme.mark} key={i}>
+								{el}
+							</mark>
+						) : (
+							el
+						),
+					);
 				}
 				return acc;
 			}, []);
 		}
 
-		return (
-			<span className={theme.container}>
-				{result}
-			</span>
-		);
+		return <span className={theme.container}>{result}</span>;
 	}
 }
 

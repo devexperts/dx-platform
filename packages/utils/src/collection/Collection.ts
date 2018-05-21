@@ -8,7 +8,7 @@ export const E_COLLECTION = {
 	ITEM_ADD: 'COLLECTION:ITEM_ADD',
 	ITEM_REMOVE: 'COLLECTION:ITEM_REMOVE',
 	CLEAR: 'COLLECTION:CLEAR',
-	CHANGE: 'COLLECTION:CHANGE'
+	CHANGE: 'COLLECTION:CHANGE',
 };
 
 export type TCollectionOptions = {
@@ -40,7 +40,7 @@ export class Collection<T> extends Emitter {
 		super();
 
 		this._options = {
-			...options
+			...options,
 		};
 
 		this._items = items.slice();

@@ -74,9 +74,13 @@ export function modifier(name: string, modifier: string | number) {
  */
 function modify(name: string, modifiers?: any): string {
 	const normalized = normalizeModifiers(modifiers);
-	return [name].concat(normalized.map((m: any) => {
-		return modifier(name, m);
-	})).join(' ');
+	return [name]
+		.concat(
+			normalized.map((m: any) => {
+				return modifier(name, m);
+			}),
+		)
+		.join(' ');
 }
 
 /**
@@ -175,7 +179,6 @@ export default function bem(blockName: string, elementOrBlockModifiers?: any, el
 		return blockName; //block
 	}
 	return '';
-
 }
 
 /**
@@ -197,7 +200,7 @@ export function BEM(blockName: string) {
 		throw new Error(ERROR_DECORATOR_BLOCKNAME_VALIDATION);
 	}
 
-	return function (target: any) {
+	return function(target: any) {
 		if (typeof target !== 'function') {
 			throw new Error(ERROR_DECORATOR_TARGET_VALIDATION);
 		}

@@ -27,7 +27,7 @@ export default function debounce<F extends Function>(func: F, wait: number = 0, 
 		}
 	};
 
-	return function (this: any) {
+	return function(this: any) {
 		context = this;
 		args = arguments;
 		timestamp = Date.now();
@@ -50,7 +50,7 @@ export default function debounce<F extends Function>(func: F, wait: number = 0, 
  * Class method decorator for {@link debounce}.
  */
 export function DEBOUNCE(wait: number = 0, immediate: boolean = false): any {
-	return function (target: any, prop: any, descriptor?: any): any {
+	return function(target: any, prop: any, descriptor?: any): any {
 		if (descriptor) {
 			if (descriptor.initializer) {
 				const old = descriptor.initializer;

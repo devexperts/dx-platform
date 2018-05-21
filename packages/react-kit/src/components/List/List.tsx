@@ -9,16 +9,15 @@ import { PURE } from '../../utils/pure';
 export const LIST = Symbol('List');
 const CONTEXT_LEVEL_KEY = '__LIST_CONTEXT_LEVEL_KEY__';
 const CONTEXT_TYPES: any = {
-	[CONTEXT_LEVEL_KEY]() {
-	}
+	[CONTEXT_LEVEL_KEY]() {},
 };
 
 export type TFullListProps = {
 	theme: {
-		container?: string
-	},
-	children: ReactNode,
-	level?: number
+		container?: string;
+	};
+	children: ReactNode;
+	level?: number;
 };
 
 class RawList extends React.Component<TFullListProps> {
@@ -29,11 +28,7 @@ class RawList extends React.Component<TFullListProps> {
 		const { theme, children } = this.props;
 		const className = classnames(theme.container, theme[`container_level_${level}`]);
 
-		return (
-			<ul className={className}>
-				{children}
-			</ul>
-		);
+		return <ul className={className}>{children}</ul>;
 	}
 }
 
@@ -42,11 +37,11 @@ export const List: ComponentClass<TListProps> = withTheme(LIST)(RawList);
 
 export type TFullListItemProps = {
 	theme: {
-		item?: string
-	},
-	children?: ReactNode,
-	level?: number,
-	onClick?: MouseEventHandler<HTMLElement>
+		item?: string;
+	};
+	children?: ReactNode;
+	level?: number;
+	onClick?: MouseEventHandler<HTMLElement>;
 };
 
 @PURE
@@ -70,20 +65,20 @@ export type TListItemProps = ObjectClean<PartialKeys<TFullListItemProps, 'theme'
 export const ListItem: ComponentClass<TListItemProps> = withTheme(LIST)(RawListItem);
 
 export type TFullListItemGroupProps = {
-	isCollapsed?: boolean,
-	children: ReactNode,
-	header?: ReactNode,
+	isCollapsed?: boolean;
+	children: ReactNode;
+	header?: ReactNode;
 	theme: {
-		itemGroup?: string,
-		itemGroup_isCollapsed?: string,
-		itemGroup__header?: string
-	},
-	onClick?: MouseEventHandler<HTMLElement>
+		itemGroup?: string;
+		itemGroup_isCollapsed?: string;
+		itemGroup__header?: string;
+	};
+	onClick?: MouseEventHandler<HTMLElement>;
 };
 
 class RawListItemGroup extends React.Component<TFullListItemGroupProps> {
 	static defaultProps = {
-		isCollapsed: false
+		isCollapsed: false,
 	};
 
 	static contextTypes = CONTEXT_TYPES;
@@ -92,20 +87,16 @@ class RawListItemGroup extends React.Component<TFullListItemGroupProps> {
 
 	getChildContext() {
 		return {
-			[CONTEXT_LEVEL_KEY]: (this.context[CONTEXT_LEVEL_KEY] || 0) + 1
+			[CONTEXT_LEVEL_KEY]: (this.context[CONTEXT_LEVEL_KEY] || 0) + 1,
 		};
 	}
 
 	render() {
 		const { theme, isCollapsed, children, header, onClick } = this.props;
 		const level = this.context[CONTEXT_LEVEL_KEY] || 0;
-		const className = classnames(
-			theme.itemGroup,
-			theme[`itemGroup_level_${level}`],
-			{
-				[theme.itemGroup_isCollapsed as string]: isCollapsed
-			}
-		);
+		const className = classnames(theme.itemGroup, theme[`itemGroup_level_${level}`], {
+			[theme.itemGroup_isCollapsed as string]: isCollapsed,
+		});
 
 		return (
 			<li className={className}>

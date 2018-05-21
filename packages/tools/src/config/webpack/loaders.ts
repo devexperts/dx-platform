@@ -6,14 +6,14 @@ import * as autoprefixer from 'autoprefixer';
 export const TS_PATTERN = /\.tsx?$/;
 
 export const babelLoader: Loader = {
-	loader: require.resolve('babel-loader')
+	loader: require.resolve('babel-loader'),
 };
 
 export const tsLoader: Loader = {
 	loader: require.resolve('ts-loader'),
 	options: {
-		transpileOnly: true // don't forget to enable ForkTsCheckerWebpackPlugin
-	}
+		transpileOnly: true, // don't forget to enable ForkTsCheckerWebpackPlugin
+	},
 };
 
 // Styles processing
@@ -26,12 +26,12 @@ export const cssLoader: Loader = {
 	options: {
 		importLoaders: 1,
 		modules: true,
-		localIdentName: '[name]__[local]__[hash:base64:5]'
-	}
+		localIdentName: '[name]__[local]__[hash:base64:5]',
+	},
 };
 
 export const styleLoader: Loader = {
-	loader: require.resolve('style-loader')
+	loader: require.resolve('style-loader'),
 };
 
 export const postcssLoader: Loader = {
@@ -40,9 +40,9 @@ export const postcssLoader: Loader = {
 		plugins: () => [
 			autoprefixer({
 				flexbox: 'no-2009',
-			})
-		]
-	}
+			}),
+		],
+	},
 };
 
 export const stylusLoader: Loader = {
@@ -51,27 +51,21 @@ export const stylusLoader: Loader = {
 		nocheck: true,
 		'include css': true,
 		'resolve url': true,
-	}
+	},
 };
 
 // file-loaders
 
-export const FILE_LOADER_EXCLUDES = [
-	/\.(ts|tsx)$/,
-	/\.(js|jsx|mjs)$/,
-	/\.html$/,
-	/\.json$/,
-	/\.ejs/,
-];
+export const FILE_LOADER_EXCLUDES = [/\.(ts|tsx)$/, /\.(js|jsx|mjs)$/, /\.html$/, /\.json$/, /\.ejs/];
 
 export const fileLoader: Loader = {
 	loader: require.resolve('file-loader'),
 	options: {
 		name: '[path][name].[ext]?[hash]',
-		context: 'src'
-	}
+		context: 'src',
+	},
 };
 
 export const urlLoader: Loader = {
-	loader: require.resolve('url-loader')
+	loader: require.resolve('url-loader'),
 };

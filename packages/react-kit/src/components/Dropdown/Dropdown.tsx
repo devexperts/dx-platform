@@ -1,8 +1,6 @@
 import * as React from 'react';
 import { PURE } from '../../utils/pure';
-import {
-	Component, ComponentClass, ComponentType, MouseEventHandler, ReactNode,
-} from 'react';
+import { Component, ComponentClass, ComponentType, MouseEventHandler, ReactNode } from 'react';
 import { Popover, TPopoverProps } from '../Popover/Popover';
 import { ReactRef, WithInnerRef } from '../../utils/typings';
 import { withTheme } from '../../utils/withTheme';
@@ -13,23 +11,23 @@ import { TControlProps } from '../Control/Control';
 export const DROPDOWN = Symbol('Dropdown');
 
 export type TAnchorProps = WithInnerRef<{
-	onClick: MouseEventHandler<Element>,
-	children: ReactNode
+	onClick: MouseEventHandler<Element>;
+	children: ReactNode;
 }>;
 
 export type TFullDropdownProps = TControlProps<boolean, 'isOpened', 'onToggle'> & {
-	Anchor: ComponentType<TAnchorProps>
-	Popover: ComponentType<TPopoverProps>,
+	Anchor: ComponentType<TAnchorProps>;
+	Popover: ComponentType<TPopoverProps>;
 	theme: {
-		Popover?: TPopoverProps['theme']
-	},
-	hasArrow?: boolean
+		Popover?: TPopoverProps['theme'];
+	};
+	hasArrow?: boolean;
 };
 
 @PURE
 class RawDropdown extends Component<TFullDropdownProps> {
 	static defaultProps = {
-		Popover
+		Popover,
 	};
 
 	private anchorRef: ReactRef;
@@ -38,14 +36,14 @@ class RawDropdown extends Component<TFullDropdownProps> {
 		const { Anchor, Popover, children, theme, hasArrow, isOpened } = this.props;
 
 		return (
-			<Anchor onClick={this.onAnchorClick}
-			        innerRef={this.innerRef}>
-				<Popover isOpened={isOpened}
-				         hasArrow={hasArrow}
-				         theme={theme.Popover}
-				         onRequestClose={this.onPopoverRequestClose}
-				         anchor={this.anchorRef}
-				         closeOnClickAway={true}>
+			<Anchor onClick={this.onAnchorClick} innerRef={this.innerRef}>
+				<Popover
+					isOpened={isOpened}
+					hasArrow={hasArrow}
+					theme={theme.Popover}
+					onRequestClose={this.onPopoverRequestClose}
+					anchor={this.anchorRef}
+					closeOnClickAway={true}>
 					{children}
 				</Popover>
 			</Anchor>
@@ -54,15 +52,15 @@ class RawDropdown extends Component<TFullDropdownProps> {
 
 	private innerRef = (ref: ReactRef) => {
 		this.anchorRef = ref;
-	}
+	};
 
 	private onAnchorClick = () => {
 		this.props.onToggle(!this.props.isOpened);
-	}
+	};
 
 	private onPopoverRequestClose = () => {
 		this.props.onToggle(false);
-	}
+	};
 }
 
 export type TDropdownProps = ObjectClean<PartialKeys<TFullDropdownProps, 'theme' | 'Popover'>>;

@@ -13,31 +13,33 @@ const darkDemoTheme = {
 	container: css.container,
 	view: css.view,
 	icon: css.icon,
-	icon_isDisabled: css.icon_isDisabled
+	icon_isDisabled: css.icon_isDisabled,
 };
 
 export const CHECKBOX = 'Checkbox';
 
 @PURE
-class CheckboxPage extends React.Component<{isDisabled?: boolean}, {isChecked: boolean}> {
+class CheckboxPage extends React.Component<{ isDisabled?: boolean }, { isChecked: boolean }> {
 	state = {
-		isChecked: true
+		isChecked: true,
 	};
 
 	render() {
 		const labelClassName = classnames(css.label, {
-			[css.label_isDisabled]: this.props.isDisabled
+			[css.label_isDisabled]: this.props.isDisabled,
 		});
 		return (
 			<Demo>
 				<div className={css.container}>
 					<label htmlFor="check1" className={labelClassName}>
-						<Checkbox theme={darkDemoTheme}
-								  checkMark={<CheckboxTickIcon/>}
-						          value={this.state.isChecked}
-						          onValueChange={this.onChangeHandler}
-						          isDisabled={this.props.isDisabled}
-						          id="check1"/>
+						<Checkbox
+							theme={darkDemoTheme}
+							checkMark={<CheckboxTickIcon />}
+							value={this.state.isChecked}
+							onValueChange={this.onChangeHandler}
+							isDisabled={this.props.isDisabled}
+							id="check1"
+						/>
 						I'am controlled checkbox
 					</label>
 				</div>
@@ -47,14 +49,13 @@ class CheckboxPage extends React.Component<{isDisabled?: boolean}, {isChecked: b
 
 	onChangeHandler = (value: boolean) => {
 		this.setState({
-			isChecked: value
+			isChecked: value,
 		});
-	}
+	};
 }
 
 storiesOf('Checkbox', module)
 	.add('default', () => {
-		return (<CheckboxPage isDisabled={knobs.boolean('isDisabled', false)}/>);
+		return <CheckboxPage isDisabled={knobs.boolean('isDisabled', false)} />;
 	})
-	.add('disabled', () => <CheckboxPage isDisabled={true}/>);
-
+	.add('disabled', () => <CheckboxPage isDisabled={true} />);

@@ -6,7 +6,7 @@ import { List, ListItem, ListItemGroup } from './List';
 import * as css from './List.page.styl';
 
 const theme = {
-	container: css.list
+	container: css.list,
 };
 
 storiesOf('List', module).add('default', () => {

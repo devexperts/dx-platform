@@ -1,13 +1,13 @@
 import * as React from 'react';
 import { storiesOf } from '@devexperts/tools/dist/utils/storybook';
-import {Scrollable} from './Scrollable';
+import { Scrollable } from './Scrollable';
 import Demo from '../demo/Demo';
 import * as css from './Scrollable.page.styl';
 import { PURE } from '../../utils/pure';
 import { Pure } from '../Pure/Pure';
 
 const darkDemoTheme = {
-	container: css.container
+	container: css.container,
 };
 
 const Heavy = () => (
@@ -28,18 +28,19 @@ const Heavy = () => (
 		</p>
 		<p>
 			Sit adipisicing sunt excepteur enim nostrud pariatur incididunt duis commodo mollit esse veniam.
-			Exercitation
-			dolore occaecat ea nostrud laboris nisi adipisicing occaecat fugiat fugiat irure. In magna non consectetur
-			proident fugiat cupidatat commodo magna et. Elit sint cupidatat dolor sint. Ullamco enim cillum anim ex eu.
-			Eiusmod commodo occaecat consequat laboris est do duis ullamco. Incididunt non culpa velit quis aute in
-			elit. Ullamco in consequat ex proident do eu dolore incididunt mollit fugiat. Cupidatat ipsum laborum cillum
-			quis commodo consequat velit cupidatat duis ex nisi non.
+			Exercitation dolore occaecat ea nostrud laboris nisi adipisicing occaecat fugiat fugiat irure. In magna non
+			consectetur proident fugiat cupidatat commodo magna et. Elit sint cupidatat dolor sint. Ullamco enim cillum
+			anim ex eu. Eiusmod commodo occaecat consequat laboris est do duis ullamco. Incididunt non culpa velit quis
+			aute in elit. Ullamco in consequat ex proident do eu dolore incididunt mollit fugiat. Cupidatat ipsum
+			laborum cillum quis commodo consequat velit cupidatat duis ex nisi non.
 		</p>
-		<p>Ea pariatur do culpa minim. Proident adipisicing tempor tempor qui pariatur voluptate dolor. Ea commodo id
+		<p>
+			Ea pariatur do culpa minim. Proident adipisicing tempor tempor qui pariatur voluptate dolor. Ea commodo id
 			veniam voluptate cupidatat ex. Do ullamco in quis elit eiusmod veniam cillum proident veniam cupidatat
 			pariatur.
 		</p>
-		<p>Cupidatat anim eiusmod id nostrud pariatur tempor reprehenderit incididunt do esse ullamco laboris sunt. Est
+		<p>
+			Cupidatat anim eiusmod id nostrud pariatur tempor reprehenderit incididunt do esse ullamco laboris sunt. Est
 			ea exercitation cupidatat ipsum do Lorem eiusmod aliqua culpa ullamco consectetur veniam. Cillum velit dolor
 			consequat cillum tempor laboris mollit laborum reprehenderit reprehenderit veniam aliqua deserunt cupidatat.
 			Id aliqua occaecat est id tempor. Enim labore sint aliquip consequat duis minim tempor proident. Dolor
@@ -54,16 +55,15 @@ const Heavy = () => (
 );
 
 export type ScrollablePageState = {
-    scrollTop: number
-    scrollLeft: number
+	scrollTop: number;
+	scrollLeft: number;
 };
 
 @PURE
 class ScrollablePage extends React.Component<{}, ScrollablePageState> {
-
 	state = {
-        scrollTop: 0,
-        scrollLeft: 0
+		scrollTop: 0,
+		scrollLeft: 0,
 	};
 
 	render() {
@@ -74,7 +74,9 @@ class ScrollablePage extends React.Component<{}, ScrollablePageState> {
 						<section className={css.section}>
 							<h1>Origin</h1>
 							<Scrollable onScroll={this.onScroll}>
-								<div className={css.scrollable}><Heavy /></div>
+								<div className={css.scrollable}>
+									<Heavy />
+								</div>
 							</Scrollable>
 						</section>
 					)}
@@ -85,7 +87,9 @@ class ScrollablePage extends React.Component<{}, ScrollablePageState> {
 						<section className={css.section}>
 							<h1>VSync</h1>
 							<Scrollable scrollTop={this.state.scrollTop}>
-								<div className={css.scrollable}><Heavy /></div>
+								<div className={css.scrollable}>
+									<Heavy />
+								</div>
 							</Scrollable>
 						</section>
 					)}
@@ -95,7 +99,9 @@ class ScrollablePage extends React.Component<{}, ScrollablePageState> {
 						<section className={css.section}>
 							<h1>HSync</h1>
 							<Scrollable scrollLeft={this.state.scrollLeft}>
-								<div className={css.scrollable}><Heavy /></div>
+								<div className={css.scrollable}>
+									<Heavy />
+								</div>
 							</Scrollable>
 						</section>
 					)}
@@ -104,10 +110,11 @@ class ScrollablePage extends React.Component<{}, ScrollablePageState> {
 				<section className={css.section}>
 					<h1>VHSync</h1>
 					<Scrollable scrollTop={this.state.scrollTop} scrollLeft={this.state.scrollLeft}>
-						<div className={css.scrollable}><Heavy /></div>
+						<div className={css.scrollable}>
+							<Heavy />
+						</div>
 					</Scrollable>
 				</section>
-
 			</Demo>
 		);
 	}
@@ -115,10 +122,10 @@ class ScrollablePage extends React.Component<{}, ScrollablePageState> {
 	onScroll = (scrollLeft: number, scrollTop: number) => {
 		this.setState({
 			scrollLeft,
-			scrollTop
+			scrollTop,
 		});
 		return {};
-	}
+	};
 }
 
 storiesOf('Scrollable', module).add('default', () => <ScrollablePage />);
