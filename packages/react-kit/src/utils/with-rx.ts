@@ -1,8 +1,8 @@
-import {Component, ComponentClass, ComponentType, createElement} from 'react';
-import {Observable} from 'rxjs/Observable';
-import {BehaviorSubject} from 'rxjs/BehaviorSubject';
-import {Subscription} from 'rxjs/Subscription';
-import {animationFrame} from 'rxjs/scheduler/animationFrame';
+import { Component, ComponentClass, ComponentType, createElement } from 'react';
+import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Subscription } from 'rxjs/Subscription';
+import { animationFrame } from 'rxjs/scheduler/animationFrame';
 import 'rxjs/add/operator/subscribeOn';
 
 const hoistNonReactStatics = require('hoist-non-react-statics');
@@ -22,7 +22,9 @@ export function withRX<P extends object = never>(select: WithRXSelector<P>): Com
 			constructor(props: P) {
 				super(props);
 
-				this.resultsSubscription = this.results$.subscribeOn(animationFrame).subscribe(state => this.setState(state));
+				this.resultsSubscription = this.results$
+					.subscribeOn(animationFrame)
+					.subscribe(state => this.setState(state));
 			}
 
 			componentWillReceiveProps(props: P) {

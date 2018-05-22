@@ -10,7 +10,9 @@
     "build:kit": "cd packages/react-kit && npm run build",
     "build:tools": "cd packages/tools && npm run build",
     "build": "npm run build:tools && npm run build:kit",
-    "test": "cd packages/react-kit && npm run test"
+    "test": "cd packages/react-kit && npm run test",
+    "prettier": "prettier --list-different \"./packages/**/src/**/*.{ts,tsx}\"",
+    "prettier:fix": "prettier --write \"./packages/**/src/**/*.{ts,tsx}\""
   },
   "repository": {
     "type": "git",
@@ -22,6 +24,7 @@
   "author": "devexperts",
   "license": "MPL-2.0",
   "devDependencies": {
-    "lerna": "2.5.1"
+    "lerna": "2.5.1",
+    "prettier": "1.12.1"
   }
 }

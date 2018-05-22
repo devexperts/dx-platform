@@ -28,5 +28,5 @@ export const STATS = OVERRIDES.STATS || {
 	timings: false,
 	chunks: false,
 	chunkModules: false,
-	children: false
+	children: false,
 };

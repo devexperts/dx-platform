@@ -1,9 +1,4 @@
-import {
-	getBoundingClientRect,
-	style,
-	getVendorProperty,
-	setVendorStyle
-} from '../dom';
+import { getBoundingClientRect, style, getVendorProperty, setVendorStyle } from '../dom';
 
 beforeEach(() => {
 	document.body.innerHTML = '<div id="element"></div>';
@@ -20,7 +15,7 @@ describe('getBoundingClientRect', () => {
 			right: 129,
 			top: 20,
 			width: 10,
-			height: 50
+			height: 50,
 		});
 
 		const bounding = getBoundingClientRect(element);
@@ -42,10 +37,10 @@ describe('style', () => {
 		style(element, {
 			height: '12px',
 			width: '24px',
-			'font-size': '12px'
+			'font-size': '12px',
 		});
 
-		const {height, width, 'font-size': fontSize} = element.style;
+		const { height, width, 'font-size': fontSize } = element.style;
 
 		expect(height).toEqual('12px');
 		expect(width).toEqual('24px');
@@ -70,7 +65,7 @@ describe('setVendorStyle', () => {
 		const element: any = document.getElementById('element');
 		setVendorStyle(element, 'transform', 'testValue');
 
-		const {WebKitTransform, MozTransform, msTransform, OTransform} = element.style;
+		const { WebKitTransform, MozTransform, msTransform, OTransform } = element.style;
 		expect(WebKitTransform).toBeDefined();
 		expect(MozTransform).toBeDefined();
 		expect(msTransform).toBeDefined();

@@ -8,10 +8,10 @@ import { PURE } from '../../utils/pure';
 //inspired by https://github.com/react-bootstrap/react-overlays/blob/master/src/RootCloseWrapper.js
 
 export type TRootCloseProps = {
-	children: ReactElement<any>,
-	onRootClose?: () => any,
-	ignoreClick?: boolean,
-	ignoreKeyUp?: boolean
+	children: ReactElement<any>;
+	onRootClose?: () => any;
+	ignoreClick?: boolean;
+	ignoreKeyUp?: boolean;
 };
 
 @PURE
@@ -34,9 +34,7 @@ export class RootClose extends Component<TRootCloseProps> {
 
 	private handleClickCapture: MouseEventHandler<HTMLElement> = e => {
 		this.preventMouseRootClose =
-			isModifiedEvent(e) ||
-			!isLeftClickEvent(e) ||
-			findDOMNode(this).contains(e.target as Node);
+			isModifiedEvent(e) || !isLeftClickEvent(e) || findDOMNode(this).contains(e.target as Node);
 	};
 
 	private handleClick: MouseEventHandler<HTMLElement> = e => {

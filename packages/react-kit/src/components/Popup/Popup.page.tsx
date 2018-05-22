@@ -11,20 +11,16 @@ import { MenuItem } from '../Menu/Menu';
 import * as css from './Popup.page.styl';
 
 const theme = {
-	container: css.container
+	container: css.container,
 };
 
 const popupTheme = {
-	container: css.popup
+	container: css.popup,
 };
 
-const header = (
-	<div>HEADER</div>
-);
+const header = <div>HEADER</div>;
 
-const footer = (
-	<div>FOOTER</div>
-);
+const footer = <div>FOOTER</div>;
 
 const Stateful = stateful()(Selectbox);
 
@@ -33,7 +29,7 @@ class PopupPage extends React.Component {
 	state = {
 		isOpened: false,
 		isModal: false,
-		shouldCloseOnClickAway: false
+		shouldCloseOnClickAway: false,
 	};
 
 	componentDidMount() {
@@ -56,33 +52,33 @@ class PopupPage extends React.Component {
 		return (
 			<Demo theme={theme}>
 				<label className={css.label}>
-					Modal <input type="checkbox"
-					             value={isModal.toString()}
-					             onChange={this.onIsModalChange}/>
+					Modal <input type="checkbox" value={isModal.toString()} onChange={this.onIsModalChange} />
 				</label>
 				<label className={css.label}>
-					Close on clickaway <input type="checkbox"
-					                          value={shouldCloseOnClickAway.toString()}
-					                          onChange={this.onCloseOnClickAwayChange}/>
+					Close on clickaway{' '}
+					<input
+						type="checkbox"
+						value={shouldCloseOnClickAway.toString()}
+						onChange={this.onCloseOnClickAwayChange}
+					/>
 				</label>
-				{!isModal && shouldCloseOnClickAway && (
-					<label className={css.label}>
-						When isModal === false && shouldCloseOnClickAway === true
-						popup will close on click inside inner selectbox, because there is no backdrop
-						and selectbox is rendered to body
-					</label>
-				)}
-				<Button isPrimary={true}
-				        onClick={this.onToggleClick}>
+				{!isModal &&
+					shouldCloseOnClickAway && (
+						<label className={css.label}>
+							When isModal === false && shouldCloseOnClickAway === true popup will close on click inside
+							inner selectbox, because there is no backdrop and selectbox is rendered to body
+						</label>
+					)}
+				<Button isPrimary={true} onClick={this.onToggleClick}>
 					{isOpened ? 'Close' : 'Open'}
-					<Popup theme={popupTheme}
-					       header={header}
-					       footer={footer}
-					       isModal={isModal}
-					       shouldCloseOnClickAway={shouldCloseOnClickAway}
-					       onRequestClose={this.onPopupRequestClose}
-					       isOpened={isOpened}
-					>
+					<Popup
+						theme={popupTheme}
+						header={header}
+						footer={footer}
+						isModal={isModal}
+						shouldCloseOnClickAway={shouldCloseOnClickAway}
+						onRequestClose={this.onPopupRequestClose}
+						isOpened={isOpened}>
 						<div>popup content</div>
 						<Stateful placeholder="Choose your hero">
 							<MenuItem value="superman">Superman</MenuItem>
@@ -97,27 +93,27 @@ class PopupPage extends React.Component {
 
 	onToggleClick = (e: any) => {
 		this.setState({
-			isOpened: !this.state.isOpened
+			isOpened: !this.state.isOpened,
 		});
-	}
+	};
 
 	onIsModalChange = (e: any) => {
 		this.setState({
-			isModal: !this.state.isModal
+			isModal: !this.state.isModal,
 		});
-	}
+	};
 
 	onCloseOnClickAwayChange = (e: any) => {
 		this.setState({
-			shouldCloseOnClickAway: !this.state.shouldCloseOnClickAway
+			shouldCloseOnClickAway: !this.state.shouldCloseOnClickAway,
 		});
-	}
+	};
 
 	onPopupRequestClose = () => {
 		this.setState({
-			isOpened: false
+			isOpened: false,
 		});
-	}
+	};
 }
 
-storiesOf('Popup', module).add('Default', () => <PopupPage/>);
+storiesOf('Popup', module).add('Default', () => <PopupPage />);

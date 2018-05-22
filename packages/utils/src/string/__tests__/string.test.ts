@@ -42,11 +42,7 @@ describe('string', () => {
 
 	describe('pluralize', () => {
 		it('should take correct value for 3 base declensions', () => {
-			const declensions = [
-				'one',
-				'two-three-four',
-				'zero-many'
-			];
+			const declensions = ['one', 'two-three-four', 'zero-many'];
 			expect(pluralize3(0, declensions)).toBe('zero-many');
 			expect(pluralize3(1, declensions)).toBe('one');
 			expect(pluralize3(2, declensions)).toBe('two-three-four');
@@ -72,10 +68,7 @@ describe('string', () => {
 		});
 
 		it('should take correct value for 2 base declensions', () => {
-			const declensions = [
-				'one',
-				'zero-many'
-			];
+			const declensions = ['one', 'zero-many'];
 			expect(pluralize2(0, declensions)).toBe('zero-many');
 			expect(pluralize2(1, declensions)).toBe('one');
 			expect(pluralize2(2, declensions)).toBe('zero-many');
@@ -104,7 +97,7 @@ describe('string', () => {
 	describe('split', () => {
 		it('should return string if no substring passed', () => {
 			const string = 'abc';
-			const result = split(string, (void 0) as any);
+			const result = split(string, void 0 as any);
 			expect(result[0]).toBe(string);
 		});
 

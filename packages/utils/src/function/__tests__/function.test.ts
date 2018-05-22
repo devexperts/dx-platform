@@ -87,9 +87,9 @@ describe('function', () => {
 	});
 
 	describe('memoize', () => {
-		it('should memoize passed function for it\'s arguments', () => {
+		it("should memoize passed function for it's arguments", () => {
 			const callback = jest.fn();
-			const fn = memoize(function (a: number, b: number) {
+			const fn = memoize(function(a: number, b: number) {
 				callback();
 				return a + b;
 			});
@@ -99,7 +99,8 @@ describe('function', () => {
 		});
 
 		it('should throw on invalid arguments', () => {
-			const fn = memoize(function () { //eslint-disable-line no-empty-function
+			const fn = memoize(function() {
+				//eslint-disable-line no-empty-function
 			});
 			expect(fn.bind(null, [])).toThrow();
 			expect(fn.bind(null, {})).toThrow();
@@ -107,7 +108,7 @@ describe('function', () => {
 
 		it('should inject clearer function', () => {
 			const callback = jest.fn();
-			const fn = memoize(function (a: number, b: number) {
+			const fn = memoize(function(a: number, b: number) {
 				callback();
 				return a + b;
 			});
@@ -186,8 +187,7 @@ describe('function', () => {
 		it('should decorate class', () => {
 			//
 			@DISPOSABLE
-			class Foo {
-			}
+			class Foo {}
 
 			expect(Foo.prototype['_using']).toBeDefined();
 			expect(Foo.prototype['dispose']).toBeDefined();

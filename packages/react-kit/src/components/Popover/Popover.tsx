@@ -14,12 +14,11 @@ import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { ReactRef } from '../../utils/typings';
 import { EventListener } from '../EventListener/EventListener';
 import { RootClose } from '../RootClose/RootClose';
-import { createPortal } from "react-dom";
-
+import { createPortal } from 'react-dom';
 
 type TSize = {
-	width: number,
-	height: number
+	width: number;
+	height: number;
 };
 
 export const POPOVER = Symbol('Popover');
@@ -28,7 +27,7 @@ export enum PopoverPlacement {
 	Top = 'Top',
 	Bottom = 'Bottom',
 	Left = 'Left',
-	Right = 'Right'
+	Right = 'Right',
 }
 
 export enum PopoverAlign {
@@ -37,45 +36,45 @@ export enum PopoverAlign {
 	Left = 'Left',
 	Right = 'Right',
 	Middle = 'Middle',
-	Center = 'Center'
+	Center = 'Center',
 }
 
 export type TFullPopoverProps = {
-	children: ReactNode,
-	isOpened?: boolean,
-	closeOnClickAway?: boolean,
-	anchor?: ReactRef,
-	onMouseDown?: MouseEventHandler<Element>,
-	placement: PopoverPlacement,
-	align: PopoverAlign,
-	onRequestClose?: () => any,
-	hasArrow?: boolean,
+	children: ReactNode;
+	isOpened?: boolean;
+	closeOnClickAway?: boolean;
+	anchor?: ReactRef;
+	onMouseDown?: MouseEventHandler<Element>;
+	placement: PopoverPlacement;
+	align: PopoverAlign;
+	onRequestClose?: () => any;
+	hasArrow?: boolean;
 	theme: {
-		container?: string,
-		container_hasArrow?: string,
-		container_placementTop?: string,
-		container_placementBottom?: string,
-		container_placementLeft?: string,
-		container_placementRight?: string,
-		content?: string,
-		arrow?: string
-	},
-	style?: object
+		container?: string;
+		container_hasArrow?: string;
+		container_placementTop?: string;
+		container_placementBottom?: string;
+		container_placementLeft?: string;
+		container_placementRight?: string;
+		content?: string;
+		arrow?: string;
+	};
+	style?: object;
 };
 
 type TPopoverState = {
-	finalPlacement?: PopoverPlacement,
-	finalAlign?: PopoverAlign,
-	top?: number,
-	left?: number,
-	arrowOffset?: number
+	finalPlacement?: PopoverPlacement;
+	finalAlign?: PopoverAlign;
+	top?: number;
+	left?: number;
+	arrowOffset?: number;
 };
 
 @PURE
 class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 	static defaultProps = {
 		align: PopoverAlign.Left,
-		placement: PopoverPlacement.Bottom
+		placement: PopoverPlacement.Bottom,
 	};
 
 	state: TPopoverState = {};
@@ -84,13 +83,13 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 	private _anchor?: Element;
 	private _popover: Element;
 	private _popoverSize: TSize;
-    private rootElement: Element;
+	private rootElement: Element;
 
-    constructor(props: TFullPopoverProps) {
-    	super(props);
+	constructor(props: TFullPopoverProps) {
+		super(props);
 
-        this.rootElement = document.createElement('div');
-        document.body.appendChild(this.rootElement);
+		this.rootElement = document.createElement('div');
+		document.body.appendChild(this.rootElement);
 	}
 
 	componentDidMount() {
@@ -104,8 +103,8 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 	}
 
 	componentWillUnmount() {
-        document.body.removeChild(this.rootElement);
-    }
+		document.body.removeChild(this.rootElement);
+	}
 
 	componentWillReceiveProps(nextProps: TFullPopoverProps) {
 		if (nextProps.isOpened && nextProps.anchor) {
@@ -125,15 +124,7 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 	}
 
 	render() {
-		const {
-			closeOnClickAway,
-			theme,
-			hasArrow,
-			onMouseDown,
-			isOpened,
-			onRequestClose,
-			anchor
-		} = this.props;
+		const { closeOnClickAway, theme, hasArrow, onMouseDown, isOpened, onRequestClose, anchor } = this.props;
 
 		if (!isOpened || !anchor) {
 			return null;
@@ -147,34 +138,38 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 		let popoverClassName = classnames(theme.container);
 		if (isMeasured && finalPlacement) {
 			style = prefix({
-				transform: `translate(${left || 0}px, ${top || 0}px)`
+				transform: `translate(${left || 0}px, ${top || 0}px)`,
 			});
 			popoverClassName = classnames(
 				popoverClassName,
 				{
-					[theme.container_hasArrow as string]: hasArrow
+					[theme.container_hasArrow as string]: hasArrow,
 				},
-				[
-					getPlacementModifier(finalPlacement)
-				].map(mod => theme[`container_${mod}`])
+				[getPlacementModifier(finalPlacement)].map(mod => theme[`container_${mod}`]),
 			);
 		}
 		style = {
 			...style,
-			...this.props.style
+			...this.props.style,
 		};
 
 		let child = (
 			<BoundsUpdateDetector onUpdate={this.onSizeUpdate}>
-				<div ref={(el: any) => this._popover = el}
-				     style={style}
-				     onMouseDown={onMouseDown}
-				     className={popoverClassName}>
+				<div
+					ref={(el: any) => (this._popover = el)}
+					style={style}
+					onMouseDown={onMouseDown}
+					className={popoverClassName}>
 					<div className={theme.content}>
-						{isMeasured && finalPlacement && finalAlign && hasArrow && (
-							<div className={theme.arrow}
-							     style={getArrowStyle(finalPlacement, finalAlign, arrowOffset)}/>
-						)}
+						{isMeasured &&
+							finalPlacement &&
+							finalAlign &&
+							hasArrow && (
+								<div
+									className={theme.arrow}
+									style={getArrowStyle(finalPlacement, finalAlign, arrowOffset)}
+								/>
+							)}
 						{this.props.children}
 					</div>
 				</div>
@@ -182,19 +177,13 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 		);
 
 		if (closeOnClickAway) {
-			child = (
-				<RootClose onRootClose={onRequestClose}>
-					{child}
-				</RootClose>
-			);
+			child = <RootClose onRootClose={onRequestClose}>{child}</RootClose>;
 		}
 
 		child = (
-            <EventListener onResize={this.onResize}
-                onScroll={this.onScroll}
-                target="window">
-                {child}
-            </EventListener>
+			<EventListener onResize={this.onResize} onScroll={this.onScroll} target="window">
+				{child}
+			</EventListener>
 		);
 		return createPortal(child, this.rootElement);
 	}
@@ -203,7 +192,7 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 		const popover = ReactDOM.findDOMNode(this._popover) as HTMLElement;
 		return {
 			height: popover.offsetHeight,
-			width: popover.offsetWidth
+			width: popover.offsetWidth,
 		};
 	}
 
@@ -224,7 +213,7 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 			anchorRect.top,
 			anchorRect.bottom,
 			this._popoverSize.height,
-			true
+			true,
 		)!;
 		const leftResult: THorizontalPosition = movePopoverHorizontally(
 			placement,
@@ -232,7 +221,7 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 			anchorRect.left,
 			anchorRect.right,
 			this._popoverSize.width,
-			true
+			true,
 		)!;
 
 		//additional
@@ -257,14 +246,14 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 			left: Math.round(leftResult.left) + window.pageXOffset,
 			finalPlacement,
 			finalAlign,
-			arrowOffset
+			arrowOffset,
 		});
 	}
 
 	onSizeUpdate = (newSize: TSize) => {
 		this._popoverSize = newSize;
 		this.updatePosition();
-	}
+	};
 
 	onResize = () => {
 		this.handleResize();
@@ -277,7 +266,7 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 
 	onScroll = () => {
 		this.handleScroll();
-	}
+	};
 
 	@THROTTLE(100)
 	handleScroll() {
@@ -288,9 +277,7 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 export type TPopoverProps = ObjectClean<PartialKeys<TFullPopoverProps, 'theme' | 'align' | 'placement'>>;
 export const Popover: ComponentClass<TPopoverProps> = withTheme(POPOVER)(RawPopover);
 
-function getArrowStyle(placement: PopoverPlacement,
-                       align: PopoverAlign,
-                       offset?: number): {} | undefined {
+function getArrowStyle(placement: PopoverPlacement, align: PopoverAlign, offset?: number): {} | undefined {
 	switch (placement) {
 		case PopoverPlacement.Top: //fallthrough
 		case PopoverPlacement.Bottom: {
@@ -298,19 +285,19 @@ function getArrowStyle(placement: PopoverPlacement,
 				case PopoverAlign.Left: {
 					return prefix({
 						left: offset,
-						transform: 'translateX(-50%)'
+						transform: 'translateX(-50%)',
 					});
 				}
 				case PopoverAlign.Center: {
 					return prefix({
 						left: '50%',
-						transform: 'translateX(-50%)'
+						transform: 'translateX(-50%)',
 					});
 				}
 				case PopoverAlign.Right: {
 					return prefix({
 						right: offset,
-						transform: 'translateX(50%)'
+						transform: 'translateX(50%)',
 					});
 				}
 			}
@@ -322,19 +309,19 @@ function getArrowStyle(placement: PopoverPlacement,
 				case PopoverAlign.Top: {
 					return prefix({
 						top: offset,
-						transform: 'translateY(-50%)'
+						transform: 'translateY(-50%)',
 					});
 				}
 				case PopoverAlign.Middle: {
 					return prefix({
 						top: '50%',
-						transform: 'translateY(-50%)'
+						transform: 'translateY(-50%)',
 					});
 				}
 				case PopoverAlign.Bottom: {
 					return prefix({
 						bottom: offset,
-						transform: 'translateY(50%)'
+						transform: 'translateY(50%)',
 					});
 				}
 			}
@@ -345,42 +332,40 @@ function getArrowStyle(placement: PopoverPlacement,
 }
 
 type TVerticalPosition = {
-	top: number,
-	placement: PopoverPlacement,
-	align: PopoverAlign
+	top: number;
+	placement: PopoverPlacement;
+	align: PopoverAlign;
 };
 
-function movePopoverVertically(placement: PopoverPlacement,
-                               align: PopoverAlign,
-                               anchorTop: number,
-                               anchorBottom: number,
-                               popoverHeight: number,
-                               checkBounds = false): TVerticalPosition | undefined {
+function movePopoverVertically(
+	placement: PopoverPlacement,
+	align: PopoverAlign,
+	anchorTop: number,
+	anchorBottom: number,
+	popoverHeight: number,
+	checkBounds = false,
+): TVerticalPosition | undefined {
 	switch (placement) {
 		case PopoverPlacement.Top: {
 			const top = anchorTop - popoverHeight;
 			if (checkBounds && top < 0) {
-				return movePopoverVertically(
-					PopoverPlacement.Bottom, align, anchorTop, anchorBottom, popoverHeight
-				);
+				return movePopoverVertically(PopoverPlacement.Bottom, align, anchorTop, anchorBottom, popoverHeight);
 			}
 			return {
 				top,
 				placement,
-				align
+				align,
 			};
 		}
 		case PopoverPlacement.Bottom: {
 			const top = anchorBottom;
 			if (checkBounds && top + popoverHeight > window.innerHeight) {
-				return movePopoverVertically(
-					PopoverPlacement.Top, align, anchorTop, anchorBottom, popoverHeight
-				);
+				return movePopoverVertically(PopoverPlacement.Top, align, anchorTop, anchorBottom, popoverHeight);
 			}
 			return {
 				top,
 				placement,
-				align
+				align,
 			};
 		}
 	}
@@ -390,11 +375,19 @@ function movePopoverVertically(placement: PopoverPlacement,
 			const top = anchorTop;
 			if (checkBounds && top + popoverHeight > window.innerHeight) {
 				const resultForMiddle = movePopoverVertically(
-					placement, PopoverAlign.Middle, anchorTop, anchorBottom, popoverHeight
+					placement,
+					PopoverAlign.Middle,
+					anchorTop,
+					anchorBottom,
+					popoverHeight,
 				);
 				if (resultForMiddle && resultForMiddle.top + popoverHeight > window.innerHeight) {
 					return movePopoverVertically(
-						placement, PopoverAlign.Bottom, anchorTop, anchorBottom, popoverHeight
+						placement,
+						PopoverAlign.Bottom,
+						anchorTop,
+						anchorBottom,
+						popoverHeight,
 					);
 				}
 				return resultForMiddle;
@@ -402,45 +395,49 @@ function movePopoverVertically(placement: PopoverPlacement,
 			return {
 				top,
 				placement,
-				align
+				align,
 			};
 		}
 		case PopoverAlign.Middle: {
 			const top = anchorTop + (anchorBottom - anchorTop) / 2 - popoverHeight / 2;
 			if (checkBounds) {
 				if (top < 0) {
-					return movePopoverVertically(
-						placement, PopoverAlign.Top, anchorTop, anchorBottom, popoverHeight
-					);
+					return movePopoverVertically(placement, PopoverAlign.Top, anchorTop, anchorBottom, popoverHeight);
 				} else if (top + popoverHeight > window.innerHeight) {
 					return movePopoverVertically(
-						placement, PopoverAlign.Bottom, anchorTop, anchorBottom, popoverHeight
+						placement,
+						PopoverAlign.Bottom,
+						anchorTop,
+						anchorBottom,
+						popoverHeight,
 					);
 				}
 			}
 			return {
 				top,
 				placement,
-				align
+				align,
 			};
 		}
 		case PopoverAlign.Bottom: {
 			const top = anchorBottom - popoverHeight;
 			if (checkBounds && top < 0) {
 				const resultForMiddle = movePopoverVertically(
-					placement, PopoverAlign.Middle, anchorTop, anchorBottom, popoverHeight
+					placement,
+					PopoverAlign.Middle,
+					anchorTop,
+					anchorBottom,
+					popoverHeight,
 				);
 				if (resultForMiddle && resultForMiddle.top < 0) {
-					return movePopoverVertically(
-						placement, PopoverAlign.Top, anchorTop, anchorBottom, popoverHeight
-					);
+					return movePopoverVertically(placement, PopoverAlign.Top, anchorTop, anchorBottom, popoverHeight);
 				}
 				return resultForMiddle;
 			}
 			return {
 				top,
 				placement,
-				align
+				align,
 			};
 		}
 	}
@@ -449,42 +446,40 @@ function movePopoverVertically(placement: PopoverPlacement,
 }
 
 type THorizontalPosition = {
-	left: number,
-	placement: PopoverPlacement,
-	align: PopoverAlign
+	left: number;
+	placement: PopoverPlacement;
+	align: PopoverAlign;
 };
 
-function movePopoverHorizontally(placement: PopoverPlacement,
-                                 align: PopoverAlign,
-                                 anchorLeft: number,
-                                 anchorRight: number,
-                                 popoverWidth: number,
-                                 checkBounds = false): THorizontalPosition | undefined {
+function movePopoverHorizontally(
+	placement: PopoverPlacement,
+	align: PopoverAlign,
+	anchorLeft: number,
+	anchorRight: number,
+	popoverWidth: number,
+	checkBounds = false,
+): THorizontalPosition | undefined {
 	switch (placement) {
 		case PopoverPlacement.Left: {
 			const left = anchorLeft - popoverWidth;
 			if (checkBounds && left < 0) {
-				return movePopoverHorizontally(
-					PopoverPlacement.Right, align, anchorLeft, anchorRight, popoverWidth
-				);
+				return movePopoverHorizontally(PopoverPlacement.Right, align, anchorLeft, anchorRight, popoverWidth);
 			}
 			return {
 				left,
 				placement,
-				align
+				align,
 			};
 		}
 		case PopoverPlacement.Right: {
 			const left = anchorRight;
 			if (checkBounds && left + popoverWidth > window.innerWidth) {
-				return movePopoverHorizontally(
-					PopoverPlacement.Left, align, anchorLeft, anchorRight, popoverWidth
-				);
+				return movePopoverHorizontally(PopoverPlacement.Left, align, anchorLeft, anchorRight, popoverWidth);
 			}
 			return {
 				left,
 				placement,
-				align
+				align,
 			};
 		}
 	}
@@ -494,11 +489,19 @@ function movePopoverHorizontally(placement: PopoverPlacement,
 			const left = anchorLeft;
 			if (checkBounds && left + popoverWidth > window.innerWidth) {
 				const resultForCenter = movePopoverHorizontally(
-					placement, PopoverAlign.Center, anchorLeft, anchorRight, popoverWidth
+					placement,
+					PopoverAlign.Center,
+					anchorLeft,
+					anchorRight,
+					popoverWidth,
 				);
 				if (resultForCenter && resultForCenter.left + popoverWidth > window.innerWidth) {
 					return movePopoverHorizontally(
-						placement, PopoverAlign.Right, anchorLeft, anchorRight, popoverWidth
+						placement,
+						PopoverAlign.Right,
+						anchorLeft,
+						anchorRight,
+						popoverWidth,
 					);
 				}
 				return resultForCenter;
@@ -506,45 +509,49 @@ function movePopoverHorizontally(placement: PopoverPlacement,
 			return {
 				left,
 				placement,
-				align
+				align,
 			};
 		}
 		case PopoverAlign.Center: {
 			const left = anchorLeft + (anchorRight - anchorLeft) / 2 - popoverWidth / 2;
 			if (checkBounds) {
 				if (left < 0) {
-					return movePopoverHorizontally(
-						placement, PopoverAlign.Left, anchorLeft, anchorRight, popoverWidth
-					);
+					return movePopoverHorizontally(placement, PopoverAlign.Left, anchorLeft, anchorRight, popoverWidth);
 				} else if (left + popoverWidth > window.innerWidth) {
 					return movePopoverHorizontally(
-						placement, PopoverAlign.Right, anchorLeft, anchorRight, popoverWidth
+						placement,
+						PopoverAlign.Right,
+						anchorLeft,
+						anchorRight,
+						popoverWidth,
 					);
 				}
 			}
 			return {
 				left,
 				placement,
-				align
+				align,
 			};
 		}
 		case PopoverAlign.Right: {
 			const left = anchorRight - popoverWidth;
 			if (checkBounds && left < 0) {
 				const resultForCenter = movePopoverHorizontally(
-					placement, PopoverAlign.Center, anchorLeft, anchorRight, popoverWidth
+					placement,
+					PopoverAlign.Center,
+					anchorLeft,
+					anchorRight,
+					popoverWidth,
 				);
 				if (resultForCenter && resultForCenter.left < 0) {
-					return movePopoverHorizontally(
-						placement, PopoverAlign.Left, anchorLeft, anchorRight, popoverWidth
-					);
+					return movePopoverHorizontally(placement, PopoverAlign.Left, anchorLeft, anchorRight, popoverWidth);
 				}
 				return resultForCenter;
 			}
 			return {
 				left,
 				placement,
-				align
+				align,
 			};
 		}
 	}

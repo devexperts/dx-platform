@@ -2,13 +2,13 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
 export type TSize = {
-	width: number,
-	height: number
+	width: number;
+	height: number;
 };
 
 export type TBoundsUpdateDetectorProps = {
-	onUpdate: (size: TSize) => void,
-	children: any
+	onUpdate: (size: TSize) => void;
+	children: any;
 };
 
 export class BoundsUpdateDetector extends React.Component<TBoundsUpdateDetectorProps> {
@@ -22,7 +22,7 @@ export class BoundsUpdateDetector extends React.Component<TBoundsUpdateDetectorP
 		const element = ReactDOM.findDOMNode(this) as HTMLElement;
 		return {
 			width: element.offsetWidth,
-			height: element.offsetHeight
+			height: element.offsetHeight,
 		};
 	}
 

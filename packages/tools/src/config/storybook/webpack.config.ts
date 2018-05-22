@@ -16,17 +16,15 @@ import {
 	FILE_LOADER_EXCLUDES,
 } from '../webpack/loaders';
 
-import {
-	createForkTSCheckerPlugin
-} from '../webpack/plugins';
+import { createForkTSCheckerPlugin } from '../webpack/plugins';
 import { Configuration } from 'webpack';
 
 // Export a function. Accept the base config as the only param.
 module.exports = (storybookBaseConfig, configType): Configuration => {
-    const config = genDefaultConfig(storybookBaseConfig, configType);
+	const config = genDefaultConfig(storybookBaseConfig, configType);
 
-    return {
-        entry: config.entry,
+	return {
+		entry: config.entry,
 		output: config.output,
 		module: {
 			rules: [
@@ -34,51 +32,37 @@ module.exports = (storybookBaseConfig, configType): Configuration => {
 					oneOf: [
 						{
 							test: TS_PATTERN,
-							use: [
-								babelLoader,
-								tsLoader,
-							],
+							use: [babelLoader, tsLoader],
 						},
 						{
 							test: STYLUS_PATTERN,
-							use: [
-								styleLoader,
-								cssLoader,
-								postcssLoader,
-								stylusLoader,
-							],
+							use: [styleLoader, cssLoader, postcssLoader, stylusLoader],
 						},
 						{
 							test: CSS_PATTERN,
-							use: [
-								styleLoader,
-								cssLoader,
-								postcssLoader,
-							],
+							use: [styleLoader, cssLoader, postcssLoader],
 						},
 						{
 							exclude: FILE_LOADER_EXCLUDES,
-							use: [
-								fileLoader,
-							],
+							use: [fileLoader],
 						} as any, // typings for webpack doesn't support default case properly
 					],
 				},
 			],
 		},
-        plugins: [
-            ...config.plugins as any[],
+		plugins: [
+			...(config.plugins as any[]),
 			createForkTSCheckerPlugin(),
 			new webpack.DefinePlugin({
-				SRC_PATH: JSON.stringify(ENV.SRC_PATH)
-			})
-        ],
+				SRC_PATH: JSON.stringify(ENV.SRC_PATH),
+			}),
+		],
 		resolve: {
 			symlinks: true,
 			extensions: ['.ts', '.tsx', '.js', '.jsx', '.styl'],
 		},
 		resolveLoader: {
-			modules: [ENV.TOOLS_NODE_MODULES_PATH]
+			modules: [ENV.TOOLS_NODE_MODULES_PATH],
 		},
-    }
+	};
 };

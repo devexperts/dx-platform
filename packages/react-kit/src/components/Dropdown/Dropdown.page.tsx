@@ -10,8 +10,8 @@ import { PURE } from '../../utils/pure';
 import { stateful } from '../Control/Control';
 
 type TAnchorProps = WithInnerRef<{
-	onClick: MouseEventHandler<Element>,
-	children: ReactNode
+	onClick: MouseEventHandler<Element>;
+	children: ReactNode;
 }>;
 
 const StatefulDropdown = stateful('isOpened', 'onToggle')(Dropdown);
@@ -24,8 +24,7 @@ class AnchorClass extends Component<TAnchorProps> {
 		console.log('rendering anchor class');
 
 		return (
-			<Button ref={innerRef}
-			        onClick={onClick}>
+			<Button ref={innerRef} onClick={onClick}>
 				Class Anchor
 				{children}
 			</Button>
@@ -60,7 +59,7 @@ storiesOf('Dropdown', module)
 	))
 	.add('with force close', () => (
 		<Demo>
-			<DropdownPage/>
+			<DropdownPage />
 		</Demo>
 	));
 
@@ -79,7 +78,7 @@ class DropdownPage extends Component<any, any> {
 
 	onForceCloseClick = () => {
 		this.forceClose();
-	}
+	};
 
 	getForceClose = (close: Function) => {
 		this.forceClose = close;

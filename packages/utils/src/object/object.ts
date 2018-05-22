@@ -7,10 +7,13 @@ import { is, hasOwnProperty } from './fb';
  * Generates new object with keys mapped with template
  */
 export function mapKeys<T extends {}>(object: T, template: (key: string) => string): T {
-	return Object.keys(object).reduce<T>((acc, key) => {
-		acc[template(key)] = object[key];
-		return acc;
-	}, {} as T);
+	return Object.keys(object).reduce<T>(
+		(acc, key) => {
+			acc[template(key)] = object[key];
+			return acc;
+		},
+		{} as T,
+	);
 }
 
 /**
@@ -24,8 +27,7 @@ export function deepEqual(objA: object, objB: object): boolean {
 		return true;
 	}
 
-	if (typeof objA !== 'object' || objA === null ||
-		typeof objB !== 'object' || objB === null) {
+	if (typeof objA !== 'object' || objA === null || typeof objB !== 'object' || objB === null) {
 		return false;
 	}
 
@@ -38,10 +40,7 @@ export function deepEqual(objA: object, objB: object): boolean {
 
 	// Test for A's keys different from B.
 	for (let i = 0, len = keysA.length; i < len; i++) {
-		if (
-			!hasOwnProperty.call(objB, keysA[i]) ||
-			!deepEqual(objA[keysA[i]], objB[keysA[i]])
-		) {
+		if (!hasOwnProperty.call(objB, keysA[i]) || !deepEqual(objA[keysA[i]], objB[keysA[i]])) {
 			return false;
 		}
 	}

@@ -1,25 +1,25 @@
 import * as React from 'react';
 import { PURE } from '../../utils/pure';
 import { EventListener, TEventListenerProps } from '../EventListener/EventListener';
-import {ObjectOmit} from 'typelevel-ts';
+import { ObjectOmit } from 'typelevel-ts';
 
 export type TBarProps = {
-    onBarDragStart: React.MouseEventHandler<HTMLDivElement>,
-    onBarDrag: React.MouseEventHandler<HTMLDivElement>,
+	onBarDragStart: React.MouseEventHandler<HTMLDivElement>;
+	onBarDrag: React.MouseEventHandler<HTMLDivElement>;
 	theme: {
-    	container?: string
-	}
+		container?: string;
+	};
 };
 
 export type TBarState = {
-	isDragging: boolean
-}
+	isDragging: boolean;
+};
 
 @PURE
 export class Bar extends React.Component<TBarProps, TBarState> {
 	state = {
-		isDragging: false
-	}
+		isDragging: false,
+	};
 
 	render() {
 		const { isDragging } = this.state;
@@ -35,15 +35,14 @@ export class Bar extends React.Component<TBarProps, TBarState> {
 				onMouseUp: this.onDocumentMouseUp,
 				onMouseMove: this.onDocumentMouseMove,
 				onSelectStart: this.onDocumentSelectStart,
-				onDragEnd: this.onDragEnd
-
+				onDragEnd: this.onDragEnd,
 			};
 		}
 
 		const barProps = {
 			onMouseDown: this.onBarMouseDown,
 			onClick: this.onBarClick,
-			className: this.props.theme.container
+			className: this.props.theme.container,
 		};
 
 		return (
@@ -53,46 +52,46 @@ export class Bar extends React.Component<TBarProps, TBarState> {
 		);
 	}
 
-	onBarClick: React.MouseEventHandler<HTMLDivElement> = (event) => {
+	onBarClick: React.MouseEventHandler<HTMLDivElement> = event => {
 		event.stopPropagation();
-	}
+	};
 
-	onDocumentSelectStart: React.MouseEventHandler<HTMLDivElement> = (event) => {
+	onDocumentSelectStart: React.MouseEventHandler<HTMLDivElement> = event => {
 		event.preventDefault();
 		event.stopPropagation();
 		return false;
-	}
+	};
 
-	onDocumentMouseMove:React.MouseEventHandler<HTMLDivElement> = (event) => {
+	onDocumentMouseMove: React.MouseEventHandler<HTMLDivElement> = event => {
 		const { onBarDrag } = this.props;
 		onBarDrag && onBarDrag(event);
-	}
+	};
 
-	onDragEnd:React.MouseEventHandler<HTMLDivElement> = (event) => {
+	onDragEnd: React.MouseEventHandler<HTMLDivElement> = event => {
 		this._stopDrag(event);
-	}
+	};
 
-	onDocumentMouseUp:React.MouseEventHandler<HTMLDivElement> = (event) => {
+	onDocumentMouseUp: React.MouseEventHandler<HTMLDivElement> = event => {
 		this._stopDrag(event);
-	}
+	};
 
-	_stopDrag:React.MouseEventHandler<HTMLDivElement> = (event) => {
+	_stopDrag: React.MouseEventHandler<HTMLDivElement> = event => {
 		const { onBarDrag } = this.props;
 
 		this.setState({
-			isDragging: false
+			isDragging: false,
 		});
 
 		onBarDrag && onBarDrag(event);
-	}
+	};
 
-	onBarMouseDown:React.MouseEventHandler<HTMLDivElement> = (event) => {
+	onBarMouseDown: React.MouseEventHandler<HTMLDivElement> = event => {
 		const { onBarDragStart } = this.props;
 
 		onBarDragStart && onBarDragStart(event);
 
 		this.setState({
-			isDragging: true
+			isDragging: true,
 		});
-	}
+	};
 }

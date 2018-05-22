@@ -88,7 +88,7 @@ const properties = [
 	'transitionTimingFunction',
 	'transitionDelay',
 	'userModify',
-	'userSelect'
+	'userSelect',
 ];
 
 /**

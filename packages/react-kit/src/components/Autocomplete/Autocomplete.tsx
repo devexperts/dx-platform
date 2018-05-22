@@ -13,77 +13,66 @@ import { AutocompleteMenuItem, TAutocompleteMenuItemProps } from './Autocomplete
 export const AUTOCOMPLETE = Symbol('Autocomplete');
 
 export type TFullAutocompleteProps = TInputProps & {
-	Input: ComponentClass<TInputProps>,
-	Popover: ComponentClass<TPopoverProps> | SFC<TPopoverProps>,
-	Menu: ComponentClass<TMenuProps> | SFC<TMenuProps>,
-	MenuItem: ComponentClass<TAutocompleteMenuItemProps>,
-	value: string,
-	data: any[],
-	filter: (value: string) => (item: any, index: number) => boolean,
+	Input: ComponentClass<TInputProps>;
+	Popover: ComponentClass<TPopoverProps> | SFC<TPopoverProps>;
+	Menu: ComponentClass<TMenuProps> | SFC<TMenuProps>;
+	MenuItem: ComponentClass<TAutocompleteMenuItemProps>;
+	value: string;
+	data: any[];
+	filter: (value: string) => (item: any, index: number) => boolean;
 	theme: {
-		container?: string,
-		Input?: TInputProps['theme'],
-		Popover?: TPopoverProps['theme'],
-		Menu?: TMenuProps['theme'],
-		MenuItem?: TAutocompleteMenuItemProps['theme']
-	}
-}
+		container?: string;
+		Input?: TInputProps['theme'];
+		Popover?: TPopoverProps['theme'];
+		Menu?: TMenuProps['theme'];
+		MenuItem?: TAutocompleteMenuItemProps['theme'];
+	};
+};
 
 class RawAutocomplete extends React.Component<TFullAutocompleteProps> {
 	static defaultProps = {
 		Input,
 		Menu,
 		Popover,
-		MenuItem: AutocompleteMenuItem
-	}
+		MenuItem: AutocompleteMenuItem,
+	};
 
 	state = {
-		isOpened: false
+		isOpened: false,
 	};
 
 	private input: any;
 	isFocused = false;
 
 	render() {
-		const {
-			theme,
-			Input,
-			MenuItem,
-			Menu,
-			Popover,
-			data,
-			value,
-			filter,
-			...inputProps
-		} = this.props;
+		const { theme, Input, MenuItem, Menu, Popover, data, value, filter, ...inputProps } = this.props;
 
 		return (
 			<div className={theme.container}>
-				<Input {...inputProps}
-					   theme={theme.Input}
-					   value={value}
-					   ref={(el: any) => this.input = el}
-					   onKeyDown={this.onInputKeyDown}
-					   onValueChange={this.onInputChange}
-					   onKeyPress={this.onInputKeyPress}/>
+				<Input
+					{...inputProps}
+					theme={theme.Input}
+					value={value}
+					ref={(el: any) => (this.input = el)}
+					onKeyDown={this.onInputKeyDown}
+					onValueChange={this.onInputChange}
+					onKeyPress={this.onInputKeyPress}
+				/>
 
-				<Popover isOpened={this.state.isOpened}
-						 theme={theme.Popover}
-						 anchor={this.input}
-						 onRequestClose={this.onPopoverRequestClose}
-						 closeOnClickAway={true}>
+				<Popover
+					isOpened={this.state.isOpened}
+					theme={theme.Popover}
+					anchor={this.input}
+					onRequestClose={this.onPopoverRequestClose}
+					closeOnClickAway={true}>
 					<Pure data={data} value={value} Menu={Menu} filter={filter}>
 						{() => {
 							const filtered = data.filter(filter(value));
 							return (
 								filtered.length > 0 && (
-									<Menu onItemSelect={this.onMenuItemSelect}
-										  theme={theme.Menu}>
+									<Menu onItemSelect={this.onMenuItemSelect} theme={theme.Menu}>
 										{filtered.map((item: any, i: number) => (
-											<MenuItem key={i}
-													  theme={theme.MenuItem}
-													  search={value}
-													  value={item}>
+											<MenuItem key={i} theme={theme.MenuItem} search={value} value={item}>
 												{item}
 											</MenuItem>
 										))}
@@ -94,7 +83,7 @@ class RawAutocomplete extends React.Component<TFullAutocompleteProps> {
 					</Pure>
 				</Popover>
 			</div>
-		)
+		);
 	}
 
 	onInputKeyDown = (e: React.KeyboardEvent<HTMLElement>) => {
@@ -103,44 +92,45 @@ class RawAutocomplete extends React.Component<TFullAutocompleteProps> {
 			//loose focus on tab press
 			this.isFocused = false;
 			this.setState({
-				isOpened: false
+				isOpened: false,
 			});
 		}
-	}
+	};
 
 	onInputKeyPress = (e: React.KeyboardEvent<HTMLElement>) => {
 		if ((e.keyCode || e.which) === KeyCode.Enter) {
 			this.isFocused = false;
 			this.setState({
-				isOpened: false
+				isOpened: false,
 			});
 		}
-	}
+	};
 
 	onInputChange = (value: string) => {
 		const { onValueChange } = this.props;
 		this.setState({
-			isOpened: value && value.length !== 0
+			isOpened: value && value.length !== 0,
 		});
 
 		onValueChange && onValueChange(value);
-	}
+	};
 
 	onPopoverRequestClose = () => {
 		this.setState({
-			isOpened: false
+			isOpened: false,
 		});
-	}
+	};
 
 	onMenuItemSelect = (value: any) => {
 		const { onValueChange } = this.props;
 		this.setState({
-			isOpened: false
+			isOpened: false,
 		});
 		onValueChange && onValueChange(value);
-	}
-
+	};
 }
 
-export type TAutocompleteProps = ObjectClean<PartialKeys<TFullAutocompleteProps, 'theme' | 'Input' | 'Popover' | 'MenuItem' | 'Menu'>>;
+export type TAutocompleteProps = ObjectClean<
+	PartialKeys<TFullAutocompleteProps, 'theme' | 'Input' | 'Popover' | 'MenuItem' | 'Menu'>
+>;
 export const Autocomplete: ComponentClass<TAutocompleteProps> = withTheme(AUTOCOMPLETE)(RawAutocomplete);

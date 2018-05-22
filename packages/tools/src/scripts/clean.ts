@@ -6,16 +6,12 @@ import { Scripts } from './constants';
 
 const program = getProgramForScript(Scripts.CLEAN);
 
-program
-	.command('clean <folder>')
-	.action(function(folder) {
-		const pathToRemove = path.join(ROOT, folder);
+program.command('clean <folder>').action(function(folder) {
+	const pathToRemove = path.join(ROOT, folder);
 
-		rimraf(pathToRemove, () => {
-			console.log(`removed: ${pathToRemove}`)
-		});
+	rimraf(pathToRemove, () => {
+		console.log(`removed: ${pathToRemove}`);
 	});
-
+});
 
 program.parse(process.argv);
-

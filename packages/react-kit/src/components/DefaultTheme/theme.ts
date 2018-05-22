@@ -5,10 +5,10 @@ import { BUTTON } from '../Button/Button';
 import * as buttonTheme from '../Button/Button.styl';
 
 import { LOADING_INDICATOR } from '../LoadingIndicator/LoadingIndicator';
-import * as loadingIndicatorTheme from '../LoadingIndicator/LoadingIndicator.demo.styl'
+import * as loadingIndicatorTheme from '../LoadingIndicator/LoadingIndicator.demo.styl';
 
 import { CHECKBOX } from '../Checkbox/Checkbox';
-import * as checkboxTheme from '../Checkbox/Checkbox.demo.styl'
+import * as checkboxTheme from '../Checkbox/Checkbox.demo.styl';
 
 import { POPOVER } from '../Popover/Popover';
 import * as popoverTheme from '../Popover/Popover.demo.styl';
@@ -93,27 +93,27 @@ export default {
 	[DATE_INPUT]: {
 		...dateInputTheme,
 		ButtonIcon: dateInputButtonIconTheme,
-		CalendarButtonIcon: dateInputButtonIconTheme
+		CalendarButtonIcon: dateInputButtonIconTheme,
 	},
 	[STEPPABLE_INPUT]: {
 		...steppableInput,
 		Input: steppableInputInput,
 		ButtonIcon: steppableInputButtonIcon,
-		ClearButtonIcon: steppableInputButtonIcon
+		ClearButtonIcon: steppableInputButtonIcon,
 	},
 	[TIME_INPUT]: timeInput,
 	[PASSWORD_INPUT]: {
 		container: passwordInputTheme.container,
 		Input: {
-			container: passwordInputTheme.input
+			container: passwordInputTheme.input,
 		},
 		RevealButton: {
 			container: passwordInputTheme.button,
-			icon: passwordInputTheme.icon
-		}
+			icon: passwordInputTheme.icon,
+		},
 	},
 	[LINK]: linkTheme,
 	[TOGGLE_BUTTONS]: toggleButtonsTheme,
 	[LOADING_INDICATION]: loadingIndicationTheme,
-	[POPUP]: popupTheme
-}
+	[POPUP]: popupTheme,
+};

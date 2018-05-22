@@ -1,5 +1,5 @@
-import {ComponentType} from 'react';
-import {PartialKeys} from '@devexperts/utils/dist/object/object';
+import { ComponentType } from 'react';
+import { PartialKeys } from '@devexperts/utils/dist/object/object';
 
 export const withDefaults = <P extends object, Keys extends keyof P>(
 	defaults: Pick<P, Keys>,

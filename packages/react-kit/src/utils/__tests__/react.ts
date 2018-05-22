@@ -5,36 +5,35 @@ describe('react', () => {
 		it('should check for shallow equality', () => {
 			const props = {
 				a: 'a',
-				b: 0
+				b: 0,
 			};
 
 			const state = {
 				a: 'a',
-				b: 0
+				b: 0,
 			};
 
-			expect(shouldComponentUpdate(
-				props,
-				state,
-				props,
-				state
-			)).toBeFalsy();
-			expect(shouldComponentUpdate(
-				props,
-				state,
-				Object.assign({}, props, {
-					a: 'b'
-				}),
-				state
-			)).toBeTruthy();
-			expect(shouldComponentUpdate(
-				props,
-				state,
-				props,
-				Object.assign({}, state, {
-					b: 1
-				})
-			));
+			expect(shouldComponentUpdate(props, state, props, state)).toBeFalsy();
+			expect(
+				shouldComponentUpdate(
+					props,
+					state,
+					Object.assign({}, props, {
+						a: 'b',
+					}),
+					state,
+				),
+			).toBeTruthy();
+			expect(
+				shouldComponentUpdate(
+					props,
+					state,
+					props,
+					Object.assign({}, state, {
+						b: 1,
+					}),
+				),
+			);
 		});
 	});
 	describe('PURE decorator', () => {
@@ -44,17 +43,15 @@ describe('react', () => {
 			class Foo {
 				props = {
 					a: 'a',
-					b: 0
+					b: 0,
 				};
 
 				state = {
 					a: 'a',
-					b: 0
+					b: 0,
 				};
 
-				render() {
-
-				}
+				render() {}
 			}
 
 			const foo = new Foo();
@@ -66,7 +63,7 @@ describe('react', () => {
 			@PURE
 			class Foo {
 				props = {
-					a: 1
+					a: 1,
 				};
 
 				shouldComponentUpdate(props: any) {
@@ -75,76 +72,95 @@ describe('react', () => {
 			}
 
 			const foo = new Foo();
-			expect(foo.shouldComponentUpdate({
-				a: 2 //value is different
-			})).toBeFalsy(); //but base shouldComponentUpdate returns false
+			expect(
+				foo.shouldComponentUpdate({
+					a: 2, //value is different
+				}),
+			).toBeFalsy(); //but base shouldComponentUpdate returns false
 		});
 		it('should check props.theme object for equality when using with react-css-themr', () => {
-			const css2 = { //different objects with same structure
-				test: 'test'
+			const css2 = {
+				//different objects with same structure
+				test: 'test',
 			};
-			const css3 = { //different objects with same structure
-				test: 'test'
+			const css3 = {
+				//different objects with same structure
+				test: 'test',
 			};
 			const css4 = {
-				test: 'bla'
+				test: 'bla',
 			};
 
 			@PURE
 			class Foo {
 				props = {
-					theme: css2
+					theme: css2,
 				};
 			}
 
 			const foo = new Foo();
-			expect(foo['shouldComponentUpdate']({ //same css
-				theme: css2
-			})).toBeFalsy();
-			expect(foo['shouldComponentUpdate']({ //different css but with same structure
-				theme: css3
-			})).toBeFalsy();
-			expect(foo['shouldComponentUpdate']({ //different css
-				theme: css4
-			})).toBeTruthy();
+			expect(
+				foo['shouldComponentUpdate']({
+					//same css
+					theme: css2,
+				}),
+			).toBeFalsy();
+			expect(
+				foo['shouldComponentUpdate']({
+					//different css but with same structure
+					theme: css3,
+				}),
+			).toBeFalsy();
+			expect(
+				foo['shouldComponentUpdate']({
+					//different css
+					theme: css4,
+				}),
+			).toBeTruthy();
 		});
 		it('should check deep props.theme objects', () => {
 			const css = {
 				test: 'test',
 				nested: {
-					foo: 'bar'
-				}
+					foo: 'bar',
+				},
 			};
 			const css2 = {
 				test: 'test',
 				nested: {
-					foo: 'bar'
-				}
+					foo: 'bar',
+				},
 			};
 			const css3 = {
 				test: 'test',
 				nested: {
-					bar: 'bar'
-				}
+					bar: 'bar',
+				},
 			};
 
 			@PURE
 			class Foo {
 				props = {
-					theme: css
+					theme: css,
 				};
 			}
 
 			const foo = new Foo();
-			expect(foo['shouldComponentUpdate']({
-				theme: css
-			})).toBeFalsy();
-			expect(foo['shouldComponentUpdate']({
-				theme: css2
-			})).toBeFalsy();
-			expect(foo['shouldComponentUpdate']({
-				theme: css3
-			})).toBeTruthy();
+			expect(
+				foo['shouldComponentUpdate']({
+					theme: css,
+				}),
+			).toBeFalsy();
+			expect(
+				foo['shouldComponentUpdate']({
+					theme: css2,
+				}),
+			).toBeFalsy();
+			expect(
+				foo['shouldComponentUpdate']({
+					theme: css3,
+				}),
+			).toBeTruthy();
 		});
 	});
 
@@ -152,9 +168,7 @@ describe('react', () => {
 		it('should decorate', () => {
 			//
 			@DISPOSABLE
-			class Foo {
-
-			}
+			class Foo {}
 
 			const foo = new Foo();
 			expect(foo['dispose']).toBeDefined();

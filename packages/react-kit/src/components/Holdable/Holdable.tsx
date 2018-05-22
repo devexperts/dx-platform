@@ -5,17 +5,17 @@ import { ObjectClean } from 'typelevel-ts/lib';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
 
 export type THoldableChildProps = {
-	onMouseDown: EventHandler<MouseEvent<Element>>,
-	onMouseUp: EventHandler<MouseEvent<Element>>,
-	onMouseLeave: EventHandler<MouseEvent<Element>>
+	onMouseDown: EventHandler<MouseEvent<Element>>;
+	onMouseUp: EventHandler<MouseEvent<Element>>;
+	onMouseLeave: EventHandler<MouseEvent<Element>>;
 };
 
 export type TFullHoldableProps = {
-	children: ReactElement<THoldableChildProps>,
-	onHold: Function,
-	delay: number,
-	interval: number,
-	isDisabled?: boolean
+	children: ReactElement<THoldableChildProps>;
+	onHold: Function;
+	delay: number;
+	interval: number;
+	isDisabled?: boolean;
 };
 
 class RawHoldable extends React.Component<TFullHoldableProps> {
@@ -23,7 +23,7 @@ class RawHoldable extends React.Component<TFullHoldableProps> {
 		children: PropTypes.element,
 		delay: PropTypes.number,
 		interval: PropTypes.number,
-		onHold: PropTypes.func
+		onHold: PropTypes.func,
 	};
 
 	private _timeoutId: any;
@@ -31,7 +31,7 @@ class RawHoldable extends React.Component<TFullHoldableProps> {
 
 	static defaultProps = {
 		interval: 50,
-		delay: 300
+		delay: 300,
 	};
 
 	componentWillUnmount() {
@@ -90,11 +90,11 @@ class RawHoldable extends React.Component<TFullHoldableProps> {
 				onHold && onHold();
 			}, interval);
 		}, delay);
-	}
+	};
 
 	onEndHold = () => {
 		this.clearTimers();
-	}
+	};
 }
 
 export type THoldableProps = ObjectClean<PartialKeys<TFullHoldableProps, 'delay' | 'interval'>>;

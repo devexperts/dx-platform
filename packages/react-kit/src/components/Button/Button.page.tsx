@@ -1,11 +1,11 @@
 import Demo from '../demo/Demo';
-import {Button} from './Button';
+import { Button } from './Button';
 import * as React from 'react';
 import { storiesOf } from '@devexperts/tools/dist/utils/storybook';
 
 const demoStyle = {
 	fontWeight: 'bold',
-	color: 'blue'
+	color: 'blue',
 };
 
 storiesOf('Button', module)
@@ -19,22 +19,36 @@ storiesOf('Button', module)
 	.add('Primary', () => (
 		<Demo>
 			<Button isPrimary={true}>Primary</Button>
-			<Button isPrimary={true} isDisabled={true}>Disabled</Button>
+			<Button isPrimary={true} isDisabled={true}>
+				Disabled
+			</Button>
 		</Demo>
 	))
 	.add('Flat', () => (
 		<Demo>
 			<Button isFlat={true}>Flat</Button>
-			<Button isFlat={true} isDisabled={true}>Flat Disabled</Button>
-			<Button isPrimary={true} isFlat={true}>Primary Flat</Button>
-			<Button isPrimary={true} isFlat={true} isDisabled={true}>Primary Flat Disabled</Button>
+			<Button isFlat={true} isDisabled={true}>
+				Flat Disabled
+			</Button>
+			<Button isPrimary={true} isFlat={true}>
+				Primary Flat
+			</Button>
+			<Button isPrimary={true} isFlat={true} isDisabled={true}>
+				Primary Flat Disabled
+			</Button>
 		</Demo>
 	))
 	.add('Loading', () => (
 		<Demo>
 			<Button isLoading={true}>Loading</Button>
-			<Button isDisabled={true} isLoading={true}>Loading Disabled</Button>
-			<Button isFlat={true} isLoading={true}>Loading Flat</Button>
-			<Button isFlat={true} isLoading={true} isDisabled={true}>Loading Flat Disabled</Button>
+			<Button isDisabled={true} isLoading={true}>
+				Loading Disabled
+			</Button>
+			<Button isFlat={true} isLoading={true}>
+				Loading Flat
+			</Button>
+			<Button isFlat={true} isLoading={true} isDisabled={true}>
+				Loading Flat Disabled
+			</Button>
 		</Demo>
 	));

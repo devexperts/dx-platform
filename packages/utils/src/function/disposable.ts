@@ -12,7 +12,7 @@ export function DISPOSABLE<T extends Function>(target: T): T {
 	/**
 	 * Dispose
 	 */
-	target.prototype.dispose = function () {
+	target.prototype.dispose = function() {
 		while (this._disposables.length !== 0) {
 			this._disposables.pop()();
 		}

@@ -6,24 +6,20 @@ import { ObjectClean } from 'typelevel-ts';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
 
 export type TFullExpandableHandlerProps = {
-	isExpanded: boolean,
+	isExpanded: boolean;
 	theme: {
-		container?: string
-	},
-	children: ReactElement<any>
-}
+		container?: string;
+	};
+	children: ReactElement<any>;
+};
 
 @PURE
 class RawExpandableHandler extends React.Component<TFullExpandableHandlerProps> {
 	render() {
-		const {theme, children} = this.props;
-		return (
-			<div className={theme.container}>
-				{children}
-			</div>
-		)
+		const { theme, children } = this.props;
+		return <div className={theme.container}>{children}</div>;
 	}
 }
 
-export type TExpandableHandlerProps = ObjectClean<PartialKeys<TFullExpandableHandlerProps, 'theme' | 'isExpanded' >>;
+export type TExpandableHandlerProps = ObjectClean<PartialKeys<TFullExpandableHandlerProps, 'theme' | 'isExpanded'>>;
 export const ExpandableHandler: ComponentClass<TExpandableHandlerProps> = withTheme(Symbol(''))(RawExpandableHandler);

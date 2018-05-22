@@ -5,24 +5,28 @@ import prefix from '@devexperts/utils/dist/dom/prefix';
 import { PURE } from '../../utils/pure';
 import { Pure } from '../Pure/Pure';
 import {
-    Table as BasicTable,
-    TableBody as BasicTableBody,
-    TableHead as BasicTableHead,
-    TableCell as BasicTableCell,
-    TableRow as BasicTableRow,
-    TFullTableProps,
-    TTableProps,
-    TFullTableBodyProps,
-    TFullTableRowProps,
-    TFullTableCellProps,
-    TFullTableHeadProps, TTableHeadProps, TTableRowProps, TTableCellProps, TTableTheme
+	Table as BasicTable,
+	TableBody as BasicTableBody,
+	TableHead as BasicTableHead,
+	TableCell as BasicTableCell,
+	TableRow as BasicTableRow,
+	TFullTableProps,
+	TTableProps,
+	TFullTableBodyProps,
+	TFullTableRowProps,
+	TFullTableCellProps,
+	TFullTableHeadProps,
+	TTableHeadProps,
+	TTableRowProps,
+	TTableCellProps,
+	TTableTheme,
 } from '../Table/Table';
 import Emitter from '@devexperts/utils/dist/emitter/Emitter';
 import { Scrollable } from '../Scrollable/Scrollable';
 import * as classnames from 'classnames';
-import {ObjectClean, ObjectOmit} from 'typelevel-ts';
-import {PartialKeys} from "@devexperts/utils/dist/object/object";
-import {withTheme} from '../../utils/withTheme';
+import { ObjectClean, ObjectOmit } from 'typelevel-ts';
+import { PartialKeys } from '@devexperts/utils/dist/object/object';
+import { withTheme } from '../../utils/withTheme';
 
 export const GRID = Symbol('Grid');
 
@@ -32,7 +36,7 @@ const EVENT_GRID = {
 	CELL_MOUNT: 'EVENT_GRID:CELL_MOUNT',
 	CELL_UPDATE: 'EVENT_GRID:CELL_UPDATE',
 	GRID_MOUNT: 'EVENT_GRID:GRID_MOUNT',
-	GRID_UPDATE: 'EVENT_GRID:GRID_UPDATE'
+	GRID_UPDATE: 'EVENT_GRID:GRID_UPDATE',
 };
 
 class GridInternalEmitter extends Emitter {
@@ -43,26 +47,26 @@ class GridInternalEmitter extends Emitter {
 
 const GRID_CONTEXT_EMITTER = '__GRID_CONTEXT_EMITTER__';
 const CONTEXT_TYPES = {
-	[GRID_CONTEXT_EMITTER]: PropTypes.instanceOf(GridInternalEmitter).isRequired
+	[GRID_CONTEXT_EMITTER]: PropTypes.instanceOf(GridInternalEmitter).isRequired,
 };
 
 export type TFullGridProps = ObjectOmit<TFullTableProps, 'theme'> & {
-    theme: TTableTheme & {
-        gridHead?: string,
-        gridHead_paddedForScrollbar?: string,
-        gridHead__content?: string
-        gridBody?: string,
-        horizontal_scrollbar__bar?: string,
-        vertical_scrollbar__bar?: string,
-        gridCell__content?: string,
-        gridCell__content_left?: string,
-        gridCell__content_center?: string,
-        gridCell__content_right?: string,
-        cell_left?: string,
-        cell_center?: string,
-        cell_right?: string,
-        gridCell__placeholder?: string
-    }
+	theme: TTableTheme & {
+		gridHead?: string;
+		gridHead_paddedForScrollbar?: string;
+		gridHead__content?: string;
+		gridBody?: string;
+		horizontal_scrollbar__bar?: string;
+		vertical_scrollbar__bar?: string;
+		gridCell__content?: string;
+		gridCell__content_left?: string;
+		gridCell__content_center?: string;
+		gridCell__content_right?: string;
+		cell_left?: string;
+		cell_center?: string;
+		cell_right?: string;
+		gridCell__placeholder?: string;
+	};
 };
 
 @PURE
@@ -73,13 +77,13 @@ class RawGrid extends React.Component<TFullGridProps> {
 
 	_rows = {
 		head: {},
-		body: {}
+		body: {},
 	};
 	_maxColumnWidths = {};
 
 	getChildContext() {
 		return {
-			[GRID_CONTEXT_EMITTER]: this._emitter
+			[GRID_CONTEXT_EMITTER]: this._emitter,
 		};
 	}
 
@@ -109,11 +113,7 @@ class RawGrid extends React.Component<TFullGridProps> {
 
 	render() {
 		const { theme, children } = this.props;
-		return (
-			<div className={theme.container}>
-				{children}
-			</div>
-		);
+		return <div className={theme.container}>{children}</div>;
 	}
 
 	onCellMount = (rowIndex: number, columnIndex: number, width: number, isInHead: boolean) => {
@@ -121,20 +121,20 @@ class RawGrid extends React.Component<TFullGridProps> {
 		//set or update row storage
 		if (!rowStorage[rowIndex]) {
 			rowStorage[rowIndex] = {
-				columns: {}
+				columns: {},
 			};
 		}
 		rowStorage[rowIndex].columns[columnIndex] = width;
 		//detect max width
 		const maxColumnWidthByIndex = this._maxColumnWidths[columnIndex];
-		if (!maxColumnWidthByIndex || maxColumnWidthByIndex && maxColumnWidthByIndex < width) {
+		if (!maxColumnWidthByIndex || (maxColumnWidthByIndex && maxColumnWidthByIndex < width)) {
 			this._maxColumnWidths[columnIndex] = width;
 		}
 	};
 
 	onCellRemount = () => {
-        throw new Error('Grid does not support dynamic row/cell mounts');
-    };
+		throw new Error('Grid does not support dynamic row/cell mounts');
+	};
 
 	onCellUpdate = (rowIndex: number, columnIndex: number, newWidth: number, isInHead: boolean) => {
 		//update row storage
@@ -143,24 +143,25 @@ class RawGrid extends React.Component<TFullGridProps> {
 		//update max width
 		this._maxColumnWidths[columnIndex] = Math.max(
 			...Object.keys(this._rows.head).map(key => this._rows.head[key].columns[columnIndex]),
-			...Object.keys(this._rows.body).map(key => this._rows.body[key].columns[columnIndex])
+			...Object.keys(this._rows.body).map(key => this._rows.body[key].columns[columnIndex]),
 		);
-	}
+	};
 }
 
-export type TFullGridHeadProps = TFullGridProps & TFullTableHeadProps & {
-	Table?: React.ComponentClass<TTableProps>
-    TableHead?: React.ComponentClass<TTableHeadProps>
-};
+export type TFullGridHeadProps = TFullGridProps &
+	TFullTableHeadProps & {
+		Table?: React.ComponentClass<TTableProps>;
+		TableHead?: React.ComponentClass<TTableHeadProps>;
+	};
 
 @PURE
 class RawGridHead extends React.Component<TFullGridHeadProps> {
 	static contextTypes = CONTEXT_TYPES;
 
 	state = {
-        scrollLeft: 0,
-        withVerticalScrollbar: false,
-		columns: {}
+		scrollLeft: 0,
+		withVerticalScrollbar: false,
+		columns: {},
 	};
 
 	componentDidMount() {
@@ -181,18 +182,13 @@ class RawGridHead extends React.Component<TFullGridHeadProps> {
 		let style;
 		if (typeof scrollLeft !== 'undefined') {
 			style = prefix({
-				transform: `translateX(-${scrollLeft}px)`
+				transform: `translateX(-${scrollLeft}px)`,
 			});
 		}
 
-		const className = classnames(
-			theme.gridHead,
-			{
-				[theme.gridHead_paddedForScrollbar as string]: (
-					withVerticalScrollbar
-				)
-			}
-		);
+		const className = classnames(theme.gridHead, {
+			[theme.gridHead_paddedForScrollbar as string]: withVerticalScrollbar,
+		});
 
 		//todo support multiple rows in head
 
@@ -215,30 +211,31 @@ class RawGridHead extends React.Component<TFullGridHeadProps> {
 
 	onGridBodyScroll = (scrollLeft: number, scrollTop: number) => {
 		this.setState({
-			scrollLeft
+			scrollLeft,
 		});
-	}
+	};
 
 	onGridBodyScrollbarAppear = (withHorizontalScrollbar: boolean, withVerticalScrollbar: boolean) => {
 		this.setState({
 			withHorizontalScrollbar,
-			withVerticalScrollbar
+			withVerticalScrollbar,
 		});
-	}
+	};
 
 	onGridMount = (columns: {}) => {
 		this.setState({
 			columns: {
-				...columns
-			}
+				...columns,
+			},
 		});
-	}
+	};
 }
 
-export type TFullGridBodyProps = TFullGridProps & TFullTableBodyProps & {
-    Table?: React.ComponentClass<TTableProps>,
-    TableBody?: React.ComponentClass<TTableHeadProps>,
-};
+export type TFullGridBodyProps = TFullGridProps &
+	TFullTableBodyProps & {
+		Table?: React.ComponentClass<TTableProps>;
+		TableBody?: React.ComponentClass<TTableHeadProps>;
+	};
 
 @PURE
 // @themr(GRID)
@@ -255,7 +252,7 @@ class RawGridBody extends React.Component<TFullGridBodyProps> {
 		const scrollableTheme = {
 			horizontal_scrollbar__bar: theme.horizontal_scrollbar__bar,
 			vertical_scrollbar__bar: theme.vertical_scrollbar__bar,
-			container: undefined as any
+			container: undefined as any,
 		};
 
 		return (
@@ -263,11 +260,15 @@ class RawGridBody extends React.Component<TFullGridBodyProps> {
 				<div className={theme.gridBody}>
 					<Table theme={theme}>
 						<TableBody theme={theme} {...props}>
-							{React.Children.map(props.children, (child, i) => (
-								React.cloneElement(child as React.ReactElement<TFullGridRowProps>, { // dont forget
-									gridRowIndexKey: i
-								} as TFullGridRowProps)
-							))}
+							{React.Children.map(props.children, (child, i) =>
+								React.cloneElement(
+									child as React.ReactElement<TFullGridRowProps>,
+									{
+										// dont forget
+										gridRowIndexKey: i,
+									} as TFullGridRowProps,
+								),
+							)}
 						</TableBody>
 					</Table>
 				</div>
@@ -280,27 +281,29 @@ class RawGridBody extends React.Component<TFullGridBodyProps> {
 			this._scrollLeft = scrollLeft;
 			this.context[GRID_CONTEXT_EMITTER].emit(EVENT_GRID.BODY_SCROLL, scrollLeft, scrollTop);
 		}
-	}
+	};
 
 	onUpdate = (withHorizontalScrollbar: boolean, withVerticalScrollbar: boolean) => {
-		if (this._withHorizontalScrollbar !== withHorizontalScrollbar ||
-			this._withVerticalScrollbar !== withVerticalScrollbar) {
+		if (
+			this._withHorizontalScrollbar !== withHorizontalScrollbar ||
+			this._withVerticalScrollbar !== withVerticalScrollbar
+		) {
 			this._withVerticalScrollbar = withVerticalScrollbar;
 			this._withHorizontalScrollbar = withHorizontalScrollbar;
 			this.context[GRID_CONTEXT_EMITTER].emit(
 				EVENT_GRID.BODY_SCROLLBAR_APPEAR,
 				withHorizontalScrollbar,
-				withVerticalScrollbar
+				withVerticalScrollbar,
 			);
 		}
-	}
+	};
 }
 
-export type TFullGridRowProps = TFullGridProps & TFullTableRowProps & {
-    TableRow?: React.ComponentClass<TTableRowProps>,
-    gridRowIndexKey?: number
-};
-
+export type TFullGridRowProps = TFullGridProps &
+	TFullTableRowProps & {
+		TableRow?: React.ComponentClass<TTableRowProps>;
+		gridRowIndexKey?: number;
+	};
 
 @PURE
 // @themr(GRID)
@@ -308,7 +311,7 @@ class RawGridRow extends React.Component<TFullGridRowProps> {
 	static contextTypes = CONTEXT_TYPES;
 
 	state = {
-        columns: {}
+		columns: {},
 	};
 
 	componentWillMount() {
@@ -329,9 +332,9 @@ class RawGridRow extends React.Component<TFullGridRowProps> {
 		return (
 			<TableRow {...props}>
 				{React.Children.map(this.props.children, (child: React.ReactElement<TFullGridCellProps>, i) => {
-					const newProps:Partial<TFullGridCellProps> = {
-                        gridRowIndexKey: rowIndex,
-						gridColumnIndexKey: i
+					const newProps: Partial<TFullGridCellProps> = {
+						gridRowIndexKey: rowIndex,
+						gridColumnIndexKey: i,
 					};
 					if (this.state.columns) {
 						newProps.gridColumnWidth = this.state.columns[i];
@@ -345,18 +348,18 @@ class RawGridRow extends React.Component<TFullGridRowProps> {
 	onGridMount = (columns: {}) => {
 		this.setState({
 			columns: {
-				...columns
-			}
+				...columns,
+			},
 		});
-	}
+	};
 
 	onGridUpdate = (columns: {}) => {
 		this.setState({
 			columns: {
-				...columns
-			}
+				...columns,
+			},
 		});
-	}
+	};
 }
 
 /**
@@ -366,16 +369,16 @@ export enum GridCellAlignment {
 	LEFT = 'GRID_CELL_ALIGN:LEFT',
 	CENTER = 'GRID_CELL_ALIGN:CENTER',
 	RIGHT = 'GRID_CELL_ALIGN:RIGHT',
-};
+}
 
-export type TFullGridCellProps = TFullGridProps & TFullTableCellProps & {
-    TableCell?: React.ComponentClass<TTableCellProps>,
-    gridRowIndexKey?: number,
-	gridColumnIndexKey?: number,
-	gridColumnWidth?: number,
-    align?: GridCellAlignment
-};
-
+export type TFullGridCellProps = TFullGridProps &
+	TFullTableCellProps & {
+		TableCell?: React.ComponentClass<TTableCellProps>;
+		gridRowIndexKey?: number;
+		gridColumnIndexKey?: number;
+		gridColumnWidth?: number;
+		align?: GridCellAlignment;
+	};
 
 @PURE
 // @themr(GRID)
@@ -393,7 +396,7 @@ class RawGridCell extends React.Component<TFullGridCellProps> {
 			this.props.gridRowIndexKey,
 			this.props.gridColumnIndexKey,
 			this._width,
-			this.props.isInHead
+			this.props.isInHead,
 		);
 	}
 
@@ -407,7 +410,7 @@ class RawGridCell extends React.Component<TFullGridCellProps> {
 				this.props.gridRowIndexKey,
 				this.props.gridColumnIndexKey,
 				newWidth,
-				this.props.isInHead
+				this.props.isInHead,
 			);
 		}
 	}
@@ -421,42 +424,35 @@ class RawGridCell extends React.Component<TFullGridCellProps> {
 			gridColumnWidth,
 			colSpan,
 			rowSpan,
-			...restProps } = this.props;
+			...restProps
+		} = this.props;
 
 		let style;
 		if (typeof gridColumnWidth !== 'undefined') {
 			style = {
-				width: `${gridColumnWidth}px`
+				width: `${gridColumnWidth}px`,
 			};
 		}
 
-		const contentClassName = classnames(
-            restProps.theme.gridCell__content,
-			{
-				[restProps.theme.gridCell__content_left as string]: align === GridCellAlignment.LEFT,
-				[restProps.theme.gridCell__content_center as string]: align === GridCellAlignment.CENTER,
-				[restProps.theme.gridCell__content_right as string]: align === GridCellAlignment.RIGHT
-			}
-		);
+		const contentClassName = classnames(restProps.theme.gridCell__content, {
+			[restProps.theme.gridCell__content_left as string]: align === GridCellAlignment.LEFT,
+			[restProps.theme.gridCell__content_center as string]: align === GridCellAlignment.CENTER,
+			[restProps.theme.gridCell__content_right as string]: align === GridCellAlignment.RIGHT,
+		});
 
 		const tableCellTheme = {
 			...restProps.theme,
-			cell: classnames(
-                restProps.theme.cell,
-				{
-					[restProps.theme.cell_left as string]: align === GridCellAlignment.LEFT,
-					[restProps.theme.cell_center as string]: align === GridCellAlignment.CENTER,
-					[restProps.theme.cell_right as string]: align === GridCellAlignment.RIGHT
-				}
-			)
+			cell: classnames(restProps.theme.cell, {
+				[restProps.theme.cell_left as string]: align === GridCellAlignment.LEFT,
+				[restProps.theme.cell_center as string]: align === GridCellAlignment.CENTER,
+				[restProps.theme.cell_right as string]: align === GridCellAlignment.RIGHT,
+			}),
 		};
 
 		return (
 			<TableCell {...restProps} theme={tableCellTheme}>
-				<span style={style}
-				      className={restProps.theme.gridCell__placeholder}>
-					<span className={contentClassName}
-					      ref={el => this._content = el}>
+				<span style={style} className={restProps.theme.gridCell__placeholder}>
+					<span className={contentClassName} ref={el => (this._content = el)}>
 						{restProps.children}
 					</span>
 				</span>

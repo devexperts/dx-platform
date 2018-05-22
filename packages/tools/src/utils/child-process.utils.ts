@@ -8,12 +8,12 @@ import * as logTransformer from 'strong-log-transformer';
 let children = 0;
 
 // when streaming children are spawned, use this color for prefix
-const colorWheel = ["cyan", "magenta", "blue", "yellow", "green", "red"];
+const colorWheel = ['cyan', 'magenta', 'blue', 'yellow', 'green', 'red'];
 const NUM_COLORS = colorWheel.length;
 
 function exec(command, args, opts) {
 	const options = Object.assign({}, opts);
-	options.stdio = "pipe"; // node default
+	options.stdio = 'pipe'; // node default
 
 	return _spawn(command, args, options);
 }
@@ -24,7 +24,7 @@ function execSync(command, args, opts) {
 
 function spawn(command, args, opts) {
 	const options = Object.assign({}, opts);
-	options.stdio = "inherit";
+	options.stdio = 'inherit';
 
 	return _spawn(command, args, options);
 }
@@ -32,7 +32,7 @@ function spawn(command, args, opts) {
 // istanbul ignore next
 function spawnStreaming(command: string, prefix: string, args?: any, opts?: any) {
 	const options = Object.assign({}, opts);
-	options.stdio = ["ignore", "pipe", "pipe"];
+	options.stdio = ['ignore', 'pipe', 'pipe'];
 
 	const colorName = colorWheel[children % NUM_COLORS];
 	const color = chalk[colorName];
@@ -42,7 +42,7 @@ function spawnStreaming(command: string, prefix: string, args?: any, opts?: any)
 	const prefixedStderr = logTransformer({ tag: `${color(prefix)}:`, mergeMultiline: true });
 
 	// Avoid "Possible EventEmitter memory leak detected" warning due to piped stdio
-	if (children > process.stdout.listenerCount("close")) {
+	if (children > process.stdout.listenerCount('close')) {
 		process.stdout.setMaxListeners(children);
 		process.stderr.setMaxListeners(children);
 	}
@@ -67,15 +67,14 @@ function _spawn(command, args, opts) {
 
 		// don't run repeatedly if this is the error event
 		if (signal === undefined) {
-			child.removeListener("exit", drain);
+			child.removeListener('exit', drain);
 		}
 	};
 
-	child.once("exit", drain);
-	child.once("error", drain);
+	child.once('exit', drain);
+	child.once('error', drain);
 
 	return child;
 }
 
-
-export {exec, execSync, spawn, spawnStreaming, getChildProcessCount};
+export { exec, execSync, spawn, spawnStreaming, getChildProcessCount };

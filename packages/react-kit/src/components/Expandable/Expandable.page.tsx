@@ -10,7 +10,7 @@ const Stateful = stateful()(Expandable);
 
 class CustomHandler extends React.Component<any> {
 	render() {
-		const {theme, isExpanded} = this.props;
+		const { theme, isExpanded } = this.props;
 		const text = isExpanded ? 'Close me!' : 'Open me!';
 
 		return (
@@ -21,13 +21,11 @@ class CustomHandler extends React.Component<any> {
 	}
 }
 
-
-storiesOf('Expandable', module)
-	.add('default', () => (
-		<Demo>
-			<Stateful Handler={CustomHandler}>
-				You will not be asked for further confirmation of trades. <br/>
-				Trades will be executed with on click.
-			</Stateful>
-		</Demo>
-	))
+storiesOf('Expandable', module).add('default', () => (
+	<Demo>
+		<Stateful Handler={CustomHandler}>
+			You will not be asked for further confirmation of trades. <br />
+			Trades will be executed with on click.
+		</Stateful>
+	</Demo>
+));

@@ -7,10 +7,7 @@ import { ThemeProvider } from '../../utils/withTheme';
 import theme from './theme';
 
 export const DefaultTheme: React.SFC<JSX.IntrinsicAttributes> = props => (
-    <ThemrProvider theme={theme}>
-        <ThemeProvider theme={theme}>
-            {props.children}
-        </ThemeProvider>
-    </ThemrProvider>
+	<ThemrProvider theme={theme}>
+		<ThemeProvider theme={theme}>{props.children}</ThemeProvider>
+	</ThemrProvider>
 );
-

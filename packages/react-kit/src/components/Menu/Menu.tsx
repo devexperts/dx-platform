@@ -1,8 +1,14 @@
 import * as React from 'react';
 import {
-	List, ListItem, ListItemGroup, TFullListItemGroupProps, TFullListItemProps, TFullListProps, TListItemGroupProps,
+	List,
+	ListItem,
+	ListItemGroup,
+	TFullListItemGroupProps,
+	TFullListItemProps,
+	TFullListProps,
+	TListItemGroupProps,
 	TListItemProps,
-	TListProps
+	TListProps,
 } from '../List/List';
 import { withTheme } from '../../utils/withTheme';
 import { Component, ComponentClass, ComponentType, ReactElement, ReactNode, ReactText } from 'react';
@@ -16,18 +22,18 @@ import { ReactChildren } from '../../utils/typings';
 export const MENU = Symbol('Menu');
 
 export type TMenuChildProps = {
-	onSelect?: (value: ReactText) => void
+	onSelect?: (value: ReactText) => void;
 };
 
 export type TFullMenuProps = TFullListProps & {
-	List: ComponentType<TListProps>,
-	onItemSelect?: (value: ReactText) => void,
-	children: ReactChildren<ReactElement<TMenuChildProps>>
+	List: ComponentType<TListProps>;
+	onItemSelect?: (value: ReactText) => void;
+	children: ReactChildren<ReactElement<TMenuChildProps>>;
 };
 
 class RawMenu extends React.Component<TFullMenuProps> {
 	static defaultProps = {
-		List
+		List,
 	};
 
 	render() {
@@ -36,7 +42,7 @@ class RawMenu extends React.Component<TFullMenuProps> {
 			<List {...this.props}>
 				{React.Children.map(children, (child: ReactElement<TMenuChildProps>) => {
 					const props: TMenuChildProps = {
-						onSelect: this.props.onItemSelect
+						onSelect: this.props.onItemSelect,
 					};
 					return React.cloneElement(child, props);
 				})}
@@ -52,21 +58,21 @@ export const Menu: ComponentClass<TMenuProps> = withTheme(MENU)(RawMenu);
 
 export type TFullMenuItemProps = TFullListItemProps & {
 	theme: {
-		item_active?: string,
-		item__content?: string,
-	},
-	ListItem: ComponentType<TListItemProps>,
-	value: ReactText,
-	isActive?: boolean,
-	onSelect?: (value: ReactText) => void, //this is injected by Menu/MenuItemGroup
-	text?: string,
-	children?: ReactNode
+		item_active?: string;
+		item__content?: string;
+	};
+	ListItem: ComponentType<TListItemProps>;
+	value: ReactText;
+	isActive?: boolean;
+	onSelect?: (value: ReactText) => void; //this is injected by Menu/MenuItemGroup
+	text?: string;
+	children?: ReactNode;
 };
 
 @PURE
 class RawMenuItem extends Component<TFullMenuItemProps> {
 	static defaultProps = {
-		ListItem
+		ListItem,
 	};
 
 	render() {
@@ -75,21 +81,19 @@ class RawMenuItem extends Component<TFullMenuItemProps> {
 		if (isActive) {
 			theme = {
 				...theme,
-				item: classnames(theme.item, theme.item_active)
+				item: classnames(theme.item, theme.item_active),
 			};
 		}
 		return (
 			<ListItem onClick={this.onClick} {...this.props} theme={theme}>
-				<div className={theme.item__content}>
-					{this.props.children}
-				</div>
+				<div className={theme.item__content}>{this.props.children}</div>
 			</ListItem>
 		);
 	}
 
 	onClick = () => {
 		this.props.onSelect && this.props.onSelect(this.props.value);
-	}
+	};
 }
 
 export type TMenuItemProps = ObjectClean<PartialKeys<TFullMenuItemProps, 'theme' | 'ListItem'>>;
@@ -99,17 +103,17 @@ export const MenuItem: ComponentClass<TMenuItemProps> = withTheme(MENU)(RawMenuI
 
 export type TFullMenuItemGroupProps = TFullListItemGroupProps & {
 	theme: {
-		itemGroup__header__content?: string
-	},
-	ListItemGroup: ComponentType<TListItemGroupProps>,
-	List: ComponentType<TListProps>,
-	onSelect?: (value: ReactText) => void, //this is injected by Menu/MenuItemGroup
-	isCollapsed: boolean,
-	header?: ReactNode
+		itemGroup__header__content?: string;
+	};
+	ListItemGroup: ComponentType<TListItemGroupProps>;
+	List: ComponentType<TListProps>;
+	onSelect?: (value: ReactText) => void; //this is injected by Menu/MenuItemGroup
+	isCollapsed: boolean;
+	header?: ReactNode;
 };
 
 type TMenuItemGroupState = {
-	isCollapsed: boolean
+	isCollapsed: boolean;
 };
 
 @PURE
@@ -117,22 +121,22 @@ class RawMenuItemGroup extends React.Component<TFullMenuItemGroupProps, TMenuIte
 	static defaultProps = {
 		ListItemGroup,
 		List: Menu,
-		isCollapsed: true //menu is always collapsed
+		isCollapsed: true, //menu is always collapsed
 	};
 
 	state = {
-		isCollapsed: true
+		isCollapsed: true,
 	};
 
 	componentWillMount() {
 		this.setState({
-			isCollapsed: this.props.isCollapsed
+			isCollapsed: this.props.isCollapsed,
 		});
 	}
 
 	componentWillReceiveProps(props: TFullMenuItemGroupProps) {
 		this.setState({
-			isCollapsed: props.isCollapsed
+			isCollapsed: props.isCollapsed,
 		});
 	}
 
@@ -141,22 +145,17 @@ class RawMenuItemGroup extends React.Component<TFullMenuItemGroupProps, TMenuIte
 
 		let header;
 		if (this.props.header) {
-			header = (
-				<div className={theme.itemGroup__header__content}>
-					{this.props.header}
-				</div>
-			);
+			header = <div className={theme.itemGroup__header__content}>{this.props.header}</div>;
 		}
 
 		return (
-			<ListItemGroup onClick={this.onClick}
-			               {...this.props}
-			               header={header}
-			               isCollapsed={this.state.isCollapsed}>
+			<ListItemGroup onClick={this.onClick} {...this.props} header={header} isCollapsed={this.state.isCollapsed}>
 				<Pure check={children}>
-					{() => React.cloneElement(React.Children.only(children), {
-						onItemSelect: this.props.onSelect
-					})}
+					{() =>
+						React.cloneElement(React.Children.only(children), {
+							onItemSelect: this.props.onSelect,
+						})
+					}
 				</Pure>
 			</ListItemGroup>
 		);
@@ -164,11 +163,12 @@ class RawMenuItemGroup extends React.Component<TFullMenuItemGroupProps, TMenuIte
 
 	onClick = () => {
 		this.setState({
-			isCollapsed: !this.state.isCollapsed
+			isCollapsed: !this.state.isCollapsed,
 		});
-	}
+	};
 }
 
-export type TMenuItemGroupProps = ObjectClean<PartialKeys<TFullMenuItemGroupProps,
-	'theme' | 'List' | 'ListItemGroup' | 'isCollapsed'>>;
+export type TMenuItemGroupProps = ObjectClean<
+	PartialKeys<TFullMenuItemGroupProps, 'theme' | 'List' | 'ListItemGroup' | 'isCollapsed'>
+>;
 export const MenuItemGroup: ComponentClass<TMenuItemGroupProps> = withTheme(MENU)(RawMenuItemGroup);

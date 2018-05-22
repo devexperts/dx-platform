@@ -16,19 +16,22 @@ class DemoInput extends React.Component<any, any> {
 
 		return (
 			<div>
-				<SteppableInput onIncrement={onIncrement}
-								onDecrement={onDecrement}
-								onClear={onClear}
-								error={error}
-								onFocus={this.onFocus}
-								clearIcon={<ClearIcon />}
-								decrementIcon={<DecreaseIcon/>}
-								incrementIcon={<AddIcon/>}
-								isDisabled={isDisabled} >
-					<input className={pageTheme.customInput}
-						   tabIndex={-1}
-						   disabled={isDisabled}
-						   ref={(el: any) => this.input = el}/>
+				<SteppableInput
+					onIncrement={onIncrement}
+					onDecrement={onDecrement}
+					onClear={onClear}
+					error={error}
+					onFocus={this.onFocus}
+					clearIcon={<ClearIcon />}
+					decrementIcon={<DecreaseIcon />}
+					incrementIcon={<AddIcon />}
+					isDisabled={isDisabled}>
+					<input
+						className={pageTheme.customInput}
+						tabIndex={-1}
+						disabled={isDisabled}
+						ref={(el: any) => (this.input = el)}
+					/>
 				</SteppableInput>
 			</div>
 		);
@@ -37,27 +40,27 @@ class DemoInput extends React.Component<any, any> {
 	onFocus = (e: any) => {
 		const input = ReactDOM.findDOMNode(this.input) as any;
 		input.focus();
-	}
+	};
 }
 
-storiesOf('SteppableInput', module)
-	.add('default', () => {
-		return (
-			<Demo>
-				<DemoInput onIncrement={action('increment')}
-						   onDecrement={action('decremnt')}/>
-				<DemoInput onClear={action('clear')}/>
-				<DemoInput onIncrement={action('increment')}
-						   isDisabled={true}
-						   onDecrement={action('decremnt')}
-						   onClear={action('clear')}/>
-				<DemoInput onIncrement={action('increment')}
-						   onDecrement={action('decremnt')}
-						   onClear={action('clear')}/>
-				<DemoInput onIncrement={action('increment')}
-						   onDecrement={action('decremnt')}
-						   error={'Error'}
-						   onClear={action('clear')}/>
-			</Demo>
-		);
-	})
+storiesOf('SteppableInput', module).add('default', () => {
+	return (
+		<Demo>
+			<DemoInput onIncrement={action('increment')} onDecrement={action('decremnt')} />
+			<DemoInput onClear={action('clear')} />
+			<DemoInput
+				onIncrement={action('increment')}
+				isDisabled={true}
+				onDecrement={action('decremnt')}
+				onClear={action('clear')}
+			/>
+			<DemoInput onIncrement={action('increment')} onDecrement={action('decremnt')} onClear={action('clear')} />
+			<DemoInput
+				onIncrement={action('increment')}
+				onDecrement={action('decremnt')}
+				error={'Error'}
+				onClear={action('clear')}
+			/>
+		</Demo>
+	);
+});

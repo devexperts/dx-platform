@@ -1,10 +1,6 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import {
-	SteppableInput,
-	TSteppableInputProps,
-	checkParentsUpTo
-} from '../SteppableInput/SteppableInput';
+import { SteppableInput, TSteppableInputProps, checkParentsUpTo } from '../SteppableInput/SteppableInput';
 import { ComponentClass } from 'react';
 import { TControlProps, KeyCode, KEY_CODE_NUM_MAP } from '../Control/Control';
 import * as classnames from 'classnames';
@@ -22,36 +18,37 @@ import { Popover } from '../Popover/Popover';
 export type TDateValueProps = TControlProps<Date | null | undefined>;
 
 export type TCalendarProps = TDateValueProps & {
-	onMouseDown?: React.EventHandler<React.MouseEvent<Element>>,
-	min?: Date,
-	max?: Date
+	onMouseDown?: React.EventHandler<React.MouseEvent<Element>>;
+	min?: Date;
+	max?: Date;
 };
 
-export type TDateInputOwnProps = TSteppableInputProps & TDateValueProps & {
-	min?: Date,
-	max?: Date,
-	calendarIcon?: React.ReactElement<any>,
-	onClear?: Function,
-	target?: Element
-	Calendar?: React.ComponentClass<TCalendarProps> | React.SFC<TCalendarProps>,
-};
+export type TDateInputOwnProps = TSteppableInputProps &
+	TDateValueProps & {
+		min?: Date;
+		max?: Date;
+		calendarIcon?: React.ReactElement<any>;
+		onClear?: Function;
+		target?: Element;
+		Calendar?: React.ComponentClass<TCalendarProps> | React.SFC<TCalendarProps>;
+	};
 
 export type TDateDefaultProps = {
-	SteppableInput: React.ComponentClass<TSteppableInputProps> | React.SFC<TSteppableInputProps>,
-	ButtonIcon: React.ComponentClass<TButtonIconProps>
+	SteppableInput: React.ComponentClass<TSteppableInputProps> | React.SFC<TSteppableInputProps>;
+	ButtonIcon: React.ComponentClass<TButtonIconProps>;
 };
 
 export type TDateInputInjectedProps = {
 	theme: {
-		inner?: string,
-		inner_isFilled?: string,
-		section?: string,
-		section_isActive?: string,
-		separator?: string,
-		SteppableInput?: TSteppableInputProps['theme'],
-		ButtonIcon?: TButtonIconProps['theme'],
-		CalendarButtonIcon?: TButtonIconProps['theme']
-	}
+		inner?: string;
+		inner_isFilled?: string;
+		section?: string;
+		section_isActive?: string;
+		separator?: string;
+		SteppableInput?: TSteppableInputProps['theme'];
+		ButtonIcon?: TButtonIconProps['theme'];
+		CalendarButtonIcon?: TButtonIconProps['theme'];
+	};
 };
 
 export type TDateInputFullProps = TDateInputOwnProps & TDateInputInjectedProps & TDateDefaultProps;
@@ -59,15 +56,15 @@ export type TDateInputFullProps = TDateInputOwnProps & TDateInputInjectedProps &
 enum ActiveSection {
 	Day,
 	Month,
-	Year
+	Year,
 }
 
 type TDateInputState = {
-	activeSection?: ActiveSection,
-	day?: number,
-	month?: number,
-	year?: number,
-	isOpened?: boolean
+	activeSection?: ActiveSection;
+	day?: number;
+	month?: number;
+	year?: number;
+	isOpened?: boolean;
 };
 
 export const DATE_INPUT = Symbol('DateInput');
@@ -76,11 +73,11 @@ export const DATE_INPUT = Symbol('DateInput');
 class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState> {
 	static defaultProps = {
 		SteppableInput,
-		ButtonIcon
+		ButtonIcon,
 	};
 
 	state: TDateInputState = {
-		isOpened: false
+		isOpened: false,
 	};
 	private secondInput: boolean = false;
 	private calendarButtonRef: ReactInstance;
@@ -106,7 +103,7 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 			this.setState({
 				month,
 				day,
-				year
+				year,
 			});
 		}
 	}
@@ -123,82 +120,71 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 			decrementIcon,
 			theme,
 			ButtonIcon,
-			SteppableInput
+			SteppableInput,
 		} = this.props;
 		const { month, day, year, activeSection } = this.state;
 
-		const dayClassName = classnames(
-			theme.section,
-			{
-				[theme.section_isActive as string]: !isDisabled && activeSection === ActiveSection.Day
-			}
-		);
+		const dayClassName = classnames(theme.section, {
+			[theme.section_isActive as string]: !isDisabled && activeSection === ActiveSection.Day,
+		});
 
-		const monthClassName = classnames(
-			theme.section,
-			{
-				[theme.section_isActive as string]: !isDisabled && activeSection === ActiveSection.Month
-			}
-		);
+		const monthClassName = classnames(theme.section, {
+			[theme.section_isActive as string]: !isDisabled && activeSection === ActiveSection.Month,
+		});
 
-		const yearClassName = classnames(
-			theme.section,
-			{
-				[theme.section_isActive as string]: !isDisabled && activeSection === ActiveSection.Year
-			}
-		);
+		const yearClassName = classnames(theme.section, {
+			[theme.section_isActive as string]: !isDisabled && activeSection === ActiveSection.Year,
+		});
 
 		let onClear;
-		if (isDefined(value) && value !== null || isDefined(day) || isDefined(month) || isDefined(year)) {
+		if ((isDefined(value) && value !== null) || isDefined(day) || isDefined(month) || isDefined(year)) {
 			onClear = this.onClear;
 		}
 
-		const innerClassName = classnames(
-			theme.inner,
-			{
-				[theme.inner_isFilled as string]: value && !isNaN(value.getTime())
-			}
-		);
+		const innerClassName = classnames(theme.inner, {
+			[theme.inner_isFilled as string]: value && !isNaN(value.getTime()),
+		});
 
 		return (
-			<SteppableInput isDisabled={isDisabled}
-			                theme={theme.SteppableInput}
-			                onClear={onClear}
-			                error={error}
-			                decrementIcon={decrementIcon}
-			                incrementIcon={incrementIcon}
-			                clearIcon={clearIcon}
-			                onIncrement={this.onIncrement}
-			                onDecrement={this.onDecrement}
-			                onBlur={this.onBlur}
-			                onFocus={this.onFocus}
-			                onKeyDown={this.onKeyDown}
-			                onClick={this.onSteppableInputClick}>
+			<SteppableInput
+				isDisabled={isDisabled}
+				theme={theme.SteppableInput}
+				onClear={onClear}
+				error={error}
+				decrementIcon={decrementIcon}
+				incrementIcon={incrementIcon}
+				clearIcon={clearIcon}
+				onIncrement={this.onIncrement}
+				onDecrement={this.onDecrement}
+				onBlur={this.onBlur}
+				onFocus={this.onFocus}
+				onKeyDown={this.onKeyDown}
+				onClick={this.onSteppableInputClick}>
 				<div className={innerClassName}>
-					<span className={dayClassName}
-					      onMouseDown={this.onDayMouseDown}>
+					<span className={dayClassName} onMouseDown={this.onDayMouseDown}>
 						{this.format(day, ActiveSection.Day)}
 					</span>
 					<span className={theme.separator}>/</span>
-					<span className={monthClassName}
-					      onMouseDown={this.onMonthMouseDown}>
+					<span className={monthClassName} onMouseDown={this.onMonthMouseDown}>
 						{this.format(month, ActiveSection.Month)}
 					</span>
 					<span className={theme.separator}>/</span>
-					<span className={yearClassName}
-					      onMouseDown={this.onYearMouseDown}>
+					<span className={yearClassName} onMouseDown={this.onYearMouseDown}>
 						{this.format(year, ActiveSection.Year)}
 					</span>
 				</div>
-				{Calendar && calendarIcon && (
-					<ButtonIcon isFlat={true}
-					            ref={(el: any) => this.calendarButtonRef = el}
-					            isDisabled={isDisabled}
-					            tabIndex={-1}
-					            icon={calendarIcon}
-					            onMouseDown={this.onCalendarButtonMouseDown}
-					            theme={theme.CalendarButtonIcon}/>
-				)}
+				{Calendar &&
+					calendarIcon && (
+						<ButtonIcon
+							isFlat={true}
+							ref={(el: any) => (this.calendarButtonRef = el)}
+							isDisabled={isDisabled}
+							tabIndex={-1}
+							icon={calendarIcon}
+							onMouseDown={this.onCalendarButtonMouseDown}
+							theme={theme.CalendarButtonIcon}
+						/>
+					)}
 				{this.renderCalendar()}
 			</SteppableInput>
 		);
@@ -212,21 +198,24 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 		}
 
 		const calendar = (
-			<Calendar value={value}
-			          min={min}
-			          max={max}
-			          onMouseDown={this.onCalendarMouseDown}
-			          onValueChange={this.onCalendarValueChange}/>
+			<Calendar
+				value={value}
+				min={min}
+				max={max}
+				onMouseDown={this.onCalendarMouseDown}
+				onValueChange={this.onCalendarValueChange}
+			/>
 		);
 
 		if (target) {
 			return createPortal(isOpened ? calendar : null, target);
 		} else {
 			return (
-				<Popover anchor={this}
-				         closeOnClickAway={true}
-				         onMouseDown={this.onCalendarMouseDown}
-				         isOpened={isOpened}>
+				<Popover
+					anchor={this}
+					closeOnClickAway={true}
+					onMouseDown={this.onCalendarMouseDown}
+					isOpened={isOpened}>
 					{calendar}
 				</Popover>
 			);
@@ -277,31 +266,31 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 		const { onValueChange, value, min, max } = this.props;
 
 		const canBuildValue = isDefined(day) && isDefined(month) && isDefined(year);
-		const newValueDiffers = canBuildValue && typeof month !== 'undefined' &&
-			(
-				typeof value === 'undefined' ||
+		const newValueDiffers =
+			canBuildValue &&
+			typeof month !== 'undefined' &&
+			(typeof value === 'undefined' ||
 				value === null ||
 				value.getDate() !== day ||
 				value.getMonth() !== month - 1 ||
-				value.getFullYear() !== year
-			);
+				value.getFullYear() !== year);
 
 		if (canBuildValue) {
-			if (newValueDiffers &&
+			if (
+				newValueDiffers &&
 				onValueChange &&
 				typeof year !== 'undefined' &&
 				typeof month !== 'undefined' &&
-				typeof day !== 'undefined') {
-				const date = new Date(
-					year,
-					month - 1,
-					day
-				);
+				typeof day !== 'undefined'
+			) {
+				const date = new Date(year, month - 1, day);
 				//check new date
 				const wasAdjusted = !(
-					date.getFullYear() === year && date.getMonth() === month - 1 && date.getDate() === day
+					date.getFullYear() === year &&
+					date.getMonth() === month - 1 &&
+					date.getDate() === day
 				);
-				const isOutOfBounds = min && is_before(date, min) || max && is_after(date, max);
+				const isOutOfBounds = (min && is_before(date, min)) || (max && is_after(date, max));
 				if (!wasAdjusted && !isOutOfBounds) {
 					//everything is ok and value hasn't been adjusted
 					onValueChange(date);
@@ -312,7 +301,7 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 					this.setState({
 						day,
 						month,
-						year
+						year,
 					});
 				}
 			}
@@ -323,7 +312,7 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 			this.setState({
 				day,
 				month,
-				year
+				year,
 			});
 		}
 	}
@@ -350,7 +339,7 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 				break;
 			}
 		}
-	}
+	};
 
 	private onDecrement = () => {
 		this.secondInput = false;
@@ -374,69 +363,69 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 				break;
 			}
 		}
-	}
+	};
 
 	private onCalendarValueChange = (date: Date) => {
 		const { onValueChange, value } = this.props;
 		this.setState({
-			isOpened: false
+			isOpened: false,
 		});
-		if (onValueChange &&
+		if (
+			onValueChange &&
 			date &&
-			date && !isNaN(date.getTime()) &&
-			(
-				!value ||
+			date &&
+			!isNaN(date.getTime()) &&
+			(!value ||
 				isNaN(value.getTime()) ||
 				value.getFullYear() !== date.getFullYear() ||
 				value.getMonth() !== date.getMonth() ||
-				value.getDate() !== date.getDate()
-			)
+				value.getDate() !== date.getDate())
 		) {
 			onValueChange(date);
 		}
-	}
+	};
 
 	private onCalendarMouseDown = (e: React.MouseEvent<HTMLElement>) => {
 		//stop blur
 		e.preventDefault();
-	}
+	};
 
 	private onClear = () => {
 		this.secondInput = false;
 		this.updateStateTime();
 		const { onClear } = this.props;
 		onClear && onClear();
-	}
+	};
 
 	private onCalendarButtonMouseDown = (e: React.MouseEvent<HTMLElement>) => {
 		if (isDefined(this.state.activeSection)) {
 			e.preventDefault();
 		}
-	}
+	};
 
 	private onDayMouseDown = (e: React.MouseEvent<HTMLElement>) => {
 		if (!this.props.isDisabled) {
 			this.setState({
-				activeSection: ActiveSection.Day
+				activeSection: ActiveSection.Day,
 			});
 		}
-	}
+	};
 
 	private onMonthMouseDown = (e: React.MouseEvent<HTMLElement>) => {
 		if (!this.props.isDisabled) {
 			this.setState({
-				activeSection: ActiveSection.Month
+				activeSection: ActiveSection.Month,
 			});
 		}
-	}
+	};
 
 	private onYearMouseDown = (e: React.MouseEvent<HTMLElement>) => {
 		if (!this.props.isDisabled) {
 			this.setState({
-				activeSection: ActiveSection.Year
+				activeSection: ActiveSection.Year,
 			});
 		}
-	}
+	};
 
 	private onKeyDown = (e: React.KeyboardEvent<HTMLElement>) => {
 		const { activeSection, day, month, year } = this.state;
@@ -444,7 +433,7 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 			case KeyCode.Escape: {
 				if (this.state.isOpened) {
 					this.setState({
-						isOpened: false
+						isOpened: false,
 					});
 				}
 				break;
@@ -455,14 +444,14 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 					case ActiveSection.Month: {
 						this.secondInput = false;
 						this.setState({
-							activeSection: ActiveSection.Day
+							activeSection: ActiveSection.Day,
 						});
 						break;
 					}
 					case ActiveSection.Year: {
 						this.secondInput = false;
 						this.setState({
-							activeSection: ActiveSection.Month
+							activeSection: ActiveSection.Month,
 						});
 						break;
 					}
@@ -475,14 +464,14 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 					case ActiveSection.Day: {
 						this.secondInput = false;
 						this.setState({
-							activeSection: ActiveSection.Month
+							activeSection: ActiveSection.Month,
 						});
 						break;
 					}
 					case ActiveSection.Month: {
 						this.secondInput = false;
 						this.setState({
-							activeSection: ActiveSection.Year
+							activeSection: ActiveSection.Year,
 						});
 						break;
 					}
@@ -515,7 +504,7 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 				}
 			}
 		}
-	}
+	};
 
 	onSteppableInputClick = (e: React.MouseEvent<HTMLElement>) => {
 		if (this.state.isOpened) {
@@ -523,41 +512,41 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 				checkParentsUpTo(
 					e.target as Element,
 					ReactDOM.findDOMNode(this.calendarButtonRef),
-					ReactDOM.findDOMNode(this)
+					ReactDOM.findDOMNode(this),
 				)
 			) {
 				//clicked on calendar button
 				this.setState({
-					isOpened: false
+					isOpened: false,
 				});
 			} else {
 				this.setState({
-					isOpened: true
+					isOpened: true,
 				});
 			}
 		} else {
 			this.setState({
-				isOpened: true
+				isOpened: true,
 			});
 		}
-	}
+	};
 
 	private onBlur = (e: React.FocusEvent<HTMLElement>) => {
 		this.secondInput = false;
 		this.setState({
 			activeSection: undefined,
-			isOpened: false
+			isOpened: false,
 		});
-	}
+	};
 
 	private onFocus = (e: React.FocusEvent<HTMLElement>) => {
 		this.secondInput = false;
 		if (!isDefined(this.state.activeSection)) {
 			this.setState({
-				activeSection: ActiveSection.Day
+				activeSection: ActiveSection.Day,
 			});
 		}
-	}
+	};
 
 	private handleDigitKeyDown(digit: number) {
 		const { day, month, year } = this.state;
@@ -574,14 +563,14 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 					}
 					this.updateStateTime(newDay, month, year);
 					this.setState({
-						activeSection: ActiveSection.Month
+						activeSection: ActiveSection.Month,
 					});
 					this.secondInput = false;
 				} else {
 					this.updateStateTime(digit, month, year);
 					if (digit > 3) {
 						this.setState({
-							activeSection: ActiveSection.Month
+							activeSection: ActiveSection.Month,
 						});
 						this.secondInput = false;
 					} else {
@@ -602,14 +591,14 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 					}
 					this.updateStateTime(day, newMonth, year);
 					this.setState({
-						activeSection: ActiveSection.Year
+						activeSection: ActiveSection.Year,
 					});
 					this.secondInput = false;
 				} else {
 					this.updateStateTime(day, digit, year);
 					if (digit > 1) {
 						this.setState({
-							activeSection: ActiveSection.Year
+							activeSection: ActiveSection.Year,
 						});
 						this.secondInput = false;
 					} else {
@@ -642,7 +631,7 @@ function getValuesFromDate(date: Date) {
 	return {
 		month: date.getMonth() + 1,
 		day: date.getDate(),
-		year: date.getFullYear()
+		year: date.getFullYear(),
 	};
 }
 

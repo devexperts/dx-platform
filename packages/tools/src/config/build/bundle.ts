@@ -1,4 +1,4 @@
-import {ROOT, SRC_PATH} from '../env';
+import { ROOT, SRC_PATH } from '../env';
 import { Configuration, DefinePlugin } from 'webpack';
 import {
 	TS_PATTERN,
@@ -11,14 +11,11 @@ import {
 	stylusLoader,
 	cssLoader,
 	postcssLoader,
-	urlLoader
+	urlLoader,
 } from '../webpack/loaders';
 
-import {
-	createForkTSCheckerPlugin,
-} from '../webpack/plugins';
+import { createForkTSCheckerPlugin } from '../webpack/plugins';
 import * as ENV from '../env';
-
 
 const bundleConfig: Configuration = {
 	resolve: {
@@ -26,38 +23,24 @@ const bundleConfig: Configuration = {
 		extensions: ['.ts', '.tsx', '.js', '.jsx', '.styl'],
 	},
 	resolveLoader: {
-		modules: [ENV.TOOLS_NODE_MODULES_PATH]
+		modules: [ENV.TOOLS_NODE_MODULES_PATH],
 	},
-	entry: [
-		require.resolve(`${SRC_PATH}/index.tsx`),
-	],
+	entry: [require.resolve(`${SRC_PATH}/index.tsx`)],
 	module: {
 		rules: [
 			{
 				oneOf: [
 					{
 						test: TS_PATTERN,
-						use: [
-							babelLoader,
-							tsLoader,
-						],
+						use: [babelLoader, tsLoader],
 					},
 					{
 						test: STYLUS_PATTERN,
-						use: [
-							styleLoader,
-							cssLoader,
-							postcssLoader,
-							stylusLoader,
-						],
+						use: [styleLoader, cssLoader, postcssLoader, stylusLoader],
 					},
 					{
 						test: CSS_PATTERN,
-						use: [
-							styleLoader,
-							cssLoader,
-							postcssLoader,
-						],
+						use: [styleLoader, cssLoader, postcssLoader],
 					},
 					{
 						exclude: FILE_LOADER_EXCLUDES,
@@ -69,7 +52,7 @@ const bundleConfig: Configuration = {
 	},
 	output: {
 		path: `${ROOT}/build`,
-		filename: '[name].bundle.js'
+		filename: '[name].bundle.js',
 	},
 	plugins: [
 		createForkTSCheckerPlugin(),
@@ -79,5 +62,4 @@ const bundleConfig: Configuration = {
 	],
 };
 
-export {bundleConfig as default};
-
+export { bundleConfig as default };

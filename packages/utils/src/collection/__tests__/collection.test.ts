@@ -98,11 +98,13 @@ describe('Collection', () => {
 	});
 
 	it('should reduce', () => {
-		expect(collection.reduce<number[]>((acc, item, i) => {
-			acc.push(0);
-			acc.push(item);
-			return acc;
-		}, [])).toEqual([0, 1, 0, 2, 0, 3]);
+		expect(
+			collection.reduce<number[]>((acc, item, i) => {
+				acc.push(0);
+				acc.push(item);
+				return acc;
+			}, []),
+		).toEqual([0, 1, 0, 2, 0, 3]);
 	});
 
 	it('should some', () => {
@@ -121,13 +123,17 @@ describe('Collection', () => {
 	});
 
 	it('should support readonly mode', () => {
-		check(new Collection([1], {
-			readonly: true
-		}));
+		check(
+			new Collection([1], {
+				readonly: true,
+			}),
+		);
 
-		check(new Collection([1]).clone({
-			readonly: true
-		}));
+		check(
+			new Collection([1]).clone({
+				readonly: true,
+			}),
+		);
 
 		function check<T>(collection: Collection<T>) {
 			expect(collection.add.bind(null, 1)).toThrow();

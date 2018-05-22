@@ -27,7 +27,7 @@ export default function throttle<F extends Function>(func: F, wait: any = 0, opt
 		}
 	};
 
-	return function (this: any) {
+	return function(this: any) {
 		const now = Date.now();
 		if (!previous && options.leading === false) {
 			previous = now;
@@ -58,7 +58,7 @@ export default function throttle<F extends Function>(func: F, wait: any = 0, opt
  * Class method decorator for {@link throttle}.
  */
 export function THROTTLE(wait = 0, options = {}): any {
-	return function (target: any, prop: any, descriptor?: any): any {
+	return function(target: any, prop: any, descriptor?: any): any {
 		if (descriptor) {
 			if (descriptor.initializer) {
 				const old = descriptor.initializer;
