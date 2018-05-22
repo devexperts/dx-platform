@@ -5,10 +5,10 @@ import { BUTTON } from '../Button/Button';
 import * as buttonTheme from '../Button/Button.styl';
 
 import { LOADING_INDICATOR } from '../LoadingIndicator/LoadingIndicator';
-import * as loadingIndicatorTheme from '../LoadingIndicator/LoadingIndicator.demo.styl';
+import * as loadingIndicatorTheme from '../LoadingIndicator/LoadingIndicator.demo.styl'
 
 import { CHECKBOX } from '../Checkbox/Checkbox';
-import * as checkboxTheme from '../Checkbox/Checkbox.demo.styl';
+import * as checkboxTheme from '../Checkbox/Checkbox.demo.styl'
 
 import { POPOVER } from '../Popover/Popover';
 import * as popoverTheme from '../Popover/Popover.demo.styl';
@@ -55,6 +55,24 @@ import * as loadingIndicationTheme from '../LoadingIndication/LoadingIndication.
 import { POPUP } from '../Popup/Popup';
 import * as popupTheme from '../Popup/Popup.demo.styl';
 
+import { STEPPABLE_INPUT } from '../SteppableInput/SteppableInput';
+import * as steppableInput from '../SteppableInput/theme/SteppableInput.styl';
+import * as steppableInputInput from '../SteppableInput/theme/Input.styl';
+import * as steppableInputButtonIcon from '../SteppableInput/theme/ButtonIcon.styl';
+
+import { TIME_INPUT } from '../TimeInput/TimeInput';
+import * as timeInput from '../TimeInput/theme/TimeInput.styl';
+
+import { DATE_INPUT } from '../DateInput/DateInput';
+import * as dateInputTheme from '../DateInput/theme/DateInput.demo.styl';
+import * as dateInputButtonIconTheme from '../DateInput/theme/ButtonIcon.demo.styl';
+
+import { AUTOCOMPLETE } from '../Autocomplete/Autocomplete';
+import * as autocompleteTheme from '../Autocomplete/Autocomplete.styl';
+
+import { EXPANDABLE } from '../Expandable/Expandable';
+import * as expandableTheme from '../Expandable/Expandable.demo.styl';
+
 export default {
 	[INPUT]: inputTheme,
 	[BUTTON]: buttonTheme,
@@ -64,24 +82,38 @@ export default {
 	[LIST]: listTheme,
 	[MENU]: menuTheme,
 	[SELECTBOX]: selectBoxTheme,
+	[EXPANDABLE]: expandableTheme,
 	[TABLE]: tableTheme,
 	[HORIZONTAL_SCROLLBAR]: horScrollbar,
 	[VERTICAL_SCROLLBAR]: vertScrollbar,
 	[SCROLLABLE]: scrollableTheme,
+	[AUTOCOMPLETE]: autocompleteTheme,
 	[GRID]: gridTheme,
 	[BUTTON_ICON]: buttonIconTheme,
+	[DATE_INPUT]: {
+		...dateInputTheme,
+		ButtonIcon: dateInputButtonIconTheme,
+		CalendarButtonIcon: dateInputButtonIconTheme
+	},
+	[STEPPABLE_INPUT]: {
+		...steppableInput,
+		Input: steppableInputInput,
+		ButtonIcon: steppableInputButtonIcon,
+		ClearButtonIcon: steppableInputButtonIcon
+	},
+	[TIME_INPUT]: timeInput,
 	[PASSWORD_INPUT]: {
 		container: passwordInputTheme.container,
 		Input: {
-			container: passwordInputTheme.input,
+			container: passwordInputTheme.input
 		},
 		RevealButton: {
 			container: passwordInputTheme.button,
-			icon: passwordInputTheme.icon,
-		},
+			icon: passwordInputTheme.icon
+		}
 	},
 	[LINK]: linkTheme,
 	[TOGGLE_BUTTONS]: toggleButtonsTheme,
 	[LOADING_INDICATION]: loadingIndicationTheme,
-	[POPUP]: popupTheme,
-};
+	[POPUP]: popupTheme
+}
