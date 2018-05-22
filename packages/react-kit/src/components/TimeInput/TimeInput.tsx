@@ -11,51 +11,51 @@ import { SteppableInput, TSteppableInputProps } from '../SteppableInput/Steppabl
 export const TIME_INPUT = Symbol('TimeInput');
 
 export type TTime = {
-	hours: number,
-	minutes: number
+	hours: number;
+	minutes: number;
 };
 
 export enum ActiveSection {
 	Hours,
-	Minutes
+	Minutes,
 }
 
 export type TTimeInputOwnProps = TSteppableInputProps & TControlProps<TTime | null>;
 
 export type TTimeInputFullProps = TTimeInputOwnProps & {
-	SteppableInput: React.ComponentClass<TSteppableInputProps> | React.SFC<TSteppableInputProps>,
+	SteppableInput: React.ComponentClass<TSteppableInputProps> | React.SFC<TSteppableInputProps>;
 	theme: {
-		inner?: string,
-		inner_isFilled?: string,
-		section?: string,
-		section_isActive?: string,
-		separator?: string,
-		SteppableInput?: TSteppableInputProps['theme']
-	}
+		inner?: string;
+		inner_isFilled?: string;
+		section?: string;
+		section_isActive?: string;
+		separator?: string;
+		SteppableInput?: TSteppableInputProps['theme'];
+	};
 };
 
 export type TTimeInputState = {
-	activeSection?: ActiveSection,
-	hours?: number,
-	minutes?: number
+	activeSection?: ActiveSection;
+	hours?: number;
+	minutes?: number;
 };
 
 @PURE
 class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState> {
 	static defaultProps = {
-		SteppableInput
+		SteppableInput,
 	};
 
 	state: TTimeInputState = {};
 	private secondInput: boolean = false;
 
 	componentWillMount() {
-		const {value} = this.props;
+		const { value } = this.props;
 		if (value) {
-			const {hours, minutes} = value;
+			const { hours, minutes } = value;
 			this.setState({
 				hours,
-				minutes
+				minutes,
 			});
 		}
 	}
@@ -71,71 +71,52 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState>
 			}
 			this.setState({
 				hours,
-				minutes
+				minutes,
 			});
 		}
 	}
 
 	render() {
-		const {
-			theme,
-			decrementIcon,
-			incrementIcon,
-			isDisabled,
-			clearIcon,
-			error,
-			value,
-			SteppableInput
-		} = this.props;
-		const {hours, minutes, activeSection} = this.state;
+		const { theme, decrementIcon, incrementIcon, isDisabled, clearIcon, error, value, SteppableInput } = this.props;
+		const { hours, minutes, activeSection } = this.state;
 
-		const hoursClassName = classnames(
-			theme.section,
-			{
-				[theme.section_isActive as string]: !isDisabled && activeSection === ActiveSection.Hours
-			}
-		);
+		const hoursClassName = classnames(theme.section, {
+			[theme.section_isActive as string]: !isDisabled && activeSection === ActiveSection.Hours,
+		});
 
-		const minutesClassName = classnames(
-			theme.section,
-			{
-				[theme.section_isActive as string]: !isDisabled && activeSection === ActiveSection.Minutes
-			}
-		);
+		const minutesClassName = classnames(theme.section, {
+			[theme.section_isActive as string]: !isDisabled && activeSection === ActiveSection.Minutes,
+		});
 
 		let onClear;
-		if (isDefined(value) && value !== null || isDefined(hours) || isDefined(minutes)) {
+		if ((isDefined(value) && value !== null) || isDefined(hours) || isDefined(minutes)) {
 			onClear = this.onClear;
 		}
 
-		const innerClassName = classnames(
-			theme.inner,
-			{
-				[theme.inner_isFilled as string]: Boolean(value)
-			}
-		);
+		const innerClassName = classnames(theme.inner, {
+			[theme.inner_isFilled as string]: Boolean(value),
+		});
 
 		return (
-			<SteppableInput isDisabled={isDisabled}
-			                theme={theme.SteppableInput}
-			                onBlur={this.onBlur}
-			                error={error}
-			                onFocus={this.onFocus}
-			                decrementIcon={decrementIcon}
-			                incrementIcon={incrementIcon}
-			                clearIcon={clearIcon}
-			                onKeyDown={this.onKeyDown}
-			                onClear={onClear}
-			                onDecrement={this.onDecrement}
-			                onIncrement={this.onIncrement}>
+			<SteppableInput
+				isDisabled={isDisabled}
+				theme={theme.SteppableInput}
+				onBlur={this.onBlur}
+				error={error}
+				onFocus={this.onFocus}
+				decrementIcon={decrementIcon}
+				incrementIcon={incrementIcon}
+				clearIcon={clearIcon}
+				onKeyDown={this.onKeyDown}
+				onClear={onClear}
+				onDecrement={this.onDecrement}
+				onIncrement={this.onIncrement}>
 				<div className={innerClassName}>
-					<span className={hoursClassName}
-					      onMouseDown={this.onHoursMouseDown}>
+					<span className={hoursClassName} onMouseDown={this.onHoursMouseDown}>
 						{this.format(hours)}
 					</span>
 					<span className={theme.separator}>:</span>
-					<span className={minutesClassName}
-					      onMouseDown={this.onMinutesMouseDown}>
+					<span className={minutesClassName} onMouseDown={this.onMinutesMouseDown}>
 						{this.format(minutes)}
 					</span>
 				</div>
@@ -154,54 +135,54 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState>
 	private onHoursMouseDown = (e: React.MouseEvent<HTMLElement>) => {
 		if (!this.props.isDisabled) {
 			this.setState({
-				activeSection: ActiveSection.Hours
+				activeSection: ActiveSection.Hours,
 			});
 			this.correctMinutes();
 		}
-	}
+	};
 
 	private onMinutesMouseDown = (e: React.MouseEvent<HTMLElement>) => {
 		if (!this.props.isDisabled) {
 			this.setState({
-				activeSection: ActiveSection.Minutes
+				activeSection: ActiveSection.Minutes,
 			});
 		}
-	}
+	};
 
 	private onIncrement = () => {
 		this.secondInput = false;
 		this.step(1);
-	}
+	};
 
 	private onDecrement = () => {
 		this.secondInput = false;
 		this.step(-1);
-	}
+	};
 
 	private onClear = () => {
 		this.secondInput = false;
 		this.updateStateTime();
-	}
+	};
 
 	private onFocus = (e: React.FocusEvent<HTMLElement>) => {
 		this.secondInput = false;
 		if (!isDefined(this.state.activeSection)) {
 			this.setState({
-				activeSection: ActiveSection.Hours
+				activeSection: ActiveSection.Hours,
 			});
 		}
-	}
+	};
 
 	private onBlur = (e: React.FocusEvent<HTMLElement>) => {
 		this.secondInput = false;
 		this.correctMinutes();
 		this.setState({
-			activeSection: undefined
+			activeSection: undefined,
 		});
-	}
+	};
 
 	private onKeyDown = (e: React.KeyboardEvent<HTMLElement>) => {
-		const {activeSection, hours, minutes} = this.state;
+		const { activeSection, hours, minutes } = this.state;
 		switch (e.keyCode) {
 			case KeyCode.Left: {
 				e.preventDefault(); //block h-scrolling
@@ -209,7 +190,7 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState>
 					this.secondInput = false;
 					this.correctMinutes();
 					this.setState({
-						activeSection: ActiveSection.Hours
+						activeSection: ActiveSection.Hours,
 					});
 				}
 				break;
@@ -220,7 +201,7 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState>
 					this.secondInput = false;
 					this.correctMinutes();
 					this.setState({
-						activeSection: ActiveSection.Minutes
+						activeSection: ActiveSection.Minutes,
 					});
 				}
 				break;
@@ -247,10 +228,10 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState>
 				}
 			}
 		}
-	}
+	};
 
 	private handleDigitKeyDown(digit: number) {
-		const {hours, minutes} = this.state;
+		const { hours, minutes } = this.state;
 		switch (this.state.activeSection) {
 			case ActiveSection.Hours: {
 				if (this.secondInput && typeof hours !== 'undefined') {
@@ -264,14 +245,14 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState>
 					}
 					this.updateStateTime(newHours, minutes);
 					this.setState({
-						activeSection: ActiveSection.Minutes
+						activeSection: ActiveSection.Minutes,
 					});
 					this.secondInput = false;
 				} else {
 					this.updateStateTime(digit, minutes);
 					if (digit > 2) {
 						this.setState({
-							activeSection: ActiveSection.Minutes
+							activeSection: ActiveSection.Minutes,
 						});
 						this.secondInput = false;
 					} else {
@@ -293,7 +274,7 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState>
 	}
 
 	private step(amount: number): void {
-		const {hours, minutes, activeSection} = this.state;
+		const { hours, minutes, activeSection } = this.state;
 		switch (activeSection) {
 			case ActiveSection.Hours: {
 				this.updateStateTime(add(hours, amount, 23), minutes);
@@ -302,7 +283,7 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState>
 			case ActiveSection.Minutes: {
 				this.updateStateTime(
 					hours,
-					add(Math.min(typeof minutes !== 'undefined' ? minutes : Infinity, 59), amount, 59)
+					add(Math.min(typeof minutes !== 'undefined' ? minutes : Infinity, 59), amount, 59),
 				);
 				break;
 			}
@@ -310,22 +291,20 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState>
 	}
 
 	private updateStateTime(hours?: number, minutes?: number): void {
-		const {onValueChange, value} = this.props;
+		const { onValueChange, value } = this.props;
 
 		const canBuildValue = typeof hours !== 'undefined' && typeof minutes !== 'undefined' && minutes < 60;
-		const newValueDiffers = canBuildValue && (
-			typeof value === 'undefined' ||
-			value === null ||
-			value.hours !== hours ||
-			value.minutes !== minutes
-		);
+		const newValueDiffers =
+			canBuildValue &&
+			(typeof value === 'undefined' || value === null || value.hours !== hours || value.minutes !== minutes);
 
 		if (canBuildValue) {
 			if (newValueDiffers) {
-				onValueChange && onValueChange({
-					hours,
-					minutes
-				} as any);
+				onValueChange &&
+					onValueChange({
+						hours,
+						minutes,
+					} as any);
 			}
 		} else {
 			if (isDefined(this.props.value)) {
@@ -333,7 +312,7 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState>
 			}
 			this.setState({
 				hours,
-				minutes
+				minutes,
 			});
 		}
 	}
@@ -357,7 +336,7 @@ function add(a: number | undefined, b: number, max: number): number {
 	}
 	let result = (a + b) % (max + 1);
 	if (result < 0) {
-		result += (max + 1);
+		result += max + 1;
 	}
 	return result;
 }

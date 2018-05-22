@@ -7,7 +7,7 @@ import { Holdable } from './Holdable';
 class HoldableDemo extends React.Component {
 	state = {
 		value: 0,
-	}
+	};
 
 	render() {
 		return (
@@ -23,9 +23,7 @@ class HoldableDemo extends React.Component {
 		this.setState({
 			value: this.state.value + 1,
 		});
-	}
+	};
 }
 
-storiesOf('Holdable', module).add('default', () => (
-	<HoldableDemo />
-));
+storiesOf('Holdable', module).add('default', () => <HoldableDemo />);

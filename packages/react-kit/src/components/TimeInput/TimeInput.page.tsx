@@ -5,32 +5,34 @@ import { Demo } from '../demo/Demo';
 import { Button } from '../Button/Button';
 import { AddIcon } from '../../icons/add-icon';
 import { DecreaseIcon } from '../../icons/decrease-icon';
-import { SmallCrossIcon  as ClearIcon } from '../../icons/small-cross-icon';
+import { SmallCrossIcon as ClearIcon } from '../../icons/small-cross-icon';
 
 const time = {
 	hours: 1,
-	minutes: 20
+	minutes: 20,
 };
 
 const log = action('change');
 
 class TimeInputPage extends React.Component<any, any> {
 	state = {
-		value: time
+		value: time,
 	};
 
 	render() {
 		return (
 			<Demo>
-				<input type="time" id="time"/>
+				<input type="time" id="time" />
 				<div>
-					<TimeInput decrementIcon={<DecreaseIcon />}
-							   isDisabled={this.props.isDisabled}
-							   incrementIcon={<AddIcon />}
-							   error={this.props.error}
-							   clearIcon={<ClearIcon />}
-							   onValueChange={this.onTimeInputChange}
-							   value={this.state.value}/>
+					<TimeInput
+						decrementIcon={<DecreaseIcon />}
+						isDisabled={this.props.isDisabled}
+						incrementIcon={<AddIcon />}
+						error={this.props.error}
+						clearIcon={<ClearIcon />}
+						onValueChange={this.onTimeInputChange}
+						value={this.state.value}
+					/>
 					<Button onClick={this.onClearClick}>clear</Button>
 				</div>
 			</Demo>
@@ -40,18 +42,18 @@ class TimeInputPage extends React.Component<any, any> {
 	onTimeInputChange = (value: TTime) => {
 		log(value);
 		this.setState({
-			value
+			value,
 		});
-	}
+	};
 
 	onClearClick = () => {
 		this.setState({
-			value: null
+			value: null,
 		});
-	}
+	};
 }
 
 storiesOf('TimeInput', module)
-	.add('default', () => <TimeInputPage/>)
-	.add('disabled', () => <TimeInputPage isDisabled={true}/>)
-	.add('invalid', () => <TimeInputPage error={true}/>);
+	.add('default', () => <TimeInputPage />)
+	.add('disabled', () => <TimeInputPage isDisabled={true} />)
+	.add('invalid', () => <TimeInputPage error={true} />);
