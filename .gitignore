@@ -1,2 +1,5 @@
 node_modules
 packages/demo
+/**/*/lib
+.idea
+dist
