@@ -29,6 +29,8 @@ export type TRawPopupProps = {
 
 	shouldCloseOnClickAway?: boolean;
 	onRequestClose?: () => any;
+
+	container?: Element;
 };
 
 @PURE
@@ -41,11 +43,13 @@ class RawPopup extends Component<TRawPopupProps> {
 		super(props);
 
 		this.rootElement = document.createElement('div');
-		document.body.appendChild(this.rootElement);
+		const container = props.container || document.body;
+		container.appendChild(this.rootElement);
 	}
 
 	componentWillUnmount() {
-		document.body.removeChild(this.rootElement);
+		const container = this.props.container || document.body;
+		container.removeChild(this.rootElement);
 	}
 
 	render() {
