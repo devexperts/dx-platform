@@ -13,7 +13,7 @@ import { NativeResizeDetector } from '../ResizeDetector/ResizeDetector';
 import { findDOMNode } from 'react-dom';
 import { raf } from '@devexperts/utils/dist/function/raf';
 
-export const SELECTBOX = Symbol('Selectbox');
+export const SELECTBOX= Symbol('Selectbox') as symbol;
 
 export type TFullSelectboxProps = TControlProps<ReactText> & {
 	theme: {

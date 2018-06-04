@@ -28,7 +28,7 @@ import { ObjectClean, ObjectOmit } from 'typelevel-ts';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { withTheme } from '../../utils/withTheme';
 
-export const GRID = Symbol('Grid');
+export const GRID= Symbol('Grid') as symbol;
 
 const EVENT_GRID = {
 	BODY_SCROLL: 'EVENT_GRID:BODY_SCROLL',

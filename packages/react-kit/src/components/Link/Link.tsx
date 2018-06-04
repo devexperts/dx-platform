@@ -6,7 +6,7 @@ import { withTheme } from '../../utils/withTheme';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { ObjectClean } from 'typelevel-ts/lib';
 
-export const LINK = Symbol('Link');
+export const LINK= Symbol('Link') as symbol;
 
 export type TFullLinkProps = {
 	children: React.ReactNode;

@@ -6,7 +6,7 @@ import { withTheme } from '../../utils/withTheme';
 import { ObjectClean } from 'typelevel-ts';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
 
-export const BUTTON_ICON = Symbol('ButtonIcon');
+export const BUTTON_ICON= Symbol('ButtonIcon') as symbol;
 
 export type TFullButtonIconProps = ObjectClean<
 	TButtonProps & {

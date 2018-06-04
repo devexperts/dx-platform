@@ -21,7 +21,7 @@ type TSize = {
 	height: number;
 };
 
-export const POPOVER = Symbol('Popover');
+export const POPOVER= Symbol('Popover') as symbol;
 
 export enum PopoverPlacement {
 	Top = 'Top',

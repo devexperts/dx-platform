@@ -21,7 +21,7 @@ import { withTheme } from '../../utils/withTheme';
 import { ObjectClean } from 'typelevel-ts';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
 
-export const SCROLLABLE = Symbol('Scrollable');
+export const SCROLLABLE= Symbol('Scrollable') as symbol;
 
 export type TFullScrollableProps = {
 	children: React.ReactNode;

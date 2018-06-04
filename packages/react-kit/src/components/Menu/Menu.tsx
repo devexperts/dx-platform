@@ -19,7 +19,7 @@ import * as classnames from 'classnames';
 import { Pure } from '../Pure/Pure';
 import { ReactChildren } from '../../utils/typings';
 
-export const MENU = Symbol('Menu');
+export const MENU= Symbol('Menu') as symbol;
 
 export type TMenuChildProps = {
 	onSelect?: (value: ReactText) => void;

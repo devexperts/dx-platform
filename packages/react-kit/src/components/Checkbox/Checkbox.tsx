@@ -8,7 +8,7 @@ import { ObjectClean } from 'typelevel-ts';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { TControlProps } from '../Control/Control';
 
-export const CHECKBOX = Symbol('Checkbox');
+export const CHECKBOX= Symbol('Checkbox') as symbol;
 
 export type TFullCheckboxProps = TControlProps<boolean> & {
 	id?: string;

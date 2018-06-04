@@ -7,7 +7,7 @@ import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { ComponentClass } from 'react';
 import { Input, TInputProps } from '../input/Input';
 
-export const NUMERIC_STEPPER = Symbol('NumericStepper');
+export const NUMERIC_STEPPER= Symbol('NumericStepper') as symbol;
 
 export type TNumericStepperOwnProps = TSteppableInputProps &
 	TControlProps<any> & {

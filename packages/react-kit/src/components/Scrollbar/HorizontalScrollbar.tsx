@@ -8,7 +8,7 @@ import { ObjectClean } from 'typelevel-ts';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { withTheme } from '../../utils/withTheme';
 
-export const HORIZONTAL_SCROLLBAR = Symbol('HorizontalScrollbar');
+export const HORIZONTAL_SCROLLBAR= Symbol('HorizontalScrollbar') as symbol;
 
 export type TAdditionalHorizontalProps = {
 	scrollLeft?: number;

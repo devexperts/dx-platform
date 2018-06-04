@@ -8,7 +8,7 @@ import { LoadingIndicator, TLoadingIndicatorProps } from '../LoadingIndicator/Lo
 import { PURE } from '../../utils/pure';
 import * as cn from 'classnames';
 
-export const LOADING_INDICATION = Symbol('LoadingIndicaton');
+export const LOADING_INDICATION= Symbol('LoadingIndicaton') as symbol;
 
 export type TRawLoadingIndicatonProps = {
 	isVisible?: boolean;
