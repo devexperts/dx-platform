@@ -6,7 +6,7 @@ import { mergeThemes, withTheme } from '../../utils/withTheme';
 import { ObjectClean } from 'typelevel-ts';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
 
-export const TOGGLE_BUTTONS= Symbol('ToggleButtons') as symbol;
+export const TOGGLE_BUTTONS = Symbol('ToggleButtons') as symbol;
 
 export type TToggleButtonsChildProps = {
 	isActive?: boolean | undefined;

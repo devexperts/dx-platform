@@ -5,7 +5,7 @@ import { ObjectClean } from 'typelevel-ts';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { ComponentClass } from 'react';
 
-export const LOADING_INDICATOR= Symbol('LoadingIndicator') as symbol;
+export const LOADING_INDICATOR = Symbol('LoadingIndicator') as symbol;
 
 export type TFullLoadingIndicatorProps = {
 	theme: {

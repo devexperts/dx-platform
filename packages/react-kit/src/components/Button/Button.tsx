@@ -7,7 +7,7 @@ import { ComponentClass, EventHandler, MouseEvent } from 'react';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { ObjectClean } from 'typelevel-ts';
 
-export const BUTTON= Symbol('Button') as symbol;
+export const BUTTON = Symbol('Button') as symbol;
 
 export type TFullButtonProps = {
 	theme: {

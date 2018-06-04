@@ -12,7 +12,7 @@ export const NativeResizeDetector = detectorFactory({
 	strategy: 'scroll',
 });
 
-export const RESIZE_DETECTOR= Symbol('ResizeDetector') as symbol;
+export const RESIZE_DETECTOR = Symbol('ResizeDetector') as symbol;
 
 export type TFullResizeDetectorProps = {
 	theme: {

@@ -8,7 +8,7 @@ import { ObjectClean } from 'typelevel-ts';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { SteppableInput, TSteppableInputProps } from '../SteppableInput/SteppableInput';
 
-export const TIME_INPUT= Symbol('TimeInput') as symbol;
+export const TIME_INPUT = Symbol('TimeInput') as symbol;
 
 export type TTime = {
 	hours: number;

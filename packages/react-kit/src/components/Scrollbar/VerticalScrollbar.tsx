@@ -6,7 +6,7 @@ import { withTheme } from '../../utils/withTheme';
 import { ObjectClean } from 'typelevel-ts';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
 
-export const VERTICAL_SCROLLBAR= Symbol('VerticalScrollbar') as symbol;
+export const VERTICAL_SCROLLBAR = Symbol('VerticalScrollbar') as symbol;
 
 export type TAdditionalVerticalScrollBarProp = {
 	scrollTop?: number;

@@ -7,7 +7,7 @@ import { withTheme } from '../../utils/withTheme';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { ComponentType } from 'react';
 
-export const PASSWORD_INPUT= Symbol('PasswordInput') as symbol;
+export const PASSWORD_INPUT = Symbol('PasswordInput') as symbol;
 
 export type TFullPasswordInputProps = TInputProps & {
 	theme: {

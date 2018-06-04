@@ -10,7 +10,7 @@ import { Input, TInputProps } from '../input/Input';
 import { KeyCode } from '../Control/Control';
 import { Holdable } from '../Holdable/Holdable';
 
-export const STEPPABLE_INPUT= Symbol('SteppableInput') as symbol;
+export const STEPPABLE_INPUT = Symbol('SteppableInput') as symbol;
 
 export type TPickedInputProps = Pick<TInputProps, 'error' | 'onBlur' | 'onFocus' | 'onKeyDown' | 'onClick'>;
 

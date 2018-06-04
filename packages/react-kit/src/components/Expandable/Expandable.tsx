@@ -8,7 +8,7 @@ import { ObjectClean } from 'typelevel-ts';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { TControlProps } from '../Control/Control';
 
-export const EXPANDABLE= Symbol('Expandable') as symbol;
+export const EXPANDABLE = Symbol('Expandable') as symbol;
 
 export type TFullExpandableProps = TControlProps<boolean | null> & {
 	theme: {

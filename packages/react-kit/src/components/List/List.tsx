@@ -6,7 +6,7 @@ import { ObjectClean } from 'typelevel-ts';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { PURE } from '../../utils/pure';
 
-export const LIST= Symbol('List') as symbol;
+export const LIST = Symbol('List') as symbol;
 const CONTEXT_LEVEL_KEY = '__LIST_CONTEXT_LEVEL_KEY__';
 const CONTEXT_TYPES: any = {
 	[CONTEXT_LEVEL_KEY]() {},
