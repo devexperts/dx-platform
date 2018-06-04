@@ -5,7 +5,7 @@ import { withTheme } from '../../utils/withTheme';
 import { ObjectClean } from 'typelevel-ts/lib';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
 
-export const TABLE = Symbol('Table');
+export const TABLE = Symbol('Table') as symbol;
 
 export type TTableTheme = {
 	container?: string;

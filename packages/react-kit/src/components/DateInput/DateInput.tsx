@@ -67,7 +67,7 @@ type TDateInputState = {
 	isOpened?: boolean;
 };
 
-export const DATE_INPUT = Symbol('DateInput');
+export const DATE_INPUT = Symbol('DateInput') as symbol;
 
 @PURE
 class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState> {

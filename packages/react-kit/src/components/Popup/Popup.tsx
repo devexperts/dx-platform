@@ -8,7 +8,7 @@ import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { withTheme } from '../../utils/withTheme';
 import { RootClose } from '../RootClose/RootClose';
 
-export const POPUP = Symbol('Popup');
+export const POPUP = Symbol('Popup') as symbol;
 
 export type TRawPopupProps = {
 	theme: {

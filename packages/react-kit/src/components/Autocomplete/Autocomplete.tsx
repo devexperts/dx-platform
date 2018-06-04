@@ -10,7 +10,7 @@ import { Pure } from '../Pure/Pure';
 import { KeyCode } from '../Control/Control';
 import { AutocompleteMenuItem, TAutocompleteMenuItemProps } from './AutocompleteMenuItem';
 
-export const AUTOCOMPLETE = Symbol('Autocomplete');
+export const AUTOCOMPLETE = Symbol('Autocomplete') as symbol;
 
 export type TFullAutocompleteProps = TInputProps & {
 	Input: ComponentClass<TInputProps>;

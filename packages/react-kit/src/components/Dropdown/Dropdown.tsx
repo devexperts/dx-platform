@@ -8,7 +8,7 @@ import { ObjectClean } from 'typelevel-ts';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { TControlProps } from '../Control/Control';
 
-export const DROPDOWN = Symbol('Dropdown');
+export const DROPDOWN = Symbol('Dropdown') as symbol;
 
 export type TAnchorProps = WithInnerRef<{
 	onClick: MouseEventHandler<Element>;

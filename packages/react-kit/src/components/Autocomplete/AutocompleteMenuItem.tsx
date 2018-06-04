@@ -5,7 +5,7 @@ import { ComponentClass } from 'react';
 import { withTheme } from '../../utils/withTheme';
 import { MenuItem, TMenuItemProps } from '../Menu/Menu';
 import { Highlight, THighlightProps } from '../Highlight/Highlight';
-const AUTOCOMPLETE_MENU_ITEM = Symbol('AutocompleteMenuItem');
+const AUTOCOMPLETE_MENU_ITEM = Symbol('AutocompleteMenuItem') as symbol;
 
 export type TFullAutocompleteMenuItemProps = TMenuItemProps & {
 	search: string;

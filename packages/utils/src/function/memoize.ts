@@ -1,7 +1,7 @@
 /**
  * @type {Symbol}
  */
-export const MEMOIZE_CLEAR_FUNCTION = Symbol('MEMOIZE_CLEAR_FUNCTION');
+export const MEMOIZE_CLEAR_FUNCTION = Symbol('MEMOIZE_CLEAR_FUNCTION') as symbol;
 
 /**
  * Memoizes function for passed arguments

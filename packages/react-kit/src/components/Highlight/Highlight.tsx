@@ -6,7 +6,7 @@ import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { ObjectClean } from 'typelevel-ts/lib';
 import { ComponentClass, ReactNode } from 'react';
 
-export const HIGHLIGHT = Symbol('Mark');
+export const HIGHLIGHT = Symbol('Mark') as symbol;
 
 export type TFullHighlightProps = {
 	search: string;

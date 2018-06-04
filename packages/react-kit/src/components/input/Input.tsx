@@ -15,7 +15,7 @@ import { ObjectClean } from 'typelevel-ts';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { withTheme } from '../../utils/withTheme';
 
-export const INPUT = Symbol('Input');
+export const INPUT = Symbol('Input') as symbol;
 
 export type TFullInputProps = TControlProps<string> & {
 	min?: any;
