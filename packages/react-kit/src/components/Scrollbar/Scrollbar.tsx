@@ -5,6 +5,7 @@ import { Bar } from './Bar';
 
 import { CONTEXT_TYPES, EVENT_SCROLABLE, SCROLLABLE_CONTEXT_EMITTER } from '../Scrollable/Scrollable.const';
 
+export const SCROLLBAR = Symbol('Scrollbar') as symbol;
 export enum SCROLLBAR_TYPE {
 	HORIZONTAL = 'HORIZONTAL',
 	VERTICAL = 'VERTICAL',

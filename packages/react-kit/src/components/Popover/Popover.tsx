@@ -47,6 +47,7 @@ export type TFullPopoverProps = {
 	onMouseDown?: MouseEventHandler<Element>;
 	placement: PopoverPlacement;
 	align: PopoverAlign;
+	container?: Element;
 	onRequestClose?: () => any;
 	hasArrow?: boolean;
 	theme: {
@@ -89,7 +90,8 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 		super(props);
 
 		this.rootElement = document.createElement('div');
-		document.body.appendChild(this.rootElement);
+		const container = props.container || document.body;
+		container.appendChild(this.rootElement);
 	}
 
 	componentDidMount() {
@@ -103,7 +105,8 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 	}
 
 	componentWillUnmount() {
-		document.body.removeChild(this.rootElement);
+		const container = this.props.container || document.body;
+		container.removeChild(this.rootElement);
 	}
 
 	componentWillReceiveProps(nextProps: TFullPopoverProps) {
