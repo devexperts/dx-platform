@@ -1,0 +1,19 @@
+{
+  "extends": "./node_modules/@devexperts/tools/settings/tsconfig.json",
+  "compilerOptions": {
+	"lib": [
+	  "es2016",
+	  "dom",
+	  "es2017.object",
+	  "es2015.symbol",
+	  "es2015.symbol.wellknown"
+	]
+  },
+  "include": [
+	"typings/**/*",
+	"src/**/*"
+  ],
+  "exclude": [
+	"**/__tests__/*"
+  ]
+}
