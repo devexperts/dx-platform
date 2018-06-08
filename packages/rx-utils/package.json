@@ -37,10 +37,12 @@
     "fp-ts": "^1.2.0"
   },
   "devDependencies": {
+    "@devexperts/remote-data-ts": "^0.2.0",
     "@devexperts/tools": "^0.11.0",
     "@types/jest": "^21.1.8",
-    "@devexperts/remote-data-ts": "^0.2.0",
+    "@types/sinon": "^5.0.1",
+    "fp-ts": "^1.2.0",
     "rxjs": "^5.5.11",
-    "fp-ts": "^1.2.0"
+    "sinon": "^5.1.0"
   }
 }

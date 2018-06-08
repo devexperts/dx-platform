@@ -1,5 +1,5 @@
 {
-  "name": "@devexperts/utils",
+  "name": "@devexperts/lint",
   "version": "0.11.0",
   "description": "",
   "main": "lib/index.js",
@@ -25,16 +25,19 @@
   },
   "homepage": "https://github.com/devex-web-frontend/dx-platform#readme",
   "dependencies": {
-    "tslib": "^1.9.0",
-    "typelevel-ts": "^0.2.2"
+    "@types/node": "^8.10.19",
+    "tslint-config-prettier": "^1.13.0",
+    "tslint-plugin-prettier": "^1.3.0",
+    "tsutils": "^2.27.1"
   },
   "peerDependencies": {
-    "@devexperts/remote-data-ts": "^0.2.0",
-    "fp-ts": "^1.2.0"
+    "@devexperts/tools": "^0.11.0",
+    "tslint": "^5.10.0",
+    "typescript": "^2.8.4"
   },
   "devDependencies": {
     "@devexperts/tools": "^0.11.0",
-    "@devexperts/remote-data-ts": "^0.2.0",
-    "fp-ts": "^1.2.0"
+    "tslint": "^5.10.0",
+    "typescript": "^2.8.4"
   }
 }

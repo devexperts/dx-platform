@@ -18,13 +18,13 @@ export enum RequestMethod {
 }
 
 export class ApiClient<TError> {
-	static create(baseHref: string, extraHeaders?: object) {
-		return new ApiClient(baseHref, extraHeaders);
+	static create<T>(baseHref: string, extraHeaders?: object) {
+		return new ApiClient<T>(baseHref, extraHeaders);
 	}
 
 	readonly RequestMethod = RequestMethod;
 
-	private constructor(private readonly baseHref: string, private readonly headers?: object) {}
+	private constructor(private readonly baseHref: string, readonly headers?: object) {}
 
 	private createURL(url: string, query?: {}): string {
 		return query ? `${url}?${qs.stringify(query)}` : url;

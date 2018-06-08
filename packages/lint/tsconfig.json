@@ -1,5 +1,5 @@
 {
-  "extends": "./packages/tools/settings/tsconfig.json",
+  "extends": "./node_modules/@devexperts/tools/settings/tsconfig.json",
   "compilerOptions": {
 	"lib": [
 	  "es2016",
@@ -10,10 +10,9 @@
 	]
   },
   "include": [
-	"packages/*/typings/**/*",
-	"packages/*/src/**/*"
+	"src/**/*"
   ],
   "exclude": [
-	"packages/**/node_modules/@devexperts/**/*"
+	"**/__tests__/*"
   ]
 }

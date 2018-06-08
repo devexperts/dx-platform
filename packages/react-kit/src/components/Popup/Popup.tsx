@@ -73,7 +73,7 @@ class RawPopup extends Component<TRawPopupProps> {
 			[theme.backdrop_closeOnClickAway as string]: shouldCloseOnClickAway,
 		});
 
-		let child = (
+		const child = (
 			<RootClose
 				onRootClose={onRequestClose}
 				ignoreKeyUp={!shouldCloseOnClickAway}
