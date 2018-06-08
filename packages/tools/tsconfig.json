@@ -9,6 +9,7 @@
 	"strictNullChecks": true,
 	"noUnusedLocals": true,
 	"target": "esnext",
+	"experimentalDecorators": true,
 	"lib": [
 	  "dom",
 	  "es6",

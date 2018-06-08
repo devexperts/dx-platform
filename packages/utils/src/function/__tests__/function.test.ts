@@ -1,3 +1,5 @@
+jest.useFakeTimers();
+
 import debounce, { DEBOUNCE } from '../debounce';
 import throttle, { THROTTLE } from '../throttle';
 import memoize, { MEMOIZE, MEMOIZE_CLEAR_FUNCTION } from '../memoize';
