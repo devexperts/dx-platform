@@ -27,6 +27,11 @@
     "transform": {
       "^.+\\.tsx?$": "ts-jest"
     },
+    "modulePathIgnorePatterns": [
+      "<rootDir>/packages/utils/dist/",
+      "<rootDir>/packages/react-kit/dist/",
+      "<rootDir>/packages/rx-utils/dist/"
+    ],
     "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.tsx?$",
     "moduleFileExtensions": [
       "ts",
