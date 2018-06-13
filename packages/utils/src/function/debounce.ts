@@ -45,26 +45,3 @@ export default function debounce<F extends Function>(func: F, wait: number = 0, 
 		return result;
 	} as any;
 }
-
-/**
- * Class method decorator for {@link debounce}.
- */
-export function DEBOUNCE(wait: number = 0, immediate: boolean = false): any {
-	return function(target: any, prop: any, descriptor?: any): any {
-		if (descriptor) {
-			if (descriptor.initializer) {
-				const old = descriptor.initializer;
-				descriptor.initializer = function initializer() {
-					return debounce(old.call(this), wait, immediate);
-				};
-			} else if (descriptor.get) {
-				descriptor.get = debounce(descriptor.get, wait, immediate);
-			} else if (descriptor.value) {
-				descriptor.value = debounce(descriptor.value, wait, immediate);
-			}
-			return descriptor;
-		} else {
-			throw new Error('Property decorators are not implemented yet!');
-		}
-	};
-}

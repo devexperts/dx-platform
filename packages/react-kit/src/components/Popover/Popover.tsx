@@ -5,7 +5,7 @@ import * as classnames from 'classnames';
 
 import { PURE } from '../../utils/pure';
 import { BoundsUpdateDetector } from '../BoundsUpdateDetector/BoundsUpdateDetector';
-import { THROTTLE } from '@devexperts/utils/dist/function/throttle';
+import throttle from '@devexperts/utils/dist/function/throttle';
 
 import { withTheme } from '../../utils/withTheme';
 import { ComponentClass, MouseEventHandler, ReactNode } from 'react';
@@ -92,6 +92,9 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 		this.rootElement = document.createElement('div');
 		const container = props.container || document.body;
 		container.appendChild(this.rootElement);
+
+		this.handleResize = throttle(this.handleResize, 100);
+		this.handleScroll = throttle(this.handleScroll, 100);
 	}
 
 	componentDidMount() {
@@ -262,7 +265,6 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 		this.handleResize();
 	};
 
-	@THROTTLE(100)
 	handleResize() {
 		this.updatePosition();
 	}
@@ -271,7 +273,6 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 		this.handleScroll();
 	};
 
-	@THROTTLE(100)
 	handleScroll() {
 		this.updatePosition();
 	}

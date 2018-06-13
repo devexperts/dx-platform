@@ -1,7 +1,7 @@
-import debounce, { DEBOUNCE } from '../debounce';
-import throttle, { THROTTLE } from '../throttle';
-import memoize, { MEMOIZE, MEMOIZE_CLEAR_FUNCTION } from '../memoize';
-import { DISPOSABLE } from '../disposable';
+import debounce from '../debounce';
+import throttle from '../throttle';
+import memoize, { MEMOIZE_CLEAR_FUNCTION } from '../memoize';
+import { disposable } from '../disposable';
 
 describe('function', () => {
 	describe('debounce', () => {
@@ -20,30 +20,6 @@ describe('function', () => {
 		});
 	});
 
-	describe('DEBOUNCE', () => {
-		it('should decorate class method', () => {
-			const callback = jest.fn();
-
-			class Foo {
-				@DEBOUNCE(100)
-				debounced(arg: any) {
-					callback();
-				}
-			}
-
-			const decorated = new Foo();
-
-			decorated.debounced(2);
-			expect(callback).not.toBeCalled();
-
-			jest.runAllTimers();
-			expect(callback).toBeCalled();
-
-			decorated.debounced(2);
-			expect(callback.mock.calls.length).toBe(1);
-		});
-	});
-
 	describe('throttle', () => {
 		it('should invoke decorated func once during time interval', () => {
 			const callback = jest.fn();
@@ -57,31 +33,6 @@ describe('function', () => {
 
 			jest.runAllTimers();
 			throttled();
-			expect(callback.mock.calls.length).toBe(2);
-		});
-	});
-
-	describe('THROTTLE', () => {
-		it('should decorate class method', () => {
-			const callback = jest.fn();
-
-			class Foo {
-				@THROTTLE(100)
-				throttled() {
-					callback();
-				}
-			}
-
-			const decorated = new Foo();
-
-			decorated.throttled();
-			expect(callback).toBeCalled();
-
-			decorated.throttled();
-			expect(callback.mock.calls.length).toBe(1);
-
-			jest.runAllTimers();
-			decorated.throttled();
 			expect(callback.mock.calls.length).toBe(2);
 		});
 	});
@@ -123,86 +74,28 @@ describe('function', () => {
 		});
 	});
 
-	describe('MEMOIZE', () => {
-		it('should decorate getter', () => {
-			const callback = jest.fn();
-
-			class Foo {
-				@MEMOIZE
-				get bar() {
-					callback();
-					return 1;
-				}
-			}
-
-			const foo = new Foo();
-			expect(foo.bar).toBe(1);
-			expect(foo.bar).toBe(1);
-			expect(callback.mock.calls.length).toBe(1);
-		});
-
-		it('should decorate methods', () => {
-			const callback = jest.fn();
-
-			class Foo {
-				@MEMOIZE
-				bar(a: any, b: any) {
-					callback();
-					return a + b;
-				}
-			}
-
-			const foo = new Foo();
-			expect(foo.bar('1', '2')).toBe('12');
-			expect(foo.bar('1', '2')).toBe('12');
-			expect(callback.mock.calls.length).toBe(1);
-		});
-
-		it('should support static fields', () => {
-			const callback = jest.fn();
-
-			class Foo {
-				@MEMOIZE
-				static getBar() {
-					callback();
-					return 1;
-				}
-
-				@MEMOIZE
-				static get bar() {
-					callback();
-					return 1;
-				}
-			}
-
-			expect(Foo.getBar()).toBe(1);
-			expect(Foo.getBar()).toBe(1);
-			expect(Foo.bar).toBe(1);
-			expect(Foo.bar).toBe(1);
-			expect(callback.mock.calls.length).toBe(2);
-		});
-	});
-
-	describe('DISPOSABLE', () => {
+	describe('disposable', () => {
 		it('should decorate class', () => {
 			//
-			@DISPOSABLE
 			class Foo {}
 
-			expect(Foo.prototype['_using']).toBeDefined();
-			expect(Foo.prototype['dispose']).toBeDefined();
+			const DecoratedFoo = disposable(Foo);
+
+			expect(DecoratedFoo.prototype['_using']).toBeDefined();
+			expect(DecoratedFoo.prototype['dispose']).toBeDefined();
 		});
 		it('should implement disposing', () => {
 			const callback = jest.fn();
 
-			@DISPOSABLE
 			class Foo {
 				constructor() {
 					this['_using']([callback]);
 				}
 			}
 
-			const foo = new Foo();
+			const DecoratedFoo = disposable(Foo);
+
+			const foo = new DecoratedFoo();
 			foo['dispose']();
 			expect(callback).toBeCalled();
 		});

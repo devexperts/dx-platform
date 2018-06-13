@@ -1,5 +1,5 @@
 import { uuid } from '../string/string';
-import { DISPOSABLE } from '../function/disposable';
+import { disposable } from '../function/disposable';
 import Emitter from '../emitter/Emitter';
 
 const id = uuid();
@@ -22,8 +22,7 @@ export const E_SESSION = {
 /**
  * @emits {@link E_SESSION}
  */
-@DISPOSABLE
-export class Session extends Emitter {
+export class RawSession extends Emitter {
 	/**
 	 * Current session id
 	 * @returns {String}
@@ -79,5 +78,7 @@ export class Session extends Emitter {
 		}
 	};
 }
+
+const Session = disposable(RawSession);
 
 export default new Session();
