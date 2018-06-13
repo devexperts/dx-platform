@@ -33,7 +33,7 @@
   },
   "peerDependencies": {
     "@devexperts/remote-data-ts": "^0.2.0",
-    "rxjs": "^5.5.11",
+    "rxjs": "^6.2.1",
     "fp-ts": "^1.2.0"
   },
   "devDependencies": {
@@ -42,7 +42,7 @@
     "@types/jest": "^21.1.8",
     "@types/sinon": "^5.0.1",
     "fp-ts": "^1.2.0",
-    "rxjs": "^5.5.11",
+    "rxjs": "^6.2.1",
     "sinon": "^5.1.0"
   }
 }

@@ -1,14 +1,9 @@
 import { RemoteData } from '@devexperts/remote-data-ts';
 import * as qs from 'query-string';
-import { of } from 'rxjs/observable/of';
-import { ajax } from 'rxjs/observable/dom/ajax';
 import { pending, failure, success } from '@devexperts/utils/dist/rd';
-import { AjaxRequest } from 'rxjs/observable/dom/AjaxObservable';
-import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/startWith';
+import { map, catchError, startWith } from 'rxjs/operators';
+import { ajax, AjaxRequest } from 'rxjs/ajax';
+import { Observable, Subject, of } from 'rxjs';
 
 export enum RequestMethod {
 	Get = 'GET',
@@ -49,14 +44,15 @@ export class ApiClient<TError> {
 			body: request.body && JSON.stringify(request.body),
 		};
 
-		return ajax(xhr)
-			.map(response => success<TError, Response>(response.response))
-			.catch(response => {
+		return ajax(xhr).pipe(
+			map(response => success<TError, Response>(response.response)),
+			catchError(response => {
 				this.errorSubj$.next(response);
 
 				return of(failure<TError, Response>(response));
-			})
-			.startWith<RemoteData<TError, Response>>(pending);
+			}),
+			startWith(pending),
+		);
 	};
 
 	readonly get = <Response = never>(url: string, query?: {}): Observable<RemoteData<TError, Response>> => {
