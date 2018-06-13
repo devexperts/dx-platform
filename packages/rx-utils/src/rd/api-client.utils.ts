@@ -1,7 +1,7 @@
 import { RemoteData, pending, failure, success } from '@devexperts/remote-data-ts';
 import * as qs from 'query-string';
 import { map, catchError, startWith } from 'rxjs/operators';
-import { ajax, AjaxRequest } from 'rxjs/ajax';
+import { ajax, AjaxError, AjaxRequest } from 'rxjs/ajax';
 import { Observable, Subject, of } from 'rxjs';
 
 export enum RequestMethod {
@@ -11,24 +11,24 @@ export enum RequestMethod {
 	Delete = 'DELETE',
 }
 
-export class ApiClient<TError> {
-	static create<T>(baseHref: string, extraHeaders?: object) {
-		return new ApiClient<T>(baseHref, extraHeaders);
+export class ApiClient {
+	static create(baseHref: string, extraHeaders?: object) {
+		return new ApiClient(baseHref, extraHeaders);
 	}
 
 	readonly RequestMethod = RequestMethod;
 
-	private constructor(private readonly baseHref: string, readonly headers?: object) {}
+	private constructor(private readonly baseHref: string, private readonly headers?: object) {}
 
 	private createURL(url: string, query?: {}): string {
 		return query ? `${url}?${qs.stringify(query)}` : url;
 	}
 
-	private readonly errorSubj$ = new Subject<TError>();
+	private readonly errorSubj$ = new Subject<AjaxError>();
 
 	readonly error$ = this.errorSubj$.asObservable();
 
-	readonly request = <Response = never>(request: AjaxRequest): Observable<RemoteData<TError, Response>> => {
+	readonly request = <Response = never>(request: AjaxRequest): Observable<RemoteData<AjaxError, Response>> => {
 		const url = `${this.baseHref}${request.url}`;
 
 		const xhr: AjaxRequest = {
@@ -44,24 +44,24 @@ export class ApiClient<TError> {
 		};
 
 		return ajax(xhr).pipe(
-			map(response => success<TError, Response>(response.response)),
+			map(response => success<AjaxError, Response>(response.response)),
 			catchError(response => {
 				this.errorSubj$.next(response);
 
-				return of(failure<TError, Response>(response));
+				return of(failure<AjaxError, Response>(response));
 			}),
 			startWith(pending),
 		);
 	};
 
-	readonly get = <Response = never>(url: string, query?: {}): Observable<RemoteData<TError, Response>> => {
+	readonly get = <Response = never>(url: string, query?: {}): Observable<RemoteData<AjaxError, Response>> => {
 		return this.request({
 			url: this.createURL(url, query),
 			method: this.RequestMethod.Get,
 		});
 	};
 
-	readonly post = <Response = never>(url: string, body: {}): Observable<RemoteData<TError, Response>> => {
+	readonly post = <Response = never>(url: string, body: {}): Observable<RemoteData<AjaxError, Response>> => {
 		return this.request({
 			url,
 			method: this.RequestMethod.Post,
@@ -69,14 +69,14 @@ export class ApiClient<TError> {
 		});
 	};
 
-	readonly remove = <Response = never>(url: string, query = {}): Observable<RemoteData<TError, Response>> => {
+	readonly remove = <Response = never>(url: string, query = {}): Observable<RemoteData<AjaxError, Response>> => {
 		return this.request({
 			url: this.createURL(url, query),
 			method: this.RequestMethod.Delete,
 		});
 	};
 
-	readonly put = <Response = never>(url: string, body?: {}): Observable<RemoteData<TError, Response>> => {
+	readonly put = <Response = never>(url: string, body?: {}): Observable<RemoteData<AjaxError, Response>> => {
 		return this.request({
 			url,
 			method: this.RequestMethod.Put,
