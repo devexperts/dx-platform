@@ -41,6 +41,7 @@
       "json",
       "node"
     ],
+    "timers": "fake",
     "globals": {
       "ts-jest": {
         "tsConfigFile": "./tsconfig.json"

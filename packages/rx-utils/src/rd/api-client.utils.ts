@@ -1,6 +1,5 @@
-import { RemoteData } from '@devexperts/remote-data-ts';
+import { RemoteData, pending, failure, success } from '@devexperts/remote-data-ts';
 import * as qs from 'query-string';
-import { pending, failure, success } from '@devexperts/utils/dist/rd';
 import { map, catchError, startWith } from 'rxjs/operators';
 import { ajax, AjaxRequest } from 'rxjs/ajax';
 import { Observable, Subject, of } from 'rxjs';

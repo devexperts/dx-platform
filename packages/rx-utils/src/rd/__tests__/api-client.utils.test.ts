@@ -1,6 +1,6 @@
 import { fakeServer } from 'sinon';
 import { ApiClient } from '../api-client.utils';
-import { pending, isSuccess, isFailure } from '@devexperts/utils/dist/rd';
+import { pending, isSuccess, isFailure } from '@devexperts/remote-data-ts';
 
 describe('API Client', () => {
 	let server = fakeServer.create();
