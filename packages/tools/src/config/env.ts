@@ -1,3 +1,5 @@
+/* tslint:disable:no-var-requires */
+
 import * as path from 'path';
 import * as fs from 'fs';
 let OVERRIDES: any = {};

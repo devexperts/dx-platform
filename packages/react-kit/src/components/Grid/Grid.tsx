@@ -424,7 +424,7 @@ class RawGridCell extends React.Component<TFullGridCellProps> {
 	}
 
 	render() {
-		let {
+		const {
 			TableCell = BasicTableCell,
 			align = GridCellAlignment.CENTER,
 			gridRowIndexKey,

@@ -10,9 +10,11 @@
     "build:kit": "cd packages/react-kit && npm run build",
     "build:tools": "cd packages/tools && npm run build",
     "build": "npm run build:tools && npm run build:kit",
-    "test": "cd packages/react-kit && npm run test",
+    "test": "npm run tslint && npm run jest",
+    "jest": "jest",
     "prettier": "prettier --list-different \"./packages/**/src/**/*.{ts,tsx}\"",
-    "prettier:fix": "prettier --write \"./packages/**/src/**/*.{ts,tsx}\""
+    "prettier:fix": "prettier --write \"./packages/**/src/**/*.{ts,tsx}\"",
+    "tslint": "tslint -c tslint.json --project tsconfig.json './packages/*/src/**/*.ts' './packages/*/src/**/*.tsx'"
   },
   "repository": {
     "type": "git",
@@ -21,10 +23,41 @@
   "bugs": {
     "url": "https://github.com/devex-web-frontend/dx-platform/issues"
   },
+  "jest": {
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "modulePathIgnorePatterns": [
+      "<rootDir>/packages/utils/dist/",
+      "<rootDir>/packages/react-kit/dist/",
+      "<rootDir>/packages/rx-utils/dist/"
+    ],
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.tsx?$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ],
+    "timers": "fake",
+    "globals": {
+      "ts-jest": {
+        "tsConfigFile": "./tsconfig.json"
+      }
+    }
+  },
   "author": "devexperts",
   "license": "MPL-2.0",
   "devDependencies": {
+    "@types/jest": "^23.0.0",
+    "babel-core": "^6.26.3",
+    "jest": "^23.1.0",
     "lerna": "2.5.1",
-    "prettier": "1.12.1"
+    "prettier": "1.12.1",
+    "ts-jest": "^22.4.6",
+    "tslint": "^5.10.0",
+    "typescript": "^2.8.4"
   }
 }

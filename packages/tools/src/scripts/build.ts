@@ -11,6 +11,7 @@ program
 	.action(function(options) {
 		const [node, bin] = program.rawArgs;
 		process.argv = [node, bin, '--config', options.config];
+		// tslint:disable-next-line
 		require('webpack/bin/webpack.js');
 	});
 

@@ -64,28 +64,6 @@ export function memoize<A, B, C, D, E>(
 export default memoize;
 
 /**
- * Decorator for {@link memoize} function
- * @param {Object} target
- * @param {String} property
- * @param {Object} descriptor
- * @returns {Object} descriptor
- */
-export function MEMOIZE(target: any, property: any, descriptor: any): any {
-	if (descriptor.initializer) {
-		//noinspection JSDuplicatedDeclaration
-		const old = descriptor.initializer;
-		descriptor.initializer = function initializer(): any {
-			return memoize(old.call(this)) as any;
-		};
-	} else if (descriptor.get) {
-		descriptor.get = memoize(descriptor.get);
-	} else if (descriptor.value) {
-		descriptor.value = memoize(descriptor.value);
-	}
-	return descriptor;
-}
-
-/**
  * @param {Array.<*>} args
  * @returns {String}
  */

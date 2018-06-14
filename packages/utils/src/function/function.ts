@@ -2,8 +2,8 @@
  * Re-exports.
  */
 
-export { default as debounce, DEBOUNCE } from './debounce';
-export { default as throttle, THROTTLE } from './throttle';
-export { default as memoize, MEMOIZE } from './memoize';
-export { DISPOSABLE } from './disposable';
+export { default as debounce } from './debounce';
+export { default as throttle } from './throttle';
+export { default as memoize } from './memoize';
+export { disposable } from './disposable';
 export * from './identity';

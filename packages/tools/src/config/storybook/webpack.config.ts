@@ -1,6 +1,7 @@
 import * as webpack from 'webpack';
 import * as ENV from '../env';
 
+// tslint:disable-next-line
 const genDefaultConfig = require('@storybook/react/dist/server/config/defaults/webpack.config.js');
 import {
 	babelLoader,

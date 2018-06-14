@@ -53,26 +53,3 @@ export default function throttle<F extends Function>(func: F, wait: any = 0, opt
 		return result;
 	} as any;
 }
-
-/**
- * Class method decorator for {@link throttle}.
- */
-export function THROTTLE(wait = 0, options = {}): any {
-	return function(target: any, prop: any, descriptor?: any): any {
-		if (descriptor) {
-			if (descriptor.initializer) {
-				const old = descriptor.initializer;
-				descriptor.initializer = function initializer() {
-					return throttle(old.call(this), wait, options);
-				};
-			} else if (descriptor.get) {
-				descriptor.get = throttle(descriptor.get, wait, options);
-			} else if (descriptor.value) {
-				descriptor.value = throttle(descriptor.value, wait, options);
-			}
-			return descriptor;
-		} else {
-			throw new Error('Property decorators are not implemented yet!');
-		}
-	};
-}

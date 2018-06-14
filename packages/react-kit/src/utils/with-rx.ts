@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { animationFrame } from 'rxjs/scheduler/animationFrame';
 import 'rxjs/add/operator/subscribeOn';
 
+// tslint:disable-next-line
 const hoistNonReactStatics = require('hoist-non-react-statics');
 
 export type ComponentDecorator<P> = (Target: ComponentType<P>) => ComponentClass<P>;
