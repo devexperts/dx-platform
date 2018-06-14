@@ -94,6 +94,9 @@ class RawSelectbox extends React.Component<TFullSelectboxProps, TSelectboxState>
 			//uninstall previous
 			if (this.anchor && this.props.shouldSyncWidth) {
 				const element = findDOMNode(this.anchor);
+				if (!element || element instanceof Text) {
+					return;
+				}
 				NativeResizeDetector.uninstall(element);
 			}
 
@@ -101,6 +104,9 @@ class RawSelectbox extends React.Component<TFullSelectboxProps, TSelectboxState>
 			this._anchor = value;
 			if (this.anchor && this.props.shouldSyncWidth) {
 				const element = findDOMNode(this.anchor);
+				if (!element || element instanceof Text) {
+					return;
+				}
 				NativeResizeDetector.listenTo(element, this.handleAnchorResize);
 			}
 		}
@@ -120,6 +126,9 @@ class RawSelectbox extends React.Component<TFullSelectboxProps, TSelectboxState>
 	componentWillUnmount() {
 		if (this.anchor) {
 			const element = findDOMNode(this.anchor);
+			if (!element || element instanceof Text) {
+				return;
+			}
 			NativeResizeDetector.uninstall(element);
 		}
 	}
