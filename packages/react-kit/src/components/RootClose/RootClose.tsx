@@ -33,8 +33,12 @@ export class RootClose extends Component<TRootCloseProps> {
 	}
 
 	private handleClickCapture: MouseEventHandler<HTMLElement> = e => {
+		const domNode = findDOMNode(this);
+		if (!domNode) {
+			return;
+		}
 		this.preventMouseRootClose =
-			isModifiedEvent(e) || !isLeftClickEvent(e) || findDOMNode(this).contains(e.target as Node);
+			isModifiedEvent(e) || !isLeftClickEvent(e) || domNode.contains(e.target as Node);
 	};
 
 	private handleClick: MouseEventHandler<HTMLElement> = e => {
@@ -44,7 +48,11 @@ export class RootClose extends Component<TRootCloseProps> {
 	};
 
 	private handleTouchStartCapture: TouchEventHandler<HTMLElement> = e => {
-		this.preventMouseRootClose = findDOMNode(this).contains(e.target as Node);
+		const domNode = findDOMNode(this);
+		if (!domNode) {
+			return;
+		}
+		this.preventMouseRootClose = domNode.contains(e.target as Node);
 	};
 
 	private handleTouchStart: TouchEventHandler<HTMLElement> = () => {

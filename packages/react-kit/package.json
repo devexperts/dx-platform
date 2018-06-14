@@ -41,15 +41,17 @@
     "typelevel-ts": "^0.2.2"
   },
   "peerDependencies": {
-    "react": ">=16.3.1",
-    "react-dom": ">=16.3.1"
+    "@types/react": ">=16.3.16",
+    "@types/react-dom": ">=16.0.6",
+    "react": ">=16.4.0",
+    "react-dom": ">=16.4.0"
   },
   "devDependencies": {
     "@devexperts/tools": "^0.11.0",
     "@types/jest": "^21.1.8",
-    "@types/react": "^16.3.6",
-    "@types/react-dom": "^16.0.4",
-    "react": "^16.3.1",
-    "react-dom": "^16.3.1"
+    "@types/react": "^16.3.16",
+    "@types/react-dom": "^16.0.6",
+    "react": "^16.4.0",
+    "react-dom": "^16.4.0"
   }
 }

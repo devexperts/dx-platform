@@ -100,7 +100,11 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 	componentDidMount() {
 		if (this.props.isOpened) {
 			if (this.props.anchor) {
-				this._anchor = ReactDOM.findDOMNode(this.props.anchor);
+				const anchorDOMNode = ReactDOM.findDOMNode(this.props.anchor);
+				if (!anchorDOMNode || anchorDOMNode instanceof Text) {
+					return;
+				}
+				this._anchor = anchorDOMNode;
 			}
 			this._popoverSize = this.getPopoverSize();
 			this.updatePosition();
@@ -115,7 +119,11 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 	componentWillReceiveProps(nextProps: TFullPopoverProps) {
 		if (nextProps.isOpened && nextProps.anchor) {
 			this._needsUpdate = true;
-			this._anchor = ReactDOM.findDOMNode(nextProps.anchor);
+			const anchorDOMNode = ReactDOM.findDOMNode(nextProps.anchor);
+			if (!anchorDOMNode || anchorDOMNode instanceof Text) {
+				return;
+			}
+			this._anchor = anchorDOMNode;
 		}
 	}
 
