@@ -508,13 +508,17 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 
 	onSteppableInputClick = (e: React.MouseEvent<HTMLElement>) => {
 		if (this.state.isOpened) {
+			const calendarButtonDOMNode = ReactDOM.findDOMNode(this.calendarButtonRef);
+			const thisNode = ReactDOM.findDOMNode(this);
 			if (
-				checkParentsUpTo(
-					e.target as Element,
-					ReactDOM.findDOMNode(this.calendarButtonRef),
-					ReactDOM.findDOMNode(this),
-				)
+				calendarButtonDOMNode === null ||
+				calendarButtonDOMNode instanceof Text ||
+				thisNode === null ||
+				thisNode instanceof Text
 			) {
+				return;
+			}
+			if (checkParentsUpTo(e.target as Element, calendarButtonDOMNode, thisNode)) {
 				//clicked on calendar button
 				this.setState({
 					isOpened: false,

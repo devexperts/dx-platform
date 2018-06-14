@@ -389,7 +389,11 @@ class RawGridCell extends React.Component<TFullGridCellProps> {
 	_width: number;
 
 	componentDidMount() {
-		this._width = ReactDOM.findDOMNode(this._content).clientWidth;
+		const contentDOMNode = ReactDOM.findDOMNode(this._content);
+		if (!contentDOMNode || contentDOMNode instanceof Text) {
+			return;
+		}
+		this._width = contentDOMNode.clientWidth;
 		const emitter = this.context[GRID_CONTEXT_EMITTER];
 		emitter.emit(
 			EVENT_GRID.CELL_MOUNT,
@@ -401,7 +405,11 @@ class RawGridCell extends React.Component<TFullGridCellProps> {
 	}
 
 	componentDidUpdate() {
-		const newWidth = ReactDOM.findDOMNode(this._content).clientWidth;
+		const contentDOMNode = ReactDOM.findDOMNode(this._content);
+		if (!contentDOMNode || contentDOMNode instanceof Text) {
+			return;
+		}
+		const newWidth = contentDOMNode.clientWidth;
 		if (newWidth !== this._width) {
 			this._width = newWidth;
 			const emitter = this.context[GRID_CONTEXT_EMITTER];
