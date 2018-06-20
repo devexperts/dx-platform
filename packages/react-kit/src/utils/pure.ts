@@ -1,4 +1,4 @@
-import { shallowEqual, deepEqual } from '@devexperts/utils/dist/object/object';
+import { shallowEqual, deepEqual } from '@devexperts/utils/dist/object';
 
 /**
  * Pure render checker
