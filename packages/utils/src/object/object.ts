@@ -1,6 +1,5 @@
 import { ObjectOmit } from 'typelevel-ts';
 
-export { is, shallowEqual } from './fb';
 import { is, hasOwnProperty } from './fb';
 
 /**
