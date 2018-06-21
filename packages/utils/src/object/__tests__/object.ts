@@ -1,4 +1,4 @@
-import { is, deepEqual, shallowEqual, mapKeys } from '../object';
+import { is, deepEqual, shallowEqual, mapKeys } from '../index';
 
 describe('object', () => {
 	describe('mapKeys', () => {
