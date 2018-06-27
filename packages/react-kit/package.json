@@ -6,7 +6,7 @@
   "module": "src",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "dx-tools build-lib src dist",
+    "build": "dx-tools build-lib src dist -f",
     "clean": "dx-tools clean dist",
     "prepare": "npm run clean && npm run build",
     "start": "dx-tools storybook",
