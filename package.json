@@ -6,7 +6,6 @@
     "lerna:update": "npm run lerna -- clean && npm run lerna -- bootstrap",
     "start": "lerna run --parallel watch",
     "start:storybook": "cd packages/react-kit && npm run start",
-    "postinstall": "lerna bootstrap",
     "build:kit": "cd packages/react-kit && npm run build",
     "build:tools": "cd packages/tools && npm run build",
     "build": "npm run build:tools && npm run build:kit",
@@ -16,6 +15,8 @@
     "prettier:fix": "prettier --write \"./packages/**/src/**/*.{ts,tsx}\"",
     "tslint": "tslint -c tslint.json --project tsconfig.json './packages/*/src/**/*.ts' './packages/*/src/**/*.tsx'"
   },
+  "private": true,
+  "workspaces": ["packages/*"],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/devex-web-frontend/dx-util.git"
