@@ -1,5 +1,4 @@
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
 import { PURE } from '../../utils/pure';
 import * as classnames from 'classnames';
 import { Component, MouseEventHandler, ReactNode } from 'react';
@@ -7,6 +6,7 @@ import { ObjectClean } from 'typelevel-ts';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { withTheme } from '../../utils/withTheme';
 import { RootClose } from '../RootClose/RootClose';
+import * as LegacyPortal from 'react-overlays/lib/LegacyPortal';
 
 export const POPUP = Symbol('Popup') as symbol;
 
@@ -62,6 +62,7 @@ class RawPopup extends Component<TRawPopupProps> {
 			isOpened,
 			shouldCloseOnClickAway,
 			onRequestClose,
+			container,
 		} = this.props;
 
 		if (!isOpened) {
@@ -87,8 +88,10 @@ class RawPopup extends Component<TRawPopupProps> {
 				</div>
 			</RootClose>
 		);
+		// return ReactDOM.createPortal(child, this.rootElement);
 
-		return ReactDOM.createPortal(child, this.rootElement);
+		// hotfix until we figure out differences in event bubbling between React.createPortal and react-overlays/Portal
+		return <LegacyPortal container={container}>{child}</LegacyPortal>;
 	}
 
 	private handleBackdropClick: MouseEventHandler<HTMLElement> = e => {
