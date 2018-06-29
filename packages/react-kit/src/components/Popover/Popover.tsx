@@ -14,7 +14,7 @@ import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { ReactRef } from '../../utils/typings';
 import { EventListener } from '../EventListener/EventListener';
 import { RootClose } from '../RootClose/RootClose';
-import { createPortal } from 'react-dom';
+import * as LegacyPortal from 'react-overlays/lib/LegacyPortal';
 
 type TSize = {
 	width: number;
@@ -135,7 +135,16 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 	}
 
 	render() {
-		const { closeOnClickAway, theme, hasArrow, onMouseDown, isOpened, onRequestClose, anchor } = this.props;
+		const {
+			closeOnClickAway,
+			theme,
+			hasArrow,
+			onMouseDown,
+			isOpened,
+			onRequestClose,
+			anchor,
+			container,
+		} = this.props;
 
 		if (!isOpened || !anchor) {
 			return null;
@@ -191,12 +200,13 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 			child = <RootClose onRootClose={onRequestClose}>{child}</RootClose>;
 		}
 
-		child = (
+		// hotfix until we figure out differences in event bubbling between React.createPortal and react - overlays / Portal;
+		return (
 			<EventListener onResize={this.onResize} onScroll={this.onScroll} target="window">
-				{child}
+				<LegacyPortal container={container}>{child}</LegacyPortal>
 			</EventListener>
 		);
-		return createPortal(child, this.rootElement);
+		// return createPortal(child, this.rootElement);
 	}
 
 	getPopoverSize(): TSize {
