@@ -1,6 +1,6 @@
 {
   "name": "@devexperts/utils",
-  "version": "0.12.3",
+  "version": "0.12.4",
   "description": "",
   "main": "lib/index.js",
   "scripts": {
@@ -29,6 +29,6 @@
     "typelevel-ts": "^0.2.2"
   },
   "devDependencies": {
-    "@devexperts/tools": "^0.12.3"
+    "@devexperts/tools": "^0.12.4"
   }
 }
