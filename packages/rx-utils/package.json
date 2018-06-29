@@ -8,7 +8,7 @@
     "test": "dx-tools build-lib src dist --failOnError",
     "build": "dx-tools build-lib src dist --failOnError",
     "clean": "dx-tools clean dist",
-    "prepare": "npm run clean && npm run build",
+    "prepare": "yarn clean && yarn build",
     "watch": "dx-tools build-lib src dist -w"
   },
   "repository": {

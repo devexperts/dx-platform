@@ -8,7 +8,7 @@
     "build": "tsc --noEmitOnError",
     "clean": "rimraf ./dist",
     "watch": "tsc -w --noEmitOnError",
-    "prepare": "npm run clean && npm run build"
+    "prepare": "yarn clean && yarn build"
   },
   "repository": {
     "type": "git",
