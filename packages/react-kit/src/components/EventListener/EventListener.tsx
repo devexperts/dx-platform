@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { PURE } from '../../utils/pure';
 import { shallowEqual } from '@devexperts/utils/dist/object';
+import { ReactPortal, ReactNode } from 'react';
 
 type Handlers = {
 	[onEvent: string]: Function;
@@ -9,7 +10,7 @@ type Handlers = {
 export type TEventListenerProps = {
 	capture?: boolean;
 	target: EventTarget | string;
-	children: React.ReactElement<any>;
+	children: ReactNode | ReactPortal;
 	[onEvent: string]: Function | boolean | string | object | undefined;
 };
 

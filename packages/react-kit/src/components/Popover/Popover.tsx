@@ -1,5 +1,5 @@
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+import { createPortal } from 'react-dom';
 import prefix from '@devexperts/utils/dist/dom/prefix';
 import * as classnames from 'classnames';
 
@@ -8,13 +8,12 @@ import { BoundsUpdateDetector } from '../BoundsUpdateDetector/BoundsUpdateDetect
 import throttle from '@devexperts/utils/dist/function/throttle';
 
 import { withTheme } from '../../utils/withTheme';
-import { ComponentClass, MouseEventHandler, ReactNode } from 'react';
+import { ComponentClass, MouseEventHandler, ReactNode, SyntheticEvent } from 'react';
 import { ObjectClean } from 'typelevel-ts';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { ReactRef } from '../../utils/typings';
 import { EventListener } from '../EventListener/EventListener';
 import { RootClose } from '../RootClose/RootClose';
-import { createPortal } from 'react-dom';
 
 type TSize = {
 	width: number;
@@ -173,6 +172,7 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 					ref={(el: any) => (this._popover = el)}
 					style={style}
 					onMouseDown={onMouseDown}
+					onClick={stopPropagation}
 					className={popoverClassName}>
 					<div className={theme.content}>
 						{isMeasured &&
@@ -196,17 +196,22 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 
 		child = (
 			<EventListener onResize={this.onResize} onScroll={this.onScroll} target="window">
-				{child}
+				{createPortal(child, this.rootElement)}
 			</EventListener>
 		);
-		return createPortal(child, this.rootElement);
 	}
 
 	getPopoverSize(): TSize {
 		const popover = ReactDOM.findDOMNode(this._popover) as HTMLElement;
+		if (popover instanceof HTMLElement) {
+			return {
+				height: popover.offsetHeight,
+				width: popover.offsetWidth,
+			};
+		}
 		return {
-			height: popover.offsetHeight,
-			width: popover.offsetWidth,
+			height: 0,
+			width: 0,
 		};
 	}
 
@@ -288,6 +293,10 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 
 export type TPopoverProps = ObjectClean<PartialKeys<TFullPopoverProps, 'theme' | 'align' | 'placement'>>;
 export const Popover: ComponentClass<TPopoverProps> = withTheme(POPOVER)(RawPopover);
+
+function stopPropagation<T>(e: SyntheticEvent<T>) {
+	e.stopPropagation();
+}
 
 function getArrowStyle(placement: PopoverPlacement, align: PopoverAlign, offset?: number): {} | undefined {
 	switch (placement) {

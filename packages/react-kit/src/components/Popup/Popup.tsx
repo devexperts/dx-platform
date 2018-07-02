@@ -1,5 +1,5 @@
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+import { createPortal } from 'react-dom';
 import { PURE } from '../../utils/pure';
 import * as classnames from 'classnames';
 import { Component, MouseEventHandler, ReactNode } from 'react';
@@ -88,7 +88,7 @@ class RawPopup extends Component<TRawPopupProps> {
 			</RootClose>
 		);
 
-		return ReactDOM.createPortal(child, this.rootElement);
+		return createPortal(child, this.rootElement);
 	}
 
 	private handleBackdropClick: MouseEventHandler<HTMLElement> = e => {
@@ -104,6 +104,7 @@ class RawPopup extends Component<TRawPopupProps> {
 			}
 			//if popup isn't modal then it's closed by RootClose
 		}
+		e.stopPropagation();
 	};
 }
 
