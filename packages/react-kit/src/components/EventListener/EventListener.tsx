@@ -10,7 +10,8 @@ type Handlers = {
 export type TEventListenerProps = {
 	capture?: boolean;
 	target: EventTarget | string;
-	children: ReactNode | ReactPortal;
+	children: ReactNode | ReactPortal ;
+} & {
 	[onEvent: string]: Function | boolean | string | object | undefined;
 };
 

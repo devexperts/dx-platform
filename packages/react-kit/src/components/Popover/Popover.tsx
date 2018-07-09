@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { createPortal } from 'react-dom';
+import * as ReactDOM from 'react-dom';
 import prefix from '@devexperts/utils/dist/dom/prefix';
 import * as classnames from 'classnames';
 
@@ -196,7 +196,7 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 
 		child = (
 			<EventListener onResize={this.onResize} onScroll={this.onScroll} target="window">
-				{createPortal(child, this.rootElement)}
+				{ReactDOM.createPortal(child, this.rootElement)}
 			</EventListener>
 		);
 	}
