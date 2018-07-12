@@ -31,7 +31,6 @@
     "tsutils": "^2.27.1"
   },
   "peerDependencies": {
-    "@devexperts/tools": "^0.11.0",
     "tslint": "^5.10.0",
     "typescript": "^2.8.4"
   },

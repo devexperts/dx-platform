@@ -38,7 +38,7 @@
   },
   "devDependencies": {
     "@devexperts/remote-data-ts": "^0.2.0",
-    "@devexperts/tools": "^0.11.0",
+    "@devexperts/tools": "*",
     "@types/jest": "^21.1.8",
     "@types/sinon": "^5.0.1",
     "fp-ts": "^1.2.0",
