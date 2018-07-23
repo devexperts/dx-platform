@@ -2,6 +2,6 @@
 <project version="4">
   <component name="TypeScriptCompiler">
     <option name="useConfig" value="true" />
-    <option name="nodeInterpreterTextField" value="$USER_HOME$/.nvm/versions/node/v8.9.3/bin/node" />
+    <option name="nodeInterpreterTextField" value="node" />
   </component>
 </project>
