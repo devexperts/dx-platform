@@ -84,6 +84,7 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 	private _popover: Element;
 	private _popoverSize: TSize;
 	private rootElement: Element;
+	private mediaQueryList?: MediaQueryList;
 
 	constructor(props: TFullPopoverProps) {
 		super(props);
@@ -108,11 +109,22 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 			this._popoverSize = this.getPopoverSize();
 			this.updatePosition();
 		}
+
+		if (window.matchMedia) {
+			this.mediaQueryList = window.matchMedia('print');
+			this.mediaQueryList.addListener(() => this.updatePosition());
+		}
+
+		window['onbeforeprint'] = this.updatePosition;
+		window['onafterprint'] = this.updatePosition;
 	}
 
 	componentWillUnmount() {
 		const container = this.props.container || document.body;
 		container.removeChild(this.rootElement);
+		this.mediaQueryList && this.mediaQueryList.removeListener(this.updatePosition);
+		window['onbeforeprint'] = null;
+		window['onafterprint'] = null;
 	}
 
 	componentWillReceiveProps(nextProps: TFullPopoverProps) {
@@ -215,7 +227,7 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 		};
 	}
 
-	updatePosition() {
+	updatePosition = () => {
 		if (!this._anchor) {
 			return;
 		}
@@ -267,7 +279,7 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 			finalAlign,
 			arrowOffset,
 		});
-	}
+	};
 
 	onSizeUpdate = (newSize: TSize) => {
 		this._popoverSize = newSize;
