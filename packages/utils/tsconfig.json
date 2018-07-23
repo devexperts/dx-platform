@@ -1,5 +1,5 @@
 {
-  "extends": "./node_modules/@devexperts/tools/settings/tsconfig.json",
+  "extends": "../../node_modules/@devexperts/tools/settings/tsconfig.json",
   "include": [
 	"src/**/*"
   ],

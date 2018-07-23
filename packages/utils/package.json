@@ -5,10 +5,10 @@
   "main": "lib/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "dx-tools build-lib src dist",
+    "build": "dx-tools build-lib src dist --failOnError",
     "clean": "dx-tools clean dist",
-    "prepare": "npm run clean && npm run build",
-    "start": "npm run watch",
+    "prepare": "yarn clean && yarn build",
+    "start": "yarn watch",
     "watch": "dx-tools build-lib src dist -w"
   },
   "repository": {
@@ -32,7 +32,7 @@
     "fp-ts": "^1.2.0"
   },
   "devDependencies": {
-    "@devexperts/tools": "^0.13.0",
+    "@devexperts/tools": "*",
     "fp-ts": "^1.2.0"
   }
 }
