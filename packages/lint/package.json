@@ -1,6 +1,6 @@
 {
   "name": "@devexperts/lint",
-  "version": "0.11.0",
+  "version": "0.13.1",
   "description": "",
   "main": "lib/index.js",
   "scripts": {
@@ -31,7 +31,6 @@
     "tsutils": "^2.27.1"
   },
   "peerDependencies": {
-    "@devexperts/tools": "*",
     "tslint": "^5.10.0",
     "typescript": "^2.8.4"
   },

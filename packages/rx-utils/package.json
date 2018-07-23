@@ -1,6 +1,6 @@
 {
   "name": "@devexperts/rx-utils",
-  "version": "0.11.0",
+  "version": "0.13.1",
   "description": "",
   "main": "lib",
   "module": "src",
@@ -33,8 +33,8 @@
   },
   "peerDependencies": {
     "@devexperts/remote-data-ts": "^0.2.0",
-    "rxjs": "^6.2.1",
-    "fp-ts": "^1.2.0"
+    "fp-ts": "^1.2.0",
+    "rxjs": "^6.2.1"
   },
   "devDependencies": {
     "@devexperts/remote-data-ts": "^0.2.0",

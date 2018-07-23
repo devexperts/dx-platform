@@ -9,7 +9,11 @@ import 'rxjs/add/operator/subscribeOn';
 const hoistNonReactStatics = require('hoist-non-react-statics');
 
 export type ComponentDecorator<P> = (Target: ComponentType<P>) => ComponentClass<P>;
-export type WithRXSelector<P> = (props$: Observable<Readonly<P>>) => Observable<Partial<Readonly<P>>>;
+export type WithRXSelectorResult<P> = {
+	props$: Observable<Partial<P>>;
+	effects$: Observable<void>;
+};
+export type WithRXSelector<P> = (props$: Observable<Readonly<P>>) => WithRXSelectorResult<P>;
 
 export function withRX<P extends object = never>(select: WithRXSelector<P>): ComponentDecorator<P> {
 	return Target => {
@@ -17,15 +21,20 @@ export function withRX<P extends object = never>(select: WithRXSelector<P>): Com
 			static displayName = `WithRX(${Target.displayName || Target.name})`;
 
 			private props$ = new BehaviorSubject(this.props);
-			private results$ = select(this.props$.asObservable());
-			private resultsSubscription: Subscription;
+			private selectResult = select(this.props$.asObservable());
+			private input$ = this.selectResult.props$;
+			private effect$ = this.selectResult.effects$;
+			private inputSubscription: Subscription;
+			private effectSubscription: Subscription;
 
 			constructor(props: P) {
 				super(props);
 
-				this.resultsSubscription = this.results$
+				this.inputSubscription = this.input$
 					.subscribeOn(animationFrame)
 					.subscribe(state => this.setState(state));
+
+				this.effectSubscription = this.effect$.subscribeOn(animationFrame).subscribe();
 			}
 
 			componentWillReceiveProps(props: P) {
@@ -33,7 +42,8 @@ export function withRX<P extends object = never>(select: WithRXSelector<P>): Com
 			}
 
 			componentWillUnmount() {
-				this.resultsSubscription.unsubscribe();
+				this.inputSubscription.unsubscribe();
+				this.effectSubscription.unsubscribe();
 			}
 
 			render() {
