@@ -20,9 +20,9 @@ export type TFullSteppableInputProps = TPickedInputProps & {
 	onIncrement?: Function;
 	onDecrement?: Function;
 	onClear?: Function;
-	incrementIcon: React.ReactElement<any>;
-	decrementIcon: React.ReactElement<any>;
-	clearIcon: React.ReactElement<any>;
+	incrementIcon?: React.ReactElement<any>;
+	decrementIcon?: React.ReactElement<any>;
+	clearIcon?: React.ReactElement<any>;
 	children?: any;
 	Input: React.ComponentClass<TInputProps> | React.SFC<TInputProps>;
 	ButtonIcon: React.ComponentClass<TButtonIconProps> | React.SFC<TButtonIconProps>;
