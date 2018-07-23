@@ -284,7 +284,6 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 
 	onScroll = () => {
 		this.handleScroll();
-		console.log('scroll');
 	};
 
 	handleScroll() {
