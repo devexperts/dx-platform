@@ -1,11 +1,15 @@
 {
   "lerna": "2.5.1",
   "packages": [
-    "packages/*"
+    "packages/tools",
+    "packages/lint",
+    "packages/utils",
+    "packages/react-kit",
+    "packages/rx-utils"
   ],
   "npmClient": "yarn",
   "useWorkspaces": true,
-  "version": "0.13.4",
+  "version": "0.14.1",
   "command": {
     "init": {
       "exact": true
