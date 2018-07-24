@@ -6,13 +6,12 @@ import { array } from 'fp-ts/lib/Array';
 import { constant, Predicate } from 'fp-ts/lib/function';
 import { isNotNullable } from '@devexperts/utils/dist/object/object';
 import { LiveData } from './live-data.utils';
-import { AjaxError } from 'rxjs/ajax';
 import { filter, map, distinctUntilChanged, shareReplay, switchMap, tap, multicast, refCount } from 'rxjs/operators';
 import { tapRD } from './operators/tapRD';
 import { mapRD } from './operators/mapRD';
 import { switchMapRD } from './operators/switchMapRD';
 
-export class EntityStore<A = never> {
+export class EntityStore<L = never, A = never> {
 	get getAllValues$(): any {
 		return this._getAllValues$;
 	}
@@ -20,8 +19,8 @@ export class EntityStore<A = never> {
 	set getAllValues$(value: any) {
 		this._getAllValues$ = value;
 	}
-	private readonly cache = new ObservableMap<string, RemoteData<AjaxError, A>>();
-	private readonly cachedStreams = new Map<string, LiveData<A>>();
+	private readonly cache = new ObservableMap<string, RemoteData<L, A>>();
+	private readonly cachedStreams = new Map<string, LiveData<L, A>>();
 	private hasLoadedAll = false;
 	private isLoadingAll = false;
 	private _getAllValues$ = this.cache.values$.pipe(
@@ -32,8 +31,8 @@ export class EntityStore<A = never> {
 		shareReplay(1),
 	);
 
-	get(key: string, get: () => LiveData<A>): LiveData<A> {
-		let sharedGetter: Observable<RemoteData<AjaxError, A>> | undefined = this.cachedStreams.get(key);
+	get(key: string, get: () => LiveData<L, A>): LiveData<L, A> {
+		let sharedGetter: Observable<RemoteData<L, A>> | undefined = this.cachedStreams.get(key);
 
 		if (!isNotNullable(sharedGetter)) {
 			const hasValue = this.cache.has(key);
@@ -43,7 +42,7 @@ export class EntityStore<A = never> {
 				return this.cache.get(key);
 			}
 
-			sharedGetter = new Observable<RemoteData<AjaxError, A>>(observer => {
+			sharedGetter = new Observable<RemoteData<L, A>>(observer => {
 				const getterSubscription = get().subscribe(value => {
 					this.cache.set(key, value);
 				});
@@ -57,7 +56,7 @@ export class EntityStore<A = never> {
 					cacheSubscription.unsubscribe();
 					this.cachedStreams.delete(key);
 				};
-			}).pipe(multicast(new ReplaySubject<RemoteData<AjaxError, A>>(1)), refCount());
+			}).pipe(multicast(new ReplaySubject<RemoteData<L, A>>(1)), refCount());
 
 			this.cachedStreams.set(key, sharedGetter);
 		}
@@ -65,7 +64,11 @@ export class EntityStore<A = never> {
 		return sharedGetter;
 	}
 
-	getAll(pk: (value: A) => string, partialGetAll: () => LiveData<A[]>, predicate?: Predicate<A>): LiveData<A[]> {
+	getAll(
+		pk: (value: A) => string,
+		partialGetAll: () => LiveData<L, A[]>,
+		predicate?: Predicate<A>,
+	): LiveData<L, A[]> {
 		this.isLoadingAll = false;
 		return partialGetAll().pipe(
 			tapRD(values => {
@@ -98,9 +101,9 @@ export class EntityStore<A = never> {
 	remove(
 		key: string,
 		pk: (value: A) => string,
-		remove: () => LiveData<A[]>,
+		remove: () => LiveData<L, A[]>,
 		optimistic: boolean = true,
-	): LiveData<A[]> {
+	): LiveData<L, A[]> {
 		if (optimistic) {
 			this.cache.delete(key);
 		}
@@ -112,7 +115,7 @@ export class EntityStore<A = never> {
 		);
 	}
 
-	create(pk: (value: A) => string, create: () => LiveData<A>): LiveData<A> {
+	create(pk: (value: A) => string, create: () => LiveData<L, A>): LiveData<L, A> {
 		return create().pipe(
 			switchMapRD(value => {
 				const key = pk(value);
@@ -122,7 +125,7 @@ export class EntityStore<A = never> {
 		);
 	}
 
-	update(key: string, update: () => LiveData<A>): LiveData<A> {
+	update(key: string, update: () => LiveData<L, A>): LiveData<L, A> {
 		return update().pipe(
 			tap(value => {
 				if (value.isSuccess()) {
@@ -133,7 +136,7 @@ export class EntityStore<A = never> {
 	}
 
 	private updateCache(values: A[], pk: (value: A) => string): void {
-		const entries = values.map<[string, RemoteData<AjaxError, A>]>(item => [pk(item), success(item)]);
+		const entries = values.map<[string, RemoteData<L, A>]>(item => [pk(item), success(item)]);
 		this.cache.setMany(entries);
 	}
 }
