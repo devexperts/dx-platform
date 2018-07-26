@@ -16,3 +16,9 @@ Also you can run several commands:
 
 - ``yarn test`` — checks codestyle and run tests for all packages.
 - ``yarn lerna run watch --parallel`` — runs watch task for each package in parallel. You can manage scope of packages using ``--scope [glob]`` flag (see [lerna](https://github.com/lerna/lerna#--scope-glob) documentation for details)
+
+## Commit name convention
+https://github.com/angular/angular.js/blob/master/DEVELOPERS.md#commits
+
+## Publish
+Always publish with `--conventional-commits` flag
