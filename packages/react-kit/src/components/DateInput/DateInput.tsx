@@ -596,6 +596,46 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 			}
 		}
 	}
+	private selectNextSection(): void {
+		const { activeSection } = this.state;
+		const { dateFormatType } = this.props;
+		switch (activeSection) {
+			case ActiveSection.Day: {
+				switch (dateFormatType) {
+					case DateFormatType.DMY: {
+						this.setState({
+							activeSection: ActiveSection.Month
+						});
+						break;
+					}
+					case DateFormatType.MDY: {
+						this.setState({
+							activeSection:  ActiveSection.Year
+						});
+						break;
+					}
+				}
+				break;
+			}
+			case ActiveSection.Month: {
+				switch (dateFormatType) {
+					case DateFormatType.DMY: {
+						this.setState({
+							activeSection:  ActiveSection.Year
+						});
+						break;
+					}
+					case DateFormatType.MDY: {
+						this.setState({
+							activeSection:  ActiveSection.Day
+						});
+						break;
+					}
+				}
+				break;
+			}
+		}
+	}
 
 	private handleDigitKeyDown(digit: number) {
 		const { day, month, year } = this.state;
@@ -611,16 +651,12 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 						newDay = digit;
 					}
 					this.updateStateTime(newDay, month, year);
-					this.setState({
-						activeSection: ActiveSection.Month,
-					});
+					this.selectNextSection();
 					this.secondInput = false;
 				} else {
 					this.updateStateTime(digit, month, year);
 					if (digit > 3) {
-						this.setState({
-							activeSection: ActiveSection.Month,
-						});
+						this.selectNextSection();
 						this.secondInput = false;
 					} else {
 						this.secondInput = true;
@@ -639,16 +675,12 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 						newMonth = digit;
 					}
 					this.updateStateTime(day, newMonth, year);
-					this.setState({
-						activeSection: ActiveSection.Year,
-					});
+					this.selectNextSection();
 					this.secondInput = false;
 				} else {
 					this.updateStateTime(day, digit, year);
 					if (digit > 1) {
-						this.setState({
-							activeSection: ActiveSection.Year,
-						});
+						this.selectNextSection();
 						this.secondInput = false;
 					} else {
 						this.secondInput = true;
