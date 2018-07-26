@@ -7,6 +7,7 @@ import { withTheme } from '../../utils/withTheme';
 import { ObjectClean } from 'typelevel-ts';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { SteppableInput, TSteppableInputProps } from '../SteppableInput/SteppableInput';
+import { withDefaults } from '../../utils/with-defaults';
 
 export const TIME_INPUT = Symbol('TimeInput') as symbol;
 
@@ -42,11 +43,7 @@ export type TTimeInputState = {
 
 @PURE
 class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState> {
-	static defaultProps = {
-		SteppableInput,
-	};
-
-	state: TTimeInputState = {};
+	readonly state: TTimeInputState = {};
 	private secondInput: boolean = false;
 
 	componentWillMount() {
@@ -325,7 +322,11 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState>
 }
 
 export type TTimeInputProps = ObjectClean<PartialKeys<TTimeInputFullProps, 'theme' | 'SteppableInput'>>;
-export const TimeInput: ComponentClass<TTimeInputProps> = withTheme(TIME_INPUT)(RawTimeInput);
+export const TimeInput: ComponentClass<TTimeInputProps> = withTheme(TIME_INPUT)(
+	withDefaults<TTimeInputFullProps, 'SteppableInput'>({
+		SteppableInput,
+	})(RawTimeInput),
+);
 
 /**
  * Values can be zeros (start from 0). Max is included value.

@@ -64,7 +64,7 @@ storiesOf('Dropdown', module)
 	));
 
 class DropdownPage extends Component<any, any> {
-	private forceClose: Function;
+	private forceClose!: Function;
 
 	render() {
 		return (

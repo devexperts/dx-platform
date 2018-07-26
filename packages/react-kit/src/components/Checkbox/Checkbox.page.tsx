@@ -47,9 +47,9 @@ class CheckboxPage extends React.Component<{ isDisabled?: boolean }, { isChecked
 		);
 	}
 
-	onChangeHandler = (value: boolean) => {
+	onChangeHandler = (value?: boolean) => {
 		this.setState({
-			isChecked: value,
+			isChecked: Boolean(value),
 		});
 	};
 }

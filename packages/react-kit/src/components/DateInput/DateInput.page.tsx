@@ -12,7 +12,7 @@ import { Button } from '../Button/Button';
 import { ToggleButtons } from '../ToggleButtons/ToggleButtons';
 
 const Stateful = stateful()(DateInput);
-const onChange = (value: Date) => action('change')(value);
+const onChange = (value: Date | null | undefined) => action('change')(value);
 const onClear = () => action('clear')();
 
 const Calendar: React.SFC<TCalendarProps> = props => {
@@ -160,7 +160,7 @@ class DateInputPage extends React.Component<any, TState> {
 		});
 	};
 
-	private onControlledChange = (value: Date) => {
+	private onControlledChange = (value: Date | undefined | null) => {
 		console.log(value);
 		this.setState({
 			value,

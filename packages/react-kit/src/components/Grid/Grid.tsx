@@ -73,7 +73,7 @@ export type TFullGridProps = ObjectOmit<TFullTableProps, 'theme'> & {
 class RawGrid extends React.Component<TFullGridProps> {
 	static childContextTypes = CONTEXT_TYPES;
 
-	_emitter: GridInternalEmitter;
+	_emitter!: GridInternalEmitter;
 
 	_rows = {
 		head: {},
@@ -242,9 +242,9 @@ export type TFullGridBodyProps = TFullGridProps &
 class RawGridBody extends React.Component<TFullGridBodyProps> {
 	static contextTypes = CONTEXT_TYPES;
 
-	_scrollLeft: number;
-	_withVerticalScrollbar: boolean;
-	_withHorizontalScrollbar: boolean;
+	_scrollLeft!: number;
+	_withVerticalScrollbar!: boolean;
+	_withHorizontalScrollbar!: boolean;
 
 	render() {
 		const { Table = BasicTable, TableBody = BasicTableBody, theme, ...props } = this.props;
@@ -331,7 +331,10 @@ class RawGridRow extends React.Component<TFullGridRowProps> {
 		const rowIndex = this.props.gridRowIndexKey;
 		return (
 			<TableRow {...props}>
-				{React.Children.map(this.props.children, (child: React.ReactElement<TFullGridCellProps>, i) => {
+				{React.Children.map(this.props.children, (child, i) => {
+					if (!React.isValidElement<TFullGridCellProps>(child)) {
+						return child;
+					}
 					const newProps: Partial<TFullGridCellProps> = {
 						gridRowIndexKey: rowIndex,
 						gridColumnIndexKey: i,
@@ -386,7 +389,7 @@ class RawGridCell extends React.Component<TFullGridCellProps> {
 	static contextTypes = CONTEXT_TYPES;
 
 	_content: any;
-	_width: number;
+	_width!: number;
 
 	componentDidMount() {
 		const contentDOMNode = ReactDOM.findDOMNode(this._content);

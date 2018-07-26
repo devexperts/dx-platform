@@ -26,10 +26,10 @@ export type TScrollbarState = {
 };
 
 export class Scrollbar<T> extends React.Component<TScrollbarProps & T, TScrollbarState> {
-	_scrollbar: HTMLDivElement | null;
+	_scrollbar!: HTMLDivElement | null;
 	_container: HTMLDivElement | null;
-	_track: HTMLDivElement | null;
-	_bar: HTMLDivElement;
+	_track!: HTMLDivElement | null;
+	_bar!: HTMLDivElement;
 
 	static contextTypes: any = CONTEXT_TYPES;
 

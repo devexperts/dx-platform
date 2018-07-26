@@ -61,11 +61,11 @@ export class RawTableHead extends React.Component<TFullTableHeadProps> {
 			<thead className={theme.head}>
 				{React.Children.map(
 					children,
-					(child: React.ReactElement<TFullTableRowProps>) =>
-						child &&
+					child =>
+						React.isValidElement<TFullTableRowProps>(child) &&
 						React.cloneElement(child, {
 							isInHead: true,
-						} as TFullTableRowProps),
+						}),
 				)}
 			</thead>
 		);
@@ -92,12 +92,12 @@ class RawTableRow extends React.Component<TFullTableRowProps> {
 				{isInHead &&
 					React.Children.map(
 						children,
-						(child: React.ReactElement<TFullTableCellProps>) =>
-							child &&
+						child =>
+							React.isValidElement<TFullTableCellProps>(child) &&
 							React.cloneElement(child, {
 								...child.props,
 								isInHead,
-							} as TFullTableCellProps),
+							}),
 					)}
 			</tr>
 		);

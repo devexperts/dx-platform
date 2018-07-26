@@ -41,7 +41,7 @@ class AutocompletePage extends React.Component {
 		);
 	}
 
-	onValueChange = (value: string) => {
+	onValueChange = (value: string | undefined) => {
 		this.setState({
 			value,
 		});

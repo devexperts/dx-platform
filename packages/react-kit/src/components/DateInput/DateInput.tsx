@@ -14,6 +14,7 @@ import { ObjectClean } from 'typelevel-ts';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { PURE } from '../../utils/pure';
 import { Popover, TPopoverProps } from '../Popover/Popover';
+import { withDefaults } from '../../utils/with-defaults';
 
 /**
  * Undefined - value is not set, null - value is force reset
@@ -84,18 +85,11 @@ export const DATE_INPUT = Symbol('DateInput') as symbol;
 
 @PURE
 class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState> {
-	static defaultProps = {
-		SteppableInput,
-		ButtonIcon,
-		Popover,
-		dateFormatType: DateFormatType.DMY,
-	};
-
-	state: TDateInputState = {
+	readonly state: TDateInputState = {
 		isOpened: false,
 	};
 	private secondInput: boolean = false;
-	private calendarButtonRef: ReactInstance;
+	private calendarButtonRef!: ReactInstance;
 
 	componentWillMount() {
 		const { value } = this.props;
@@ -388,7 +382,7 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 		}
 	};
 
-	private onCalendarValueChange = (date: Date) => {
+	private onCalendarValueChange = (date: Date | null | undefined) => {
 		const { onValueChange, value } = this.props;
 		this.setState({
 			isOpened: false,
@@ -727,7 +721,14 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 export type TDateInputProps = ObjectClean<
 	PartialKeys<TDateInputFullProps, 'theme' | 'SteppableInput' | 'ButtonIcon' | 'dateFormatType' | 'Popover'>
 >;
-export const DateInput: ComponentClass<TDateInputProps> = withTheme(DATE_INPUT)(RawDateInput);
+export const DateInput: ComponentClass<TDateInputProps> = withTheme(DATE_INPUT)(
+	withDefaults<TDateInputFullProps, 'SteppableInput' | 'ButtonIcon' | 'dateFormatType' | 'Popover'>({
+		SteppableInput,
+		ButtonIcon,
+		Popover,
+		dateFormatType: DateFormatType.DMY,
+	})(RawDateInput),
+);
 
 function getValuesFromDate(date: Date) {
 	return {

@@ -1,8 +1,8 @@
-import * as PropTypes from 'prop-types';
 import * as React from 'react';
-import { ReactElement, EventHandler, MouseEvent, TouchEvent, ComponentClass } from 'react';
+import { ReactElement, EventHandler, MouseEvent, TouchEvent } from 'react';
 import { ObjectClean } from 'typelevel-ts/lib';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
+import { withDefaults } from '../../utils/with-defaults';
 
 export type THoldableChildProps = {
 	onMouseDown: EventHandler<MouseEvent<Element>>;
@@ -19,20 +19,8 @@ export type TFullHoldableProps = {
 };
 
 class RawHoldable extends React.Component<TFullHoldableProps> {
-	static propTypes = {
-		children: PropTypes.element,
-		delay: PropTypes.number,
-		interval: PropTypes.number,
-		onHold: PropTypes.func,
-	};
-
 	private _timeoutId: any;
 	private _intervalId: any;
-
-	static defaultProps = {
-		interval: 50,
-		delay: 300,
-	};
 
 	componentWillUnmount() {
 		this.clearTimers();
@@ -98,4 +86,7 @@ class RawHoldable extends React.Component<TFullHoldableProps> {
 }
 
 export type THoldableProps = ObjectClean<PartialKeys<TFullHoldableProps, 'delay' | 'interval'>>;
-export const Holdable: ComponentClass<THoldableProps> = RawHoldable;
+export const Holdable = withDefaults<TFullHoldableProps, 'delay' | 'interval'>({
+	interval: 50,
+	delay: 300,
+})(RawHoldable);

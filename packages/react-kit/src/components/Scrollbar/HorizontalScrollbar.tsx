@@ -18,12 +18,12 @@ export type TFullHorizontalProps = TScrollbarProps & TAdditionalHorizontalProps;
 
 @PURE
 export class RawHorizontalScrollbar extends Scrollbar<TAdditionalHorizontalProps> {
-	_ratio: {
+	_ratio!: {
 		size: number;
 		position: number;
 	};
-	_previousDragCoordinate: number;
-	_minBarSize: number;
+	_previousDragCoordinate!: number;
+	_minBarSize!: number;
 
 	/**
 	 * @returns {Number}

@@ -35,7 +35,7 @@ export type TRawPopupProps = {
 
 @PURE
 class RawPopup extends Component<TRawPopupProps> {
-	private backdrop: Element | null;
+	private backdrop!: Element | null;
 
 	private rootElement: Element;
 
