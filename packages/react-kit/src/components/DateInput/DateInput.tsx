@@ -581,10 +581,21 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 		this.secondInput = false;
 		if (!isDefined(this.state.activeSection)) {
 			this.setState({
-				activeSection: ActiveSection.Day,
+				activeSection: this.getDefaultActiveSection(),
 			});
 		}
 	};
+
+	private getDefaultActiveSection(): ActiveSection {
+		switch (this.props.dateFormatType) {
+			case DateFormatType.DMY: {
+				return ActiveSection.Day;
+			}
+			case DateFormatType.MDY: {
+				return ActiveSection.Month;
+			}
+		}
+	}
 
 	private handleDigitKeyDown(digit: number) {
 		const { day, month, year } = this.state;
