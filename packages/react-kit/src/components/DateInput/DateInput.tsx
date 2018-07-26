@@ -20,6 +20,11 @@ import { Popover } from '../Popover/Popover';
  */
 export type TDateValueProps = TControlProps<Date | null | undefined>;
 
+export enum DateFormatType {
+	MDY,
+	DMY
+}
+
 export type TCalendarProps = TDateValueProps & {
 	onMouseDown?: React.EventHandler<React.MouseEvent<Element>>;
 	min?: Date;
@@ -39,6 +44,7 @@ export type TDateInputOwnProps = TSteppableInputProps &
 export type TDateDefaultProps = {
 	SteppableInput: React.ComponentClass<TSteppableInputProps> | React.SFC<TSteppableInputProps>;
 	ButtonIcon: React.ComponentClass<TButtonIconProps>;
+	dateFormatType: DateFormatType;
 };
 
 export type TDateInputInjectedProps = {
@@ -77,6 +83,7 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 	static defaultProps = {
 		SteppableInput,
 		ButtonIcon,
+		dateFormatType: DateFormatType.DMY
 	};
 
 	state: TDateInputState = {
@@ -124,16 +131,9 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 			theme,
 			ButtonIcon,
 			SteppableInput,
+			dateFormatType
 		} = this.props;
 		const { month, day, year, activeSection } = this.state;
-
-		const dayClassName = classnames(theme.section, {
-			[theme.section_isActive as string]: !isDisabled && activeSection === ActiveSection.Day,
-		});
-
-		const monthClassName = classnames(theme.section, {
-			[theme.section_isActive as string]: !isDisabled && activeSection === ActiveSection.Month,
-		});
 
 		const yearClassName = classnames(theme.section, {
 			[theme.section_isActive as string]: !isDisabled && activeSection === ActiveSection.Year,
@@ -165,13 +165,11 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 				onKeyDown={this.onKeyDown}
 				onClick={this.onSteppableInputClick}>
 				<div className={innerClassName}>
-					<span className={dayClassName} onMouseDown={this.onDayMouseDown}>
-						{this.format(day, ActiveSection.Day)}
-					</span>
+					{dateFormatType === DateFormatType.DMY && this.renderDay()}
+					{dateFormatType === DateFormatType.MDY && this.renderMonth()}
 					<span className={theme.separator}>/</span>
-					<span className={monthClassName} onMouseDown={this.onMonthMouseDown}>
-						{this.format(month, ActiveSection.Month)}
-					</span>
+					{dateFormatType === DateFormatType.DMY && this.renderMonth()}
+					{dateFormatType === DateFormatType.MDY && this.renderDay()}
 					<span className={theme.separator}>/</span>
 					<span className={yearClassName} onMouseDown={this.onYearMouseDown}>
 						{this.format(year, ActiveSection.Year)}
@@ -192,6 +190,44 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 				{this.renderCalendar()}
 			</SteppableInput>
 		);
+	}
+
+	private renderDay() {
+		const {
+			isDisabled,
+			theme
+		} = this.props;
+		const {
+			activeSection,
+			day
+		} = this.state;
+		const dayClassName = classnames(theme.section, {
+			[theme.section_isActive as string]: !isDisabled && activeSection === ActiveSection.Day,
+		});
+		return (
+			<span className={dayClassName} onMouseDown={this.onDayMouseDown}>
+				{this.format(day, ActiveSection.Day)}
+			</span>
+		)
+	}
+
+	private renderMonth() {
+		const {
+			isDisabled,
+			theme
+		} = this.props;
+		const {
+			activeSection,
+			month
+		} = this.state;
+		const monthClassName = classnames(theme.section, {
+			[theme.section_isActive as string]: !isDisabled && activeSection === ActiveSection.Month,
+		});
+		return (
+			<span className={monthClassName} onMouseDown={this.onMonthMouseDown}>
+				{this.format(month, ActiveSection.Month)}
+			</span>
+		)
 	}
 
 	private renderCalendar(): any {
@@ -626,7 +662,7 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 	}
 }
 
-export type TDateInputProps = ObjectClean<PartialKeys<TDateInputFullProps, 'theme' | 'SteppableInput' | 'ButtonIcon'>>;
+export type TDateInputProps = ObjectClean<PartialKeys<TDateInputFullProps, 'theme' | 'SteppableInput' | 'ButtonIcon' | 'dateFormatType'>>;
 export const DateInput: ComponentClass<TDateInputProps> = withTheme(DATE_INPUT)(RawDateInput);
 
 function getValuesFromDate(date: Date) {
