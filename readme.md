@@ -21,4 +21,4 @@ Also you can run several commands:
 https://github.com/angular/angular.js/blob/master/DEVELOPERS.md#commits
 
 ## Publish
-Always publish with `--conventional-commits` flag
+Always publish with `--conventional-commits` flag or use `npm run lerna:publish`
