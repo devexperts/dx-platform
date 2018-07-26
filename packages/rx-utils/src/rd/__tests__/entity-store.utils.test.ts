@@ -2,6 +2,7 @@ import { TestScheduler } from 'rxjs/testing';
 import { EntityStore } from '../entity-store.utils';
 import { RemoteData, success, pending, failure } from '@devexperts/remote-data-ts';
 import { AjaxError } from 'rxjs/ajax';
+import { LiveData } from '../live-data.utils';
 
 type TEntity = {
 	id: number;
@@ -9,7 +10,7 @@ type TEntity = {
 
 describe('EntityStore', () => {
 	let scheduler: TestScheduler;
-	let store: EntityStore<TEntity>;
+	let store: EntityStore<AjaxError, TEntity>;
 	beforeEach(() => {
 		scheduler = new TestScheduler((a, b) => expect(a).toEqual(b));
 		store = new EntityStore();
@@ -24,7 +25,7 @@ describe('EntityStore', () => {
 	class TestGetter {
 		count = 0;
 
-		execute(marbles: string, values: object = getterValues) {
+		execute(marbles: string, values: object = getterValues): LiveData<AjaxError, TEntity> {
 			this.count++;
 			return scheduler.createColdObservable<RemoteData<AjaxError, TEntity>>(marbles, values);
 		}

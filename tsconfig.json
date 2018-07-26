@@ -1,6 +1,7 @@
 {
   "extends": "./packages/tools/settings/tsconfig.json",
   "compilerOptions": {
+    "strict": true,
     "lib": [
       "es2016",
       "dom",

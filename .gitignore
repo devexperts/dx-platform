@@ -3,3 +3,4 @@ packages/demo
 /**/*/lib
 .idea
 dist
+lerna-debug.log
