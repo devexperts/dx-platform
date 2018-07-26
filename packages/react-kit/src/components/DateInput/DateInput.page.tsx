@@ -1,14 +1,15 @@
 import * as React from 'react';
-import { storiesOf, action } from '@devexperts/tools/dist/utils/storybook';
+import { action, storiesOf } from '@devexperts/tools/dist/utils/storybook';
 import { AddIcon } from '../../icons/add-icon';
 import { CalendarIcon } from '../../icons/calendar-icon';
 import { DecreaseIcon } from '../../icons/decrease-icon';
 import { SmallCrossIcon as ClearIcon } from '../../icons/small-cross-icon';
 
-import { DateInput, TCalendarProps } from './DateInput';
+import { DateFormatType, DateInput, TCalendarProps } from './DateInput';
 import { stateful } from '../Control/Control';
 import { Demo } from '../demo/Demo';
 import { Button } from '../Button/Button';
+import { ToggleButtons } from '../ToggleButtons/ToggleButtons';
 
 const Stateful = stateful()(DateInput);
 const onChange = (value: Date) => action('change')(value);
@@ -24,23 +25,34 @@ const Calendar: React.SFC<TCalendarProps> = props => {
 	);
 };
 
-type TState = {
+type TState = Readonly<{
 	value?: Date | null;
-};
+	dateFormatType: DateFormatType;
+}>;
 
 class DateInputPage extends React.Component<any, TState> {
 	private target: any;
-	state: TState = {};
+	readonly state: TState = {
+		dateFormatType: DateFormatType.DMY,
+	};
 
 	render() {
 		const { isDisabled, error } = this.props;
 
 		return (
 			<Demo>
+				<div>
+					DateFormatType
+					<ToggleButtons toggleIndex={this.getToggleIndex()} isVertical={true} onChange={this.onToggleChange}>
+						<Button>DD/MM/YYYY</Button>
+						<Button>MM/DD/YYYY</Button>
+					</ToggleButtons>
+				</div>
 				<input type="date" id="date" disabled={isDisabled} />
 				<section>
 					<h1>Controlled</h1>
 					<DateInput
+						dateFormatType={this.state.dateFormatType}
 						onValueChange={this.onControlledChange}
 						clearIcon={<ClearIcon />}
 						incrementIcon={<AddIcon />}
@@ -54,6 +66,7 @@ class DateInputPage extends React.Component<any, TState> {
 				<section>
 					<h1>without Calendar</h1>
 					<Stateful
+						dateFormatType={this.state.dateFormatType}
 						decrementIcon={<DecreaseIcon />}
 						isDisabled={isDisabled}
 						incrementIcon={<AddIcon />}
@@ -64,6 +77,7 @@ class DateInputPage extends React.Component<any, TState> {
 						defaultValue={new Date()}
 					/>
 					<Stateful
+						dateFormatType={this.state.dateFormatType}
 						decrementIcon={<DecreaseIcon />}
 						isDisabled={isDisabled}
 						incrementIcon={<AddIcon />}
@@ -74,6 +88,7 @@ class DateInputPage extends React.Component<any, TState> {
 						defaultValue={new Date()}
 					/>
 					<Stateful
+						dateFormatType={this.state.dateFormatType}
 						decrementIcon={<DecreaseIcon />}
 						isDisabled={isDisabled}
 						incrementIcon={<AddIcon />}
@@ -87,6 +102,7 @@ class DateInputPage extends React.Component<any, TState> {
 				<section>
 					<h1>with calendar</h1>
 					<Stateful
+						dateFormatType={this.state.dateFormatType}
 						decrementIcon={<DecreaseIcon />}
 						incrementIcon={<AddIcon />}
 						isDisabled={isDisabled}
@@ -99,6 +115,7 @@ class DateInputPage extends React.Component<any, TState> {
 						defaultValue={new Date()}
 					/>
 					<Stateful
+						dateFormatType={this.state.dateFormatType}
 						decrementIcon={<DecreaseIcon />}
 						incrementIcon={<AddIcon />}
 						isDisabled={isDisabled}
@@ -120,6 +137,17 @@ class DateInputPage extends React.Component<any, TState> {
 		);
 	}
 
+	private getToggleIndex() {
+		switch (this.state.dateFormatType) {
+			case DateFormatType.DMY: {
+				return 0;
+			}
+			case DateFormatType.MDY: {
+				return 1;
+			}
+		}
+	}
+
 	private onControlledManualClear = () => {
 		this.setState({
 			value: null,
@@ -137,6 +165,23 @@ class DateInputPage extends React.Component<any, TState> {
 		this.setState({
 			value,
 		});
+	};
+
+	private onToggleChange = (index: number) => {
+		switch (index) {
+			case 0: {
+				this.setState({
+					dateFormatType: DateFormatType.DMY,
+				});
+				break;
+			}
+			case 1: {
+				this.setState({
+					dateFormatType: DateFormatType.MDY,
+				});
+				break;
+			}
+		}
 	};
 }
 
