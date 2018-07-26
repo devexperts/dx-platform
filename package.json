@@ -4,6 +4,7 @@
     "lerna": "lerna",
     "lerna:bootstrap": "npm run lerna -- bootstrap",
     "lerna:update": "npm run lerna -- clean && npm run lerna -- bootstrap",
+    "lerna:publish": "npm run lerna -- publish --conventional-commits",
     "start": "lerna run --parallel watch",
     "start:storybook": "cd packages/react-kit && npm run start",
     "postinstall": "lerna bootstrap",
