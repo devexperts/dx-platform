@@ -475,41 +475,25 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 			case KeyCode.Left: {
 				e.preventDefault(); //block h-scrolling
 				switch (activeSection) {
-					case ActiveSection.Month: {
-						this.secondInput = false;
-						this.setState({
-							activeSection: ActiveSection.Day,
-						});
-						break;
-					}
+					case ActiveSection.Month: //fallthrough
 					case ActiveSection.Year: {
 						this.secondInput = false;
-						this.setState({
-							activeSection: ActiveSection.Month,
-						});
 						break;
 					}
 				}
+				this.selectPreviousSection();
 				break;
 			}
 			case KeyCode.Right: {
 				e.preventDefault(); //block h-scrolling
 				switch (activeSection) {
-					case ActiveSection.Day: {
-						this.secondInput = false;
-						this.setState({
-							activeSection: ActiveSection.Month,
-						});
-						break;
-					}
+					case ActiveSection.Day: //fallthrough
 					case ActiveSection.Month: {
 						this.secondInput = false;
-						this.setState({
-							activeSection: ActiveSection.Year,
-						});
 						break;
 					}
 				}
+				this.selectNextSection();
 				break;
 			}
 			case KeyCode.Delete: //fallthrough
@@ -628,6 +612,51 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 					case DateFormatType.MDY: {
 						this.setState({
 							activeSection:  ActiveSection.Day
+						});
+						break;
+					}
+				}
+				break;
+			}
+		}
+	}
+	private selectPreviousSection(): void {
+		const { activeSection } = this.state;
+		const { dateFormatType } = this.props;
+		switch (activeSection) {
+			case ActiveSection.Day: {
+				switch (dateFormatType) {
+					case DateFormatType.MDY: {
+						this.setState({
+							activeSection: ActiveSection.Month
+						});
+						break;
+					}
+				}
+				break;
+			}
+			case ActiveSection.Month: {
+				switch (dateFormatType) {
+					case DateFormatType.DMY: {
+						this.setState({
+							activeSection: ActiveSection.Day
+						});
+						break;
+					}
+				}
+				break;
+			}
+			case ActiveSection.Year: {
+				switch (dateFormatType) {
+					case DateFormatType.DMY: {
+						this.setState({
+							activeSection: ActiveSection.Month
+						});
+						break;
+					}
+					case DateFormatType.MDY: {
+						this.setState({
+							activeSection: ActiveSection.Day
 						});
 						break;
 					}
