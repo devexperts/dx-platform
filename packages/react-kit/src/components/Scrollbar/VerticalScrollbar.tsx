@@ -16,12 +16,12 @@ export type TFullVerticalScrollBarProp = TScrollbarProps & TAdditionalVerticalSc
 
 @PURE
 export class RawVerticalScrollbar extends Scrollbar<TAdditionalVerticalScrollBarProp> {
-	_ratio: {
+	_ratio!: {
 		size: number;
 		position: number;
 	};
-	_previousDragCoordinate: number;
-	_minBarSize: number;
+	_previousDragCoordinate!: number;
+	_minBarSize!: number;
 
 	/**
 	 * @returns {Number}

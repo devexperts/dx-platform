@@ -60,7 +60,7 @@ class PopoverPage extends React.Component {
 				<div className={css.container}>
 					<div>
 						<label className={css.label}>Placement</label>
-						<Stateful defaultValue={PopoverPlacement.Bottom} onValueChange={this.onPlacementSelect}>
+						<Stateful defaultValue={PopoverPlacement.Bottom} onValueChange={this.onPlacementSelect as any}>
 							<MenuItem value={PopoverPlacement.Top}>Top</MenuItem>
 							<MenuItem value={PopoverPlacement.Bottom}>Bottom</MenuItem>
 							<MenuItem value={PopoverPlacement.Left}>Left</MenuItem>
@@ -68,14 +68,14 @@ class PopoverPage extends React.Component {
 						</Stateful>
 						<label className={css.label}>Align</label>
 						{(placement === PopoverPlacement.Top || placement === PopoverPlacement.Bottom) && (
-							<Stateful defaultValue={PopoverAlign.Left} onValueChange={this.onAlignSelect}>
+							<Stateful defaultValue={PopoverAlign.Left} onValueChange={this.onAlignSelect as any}>
 								<MenuItem value={PopoverAlign.Left}>Left</MenuItem>
 								<MenuItem value={PopoverAlign.Center}>Center</MenuItem>
 								<MenuItem value={PopoverAlign.Right}>Right</MenuItem>
 							</Stateful>
 						)}
 						{(placement === PopoverPlacement.Left || placement === PopoverPlacement.Right) && (
-							<Stateful defaultValue={PopoverAlign.Top} onValueChange={this.onAlignSelect}>
+							<Stateful defaultValue={PopoverAlign.Top} onValueChange={this.onAlignSelect as any}>
 								<MenuItem value={PopoverAlign.Top}>Top</MenuItem>
 								<MenuItem value={PopoverAlign.Middle}>Middle</MenuItem>
 								<MenuItem value={PopoverAlign.Bottom}>Bottom</MenuItem>

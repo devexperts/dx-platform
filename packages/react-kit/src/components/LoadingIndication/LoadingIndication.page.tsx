@@ -9,7 +9,7 @@ import * as css from './LoadingIndication.page.styl';
 
 @PURE
 class LoadingIndicationPage extends React.Component {
-	state = {
+	readonly state = {
 		isVisible: false,
 	};
 

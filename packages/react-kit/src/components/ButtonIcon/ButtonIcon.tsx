@@ -1,10 +1,11 @@
 import * as React from 'react';
-import { Button as BasicButton, TButtonProps } from '../Button/Button';
+import { Button, TButtonProps } from '../Button/Button';
 import { PURE } from '../../utils/pure';
 import { ComponentClass, ComponentType } from 'react';
 import { withTheme } from '../../utils/withTheme';
 import { ObjectClean } from 'typelevel-ts';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
+import { withDefaults } from '../../utils/with-defaults';
 
 export const BUTTON_ICON = Symbol('ButtonIcon') as symbol;
 
@@ -21,7 +22,7 @@ export type TFullButtonIconProps = ObjectClean<
 @PURE
 class RawButtonIcon extends React.Component<TFullButtonIconProps> {
 	render() {
-		const { theme, Button = BasicButton, children, icon, ...props } = this.props;
+		const { theme, Button, children, icon, ...props } = this.props;
 
 		return (
 			<Button {...props} theme={theme}>
@@ -33,4 +34,8 @@ class RawButtonIcon extends React.Component<TFullButtonIconProps> {
 }
 
 export type TButtonIconProps = ObjectClean<PartialKeys<TFullButtonIconProps, 'Button' | 'theme'>>;
-export const ButtonIcon: ComponentClass<TButtonIconProps> = withTheme(BUTTON_ICON)(RawButtonIcon);
+export const ButtonIcon: ComponentClass<TButtonIconProps> = withTheme(BUTTON_ICON)(
+	withDefaults<TFullButtonIconProps, 'Button'>({
+		Button,
+	})(RawButtonIcon),
+);

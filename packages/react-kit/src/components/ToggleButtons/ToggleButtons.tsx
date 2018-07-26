@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Component, ReactElement, ComponentClass } from 'react';
+import { Component, ReactElement, ComponentClass, ReactText } from 'react';
 import { PURE } from '../../utils/pure';
 import * as classnames from 'classnames';
 import { mergeThemes, withTheme } from '../../utils/withTheme';
@@ -65,7 +65,10 @@ class RawToggleButtons extends Component<TFullToggleButtonsProps, TToggleButtons
 		return <div className={theme.container__wrapper}>{React.Children.map(children, this.renderToggleItem)}</div>;
 	}
 
-	renderToggleItem = (child: ReactElement<TToggleButtonsChildProps>, i: number) => {
+	renderToggleItem = (child: ReactElement<TToggleButtonsChildProps> | ReactText, i: number) => {
+		if (!React.isValidElement<TToggleButtonsChildProps>(child)) {
+			return child;
+		}
 		const { theme, isVertical, isDisabled } = this.props;
 
 		const isActive = i === this.state.toggleIndex;

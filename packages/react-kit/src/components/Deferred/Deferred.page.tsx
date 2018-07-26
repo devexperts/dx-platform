@@ -13,7 +13,7 @@ class DeferredPage extends PureComponent<{}, TDeferredPageState> {
 		counter: 0,
 	};
 
-	private interval: number;
+	private interval!: number;
 
 	componentWillMount() {
 		this.interval = window.setInterval(() => {

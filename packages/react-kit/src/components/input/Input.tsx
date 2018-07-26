@@ -66,8 +66,8 @@ class RawInput extends React.Component<TFullInputProps, TInputState> {
 		isFocused: false,
 	};
 
-	private input: React.ReactInstance | null;
-	private isFocusingOnInput: boolean;
+	private input!: React.ReactInstance | null;
+	private isFocusingOnInput!: boolean;
 
 	render() {
 		const {

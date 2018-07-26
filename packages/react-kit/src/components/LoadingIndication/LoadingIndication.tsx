@@ -7,6 +7,7 @@ import { withTheme } from '../../utils/withTheme';
 import { LoadingIndicator, TLoadingIndicatorProps } from '../LoadingIndicator/LoadingIndicator';
 import { PURE } from '../../utils/pure';
 import * as cn from 'classnames';
+import { withDefaults } from '../../utils/with-defaults';
 
 export const LOADING_INDICATION = Symbol('LoadingIndicaton') as symbol;
 
@@ -22,10 +23,6 @@ export type TRawLoadingIndicatonProps = {
 
 @PURE
 class RawLoadingIndicaton extends React.Component<TRawLoadingIndicatonProps> {
-	static defaultProps = {
-		LoadingIndicator,
-	};
-
 	render() {
 		const { theme, isVisible, LoadingIndicator } = this.props;
 
@@ -43,5 +40,7 @@ class RawLoadingIndicaton extends React.Component<TRawLoadingIndicatonProps> {
 
 export type TLoadingIndicationProps = ObjectClean<PartialKeys<TRawLoadingIndicatonProps, 'LoadingIndicator' | 'theme'>>;
 export const LoadingIndication: ComponentClass<TLoadingIndicationProps> = withTheme(LOADING_INDICATION)(
-	RawLoadingIndicaton,
+	withDefaults<TRawLoadingIndicatonProps, 'LoadingIndicator'>({
+		LoadingIndicator,
+	})(RawLoadingIndicaton),
 );

@@ -39,7 +39,7 @@ class TimeInputPage extends React.Component<any, any> {
 		);
 	}
 
-	onTimeInputChange = (value: TTime) => {
+	onTimeInputChange = (value: TTime | undefined | null) => {
 		log(value);
 		this.setState({
 			value,

@@ -14,6 +14,7 @@ import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { ReactRef } from '../../utils/typings';
 import { EventListener } from '../EventListener/EventListener';
 import { RootClose } from '../RootClose/RootClose';
+import { withDefaults } from '../../utils/with-defaults';
 
 type TSize = {
 	width: number;
@@ -72,18 +73,13 @@ type TPopoverState = {
 
 @PURE
 class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
-	static defaultProps = {
-		align: PopoverAlign.Left,
-		placement: PopoverPlacement.Bottom,
-	};
-
-	state: TPopoverState = {};
+	readonly state: TPopoverState = {};
 
 	private _needsUpdate = false;
 	private _anchor?: Element;
-	private _popover: Element;
-	private _popoverSize: TSize;
-	private rootElement: Element;
+	private _popover!: Element;
+	private _popoverSize!: TSize;
+	private rootElement!: Element;
 	private mediaQueryList?: MediaQueryList;
 
 	constructor(props: TFullPopoverProps) {
@@ -309,7 +305,12 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 }
 
 export type TPopoverProps = ObjectClean<PartialKeys<TFullPopoverProps, 'theme' | 'align' | 'placement'>>;
-export const Popover: ComponentClass<TPopoverProps> = withTheme(POPOVER)(RawPopover);
+export const Popover: ComponentClass<TPopoverProps> = withTheme(POPOVER)(
+	withDefaults<TFullPopoverProps, 'align' | 'placement'>({
+		align: PopoverAlign.Left,
+		placement: PopoverPlacement.Bottom,
+	})(RawPopover),
+);
 
 function stopPropagation<T>(e: SyntheticEvent<T>) {
 	e.stopPropagation();

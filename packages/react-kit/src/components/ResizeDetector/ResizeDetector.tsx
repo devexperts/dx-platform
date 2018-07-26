@@ -23,7 +23,7 @@ export type TFullResizeDetectorProps = {
 
 @PURE
 class RawResizeDetector extends React.Component<TFullResizeDetectorProps> {
-	private element: HTMLDivElement | null;
+	private element!: HTMLDivElement | null;
 
 	componentDidMount() {
 		if (this.element) {

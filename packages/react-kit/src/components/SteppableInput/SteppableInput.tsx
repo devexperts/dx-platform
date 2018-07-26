@@ -9,6 +9,7 @@ import { ButtonIcon, TButtonIconProps } from '../ButtonIcon/ButtonIcon';
 import { Input, TInputProps } from '../input/Input';
 import { KeyCode } from '../Control/Control';
 import { Holdable } from '../Holdable/Holdable';
+import { withDefaults } from '../../utils/with-defaults';
 
 export const STEPPABLE_INPUT = Symbol('SteppableInput') as symbol;
 
@@ -40,12 +41,7 @@ type TSteppableInputState = {
 
 @PURE
 class RawSteppableInput extends React.Component<TFullSteppableInputProps, TSteppableInputState> {
-	static defaultProps = {
-		Input,
-		ButtonIcon,
-	};
-
-	state: TSteppableInputState = {};
+	readonly state: TSteppableInputState = {};
 
 	componentDidUpdate(prevProps: TFullSteppableInputProps) {
 		if (prevProps.onClear && !this.props.onClear) {
@@ -204,7 +200,12 @@ class RawSteppableInput extends React.Component<TFullSteppableInputProps, TStepp
 }
 
 export type TSteppableInputProps = ObjectClean<PartialKeys<TFullSteppableInputProps, 'theme' | 'Input' | 'ButtonIcon'>>;
-export const SteppableInput: ComponentClass<TSteppableInputProps> = withTheme(STEPPABLE_INPUT)(RawSteppableInput);
+export const SteppableInput: ComponentClass<TSteppableInputProps> = withTheme(STEPPABLE_INPUT)(
+	withDefaults<TFullSteppableInputProps, 'Input' | 'ButtonIcon'>({
+		Input,
+		ButtonIcon,
+	})(RawSteppableInput),
+);
 
 export function checkParentsUpTo(node?: Element | null, checkNode?: Element, upToNode?: Element): boolean {
 	if (!node || !checkNode || !upToNode) {

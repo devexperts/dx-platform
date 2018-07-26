@@ -59,4 +59,4 @@ class RawSelectboxAnchor extends React.Component<TFullSelectboxAnchorProps> {
 }
 
 export type TSelectboxAnchorProps = ObjectClean<PartialKeys<TFullSelectboxAnchorProps, 'theme'>>;
-export const SelectboxAnchor: ComponentClass<TSelectboxAnchorProps> = RawSelectboxAnchor;
+export const SelectboxAnchor: ComponentClass<TSelectboxAnchorProps> = RawSelectboxAnchor as any;
