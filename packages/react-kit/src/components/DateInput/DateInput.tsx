@@ -13,7 +13,7 @@ import ReactInstance = React.ReactInstance;
 import { ObjectClean } from 'typelevel-ts';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { PURE } from '../../utils/pure';
-import { Popover } from '../Popover/Popover';
+import { Popover, TPopoverProps } from '../Popover/Popover';
 
 /**
  * Undefined - value is not set, null - value is force reset
@@ -37,13 +37,16 @@ export type TDateInputOwnProps = TSteppableInputProps &
 		max?: Date;
 		calendarIcon?: React.ReactElement<any>;
 		onClear?: Function;
+		onFocus?: () => void;
+		onBlur?: () => void;
 		target?: Element;
 		Calendar?: React.ComponentClass<TCalendarProps> | React.SFC<TCalendarProps>;
-	};
+};
 
 export type TDateDefaultProps = {
 	SteppableInput: React.ComponentClass<TSteppableInputProps> | React.SFC<TSteppableInputProps>;
 	ButtonIcon: React.ComponentClass<TButtonIconProps>;
+	Popover: React.ComponentClass<TPopoverProps> | React.SFC<TPopoverProps>;
 	dateFormatType: DateFormatType;
 };
 
@@ -57,6 +60,7 @@ export type TDateInputInjectedProps = {
 		SteppableInput?: TSteppableInputProps['theme'];
 		ButtonIcon?: TButtonIconProps['theme'];
 		CalendarButtonIcon?: TButtonIconProps['theme'];
+		Popover?: TPopoverProps['theme']
 	};
 };
 
@@ -83,6 +87,7 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 	static defaultProps = {
 		SteppableInput,
 		ButtonIcon,
+		Popover,
 		dateFormatType: DateFormatType.DMY
 	};
 
@@ -231,7 +236,7 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 	}
 
 	private renderCalendar(): any {
-		const { target, Calendar, value, min, max } = this.props;
+		const { target, Calendar, Popover, value, min, max, theme } = this.props;
 		const { isOpened } = this.state;
 		if (!Calendar) {
 			return null;
@@ -252,6 +257,7 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 		} else {
 			return (
 				<Popover
+					theme={theme.Popover}
 					anchor={this}
 					closeOnClickAway={true}
 					onMouseDown={this.onCalendarMouseDown}
@@ -559,6 +565,7 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 			activeSection: undefined,
 			isOpened: false,
 		});
+		this.props.onBlur && this.props.onBlur();
 	};
 
 	private onFocus = (e: React.FocusEvent<HTMLElement>) => {
@@ -734,7 +741,7 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 	}
 }
 
-export type TDateInputProps = ObjectClean<PartialKeys<TDateInputFullProps, 'theme' | 'SteppableInput' | 'ButtonIcon' | 'dateFormatType'>>;
+export type TDateInputProps = ObjectClean<PartialKeys<TDateInputFullProps, 'theme' | 'SteppableInput' | 'ButtonIcon' | 'dateFormatType' | 'Popover'>>;
 export const DateInput: ComponentClass<TDateInputProps> = withTheme(DATE_INPUT)(RawDateInput);
 
 function getValuesFromDate(date: Date) {
