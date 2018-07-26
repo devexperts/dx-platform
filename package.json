@@ -20,7 +20,7 @@
   "workspaces": ["packages/*"],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/devex-web-frontend/dx-util.git"
+    "url": "git+https://github.com/devex-web-frontend/dx-platform.git"
   },
   "bugs": {
     "url": "https://github.com/devex-web-frontend/dx-platform/issues"
