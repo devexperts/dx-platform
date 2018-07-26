@@ -15,6 +15,9 @@ import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { PURE } from '../../utils/pure';
 import { Popover } from '../Popover/Popover';
 
+/**
+ * Undefined - value is not set, null - value is force reset
+ */
 export type TDateValueProps = TControlProps<Date | null | undefined>;
 
 export type TCalendarProps = TDateValueProps & {
@@ -94,7 +97,7 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 			let month;
 			let day;
 			let year;
-			if (typeof newProps.value !== 'undefined' && newProps.value !== null && !isNaN(newProps.value.getTime())) {
+			if (newProps.value !== null && !isNaN(newProps.value.getTime())) {
 				const result = getValuesFromDate(newProps.value);
 				month = result.month;
 				day = result.day;
@@ -137,6 +140,7 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 		});
 
 		let onClear;
+		// check if "X" clear button should be visible - at least one part of date should be set
 		if ((isDefined(value) && value !== null) || isDefined(day) || isDefined(month) || isDefined(year)) {
 			onClear = this.onClear;
 		}
@@ -639,6 +643,6 @@ function getValuesFromDate(date: Date) {
 	};
 }
 
-function isDefined(value: any): boolean {
+function isDefined<A>(value: A | undefined): value is A {
 	return typeof value !== 'undefined';
 }
