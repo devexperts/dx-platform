@@ -15,7 +15,15 @@ import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { PURE } from '../../utils/pure';
 import { Popover } from '../Popover/Popover';
 
+/**
+ * Undefined - value is not set, null - value is force reset
+ */
 export type TDateValueProps = TControlProps<Date | null | undefined>;
+
+export enum DateFormatType {
+	MDY,
+	DMY,
+}
 
 export type TCalendarProps = TDateValueProps & {
 	onMouseDown?: React.EventHandler<React.MouseEvent<Element>>;
@@ -36,6 +44,7 @@ export type TDateInputOwnProps = TSteppableInputProps &
 export type TDateDefaultProps = {
 	SteppableInput: React.ComponentClass<TSteppableInputProps> | React.SFC<TSteppableInputProps>;
 	ButtonIcon: React.ComponentClass<TButtonIconProps>;
+	dateFormatType: DateFormatType;
 };
 
 export type TDateInputInjectedProps = {
@@ -74,6 +83,7 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 	static defaultProps = {
 		SteppableInput,
 		ButtonIcon,
+		dateFormatType: DateFormatType.DMY,
 	};
 
 	state: TDateInputState = {
@@ -94,7 +104,7 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 			let month;
 			let day;
 			let year;
-			if (typeof newProps.value !== 'undefined' && newProps.value !== null && !isNaN(newProps.value.getTime())) {
+			if (newProps.value !== null && !isNaN(newProps.value.getTime())) {
 				const result = getValuesFromDate(newProps.value);
 				month = result.month;
 				day = result.day;
@@ -121,22 +131,16 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 			theme,
 			ButtonIcon,
 			SteppableInput,
+			dateFormatType,
 		} = this.props;
 		const { month, day, year, activeSection } = this.state;
-
-		const dayClassName = classnames(theme.section, {
-			[theme.section_isActive as string]: !isDisabled && activeSection === ActiveSection.Day,
-		});
-
-		const monthClassName = classnames(theme.section, {
-			[theme.section_isActive as string]: !isDisabled && activeSection === ActiveSection.Month,
-		});
 
 		const yearClassName = classnames(theme.section, {
 			[theme.section_isActive as string]: !isDisabled && activeSection === ActiveSection.Year,
 		});
 
 		let onClear;
+		// check if "X" clear button should be visible - at least one part of date should be set
 		if ((isDefined(value) && value !== null) || isDefined(day) || isDefined(month) || isDefined(year)) {
 			onClear = this.onClear;
 		}
@@ -161,13 +165,11 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 				onKeyDown={this.onKeyDown}
 				onClick={this.onSteppableInputClick}>
 				<div className={innerClassName}>
-					<span className={dayClassName} onMouseDown={this.onDayMouseDown}>
-						{this.format(day, ActiveSection.Day)}
-					</span>
+					{dateFormatType === DateFormatType.DMY && this.renderDay()}
+					{dateFormatType === DateFormatType.MDY && this.renderMonth()}
 					<span className={theme.separator}>/</span>
-					<span className={monthClassName} onMouseDown={this.onMonthMouseDown}>
-						{this.format(month, ActiveSection.Month)}
-					</span>
+					{dateFormatType === DateFormatType.DMY && this.renderMonth()}
+					{dateFormatType === DateFormatType.MDY && this.renderDay()}
 					<span className={theme.separator}>/</span>
 					<span className={yearClassName} onMouseDown={this.onYearMouseDown}>
 						{this.format(year, ActiveSection.Year)}
@@ -187,6 +189,32 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 					)}
 				{this.renderCalendar()}
 			</SteppableInput>
+		);
+	}
+
+	private renderDay() {
+		const { isDisabled, theme } = this.props;
+		const { activeSection, day } = this.state;
+		const dayClassName = classnames(theme.section, {
+			[theme.section_isActive as string]: !isDisabled && activeSection === ActiveSection.Day,
+		});
+		return (
+			<span className={dayClassName} onMouseDown={this.onDayMouseDown}>
+				{this.format(day, ActiveSection.Day)}
+			</span>
+		);
+	}
+
+	private renderMonth() {
+		const { isDisabled, theme } = this.props;
+		const { activeSection, month } = this.state;
+		const monthClassName = classnames(theme.section, {
+			[theme.section_isActive as string]: !isDisabled && activeSection === ActiveSection.Month,
+		});
+		return (
+			<span className={monthClassName} onMouseDown={this.onMonthMouseDown}>
+				{this.format(month, ActiveSection.Month)}
+			</span>
 		);
 	}
 
@@ -229,35 +257,30 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 				case ActiveSection.Day: //fallthrough
 				case ActiveSection.Month: {
 					//day and month are 2 digits
-					return `${typeof value !== 'undefined' && value >= 0 && value < 10 ? 0 : ''}${value}`;
+					return `${value >= 0 && value < 10 ? 0 : ''}${value}`;
 				}
-				case ActiveSection.Year: //fallthrough
-				default: {
-					if (typeof value !== 'undefined' && value < 10) {
+				case ActiveSection.Year: {
+					if (value < 10) {
 						return `000${value}`;
-					} else if (typeof value !== 'undefined' && value < 100) {
+					} else if (value < 100) {
 						return `00${value}`;
-					} else if (typeof value !== 'undefined' && value < 1000) {
+					} else if (value < 1000) {
 						return `0${value}`;
 					} else {
 						return `${value}`;
 					}
 				}
 			}
-		} else {
-			switch (section) {
-				case ActiveSection.Day: {
-					return 'dd';
-				}
-				case ActiveSection.Month: {
-					return 'mm';
-				}
-				case ActiveSection.Year: {
-					return 'yyyy';
-				}
-				default: {
-					return '--';
-				}
+		}
+		switch (section) {
+			case ActiveSection.Day: {
+				return 'dd';
+			}
+			case ActiveSection.Month: {
+				return 'mm';
+			}
+			case ActiveSection.Year: {
+				return 'yyyy';
 			}
 		}
 	}
@@ -268,21 +291,15 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 		const canBuildValue = isDefined(day) && isDefined(month) && isDefined(year);
 		const newValueDiffers =
 			canBuildValue &&
-			typeof month !== 'undefined' &&
-			(typeof value === 'undefined' ||
+			isDefined(month) &&
+			(!isDefined(value) ||
 				value === null ||
 				value.getDate() !== day ||
 				value.getMonth() !== month - 1 ||
 				value.getFullYear() !== year);
 
 		if (canBuildValue) {
-			if (
-				newValueDiffers &&
-				onValueChange &&
-				typeof year !== 'undefined' &&
-				typeof month !== 'undefined' &&
-				typeof day !== 'undefined'
-			) {
+			if (newValueDiffers && onValueChange && isDefined(year) && isDefined(month) && isDefined(day)) {
 				const date = new Date(year, month - 1, day);
 				//check new date
 				const wasAdjusted = !(
@@ -323,18 +340,18 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 		switch (activeSection) {
 			case ActiveSection.Day: {
 				//day starts from 1 here and cannot be zero
-				const newDay = typeof day !== 'undefined' ? (day + 1) % 32 || 1 : 1;
+				const newDay = isDefined(day) ? (day + 1) % 32 || 1 : 1;
 				this.updateStateTime(newDay, month, year);
 				break;
 			}
 			case ActiveSection.Month: {
 				//month starts from 1 here and cannot be zero
-				const newMonth = typeof month !== 'undefined' ? (month + 1) % 13 || 1 : 1;
+				const newMonth = isDefined(month) ? (month + 1) % 13 || 1 : 1;
 				this.updateStateTime(day, newMonth, year);
 				break;
 			}
 			case ActiveSection.Year: {
-				const newYear = typeof year !== 'undefined' && year !== 9999 ? year + 1 : new Date().getFullYear();
+				const newYear = isDefined(year) && year !== 9999 ? year + 1 : new Date().getFullYear();
 				this.updateStateTime(day, month, newYear);
 				break;
 			}
@@ -347,18 +364,18 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 		switch (activeSection) {
 			case ActiveSection.Day: {
 				//day starts from 1 and cannot be zero
-				const newDay = typeof day !== 'undefined' ? (day - 1) % 32 || 31 : 31;
+				const newDay = isDefined(day) ? (day - 1) % 32 || 31 : 31;
 				this.updateStateTime(newDay, month, year);
 				break;
 			}
 			case ActiveSection.Month: {
 				//month starts from 1 and cannot be zero
-				const newMonth = typeof month !== 'undefined' ? (month - 1) % 13 || 12 : 12;
+				const newMonth = isDefined(month) ? (month - 1) % 13 || 12 : 12;
 				this.updateStateTime(day, newMonth, year);
 				break;
 			}
 			case ActiveSection.Year: {
-				const newYear = typeof year !== 'undefined' && year !== 0 ? year - 1 : new Date().getFullYear();
+				const newYear = isDefined(year) && year !== 0 ? year - 1 : new Date().getFullYear();
 				this.updateStateTime(day, month, newYear);
 				break;
 			}
@@ -441,41 +458,25 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 			case KeyCode.Left: {
 				e.preventDefault(); //block h-scrolling
 				switch (activeSection) {
-					case ActiveSection.Month: {
-						this.secondInput = false;
-						this.setState({
-							activeSection: ActiveSection.Day,
-						});
-						break;
-					}
+					case ActiveSection.Month: //fallthrough
 					case ActiveSection.Year: {
 						this.secondInput = false;
-						this.setState({
-							activeSection: ActiveSection.Month,
-						});
 						break;
 					}
 				}
+				this.selectPreviousSection();
 				break;
 			}
 			case KeyCode.Right: {
 				e.preventDefault(); //block h-scrolling
 				switch (activeSection) {
-					case ActiveSection.Day: {
-						this.secondInput = false;
-						this.setState({
-							activeSection: ActiveSection.Month,
-						});
-						break;
-					}
+					case ActiveSection.Day: //fallthrough
 					case ActiveSection.Month: {
 						this.secondInput = false;
-						this.setState({
-							activeSection: ActiveSection.Year,
-						});
 						break;
 					}
 				}
+				this.selectNextSection();
 				break;
 			}
 			case KeyCode.Delete: //fallthrough
@@ -547,10 +548,106 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 		this.secondInput = false;
 		if (!isDefined(this.state.activeSection)) {
 			this.setState({
-				activeSection: ActiveSection.Day,
+				activeSection: this.getDefaultActiveSection(),
 			});
 		}
 	};
+
+	private getDefaultActiveSection(): ActiveSection {
+		switch (this.props.dateFormatType) {
+			case DateFormatType.DMY: {
+				return ActiveSection.Day;
+			}
+			case DateFormatType.MDY: {
+				return ActiveSection.Month;
+			}
+		}
+	}
+	private selectNextSection(): void {
+		const { activeSection } = this.state;
+		const { dateFormatType } = this.props;
+		switch (activeSection) {
+			case ActiveSection.Day: {
+				switch (dateFormatType) {
+					case DateFormatType.DMY: {
+						this.setState({
+							activeSection: ActiveSection.Month,
+						});
+						break;
+					}
+					case DateFormatType.MDY: {
+						this.setState({
+							activeSection: ActiveSection.Year,
+						});
+						break;
+					}
+				}
+				break;
+			}
+			case ActiveSection.Month: {
+				switch (dateFormatType) {
+					case DateFormatType.DMY: {
+						this.setState({
+							activeSection: ActiveSection.Year,
+						});
+						break;
+					}
+					case DateFormatType.MDY: {
+						this.setState({
+							activeSection: ActiveSection.Day,
+						});
+						break;
+					}
+				}
+				break;
+			}
+		}
+	}
+	private selectPreviousSection(): void {
+		const { activeSection } = this.state;
+		const { dateFormatType } = this.props;
+		switch (activeSection) {
+			case ActiveSection.Day: {
+				switch (dateFormatType) {
+					case DateFormatType.MDY: {
+						this.setState({
+							activeSection: ActiveSection.Month,
+						});
+						break;
+					}
+				}
+				break;
+			}
+			case ActiveSection.Month: {
+				switch (dateFormatType) {
+					case DateFormatType.DMY: {
+						this.setState({
+							activeSection: ActiveSection.Day,
+						});
+						break;
+					}
+				}
+				break;
+			}
+			case ActiveSection.Year: {
+				switch (dateFormatType) {
+					case DateFormatType.DMY: {
+						this.setState({
+							activeSection: ActiveSection.Month,
+						});
+						break;
+					}
+					case DateFormatType.MDY: {
+						this.setState({
+							activeSection: ActiveSection.Day,
+						});
+						break;
+					}
+				}
+				break;
+			}
+		}
+	}
 
 	private handleDigitKeyDown(digit: number) {
 		const { day, month, year } = this.state;
@@ -558,7 +655,7 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 			case ActiveSection.Day: {
 				if (this.secondInput) {
 					let newDay;
-					if (typeof day !== 'undefined' && day < 3) {
+					if (isDefined(day) && day < 3) {
 						newDay = Number(`${day}${digit}`);
 					} else if (day === 3) {
 						newDay = Math.min(Number(`${day}${digit}`), 31);
@@ -566,16 +663,12 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 						newDay = digit;
 					}
 					this.updateStateTime(newDay, month, year);
-					this.setState({
-						activeSection: ActiveSection.Month,
-					});
+					this.selectNextSection();
 					this.secondInput = false;
 				} else {
 					this.updateStateTime(digit, month, year);
 					if (digit > 3) {
-						this.setState({
-							activeSection: ActiveSection.Month,
-						});
+						this.selectNextSection();
 						this.secondInput = false;
 					} else {
 						this.secondInput = true;
@@ -586,7 +679,7 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 			case ActiveSection.Month: {
 				if (this.secondInput) {
 					let newMonth;
-					if (typeof month !== 'undefined' && month < 1) {
+					if (isDefined(month) && month < 1) {
 						newMonth = Number(`${month}${digit}`);
 					} else if (month === 1) {
 						newMonth = Math.min(Number(`${month}${digit}`), 12);
@@ -594,16 +687,12 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 						newMonth = digit;
 					}
 					this.updateStateTime(day, newMonth, year);
-					this.setState({
-						activeSection: ActiveSection.Year,
-					});
+					this.selectNextSection();
 					this.secondInput = false;
 				} else {
 					this.updateStateTime(day, digit, year);
 					if (digit > 1) {
-						this.setState({
-							activeSection: ActiveSection.Year,
-						});
+						this.selectNextSection();
 						this.secondInput = false;
 					} else {
 						this.secondInput = true;
@@ -614,7 +703,7 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 			case ActiveSection.Year: {
 				if (this.secondInput) {
 					let newYear = `${year}${digit}`;
-					if (typeof year !== 'undefined' && year >= 1000) {
+					if (isDefined(year) && year >= 1000) {
 						newYear = newYear.substr(1);
 					}
 					this.updateStateTime(day, month, Number(newYear));
@@ -628,7 +717,9 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 	}
 }
 
-export type TDateInputProps = ObjectClean<PartialKeys<TDateInputFullProps, 'theme' | 'SteppableInput' | 'ButtonIcon'>>;
+export type TDateInputProps = ObjectClean<
+	PartialKeys<TDateInputFullProps, 'theme' | 'SteppableInput' | 'ButtonIcon' | 'dateFormatType'>
+>;
 export const DateInput: ComponentClass<TDateInputProps> = withTheme(DATE_INPUT)(RawDateInput);
 
 function getValuesFromDate(date: Date) {
@@ -639,6 +730,6 @@ function getValuesFromDate(date: Date) {
 	};
 }
 
-function isDefined(value: any): boolean {
+function isDefined<A>(value: A | undefined): value is A {
 	return typeof value !== 'undefined';
 }
