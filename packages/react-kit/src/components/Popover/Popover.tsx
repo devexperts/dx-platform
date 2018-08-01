@@ -211,7 +211,7 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 			child = <RootClose onRootClose={onRequestClose}>{child}</RootClose>;
 		}
 
-		const target = typeof window !== undefined ? window : 'window';
+		const target = typeof window !== 'undefined' ? window : 'window';
 		return (
 			<EventListener onResize={this.onResize} onScroll={this.onScroll} target={target}>
 				{createPortal(child, this.rootElement)}

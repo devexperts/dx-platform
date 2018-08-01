@@ -75,6 +75,7 @@ class SelectboxPage extends React.Component<{}, TPageState> {
 						onValueChange={this.onHeroChange}
 						caretIcon={<SmallDropDownArrowIcon />}>
 						<MenuItem value="superman">Superman</MenuItem>
+						<MenuItem value="aquaman">Aquaman</MenuItem>
 						<MenuItem value="batman">Batman</MenuItem>
 						<MenuItem value="flash">Flash</MenuItem>
 					</DemoSelectbox>
@@ -92,6 +93,7 @@ class SelectboxPage extends React.Component<{}, TPageState> {
 						selectedIcon={<ListItemTickIcon />}
 						caretIcon={<SmallDropDownArrowIcon />}>
 						<MenuItem value="superman">Superman</MenuItem>
+						<MenuItem value="aquaman">Aquaman</MenuItem>
 						<MenuItem value="batman">Batman</MenuItem>
 						<MenuItem value="flash">Flash</MenuItem>
 					</Stateful>
