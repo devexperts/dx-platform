@@ -4,7 +4,6 @@ import { ExpandableHandler, TExpandableHandlerProps } from './ExpandableHandler'
 import { PURE } from '../../utils/pure';
 import { ComponentClass } from 'react';
 import { withTheme } from '../../utils/withTheme';
-import { ObjectClean } from 'typelevel-ts';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { TControlProps } from '../Control/Control';
 import { withDefaults } from '../../utils/with-defaults';
@@ -47,7 +46,7 @@ class RawExpandable extends React.Component<TFullExpandableProps> {
 	};
 }
 
-export type TExpandableProps = ObjectClean<PartialKeys<TFullExpandableProps, 'theme' | 'Handler'>>;
+export type TExpandableProps = PartialKeys<TFullExpandableProps, 'theme' | 'Handler'>;
 export const Expandable: ComponentClass<TExpandableProps> = withTheme(EXPANDABLE)(
 	withDefaults<TFullExpandableProps, 'Handler'>({
 		Handler: ExpandableHandler,

@@ -2,7 +2,6 @@ import * as React from 'react';
 import { withTheme } from '../../utils/withTheme';
 import { ComponentClass, SFC } from 'react';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
-import { ObjectClean } from 'typelevel-ts';
 import { Menu, TMenuProps } from '../Menu/Menu';
 import { Input, TInputProps } from '../input/Input';
 import { Popover, TPopoverProps } from '../Popover/Popover';
@@ -124,8 +123,9 @@ class RawAutocomplete extends React.Component<TFullAutocompleteProps> {
 	};
 }
 
-export type TAutocompleteProps = ObjectClean<
-	PartialKeys<TFullAutocompleteProps, 'theme' | 'Input' | 'Popover' | 'MenuItem' | 'Menu'>
+export type TAutocompleteProps = PartialKeys<
+	TFullAutocompleteProps,
+	'theme' | 'Input' | 'Popover' | 'MenuItem' | 'Menu'
 >;
 export const Autocomplete: ComponentClass<TAutocompleteProps> = withTheme(AUTOCOMPLETE)(
 	withDefaults<TFullAutocompleteProps, 'Input' | 'Popover' | 'MenuItem' | 'Menu'>({

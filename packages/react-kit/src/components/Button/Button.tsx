@@ -5,7 +5,6 @@ import { LoadingIndicator, TLoadingIndicatorProps } from '../LoadingIndicator/Lo
 import { withTheme } from '../../utils/withTheme';
 import { ComponentClass, EventHandler, MouseEvent } from 'react';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
-import { ObjectClean } from 'typelevel-ts';
 
 export const BUTTON = Symbol('Button') as symbol;
 
@@ -82,5 +81,5 @@ class RawButton extends React.Component<TFullButtonProps> {
 	}
 }
 
-export type TButtonProps = ObjectClean<PartialKeys<TFullButtonProps, 'theme'>>;
+export type TButtonProps = PartialKeys<TFullButtonProps, 'theme'>;
 export const Button: ComponentClass<TButtonProps> = withTheme(BUTTON)(RawButton);

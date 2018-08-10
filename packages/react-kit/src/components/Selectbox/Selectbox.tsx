@@ -6,7 +6,6 @@ import { PURE } from '../../utils/pure';
 import * as classnames from 'classnames';
 import { withTheme } from '../../utils/withTheme';
 import { Component, ComponentClass, ComponentType, ReactElement, ReactNode, ReactText } from 'react';
-import { ObjectClean } from 'typelevel-ts';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { TControlProps } from '../Control/Control';
 import { NativeResizeDetector } from '../ResizeDetector/ResizeDetector';
@@ -265,7 +264,7 @@ class RawSelectbox extends React.Component<TFullSelectboxProps, TSelectboxState>
 	});
 }
 
-export type TSelectboxProps = ObjectClean<PartialKeys<TFullSelectboxProps, 'theme' | 'Anchor' | 'Menu' | 'Popover'>>;
+export type TSelectboxProps = PartialKeys<TFullSelectboxProps, 'theme' | 'Anchor' | 'Menu' | 'Popover'>;
 export const Selectbox: ComponentClass<TSelectboxProps> = withTheme(SELECTBOX)(
 	withDefaults<TFullSelectboxProps, 'Anchor' | 'Menu' | 'Popover'>({
 		Anchor: SelectboxAnchor,

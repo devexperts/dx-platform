@@ -5,7 +5,7 @@ import * as React from 'react';
 //     ComponentType
 // } from 'react';
 import * as PropTypes from 'prop-types';
-import { ObjectOmit } from 'typelevel-ts';
+import { Omit } from 'typelevel-ts';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
 
 const THEME_CONTEXT_KEY = '@@dx-util/withTheme-context-key'; //should be serializable
@@ -19,7 +19,7 @@ type TTargetProps = {
 	theme?: TTheme;
 };
 
-type TResultProps<P extends TTargetProps> = ObjectOmit<P, 'theme'> & {
+type TResultProps<P extends TTargetProps> = Omit<P, 'theme'> & {
 	theme?: P['theme'];
 };
 

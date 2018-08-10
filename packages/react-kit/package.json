@@ -38,7 +38,7 @@
     "react-css-themr": "^2.1.2",
     "rxjs": "~5.5.2",
     "tslib": "^1.9.0",
-    "typelevel-ts": "^0.2.2"
+    "typelevel-ts": "^0.3.1"
   },
   "peerDependencies": {
     "@types/react": ">=16.3.16",

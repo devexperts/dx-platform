@@ -1,5 +1,4 @@
 import { ComponentClass, PureComponent, ReactElement } from 'react';
-import { ObjectClean } from 'typelevel-ts';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { withDefaults } from '../../utils/with-defaults';
 
@@ -49,7 +48,7 @@ class RawDeferred extends PureComponent<TRawDeferredProps, TDeferredState> {
 	}
 }
 
-export type TDeferredProps = ObjectClean<PartialKeys<TRawDeferredProps, 'delay'>>;
+export type TDeferredProps = PartialKeys<TRawDeferredProps, 'delay'>;
 export const Deferred: ComponentClass<TDeferredProps> = withDefaults<TRawDeferredProps, 'delay'>({
 	delay: 0,
 })(RawDeferred) as any;

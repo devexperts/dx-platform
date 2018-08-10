@@ -4,7 +4,6 @@ import { ComponentClass } from 'react';
 import { TControlProps, KeyCode, KEY_CODE_NUM_MAP } from '../Control/Control';
 import * as classnames from 'classnames';
 import { withTheme } from '../../utils/withTheme';
-import { ObjectClean } from 'typelevel-ts';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { SteppableInput, TSteppableInputProps } from '../SteppableInput/SteppableInput';
 import { withDefaults } from '../../utils/with-defaults';
@@ -321,7 +320,7 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState>
 	}
 }
 
-export type TTimeInputProps = ObjectClean<PartialKeys<TTimeInputFullProps, 'theme' | 'SteppableInput'>>;
+export type TTimeInputProps = PartialKeys<TTimeInputFullProps, 'theme' | 'SteppableInput'>;
 export const TimeInput: ComponentClass<TTimeInputProps> = withTheme(TIME_INPUT)(
 	withDefaults<TTimeInputFullProps, 'SteppableInput'>({
 		SteppableInput,

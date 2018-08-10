@@ -8855,17 +8855,13 @@ typedarray@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
 
-typelevel-ts@^0.2.2:
-  version "0.2.4"
-  resolved "https://registry.yarnpkg.com/typelevel-ts/-/typelevel-ts-0.2.4.tgz#d4832c6fb739abe0bc1c29b098e158fe0778f3f0"
+typelevel-ts@^0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/typelevel-ts/-/typelevel-ts-0.3.1.tgz#05aec16b3437d6b04a073c9036f9f5ae24ec359d"
 
-typescript@2.8.1:
-  version "2.8.1"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.8.1.tgz#6160e4f8f195d5ba81d4876f9c0cc1fbc0820624"
-
-typescript@^2.8.4:
-  version "2.9.2"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.9.2.tgz#1cbf61d05d6b96269244eb6a3bce4bd914e0f00c"
+typescript@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.0.1.tgz#43738f29585d3a87575520a4b93ab6026ef11fdb"
 
 ua-parser-js@^0.7.18:
   version "0.7.18"

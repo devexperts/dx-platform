@@ -9,7 +9,6 @@ import throttle from '@devexperts/utils/dist/function/throttle';
 
 import { withTheme } from '../../utils/withTheme';
 import { ComponentClass, MouseEventHandler, ReactNode, SyntheticEvent } from 'react';
-import { ObjectClean } from 'typelevel-ts';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { ReactRef } from '../../utils/typings';
 import { EventListener } from '../EventListener/EventListener';
@@ -304,7 +303,7 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 	}
 }
 
-export type TPopoverProps = ObjectClean<PartialKeys<TFullPopoverProps, 'theme' | 'align' | 'placement'>>;
+export type TPopoverProps = PartialKeys<TFullPopoverProps, 'theme' | 'align' | 'placement'>;
 export const Popover: ComponentClass<TPopoverProps> = withTheme(POPOVER)(
 	withDefaults<TFullPopoverProps, 'align' | 'placement'>({
 		align: PopoverAlign.Left,

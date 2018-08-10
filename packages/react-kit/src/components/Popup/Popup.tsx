@@ -3,7 +3,6 @@ import { createPortal } from 'react-dom';
 import { PURE } from '../../utils/pure';
 import * as classnames from 'classnames';
 import { Component, MouseEventHandler, ReactNode } from 'react';
-import { ObjectClean } from 'typelevel-ts';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { withTheme } from '../../utils/withTheme';
 import { RootClose } from '../RootClose/RootClose';
@@ -108,5 +107,5 @@ class RawPopup extends Component<TRawPopupProps> {
 	};
 }
 
-export type TPopupProps = ObjectClean<PartialKeys<TRawPopupProps, 'theme'>>;
+export type TPopupProps = PartialKeys<TRawPopupProps, 'theme'>;
 export const Popup = withTheme(POPUP)(RawPopup);

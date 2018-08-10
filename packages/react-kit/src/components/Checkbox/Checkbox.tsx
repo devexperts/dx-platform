@@ -4,7 +4,6 @@ import { PURE } from '../../utils/pure';
 import * as classnames from 'classnames';
 
 import { withTheme } from '../../utils/withTheme';
-import { ObjectClean } from 'typelevel-ts';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { TControlProps } from '../Control/Control';
 
@@ -61,5 +60,5 @@ class RawCheckbox extends Component<TFullCheckboxProps> {
 	};
 }
 
-export type TCheckboxProps = ObjectClean<PartialKeys<TFullCheckboxProps, 'theme'>>;
+export type TCheckboxProps = PartialKeys<TFullCheckboxProps, 'theme'>;
 export const Checkbox: ComponentClass<TCheckboxProps> = withTheme(CHECKBOX)(RawCheckbox);
