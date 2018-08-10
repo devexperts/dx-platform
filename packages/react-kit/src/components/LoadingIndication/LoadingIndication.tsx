@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { ObjectClean } from 'typelevel-ts';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { ComponentClass, ComponentType } from 'react';
 
@@ -38,7 +37,7 @@ class RawLoadingIndicaton extends React.Component<TRawLoadingIndicatonProps> {
 	}
 }
 
-export type TLoadingIndicationProps = ObjectClean<PartialKeys<TRawLoadingIndicatonProps, 'LoadingIndicator' | 'theme'>>;
+export type TLoadingIndicationProps = PartialKeys<TRawLoadingIndicatonProps, 'LoadingIndicator' | 'theme'>;
 export const LoadingIndication: ComponentClass<TLoadingIndicationProps> = withTheme(LOADING_INDICATION)(
 	withDefaults<TRawLoadingIndicatonProps, 'LoadingIndicator'>({
 		LoadingIndicator,

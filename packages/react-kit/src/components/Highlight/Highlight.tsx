@@ -3,7 +3,6 @@ import split from '@devexperts/utils/dist/string/split';
 import { PURE } from '../../utils/pure';
 import { withTheme } from '../../utils/withTheme';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
-import { ObjectClean } from 'typelevel-ts/lib';
 import { ComponentClass, ReactNode } from 'react';
 import { withDefaults } from '../../utils/with-defaults';
 
@@ -48,7 +47,7 @@ class RawHighlight extends React.Component<TFullHighlightProps> {
 	}
 }
 
-export type THighlightProps = ObjectClean<PartialKeys<TFullHighlightProps, 'theme' | 'search'>>;
+export type THighlightProps = PartialKeys<TFullHighlightProps, 'theme' | 'search'>;
 export const Highlight: ComponentClass<THighlightProps> = withTheme(HIGHLIGHT)(
 	withDefaults<TFullHighlightProps, 'search'>({
 		search: '',

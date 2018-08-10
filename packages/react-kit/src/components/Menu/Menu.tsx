@@ -12,7 +12,6 @@ import {
 } from '../List/List';
 import { withTheme } from '../../utils/withTheme';
 import { Component, ComponentClass, ComponentType, ReactElement, ReactNode, ReactText } from 'react';
-import { ObjectClean } from 'typelevel-ts';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { PURE } from '../../utils/pure';
 import * as classnames from 'classnames';
@@ -162,8 +161,9 @@ class RawMenuItemGroup extends React.Component<TFullMenuItemGroupProps, TMenuIte
 	};
 }
 
-export type TMenuItemGroupProps = ObjectClean<
-	PartialKeys<TFullMenuItemGroupProps, 'theme' | 'List' | 'ListItemGroup' | 'isCollapsed'>
+export type TMenuItemGroupProps = PartialKeys<
+	TFullMenuItemGroupProps,
+	'theme' | 'List' | 'ListItemGroup' | 'isCollapsed'
 >;
 export const MenuItemGroup: ComponentClass<TMenuItemGroupProps> = withTheme(MENU)(
 	withDefaults<TFullMenuItemGroupProps, 'ListItemGroup' | 'isCollapsed' | 'List'>({

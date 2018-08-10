@@ -1,16 +1,17 @@
 {
   "name": "@devexperts/platform",
   "scripts": {
-    "lerna": "lerna",
-    "lerna:bootstrap": "npm run lerna -- bootstrap",
-    "lerna:update": "npm run lerna -- clean && npm run lerna -- bootstrap",
-    "lerna:publish": "npm run lerna -- publish --conventional-commits",
     "start": "lerna run --parallel watch",
-    "start:storybook": "cd packages/react-kit && npm run start",
-    "build:kit": "cd packages/react-kit && npm run build",
-    "build:tools": "cd packages/tools && npm run build",
-    "build": "npm run build:tools && npm run build:kit",
-    "test": "npm run tslint && npm run jest",
+    "start:storybook": "cd packages/react-kit && yarn start",
+    "test": "yarn tslint && yarn jest",
+    "lerna": "lerna",
+    "lerna:bootstrap": "yarn lerna -- bootstrap",
+    "lerna:update": "yarn lerna -- clean && yarn lerna -- bootstrap",
+    "lerna:prepare": "yarn lerna run prepare",
+    "lerna:publish": "yarn lerna -- publish --conventional-commits",
+    "build:kit": "cd packages/react-kit && yarn build",
+    "build:tools": "cd packages/tools && yarn build",
+    "build": "yarn build:tools && yarn build:kit",
     "jest": "jest",
     "prettier": "prettier --list-different \"./packages/**/src/**/*.{ts,tsx}\"",
     "prettier:fix": "prettier --write \"./packages/**/src/**/*.{ts,tsx}\"",
@@ -60,6 +61,6 @@
     "prettier": "1.12.1",
     "ts-jest": "^22.4.6",
     "tslint": "^5.10.0",
-    "typescript": "^2.8.4"
+    "typescript": "^3.0.1"
   }
 }

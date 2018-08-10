@@ -18,7 +18,6 @@ import { VerticalScrollbar as BaseVerticalScrollbar, TVerticalScrollbarProps } f
 
 import getScrollbarSize from '../Scrollbar/Scrollbar.util';
 import { withTheme } from '../../utils/withTheme';
-import { ObjectClean } from 'typelevel-ts';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { withDefaults } from '../../utils/with-defaults';
 
@@ -182,8 +181,9 @@ export class RawScrollable extends React.Component<TFullScrollableProps> {
 	};
 }
 
-export type TScrollableProps = ObjectClean<
-	PartialKeys<TFullScrollableProps, 'theme' | 'ResizeDetector' | 'VerticalScrollbar' | 'HorizontalScrollbar'>
+export type TScrollableProps = PartialKeys<
+	TFullScrollableProps,
+	'theme' | 'ResizeDetector' | 'VerticalScrollbar' | 'HorizontalScrollbar'
 >;
 export const Scrollable: React.ComponentClass<TScrollableProps> = withTheme(SCROLLABLE)(
 	withDefaults<TFullScrollableProps, 'ResizeDetector' | 'VerticalScrollbar' | 'HorizontalScrollbar'>({

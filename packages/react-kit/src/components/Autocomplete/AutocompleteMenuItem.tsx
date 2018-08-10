@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
-import { ObjectClean } from 'typelevel-ts';
 import { ComponentClass } from 'react';
 import { withTheme } from '../../utils/withTheme';
 import { MenuItem, TMenuItemProps } from '../Menu/Menu';
@@ -30,7 +29,7 @@ class RawAutocompleteMenuItem extends React.Component<TFullAutocompleteMenuItemP
 	}
 }
 
-export type TAutocompleteMenuItemProps = ObjectClean<PartialKeys<TFullAutocompleteMenuItemProps, 'theme' | 'search'>>;
+export type TAutocompleteMenuItemProps = PartialKeys<TFullAutocompleteMenuItemProps, 'theme' | 'search'>;
 export const AutocompleteMenuItem: ComponentClass<TAutocompleteMenuItemProps> = withTheme(AUTOCOMPLETE_MENU_ITEM)(
 	withDefaults<TFullAutocompleteMenuItemProps, 'search'>({
 		search: '',

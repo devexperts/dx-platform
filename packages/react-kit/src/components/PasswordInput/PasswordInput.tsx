@@ -2,7 +2,6 @@ import * as React from 'react';
 import { PURE } from '../../utils/pure';
 import { ButtonIcon, TButtonIconProps } from '../ButtonIcon/ButtonIcon';
 import { Input as BaseInput, TInputProps } from '../input/Input';
-import { ObjectClean } from 'typelevel-ts';
 import { withTheme } from '../../utils/withTheme';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { ComponentType } from 'react';
@@ -64,5 +63,5 @@ export class RawPasswordInput extends React.Component<TFullPasswordInputProps> {
 	};
 }
 
-export type TPasswordInputProps = ObjectClean<PartialKeys<TFullPasswordInputProps, 'theme'>>;
+export type TPasswordInputProps = PartialKeys<TFullPasswordInputProps, 'theme'>;
 export const PasswordInput: React.ComponentClass<TPasswordInputProps> = withTheme(PASSWORD_INPUT)(RawPasswordInput);

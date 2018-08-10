@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { PURE } from '../../utils/pure';
 import { EventListener, TEventListenerProps } from '../EventListener/EventListener';
-import { ObjectOmit } from 'typelevel-ts';
+import { Omit } from 'typelevel-ts';
 
 export type TBarProps = {
 	onBarDragStart: React.MouseEventHandler<HTMLDivElement>;
@@ -24,7 +24,7 @@ export class Bar extends React.Component<TBarProps, TBarState> {
 	render() {
 		const { isDragging } = this.state;
 
-		let eventListenerProps: ObjectOmit<TEventListenerProps, 'children'> = {
+		let eventListenerProps: Omit<TEventListenerProps, 'children'> = {
 			target: 'window',
 			capture: true,
 		};

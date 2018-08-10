@@ -11,7 +11,6 @@ import {
 	MouseEventHandler,
 	WheelEventHandler,
 } from 'react';
-import { ObjectClean } from 'typelevel-ts';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { withTheme } from '../../utils/withTheme';
 
@@ -173,5 +172,5 @@ class RawInput extends React.Component<TFullInputProps, TInputState> {
 	};
 }
 
-export type TInputProps = ObjectClean<PartialKeys<TFullInputProps, 'theme'>>;
+export type TInputProps = PartialKeys<TFullInputProps, 'theme'>;
 export const Input: ComponentClass<TInputProps> = withTheme(INPUT)(RawInput);

@@ -10,7 +10,6 @@ import { ButtonIcon, TButtonIconProps } from '../ButtonIcon/ButtonIcon';
 import * as is_before from 'date-fns/is_before';
 import * as is_after from 'date-fns/is_after';
 import ReactInstance = React.ReactInstance;
-import { ObjectClean } from 'typelevel-ts';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { PURE } from '../../utils/pure';
 import { Popover, TPopoverProps } from '../Popover/Popover';
@@ -549,13 +548,13 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 		this.secondInput = false;
 		if (!isDefined(this.state.activeSection)) {
 			this.setState({
-				activeSection: this.getDefaultActiveSection(),
+				activeSection: this.getDefaultActiveSection(this.props.dateFormatType),
 			});
 		}
 	};
 
-	private getDefaultActiveSection(): ActiveSection {
-		switch (this.props.dateFormatType) {
+	private getDefaultActiveSection(dateFormatType: DateFormatType): ActiveSection {
+		switch (dateFormatType) {
 			case DateFormatType.DMY: {
 				return ActiveSection.Day;
 			}
@@ -718,8 +717,9 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 	}
 }
 
-export type TDateInputProps = ObjectClean<
-	PartialKeys<TDateInputFullProps, 'theme' | 'SteppableInput' | 'ButtonIcon' | 'dateFormatType' | 'Popover'>
+export type TDateInputProps = PartialKeys<
+	TDateInputFullProps,
+	'theme' | 'SteppableInput' | 'ButtonIcon' | 'dateFormatType' | 'Popover'
 >;
 export const DateInput: ComponentClass<TDateInputProps> = withTheme(DATE_INPUT)(
 	withDefaults<TDateInputFullProps, 'SteppableInput' | 'ButtonIcon' | 'dateFormatType' | 'Popover'>({
