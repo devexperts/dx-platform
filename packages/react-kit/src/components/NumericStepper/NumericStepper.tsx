@@ -2,7 +2,6 @@ import * as React from 'react';
 import { SteppableInput, TSteppableInputProps } from '../SteppableInput/SteppableInput';
 import { KeyCode, TControlProps } from '../Control/Control';
 import { withTheme } from '../../utils/withTheme';
-import { ObjectClean } from 'typelevel-ts';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { ComponentClass } from 'react';
 import { Input, TInputProps } from '../input/Input';
@@ -254,8 +253,9 @@ class RawNumericStepper extends React.Component<TNumericStepperFullProps, TNumer
 	};
 }
 
-export type TNumericStepperProps = ObjectClean<
-	PartialKeys<TNumericStepperFullProps, 'theme' | 'SteppableInput' | 'step' | 'max' | 'min' | 'manualEdit'>
+export type TNumericStepperProps = PartialKeys<
+	TNumericStepperFullProps,
+	'theme' | 'SteppableInput' | 'step' | 'max' | 'min' | 'manualEdit'
 >;
 export const NumericStepper: ComponentClass<TNumericStepperProps> = withTheme(NUMERIC_STEPPER)(
 	withDefaults<TNumericStepperFullProps, 'SteppableInput' | 'step' | 'max' | 'min' | 'manualEdit'>({

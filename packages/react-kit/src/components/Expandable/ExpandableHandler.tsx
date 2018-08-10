@@ -2,7 +2,6 @@ import * as React from 'react';
 import { PURE } from '../../utils/pure';
 import { ComponentClass, ReactElement } from 'react';
 import { withTheme } from '../../utils/withTheme';
-import { ObjectClean } from 'typelevel-ts';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
 
 export const EXPANDABLE_HEADER = Symbol() as symbol;
@@ -23,7 +22,7 @@ class RawExpandableHandler extends React.Component<TFullExpandableHandlerProps> 
 	}
 }
 
-export type TExpandableHandlerProps = ObjectClean<PartialKeys<TFullExpandableHandlerProps, 'theme' | 'isExpanded'>>;
+export type TExpandableHandlerProps = PartialKeys<TFullExpandableHandlerProps, 'theme' | 'isExpanded'>;
 export const ExpandableHandler: ComponentClass<TExpandableHandlerProps> = withTheme(EXPANDABLE_HEADER)(
 	RawExpandableHandler,
 );

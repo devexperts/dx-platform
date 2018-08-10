@@ -3,7 +3,6 @@ import { PURE } from '../../utils/pure';
 import { ComponentClass } from 'react';
 import * as ReactDOM from 'react-dom';
 import { withTheme } from '../../utils/withTheme';
-import { ObjectClean } from 'typelevel-ts';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { ButtonIcon, TButtonIconProps } from '../ButtonIcon/ButtonIcon';
 import { Input, TInputProps } from '../input/Input';
@@ -199,7 +198,7 @@ class RawSteppableInput extends React.Component<TFullSteppableInputProps, TStepp
 	};
 }
 
-export type TSteppableInputProps = ObjectClean<PartialKeys<TFullSteppableInputProps, 'theme' | 'Input' | 'ButtonIcon'>>;
+export type TSteppableInputProps = PartialKeys<TFullSteppableInputProps, 'theme' | 'Input' | 'ButtonIcon'>;
 export const SteppableInput: ComponentClass<TSteppableInputProps> = withTheme(STEPPABLE_INPUT)(
 	withDefaults<TFullSteppableInputProps, 'Input' | 'ButtonIcon'>({
 		Input,

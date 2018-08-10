@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { ReactElement, EventHandler, MouseEvent, TouchEvent } from 'react';
-import { ObjectClean } from 'typelevel-ts/lib';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { withDefaults } from '../../utils/with-defaults';
 
@@ -85,7 +84,7 @@ class RawHoldable extends React.Component<TFullHoldableProps> {
 	};
 }
 
-export type THoldableProps = ObjectClean<PartialKeys<TFullHoldableProps, 'delay' | 'interval'>>;
+export type THoldableProps = PartialKeys<TFullHoldableProps, 'delay' | 'interval'>;
 export const Holdable = withDefaults<TFullHoldableProps, 'delay' | 'interval'>({
 	interval: 50,
 	delay: 300,

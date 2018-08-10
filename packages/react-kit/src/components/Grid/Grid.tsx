@@ -24,7 +24,7 @@ import {
 import Emitter from '@devexperts/utils/dist/emitter/Emitter';
 import { Scrollable } from '../Scrollable/Scrollable';
 import * as classnames from 'classnames';
-import { ObjectClean, ObjectOmit } from 'typelevel-ts';
+import { Omit } from 'typelevel-ts';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { withTheme } from '../../utils/withTheme';
 
@@ -50,7 +50,7 @@ const CONTEXT_TYPES = {
 	[GRID_CONTEXT_EMITTER]: PropTypes.instanceOf(GridInternalEmitter).isRequired,
 };
 
-export type TFullGridProps = ObjectOmit<TFullTableProps, 'theme'> & {
+export type TFullGridProps = Omit<TFullTableProps, 'theme'> & {
 	theme: TTableTheme & {
 		gridHead?: string;
 		gridHead_paddedForScrollbar?: string;
@@ -472,17 +472,17 @@ class RawGridCell extends React.Component<TFullGridCellProps> {
 	}
 }
 
-export type TGridProps = ObjectClean<PartialKeys<TFullGridProps, 'theme'>>;
+export type TGridProps = PartialKeys<TFullGridProps, 'theme'>;
 export const Grid: React.ComponentClass<TGridProps> = withTheme(GRID)(RawGrid);
 
-export type TGridBodyProps = ObjectClean<PartialKeys<TFullGridBodyProps, 'theme'>>;
+export type TGridBodyProps = PartialKeys<TFullGridBodyProps, 'theme'>;
 export const GridBody: React.ComponentClass<TGridBodyProps> = withTheme(GRID)(RawGridBody);
 
-export type TGridHeadProps = ObjectClean<PartialKeys<TFullGridHeadProps, 'theme'>>;
+export type TGridHeadProps = PartialKeys<TFullGridHeadProps, 'theme'>;
 export const GridHead: React.ComponentClass<TGridHeadProps> = withTheme(GRID)(RawGridHead);
 
-export type TGridRowProps = ObjectClean<PartialKeys<TFullGridRowProps, 'theme'>>;
+export type TGridRowProps = PartialKeys<TFullGridRowProps, 'theme'>;
 export const GridRow: React.ComponentClass<TGridRowProps> = withTheme(GRID)(RawGridRow);
 
-export type TGridCellProps = ObjectClean<PartialKeys<TFullGridCellProps, 'theme'>>;
+export type TGridCellProps = PartialKeys<TFullGridCellProps, 'theme'>;
 export const GridCell: React.ComponentClass<TGridCellProps> = withTheme(GRID)(RawGridCell);

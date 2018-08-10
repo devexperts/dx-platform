@@ -4,7 +4,6 @@ import { Component, ComponentClass, ComponentType, MouseEventHandler, ReactNode 
 import { Popover, TPopoverProps } from '../Popover/Popover';
 import { ReactRef, WithInnerRef } from '../../utils/typings';
 import { withTheme } from '../../utils/withTheme';
-import { ObjectClean } from 'typelevel-ts';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { TControlProps } from '../Control/Control';
 import { withDefaults } from '../../utils/with-defaults';
@@ -60,7 +59,7 @@ class RawDropdown extends Component<TFullDropdownProps> {
 	};
 }
 
-export type TDropdownProps = ObjectClean<PartialKeys<TFullDropdownProps, 'theme' | 'Popover'>>;
+export type TDropdownProps = PartialKeys<TFullDropdownProps, 'theme' | 'Popover'>;
 export const Dropdown: ComponentClass<TDropdownProps> = withTheme(DROPDOWN)(
 	withDefaults<TFullDropdownProps, 'Popover'>({
 		Popover,

@@ -5,7 +5,6 @@ import { DefaultTheme } from '../DefaultTheme/DefaultTheme';
 
 import * as css from './Demo.styl';
 
-import { ObjectClean } from 'typelevel-ts';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
 
 const DEMO = Symbol();
@@ -24,7 +23,7 @@ class RawDemoComponent extends React.Component<TFullDemoComponentProps> {
 	}
 }
 
-export type TDemoComponentProps = ObjectClean<PartialKeys<TFullDemoComponentProps, 'theme'>>;
+export type TDemoComponentProps = PartialKeys<TFullDemoComponentProps, 'theme'>;
 export const DemoComponent: React.ComponentClass<TDemoComponentProps> = withTheme(DEMO, css)(RawDemoComponent);
 
 const Demo: React.SFC<Partial<TFullDemoComponentProps>> = props => (
