@@ -1,6 +1,6 @@
 {
   "name": "@devexperts/lint",
-  "version": "0.14.1",
+  "version": "0.15.0",
   "description": "",
   "main": "lib/index.js",
   "scripts": {
@@ -35,7 +35,7 @@
     "typescript": "^3.0.1"
   },
   "devDependencies": {
-    "@devexperts/tools": "^0.14.1",
+    "@devexperts/tools": "^0.15.0",
     "tslint": "^5.10.0",
     "typescript": "^3.0.1"
   }

@@ -1,6 +1,6 @@
 {
   "name": "@devexperts/utils",
-  "version": "0.14.1",
+  "version": "0.15.0",
   "description": "",
   "main": "lib/index.js",
   "scripts": {
@@ -32,7 +32,7 @@
     "fp-ts": "^1.2.0"
   },
   "devDependencies": {
-    "@devexperts/tools": "^0.14.1",
+    "@devexperts/tools": "^0.15.0",
     "fp-ts": "^1.2.0"
   }
 }
