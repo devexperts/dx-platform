@@ -19,4 +19,4 @@ storiesOf('RenderRemoteData', module)
 	.add('error', () => (
 		<RenderRemoteData success={renderSuccess} data={failure<Error, string>(new Error('some test error'))} />
 	))
-	.add('no data', () => <RenderRemoteData success={renderSuccess} data={success('')} noData={data => !!data} />);
+	.add('no data', () => <RenderRemoteData success={renderSuccess} data={success('')} noData={data => !data} />);
