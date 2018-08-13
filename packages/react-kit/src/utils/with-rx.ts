@@ -7,14 +7,14 @@ import { animationFrame } from 'rxjs/internal/scheduler/animationFrame';
 const hoistNonReactStatics = require('hoist-non-react-statics');
 
 export type WithRXSelectorResultPropsOnly<P> = Observable<Partial<P>>;
-export type WithRXSelectorResultWithEffects<P, E> = {
+export type WithRXSelectorResultWithEffects<P> = {
 	props$: Observable<Partial<P>>;
-	effects$: Observable<E>;
+	effects$: Observable<void>;
 };
 
 export type ComponentDecorator<P> = (Target: ComponentType<P>) => ComponentClass<P>;
-export type WithRXSelectorResult<P, E> = WithRXSelectorResultPropsOnly<P> | WithRXSelectorResultWithEffects<P, E>;
-export type WithRXSelector<P, E = unknown> = (props$: Observable<Readonly<P>>) => WithRXSelectorResult<P, E>;
+export type WithRXSelectorResult<P> = WithRXSelectorResultPropsOnly<P> | WithRXSelectorResultWithEffects<P>;
+export type WithRXSelector<P> = (props$: Observable<Readonly<P>>) => WithRXSelectorResult<P>;
 
 export function withRX<P extends object = never>(select: WithRXSelector<P>): ComponentDecorator<P> {
 	return Target => {
