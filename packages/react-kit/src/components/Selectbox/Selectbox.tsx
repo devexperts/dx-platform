@@ -246,6 +246,7 @@ class RawSelectbox extends React.Component<TFullSelectboxProps, TSelectboxState>
 			isOpened: false,
 		});
 		this.props.onValueChange && this.props.onValueChange(value);
+		this.focusOnAnchor();
 	};
 
 	onPopoverRequestClose = () => {
@@ -262,6 +263,16 @@ class RawSelectbox extends React.Component<TFullSelectboxProps, TSelectboxState>
 			});
 		}
 	});
+
+	private focusOnAnchor() {
+		if (!this.anchor) {
+			return;
+		}
+		const anchor = findDOMNode(this.anchor);
+		if (anchor instanceof HTMLElement) {
+			anchor.focus();
+		}
+	}
 }
 
 export type TSelectboxProps = PartialKeys<TFullSelectboxProps, 'theme' | 'Anchor' | 'Menu' | 'Popover'>;
