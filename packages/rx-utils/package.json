@@ -1,9 +1,20 @@
 {
   "name": "@devexperts/rx-utils",
-  "version": "0.15.0",
-  "description": "",
-  "main": "lib",
-  "module": "src",
+  "version": "0.15.1",
+  "description": "utilits for rxjs",
+  "keywords": ["rxjs", "devexperts", "observable"],
+  "main": "dist",
+  "module": "dist",
+  "bugs": {
+    "url": "https://github.com/devex-web-frontend/dx-platform/issues"
+  },
+  "license": "MPL-2.0",
+  "homepage": "https://github.com/devex-web-frontend/dx-platform#readme",
+  "author": "devexperts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/devex-web-frontend/dx-platform.git"
+  },
   "scripts": {
     "test": "dx-tools build-lib src dist --failOnError",
     "build": "dx-tools build-lib src dist --failOnError",
@@ -11,30 +22,12 @@
     "prepare": "yarn clean && yarn build",
     "watch": "dx-tools build-lib src dist -w"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/devex-web-frontend/dx-platform.git"
-  },
-  "publishConfig": {
-    "access": "public"
-  },
-  "author": "devexperts",
-  "license": "MPL-2.0",
-  "bugs": {
-    "url": "https://github.com/devex-web-frontend/dx-platform/issues"
-  },
-  "homepage": "https://github.com/devex-web-frontend/dx-platform#readme",
   "dependencies": {
     "@devexperts/utils": "^0.15.0",
     "@types/query-string": "^5.1.0",
     "query-string": "^6.1.0",
     "querystring": "^0.2.0",
     "tslib": "^1.9.0"
-  },
-  "peerDependencies": {
-    "@devexperts/remote-data-ts": "^0.2.0",
-    "fp-ts": "^1.2.0",
-    "rxjs": "^6.2.1"
   },
   "devDependencies": {
     "@devexperts/remote-data-ts": "^0.2.0",
@@ -44,5 +37,13 @@
     "fp-ts": "^1.2.0",
     "rxjs": "^6.2.1",
     "sinon": "^5.1.0"
+  },
+  "peerDependencies": {
+    "@devexperts/remote-data-ts": "^0.2.0",
+    "fp-ts": "^1.2.0",
+    "rxjs": "^6.2.1"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
