@@ -2,8 +2,8 @@
   "name": "@devexperts/react-kit",
   "version": "0.15.0",
   "description": "",
-  "main": "lib",
-  "module": "src",
+  "main": "dist",
+  "module": "dist",
   "scripts": {
     "test": "dx-tools build-lib src dist --failOnError",
     "build": "dx-tools build-lib src dist --failOnError",
