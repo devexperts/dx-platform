@@ -275,7 +275,7 @@ class RawSelectbox extends React.Component<TFullSelectboxProps, TSelectboxState>
 		if (anchor instanceof HTMLElement) {
 			anchor.focus();
 		}
-	};
+	}
 }
 
 export type TSelectboxProps = ObjectClean<PartialKeys<TFullSelectboxProps, 'theme' | 'Anchor' | 'Menu' | 'Popover'>>;

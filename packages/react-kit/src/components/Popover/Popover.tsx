@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { createPortal } from 'react-dom';
+import { createPortal, findDOMNode } from 'react-dom';
 import prefix from '@devexperts/utils/dist/dom/prefix';
 import * as classnames from 'classnames';
 
@@ -99,7 +99,7 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 	componentDidMount() {
 		if (this.props.isOpened) {
 			if (this.props.anchor) {
-				const anchorDOMNode = ReactDOM.findDOMNode(this.props.anchor);
+				const anchorDOMNode = findDOMNode(this.props.anchor);
 				if (!anchorDOMNode || anchorDOMNode instanceof Text) {
 					return;
 				}
@@ -118,7 +118,7 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 	componentWillReceiveProps(nextProps: TFullPopoverProps) {
 		if (nextProps.isOpened && nextProps.anchor) {
 			this._needsUpdate = true;
-			const anchorDOMNode = ReactDOM.findDOMNode(nextProps.anchor);
+			const anchorDOMNode = findDOMNode(nextProps.anchor);
 			if (!anchorDOMNode || anchorDOMNode instanceof Text) {
 				return;
 			}
@@ -202,7 +202,7 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 	}
 
 	getPopoverSize(): TSize {
-		const popover = ReactDOM.findDOMNode(this._popover) as HTMLElement;
+		const popover = findDOMNode(this._popover);
 		if (popover instanceof HTMLElement) {
 			return {
 				height: popover.offsetHeight,
