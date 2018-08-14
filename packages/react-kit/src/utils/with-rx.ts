@@ -1,18 +1,19 @@
 import { Component, ComponentClass, ComponentType, createElement } from 'react';
-import { Observable } from 'rxjs/Observable';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Subscription } from 'rxjs/Subscription';
-import { animationFrame } from 'rxjs/scheduler/animationFrame';
-import 'rxjs/add/operator/subscribeOn';
+import { BehaviorSubject, isObservable, Observable, Subscription } from 'rxjs';
+import { observeOn } from 'rxjs/operators';
+import { animationFrame } from 'rxjs/internal/scheduler/animationFrame';
 
 // tslint:disable-next-line
 const hoistNonReactStatics = require('hoist-non-react-statics');
 
-export type ComponentDecorator<P> = (Target: ComponentType<P>) => ComponentClass<P>;
-export type WithRXSelectorResult<P> = {
+export type WithRXSelectorResultPropsOnly<P> = Observable<Partial<P>>;
+export type WithRXSelectorResultWithEffects<P> = {
 	props$: Observable<Partial<P>>;
 	effects$: Observable<void>;
 };
+
+export type ComponentDecorator<P> = (Target: ComponentType<P>) => ComponentClass<P>;
+export type WithRXSelectorResult<P> = WithRXSelectorResultPropsOnly<P> | WithRXSelectorResultWithEffects<P>;
 export type WithRXSelector<P> = (props$: Observable<Readonly<P>>) => WithRXSelectorResult<P>;
 
 export function withRX<P extends object = never>(select: WithRXSelector<P>): ComponentDecorator<P> {
@@ -22,19 +23,19 @@ export function withRX<P extends object = never>(select: WithRXSelector<P>): Com
 
 			private props$ = new BehaviorSubject(this.props);
 			private selectResult = select(this.props$.asObservable());
-			private input$ = this.selectResult.props$;
-			private effect$ = this.selectResult.effects$;
-			private inputSubscription: Subscription;
-			private effectSubscription: Subscription;
+			private input$ = isObservable(this.selectResult) ? this.selectResult : this.selectResult.props$;
+			private effect$ = !isObservable(this.selectResult) ? this.selectResult.effects$ : undefined;
+			private inputSubscription?: Subscription;
+			private effectSubscription?: Subscription;
 
-			constructor(props: P) {
-				super(props);
-
+			componentDidMount() {
 				this.inputSubscription = this.input$
-					.subscribeOn(animationFrame)
-					.subscribe(state => this.setState(state));
+					.pipe(observeOn(animationFrame))
+					.subscribe(this.setState.bind(this));
 
-				this.effectSubscription = this.effect$.subscribeOn(animationFrame).subscribe();
+				if (this.effect$) {
+					this.effectSubscription = this.effect$.pipe(observeOn(animationFrame)).subscribe();
+				}
 			}
 
 			componentWillReceiveProps(props: P) {
@@ -42,8 +43,8 @@ export function withRX<P extends object = never>(select: WithRXSelector<P>): Com
 			}
 
 			componentWillUnmount() {
-				this.inputSubscription.unsubscribe();
-				this.effectSubscription.unsubscribe();
+				this.inputSubscription && this.inputSubscription.unsubscribe();
+				this.effectSubscription && this.effectSubscription.unsubscribe();
 			}
 
 			render() {
