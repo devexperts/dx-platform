@@ -2,7 +2,6 @@ import * as React from 'react';
 import * as classnames from 'classnames';
 import { withTheme } from '../../utils/withTheme';
 import { ComponentClass, MouseEventHandler, ReactNode } from 'react';
-import { ObjectClean } from 'typelevel-ts';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { PURE } from '../../utils/pure';
 
@@ -32,7 +31,7 @@ class RawList extends React.Component<TFullListProps> {
 	}
 }
 
-export type TListProps = ObjectClean<PartialKeys<TFullListProps, 'theme'>>;
+export type TListProps = PartialKeys<TFullListProps, 'theme'>;
 export const List: ComponentClass<TListProps> = withTheme(LIST)(RawList);
 
 export type TFullListItemProps = {
@@ -61,7 +60,7 @@ class RawListItem extends React.Component<TFullListItemProps> {
 	}
 }
 
-export type TListItemProps = ObjectClean<PartialKeys<TFullListItemProps, 'theme'>>;
+export type TListItemProps = PartialKeys<TFullListItemProps, 'theme'>;
 export const ListItem: ComponentClass<TListItemProps> = withTheme(LIST)(RawListItem);
 
 export type TFullListItemGroupProps = {
@@ -109,5 +108,5 @@ class RawListItemGroup extends React.Component<TFullListItemGroupProps> {
 	}
 }
 
-export type TListItemGroupProps = ObjectClean<PartialKeys<TFullListItemGroupProps, 'theme'>>;
+export type TListItemGroupProps = PartialKeys<TFullListItemGroupProps, 'theme'>;
 export const ListItemGroup: ComponentClass<TListItemGroupProps> = withTheme(LIST)(RawListItemGroup);

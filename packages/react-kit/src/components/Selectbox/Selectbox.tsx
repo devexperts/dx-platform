@@ -6,12 +6,12 @@ import { PURE } from '../../utils/pure';
 import * as classnames from 'classnames';
 import { withTheme } from '../../utils/withTheme';
 import { Component, ComponentClass, ComponentType, ReactElement, ReactNode, ReactText } from 'react';
-import { ObjectClean } from 'typelevel-ts';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { TControlProps } from '../Control/Control';
 import { NativeResizeDetector } from '../ResizeDetector/ResizeDetector';
 import { findDOMNode } from 'react-dom';
 import { raf } from '@devexperts/utils/dist/function/raf';
+import { withDefaults } from '../../utils/with-defaults';
 
 export const SELECTBOX = Symbol('Selectbox') as symbol;
 
@@ -64,7 +64,7 @@ class RawSelectbox extends React.Component<TFullSelectboxProps, TSelectboxState>
 				} else {
 					if (
 						!React.Children.toArray(props.children).find(
-							(child: ReactElement<TMenuItemProps>) => child.props.value === props.value,
+							child => React.isValidElement<TMenuItemProps>(child) && child.props.value === props.value,
 						)
 					) {
 						throw new Error('Value should be in passed children');
@@ -74,17 +74,11 @@ class RawSelectbox extends React.Component<TFullSelectboxProps, TSelectboxState>
 		},
 	};
 
-	static defaultProps = {
-		Anchor: SelectboxAnchor,
-		Menu,
-		Popover,
-	};
-
-	state: TSelectboxState = {
+	readonly state: TSelectboxState = {
 		isOpened: false,
 	};
 
-	private _anchor: Component<TSelectboxAnchorProps> | null;
+	private _anchor!: Component<TSelectboxAnchorProps> | null;
 	private get anchor() {
 		return this._anchor;
 	}
@@ -179,7 +173,7 @@ class RawSelectbox extends React.Component<TFullSelectboxProps, TSelectboxState>
 		let valueText: ReactNode = placeholder;
 		if (typeof value !== 'undefined') {
 			const valueChild = React.Children.toArray(children).find(
-				(child: ReactElement<TMenuItemProps>) => child.props.value === value,
+				child => React.isValidElement<TMenuItemProps>(child) && child.props.value === value,
 			) as ReactElement<TMenuItemProps>;
 			//existance is checked in prop types
 			if (valueChild) {
@@ -213,14 +207,17 @@ class RawSelectbox extends React.Component<TFullSelectboxProps, TSelectboxState>
 					onRequestClose={this.onPopoverRequestClose}
 					anchor={this.anchor}>
 					<Menu onItemSelect={this.onItemSelect} theme={menuTheme}>
-						{React.Children.map(children, this.wrapItem)}
+						{React.Children.map(children, this.wrapItem) as any}
 					</Menu>
 				</Popover>
 			</Anchor>
 		);
 	}
 
-	wrapItem = (child: ReactElement<TMenuItemProps>) => {
+	wrapItem = (child: ReactElement<TMenuItemProps> | ReactText) => {
+		if (!React.isValidElement<TMenuItemProps>(child)) {
+			return child;
+		}
 		const { theme, selectedIcon } = this.props;
 		const { value } = child.props;
 		const isActive = typeof value !== 'undefined' && value === this.props.value;
@@ -244,7 +241,7 @@ class RawSelectbox extends React.Component<TFullSelectboxProps, TSelectboxState>
 		});
 	};
 
-	onItemSelect = (value: ReactText) => {
+	onItemSelect = (value: ReactText | undefined) => {
 		this.setState({
 			isOpened: false,
 		});
@@ -278,5 +275,11 @@ class RawSelectbox extends React.Component<TFullSelectboxProps, TSelectboxState>
 	}
 }
 
-export type TSelectboxProps = ObjectClean<PartialKeys<TFullSelectboxProps, 'theme' | 'Anchor' | 'Menu' | 'Popover'>>;
-export const Selectbox: ComponentClass<TSelectboxProps> = withTheme(SELECTBOX)(RawSelectbox);
+export type TSelectboxProps = PartialKeys<TFullSelectboxProps, 'theme' | 'Anchor' | 'Menu' | 'Popover'>;
+export const Selectbox: ComponentClass<TSelectboxProps> = withTheme(SELECTBOX)(
+	withDefaults<TFullSelectboxProps, 'Anchor' | 'Menu' | 'Popover'>({
+		Anchor: SelectboxAnchor,
+		Menu,
+		Popover,
+	})(RawSelectbox),
+);

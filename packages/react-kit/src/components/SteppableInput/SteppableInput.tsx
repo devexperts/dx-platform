@@ -3,12 +3,12 @@ import { PURE } from '../../utils/pure';
 import { ComponentClass } from 'react';
 import * as ReactDOM from 'react-dom';
 import { withTheme } from '../../utils/withTheme';
-import { ObjectClean } from 'typelevel-ts';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { ButtonIcon, TButtonIconProps } from '../ButtonIcon/ButtonIcon';
 import { Input, TInputProps } from '../input/Input';
 import { KeyCode } from '../Control/Control';
 import { Holdable } from '../Holdable/Holdable';
+import { withDefaults } from '../../utils/with-defaults';
 
 export const STEPPABLE_INPUT = Symbol('SteppableInput') as symbol;
 
@@ -20,9 +20,9 @@ export type TFullSteppableInputProps = TPickedInputProps & {
 	onIncrement?: Function;
 	onDecrement?: Function;
 	onClear?: Function;
-	incrementIcon: React.ReactElement<any>;
-	decrementIcon: React.ReactElement<any>;
-	clearIcon: React.ReactElement<any>;
+	incrementIcon?: React.ReactElement<any>;
+	decrementIcon?: React.ReactElement<any>;
+	clearIcon?: React.ReactElement<any>;
 	children?: any;
 	Input: React.ComponentClass<TInputProps> | React.SFC<TInputProps>;
 	ButtonIcon: React.ComponentClass<TButtonIconProps> | React.SFC<TButtonIconProps>;
@@ -40,12 +40,7 @@ type TSteppableInputState = {
 
 @PURE
 class RawSteppableInput extends React.Component<TFullSteppableInputProps, TSteppableInputState> {
-	static defaultProps = {
-		Input,
-		ButtonIcon,
-	};
-
-	state: TSteppableInputState = {};
+	readonly state: TSteppableInputState = {};
 
 	componentDidUpdate(prevProps: TFullSteppableInputProps) {
 		if (prevProps.onClear && !this.props.onClear) {
@@ -203,8 +198,13 @@ class RawSteppableInput extends React.Component<TFullSteppableInputProps, TStepp
 	};
 }
 
-export type TSteppableInputProps = ObjectClean<PartialKeys<TFullSteppableInputProps, 'theme' | 'Input' | 'ButtonIcon'>>;
-export const SteppableInput: ComponentClass<TSteppableInputProps> = withTheme(STEPPABLE_INPUT)(RawSteppableInput);
+export type TSteppableInputProps = PartialKeys<TFullSteppableInputProps, 'theme' | 'Input' | 'ButtonIcon'>;
+export const SteppableInput: ComponentClass<TSteppableInputProps> = withTheme(STEPPABLE_INPUT)(
+	withDefaults<TFullSteppableInputProps, 'Input' | 'ButtonIcon'>({
+		Input,
+		ButtonIcon,
+	})(RawSteppableInput),
+);
 
 export function checkParentsUpTo(node?: Element | null, checkNode?: Element, upToNode?: Element): boolean {
 	if (!node || !checkNode || !upToNode) {

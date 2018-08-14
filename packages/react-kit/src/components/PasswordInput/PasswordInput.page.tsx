@@ -40,7 +40,7 @@ class PasswordInputPage extends React.Component {
 		);
 	}
 
-	onChange = (value: string) => {
+	onChange = (value?: string) => {
 		action('value changed')(value);
 
 		this.setState({

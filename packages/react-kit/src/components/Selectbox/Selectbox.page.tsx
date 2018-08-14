@@ -12,7 +12,6 @@ import { SmallDropDownArrowIcon } from '../../icons/small-dropdown-arrow-icon';
 import { stateful } from '../Control/Control';
 
 import * as selectoxPageCss from './Selectbox.page.styl';
-import { ObjectClean } from 'typelevel-ts';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
 const wideSelectboxTheme = {
 	container__anchor: selectoxPageCss.container__anchor,
@@ -28,9 +27,7 @@ class DemoSelectboxAnchor extends React.Component<TFullSelectboxAnchorProps> {
 	}
 }
 
-class DemoSelectbox extends React.Component<
-	ObjectClean<PartialKeys<TFullSelectboxProps, 'theme' | 'Anchor' | 'Menu' | 'Popover'>>
-> {
+class DemoSelectbox extends React.Component<PartialKeys<TFullSelectboxProps, 'theme' | 'Anchor' | 'Menu' | 'Popover'>> {
 	render() {
 		const newProps = {
 			...this.props,
@@ -61,7 +58,7 @@ class SelectboxPage extends React.Component<{}, TPageState> {
 					<Stateful
 						placeholder="Choose your hero"
 						selectedIcon={<ListItemTickIcon />}
-						onValueChange={this.onHeroChange}
+						onValueChange={this.onHeroChange as any}
 						caretIcon={<SmallDropDownArrowIcon />}>
 						<MenuItem value="superman">Superman</MenuItem>
 						<MenuItem value="batman">Batman</MenuItem>
@@ -72,7 +69,7 @@ class SelectboxPage extends React.Component<{}, TPageState> {
 						value={this.state.hero}
 						theme={{}}
 						selectedIcon={<ListItemTickIcon />}
-						onValueChange={this.onHeroChange}
+						onValueChange={this.onHeroChange as any}
 						caretIcon={<SmallDropDownArrowIcon />}>
 						<MenuItem value="superman">Superman</MenuItem>
 						<MenuItem value="batman">Batman</MenuItem>

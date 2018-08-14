@@ -3,7 +3,6 @@ import { Scrollbar, SCROLLBAR_TYPE, TScrollbarProps } from './Scrollbar';
 import { EVENT_SCROLABLE, SCROLLABLE_CONTEXT_EMITTER } from '../Scrollable/Scrollable.const';
 import { PURE } from '../../utils/pure';
 import { withTheme } from '../../utils/withTheme';
-import { ObjectClean } from 'typelevel-ts';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
 
 export const VERTICAL_SCROLLBAR = Symbol('VerticalScrollbar') as symbol;
@@ -16,12 +15,12 @@ export type TFullVerticalScrollBarProp = TScrollbarProps & TAdditionalVerticalSc
 
 @PURE
 export class RawVerticalScrollbar extends Scrollbar<TAdditionalVerticalScrollBarProp> {
-	_ratio: {
+	_ratio!: {
 		size: number;
 		position: number;
 	};
-	_previousDragCoordinate: number;
-	_minBarSize: number;
+	_previousDragCoordinate!: number;
+	_minBarSize!: number;
 
 	/**
 	 * @returns {Number}
@@ -174,7 +173,7 @@ export class RawVerticalScrollbar extends Scrollbar<TAdditionalVerticalScrollBar
 	};
 }
 
-export type TVerticalScrollbarProps = ObjectClean<PartialKeys<TFullVerticalScrollBarProp, 'theme'>>;
+export type TVerticalScrollbarProps = PartialKeys<TFullVerticalScrollBarProp, 'theme'>;
 export const VerticalScrollbar: React.ComponentClass<TVerticalScrollbarProps> = withTheme(VERTICAL_SCROLLBAR)(
 	RawVerticalScrollbar,
 );

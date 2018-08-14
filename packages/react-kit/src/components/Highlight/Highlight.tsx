@@ -3,8 +3,8 @@ import split from '@devexperts/utils/dist/string/split';
 import { PURE } from '../../utils/pure';
 import { withTheme } from '../../utils/withTheme';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
-import { ObjectClean } from 'typelevel-ts/lib';
 import { ComponentClass, ReactNode } from 'react';
+import { withDefaults } from '../../utils/with-defaults';
 
 export const HIGHLIGHT = Symbol('Mark') as symbol;
 
@@ -19,11 +19,6 @@ export type TFullHighlightProps = {
 
 @PURE
 class RawHighlight extends React.Component<TFullHighlightProps> {
-	static defaultProps = {
-		children: '',
-		search: '',
-	};
-
 	render() {
 		const { search, children, theme } = this.props;
 
@@ -52,5 +47,9 @@ class RawHighlight extends React.Component<TFullHighlightProps> {
 	}
 }
 
-export type THighlightProps = ObjectClean<PartialKeys<TFullHighlightProps, 'theme' | 'search' | 'children'>>;
-export const Highlight: ComponentClass<THighlightProps> = withTheme(HIGHLIGHT)(RawHighlight);
+export type THighlightProps = PartialKeys<TFullHighlightProps, 'theme' | 'search'>;
+export const Highlight: ComponentClass<THighlightProps> = withTheme(HIGHLIGHT)(
+	withDefaults<TFullHighlightProps, 'search'>({
+		search: '',
+	})(RawHighlight),
+);

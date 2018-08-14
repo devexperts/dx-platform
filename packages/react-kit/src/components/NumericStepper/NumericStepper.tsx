@@ -2,10 +2,10 @@ import * as React from 'react';
 import { SteppableInput, TSteppableInputProps } from '../SteppableInput/SteppableInput';
 import { KeyCode, TControlProps } from '../Control/Control';
 import { withTheme } from '../../utils/withTheme';
-import { ObjectClean } from 'typelevel-ts';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { ComponentClass } from 'react';
 import { Input, TInputProps } from '../input/Input';
+import { withDefaults } from '../../utils/with-defaults';
 
 export const NUMERIC_STEPPER = Symbol('NumericStepper') as symbol;
 
@@ -68,14 +68,6 @@ class RawNumericStepper extends React.Component<TNumericStepperFullProps, TNumer
 				}
 			}
 		},
-	};
-
-	static defaultProps = {
-		step: 1,
-		manualEdit: true,
-		min: Number.NEGATIVE_INFINITY,
-		max: Number.POSITIVE_INFINITY,
-		SteppableInput,
 	};
 
 	constructor(props: TNumericStepperFullProps) {
@@ -154,7 +146,7 @@ class RawNumericStepper extends React.Component<TNumericStepperFullProps, TNumer
 		}
 	};
 
-	private onInputChange = (value: string) => {
+	private onInputChange = (value: string | undefined) => {
 		if (!this.props.manualEdit) {
 			return;
 		}
@@ -261,7 +253,16 @@ class RawNumericStepper extends React.Component<TNumericStepperFullProps, TNumer
 	};
 }
 
-export type TNumericStepperProps = ObjectClean<
-	PartialKeys<TNumericStepperFullProps, 'theme' | 'SteppableInput' | 'step' | 'max' | 'min' | 'manualEdit'>
+export type TNumericStepperProps = PartialKeys<
+	TNumericStepperFullProps,
+	'theme' | 'SteppableInput' | 'step' | 'max' | 'min' | 'manualEdit'
 >;
-export const NumericStepper: ComponentClass<TNumericStepperProps> = withTheme(NUMERIC_STEPPER)(RawNumericStepper);
+export const NumericStepper: ComponentClass<TNumericStepperProps> = withTheme(NUMERIC_STEPPER)(
+	withDefaults<TNumericStepperFullProps, 'SteppableInput' | 'step' | 'max' | 'min' | 'manualEdit'>({
+		step: 1,
+		manualEdit: true,
+		min: Number.NEGATIVE_INFINITY,
+		max: Number.POSITIVE_INFINITY,
+		SteppableInput,
+	})(RawNumericStepper),
+);

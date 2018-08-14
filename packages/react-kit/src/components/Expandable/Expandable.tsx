@@ -4,9 +4,9 @@ import { ExpandableHandler, TExpandableHandlerProps } from './ExpandableHandler'
 import { PURE } from '../../utils/pure';
 import { ComponentClass } from 'react';
 import { withTheme } from '../../utils/withTheme';
-import { ObjectClean } from 'typelevel-ts';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { TControlProps } from '../Control/Control';
+import { withDefaults } from '../../utils/with-defaults';
 
 export const EXPANDABLE = Symbol('Expandable') as symbol;
 
@@ -23,10 +23,6 @@ export type TFullExpandableProps = TControlProps<boolean | null> & {
 
 @PURE
 class RawExpandable extends React.Component<TFullExpandableProps> {
-	static defaultProps = {
-		Handler: ExpandableHandler,
-	};
-
 	render() {
 		const { theme, Handler, value, children } = this.props;
 
@@ -50,5 +46,9 @@ class RawExpandable extends React.Component<TFullExpandableProps> {
 	};
 }
 
-export type TExpandableProps = ObjectClean<PartialKeys<TFullExpandableProps, 'theme' | 'Handler'>>;
-export const Expandable: ComponentClass<TExpandableProps> = withTheme(EXPANDABLE)(RawExpandable);
+export type TExpandableProps = PartialKeys<TFullExpandableProps, 'theme' | 'Handler'>;
+export const Expandable: ComponentClass<TExpandableProps> = withTheme(EXPANDABLE)(
+	withDefaults<TFullExpandableProps, 'Handler'>({
+		Handler: ExpandableHandler,
+	})(RawExpandable),
+);

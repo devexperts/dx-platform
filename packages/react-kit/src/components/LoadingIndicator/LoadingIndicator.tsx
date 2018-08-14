@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { PURE } from '../../utils/pure';
 import { withTheme } from '../../utils/withTheme';
-import { ObjectClean } from 'typelevel-ts';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { ComponentClass } from 'react';
 
@@ -22,7 +21,7 @@ class RawLoadingIndicator extends React.Component<TFullLoadingIndicatorProps> {
 	}
 }
 
-export type TLoadingIndicatorProps = ObjectClean<PartialKeys<TFullLoadingIndicatorProps, 'theme'>>;
+export type TLoadingIndicatorProps = PartialKeys<TFullLoadingIndicatorProps, 'theme'>;
 export const LoadingIndicator: ComponentClass<TLoadingIndicatorProps> = withTheme(LOADING_INDICATOR)(
 	RawLoadingIndicator,
 );

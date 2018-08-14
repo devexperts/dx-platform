@@ -2,7 +2,6 @@ import * as React from 'react';
 import { PURE } from '../../utils/pure';
 import * as classnames from 'classnames';
 import { withTheme } from '../../utils/withTheme';
-import { ObjectClean } from 'typelevel-ts/lib';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
 
 export const TABLE = Symbol('Table') as symbol;
@@ -61,11 +60,11 @@ export class RawTableHead extends React.Component<TFullTableHeadProps> {
 			<thead className={theme.head}>
 				{React.Children.map(
 					children,
-					(child: React.ReactElement<TFullTableRowProps>) =>
-						child &&
+					child =>
+						React.isValidElement<TFullTableRowProps>(child) &&
 						React.cloneElement(child, {
 							isInHead: true,
-						} as TFullTableRowProps),
+						}),
 				)}
 			</thead>
 		);
@@ -92,12 +91,12 @@ class RawTableRow extends React.Component<TFullTableRowProps> {
 				{isInHead &&
 					React.Children.map(
 						children,
-						(child: React.ReactElement<TFullTableCellProps>) =>
-							child &&
+						child =>
+							React.isValidElement<TFullTableCellProps>(child) &&
 							React.cloneElement(child, {
 								...child.props,
 								isInHead,
-							} as TFullTableCellProps),
+							}),
 					)}
 			</tr>
 		);
@@ -124,17 +123,17 @@ class RawTableCell extends React.Component<TFullTableCellProps> {
 	}
 }
 
-export type TTableProps = ObjectClean<PartialKeys<TFullTableProps, 'theme'>>;
+export type TTableProps = PartialKeys<TFullTableProps, 'theme'>;
 export const Table: React.ComponentClass<TTableProps> = withTheme(TABLE)(RawTable);
 
-export type TTableBodyProps = ObjectClean<PartialKeys<TFullTableBodyProps, 'theme'>>;
+export type TTableBodyProps = PartialKeys<TFullTableBodyProps, 'theme'>;
 export const TableBody: React.ComponentClass<TTableBodyProps> = withTheme(TABLE)(RawTableBody);
 
-export type TTableHeadProps = ObjectClean<PartialKeys<TFullTableHeadProps, 'theme'>>;
+export type TTableHeadProps = PartialKeys<TFullTableHeadProps, 'theme'>;
 export const TableHead: React.ComponentClass<TTableHeadProps> = withTheme(TABLE)(RawTableHead);
 
-export type TTableRowProps = ObjectClean<PartialKeys<TFullTableRowProps, 'theme'>>;
+export type TTableRowProps = PartialKeys<TFullTableRowProps, 'theme'>;
 export const TableRow: React.ComponentClass<TTableRowProps> = withTheme(TABLE)(RawTableRow);
 
-export type TTableCellProps = ObjectClean<PartialKeys<TFullTableCellProps, 'theme'>>;
+export type TTableCellProps = PartialKeys<TFullTableCellProps, 'theme'>;
 export const TableCell: React.ComponentClass<TTableCellProps> = withTheme(TABLE)(RawTableCell);

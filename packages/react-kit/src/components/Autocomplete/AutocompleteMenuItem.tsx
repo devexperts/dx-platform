@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
-import { ObjectClean } from 'typelevel-ts';
 import { ComponentClass } from 'react';
 import { withTheme } from '../../utils/withTheme';
 import { MenuItem, TMenuItemProps } from '../Menu/Menu';
 import { Highlight, THighlightProps } from '../Highlight/Highlight';
+import { withDefaults } from '../../utils/with-defaults';
 const AUTOCOMPLETE_MENU_ITEM = Symbol('AutocompleteMenuItem') as symbol;
 
 export type TFullAutocompleteMenuItemProps = TMenuItemProps & {
@@ -16,10 +16,6 @@ export type TFullAutocompleteMenuItemProps = TMenuItemProps & {
 };
 
 class RawAutocompleteMenuItem extends React.Component<TFullAutocompleteMenuItemProps> {
-	static defaultProps = {
-		search: '',
-	};
-
 	render() {
 		const { search, theme, ...menuItemProps } = this.props;
 
@@ -33,7 +29,9 @@ class RawAutocompleteMenuItem extends React.Component<TFullAutocompleteMenuItemP
 	}
 }
 
-export type TAutocompleteMenuItemProps = ObjectClean<PartialKeys<TFullAutocompleteMenuItemProps, 'theme' | 'search'>>;
+export type TAutocompleteMenuItemProps = PartialKeys<TFullAutocompleteMenuItemProps, 'theme' | 'search'>;
 export const AutocompleteMenuItem: ComponentClass<TAutocompleteMenuItemProps> = withTheme(AUTOCOMPLETE_MENU_ITEM)(
-	RawAutocompleteMenuItem,
+	withDefaults<TFullAutocompleteMenuItemProps, 'search'>({
+		search: '',
+	})(RawAutocompleteMenuItem),
 );

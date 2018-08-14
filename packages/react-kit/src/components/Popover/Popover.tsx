@@ -9,11 +9,11 @@ import throttle from '@devexperts/utils/dist/function/throttle';
 
 import { withTheme } from '../../utils/withTheme';
 import { ComponentClass, MouseEventHandler, ReactNode, SyntheticEvent } from 'react';
-import { ObjectClean } from 'typelevel-ts';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { ReactRef } from '../../utils/typings';
 import { EventListener } from '../EventListener/EventListener';
 import { RootClose } from '../RootClose/RootClose';
+import { withDefaults } from '../../utils/with-defaults';
 
 type TSize = {
 	width: number;
@@ -72,18 +72,14 @@ type TPopoverState = {
 
 @PURE
 class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
-	static defaultProps = {
-		align: PopoverAlign.Left,
-		placement: PopoverPlacement.Bottom,
-	};
-
-	state: TPopoverState = {};
+	readonly state: TPopoverState = {};
 
 	private _needsUpdate = false;
 	private _anchor?: Element;
-	private _popover: Element;
-	private _popoverSize: TSize;
-	private rootElement: Element;
+	private _popover!: Element;
+	private _popoverSize!: TSize;
+	private rootElement!: Element;
+	private mediaQueryList?: MediaQueryList;
 
 	constructor(props: TFullPopoverProps) {
 		super(props);
@@ -108,11 +104,22 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 			this._popoverSize = this.getPopoverSize();
 			this.updatePosition();
 		}
+
+		if (window.matchMedia) {
+			this.mediaQueryList = window.matchMedia('print');
+			this.mediaQueryList.addListener(() => this.updatePosition());
+		}
+
+		window['onbeforeprint'] = this.updatePosition;
+		window['onafterprint'] = this.updatePosition;
 	}
 
 	componentWillUnmount() {
 		const container = this.props.container || document.body;
 		container.removeChild(this.rootElement);
+		this.mediaQueryList && this.mediaQueryList.removeListener(this.updatePosition);
+		window['onbeforeprint'] = null;
+		window['onafterprint'] = null;
 	}
 
 	componentWillReceiveProps(nextProps: TFullPopoverProps) {
@@ -194,9 +201,11 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 			child = <RootClose onRootClose={onRequestClose}>{child}</RootClose>;
 		}
 
-		child = (
-			<EventListener onResize={this.onResize} onScroll={this.onScroll} target="window">
-				{createPortal(child, this.rootElement)}
+		const target = typeof window !== 'undefined' ? window : 'window';
+
+		return (
+			<EventListener onResize={this.onResize} onScroll={this.onScroll} target={target}>
+				{ReactDOM.createPortal(child, this.rootElement)}
 			</EventListener>
 		);
 	}
@@ -215,7 +224,7 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 		};
 	}
 
-	updatePosition() {
+	updatePosition = () => {
 		if (!this._anchor) {
 			return;
 		}
@@ -267,7 +276,7 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 			finalAlign,
 			arrowOffset,
 		});
-	}
+	};
 
 	onSizeUpdate = (newSize: TSize) => {
 		this._popoverSize = newSize;
@@ -287,12 +296,20 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 	};
 
 	handleScroll() {
-		this.updatePosition();
+		const { onRequestClose, isOpened } = this.props;
+		if (onRequestClose && isOpened) {
+			onRequestClose();
+		}
 	}
 }
 
-export type TPopoverProps = ObjectClean<PartialKeys<TFullPopoverProps, 'theme' | 'align' | 'placement'>>;
-export const Popover: ComponentClass<TPopoverProps> = withTheme(POPOVER)(RawPopover);
+export type TPopoverProps = PartialKeys<TFullPopoverProps, 'theme' | 'align' | 'placement'>;
+export const Popover: ComponentClass<TPopoverProps> = withTheme(POPOVER)(
+	withDefaults<TFullPopoverProps, 'align' | 'placement'>({
+		align: PopoverAlign.Left,
+		placement: PopoverPlacement.Bottom,
+	})(RawPopover),
+);
 
 function stopPropagation<T>(e: SyntheticEvent<T>) {
 	e.stopPropagation();

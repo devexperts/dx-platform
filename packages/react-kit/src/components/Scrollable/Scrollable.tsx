@@ -18,8 +18,8 @@ import { VerticalScrollbar as BaseVerticalScrollbar, TVerticalScrollbarProps } f
 
 import getScrollbarSize from '../Scrollbar/Scrollbar.util';
 import { withTheme } from '../../utils/withTheme';
-import { ObjectClean } from 'typelevel-ts';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
+import { withDefaults } from '../../utils/with-defaults';
 
 export const SCROLLABLE = Symbol('Scrollable') as symbol;
 
@@ -47,23 +47,17 @@ export type TFullScrollableProps = {
 };
 
 export class RawScrollable extends React.Component<TFullScrollableProps> {
-	static defaultProps = {
-		ResizeDetector: BaseResizeDetector,
-		VerticalScrollbar: BaseVerticalScrollbar,
-		HorizontalScrollbar: BaseHorizontalScrollbar,
-	};
-
 	static childContextTypes: any = CONTEXT_TYPES;
 
 	_withHorizontalScrollbar = false;
 	_withVerticalScrollbar = false;
-	_container: HTMLDivElement | null;
-	_scrollable: HTMLDivElement | null;
-	_emitter: ScrollableInternalEmitter;
-	_horizontalScrollbar: HTMLDivElement | null;
-	_verticalScrollbar: HTMLDivElement | null;
+	_container!: HTMLDivElement | null;
+	_scrollable!: HTMLDivElement | null;
+	_emitter!: ScrollableInternalEmitter;
+	_horizontalScrollbar!: HTMLDivElement | null;
+	_verticalScrollbar!: HTMLDivElement | null;
 
-	state = {
+	readonly state = {
 		container: void 0, //eslint-disable-line no-void
 		scrollable: void 0, //eslint-disable-line no-void
 	};
@@ -187,7 +181,14 @@ export class RawScrollable extends React.Component<TFullScrollableProps> {
 	};
 }
 
-export type TScrollableProps = ObjectClean<
-	PartialKeys<TFullScrollableProps, 'theme' | 'ResizeDetector' | 'VerticalScrollbar' | 'HorizontalScrollbar'>
+export type TScrollableProps = PartialKeys<
+	TFullScrollableProps,
+	'theme' | 'ResizeDetector' | 'VerticalScrollbar' | 'HorizontalScrollbar'
 >;
-export const Scrollable: React.ComponentClass<TScrollableProps> = withTheme(SCROLLABLE)(RawScrollable);
+export const Scrollable: React.ComponentClass<TScrollableProps> = withTheme(SCROLLABLE)(
+	withDefaults<TFullScrollableProps, 'ResizeDetector' | 'VerticalScrollbar' | 'HorizontalScrollbar'>({
+		ResizeDetector: BaseResizeDetector,
+		VerticalScrollbar: BaseVerticalScrollbar,
+		HorizontalScrollbar: BaseHorizontalScrollbar,
+	})(RawScrollable),
+);

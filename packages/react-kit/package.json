@@ -1,14 +1,14 @@
 {
   "name": "@devexperts/react-kit",
-  "version": "0.12.0",
+  "version": "0.15.0",
   "description": "",
   "main": "lib",
   "module": "src",
   "scripts": {
     "test": "dx-tools build-lib src dist --failOnError",
-    "build": "dx-tools build-lib src dist",
+    "build": "dx-tools build-lib src dist --failOnError",
     "clean": "dx-tools clean dist",
-    "prepare": "npm run clean && npm run build",
+    "prepare": "yarn clean && yarn build",
     "start": "dx-tools storybook",
     "watch": "dx-tools build-lib src dist -w"
   },
@@ -26,7 +26,7 @@
   },
   "homepage": "https://github.com/devex-web-frontend/dx-platform#readme",
   "dependencies": {
-    "@devexperts/utils": "^0.12.0",
+    "@devexperts/utils": "^0.15.0",
     "@types/classnames": ">=2.2.3",
     "@types/node": ">=8.5.2",
     "@types/prop-types": ">=15.5.2",
@@ -36,9 +36,9 @@
     "hoist-non-react-statics": "^2.5.0",
     "prop-types": "^15.6.0",
     "react-css-themr": "^2.1.2",
-    "rxjs": "~5.5.2",
+    "rxjs": "^6.2.2",
     "tslib": "^1.9.0",
-    "typelevel-ts": "^0.2.2"
+    "typelevel-ts": "^0.3.1"
   },
   "peerDependencies": {
     "@types/react": ">=16.3.16",
@@ -47,7 +47,7 @@
     "react-dom": ">=16.4.0"
   },
   "devDependencies": {
-    "@devexperts/tools": "^0.12.0",
+    "@devexperts/tools": "^0.15.0",
     "@types/jest": "^21.1.8",
     "@types/react": "^16.3.16",
     "@types/react-dom": "^16.0.6",

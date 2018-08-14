@@ -1,26 +1,26 @@
 {
-    "compilerOptions": {
-      "module": "commonjs",
-      "sourceMap": true,
-      "declaration": true,
-      "moduleResolution": "node",
-      "emitDecoratorMetadata": true,
-      "experimentalDecorators": true,
-      "forceConsistentCasingInFileNames": true,
-      "suppressImplicitAnyIndexErrors": true,
-      "noImplicitAny": true,
-      "noImplicitThis": true,
-      "jsx": "react",
-      "strictNullChecks": true,
-      "importHelpers": true,
-      "lib": [
-        "es2016",
-        "dom",
-        "es2017.object"
-      ],
-      "target": "es5",
-      "pretty": true,
-      "noUnusedLocals": true
-    }
+  "compilerOptions": {
+    "strict": true,
+    "module": "commonjs",
+    "sourceMap": true,
+    "declaration": true,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "forceConsistentCasingInFileNames": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "jsx": "react",
+    "strictNullChecks": true,
+    "importHelpers": true,
+    "lib": [
+      "es2016",
+      "dom",
+      "es2017.object"
+    ],
+    "target": "es5",
+    "pretty": true,
+    "noUnusedLocals": true
   }
-  
+}

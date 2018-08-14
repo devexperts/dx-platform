@@ -12,12 +12,12 @@ import {
 } from '../List/List';
 import { withTheme } from '../../utils/withTheme';
 import { Component, ComponentClass, ComponentType, ReactElement, ReactNode, ReactText } from 'react';
-import { ObjectClean } from 'typelevel-ts';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { PURE } from '../../utils/pure';
 import * as classnames from 'classnames';
 import { Pure } from '../Pure/Pure';
 import { ReactChildren } from '../../utils/typings';
+import { withDefaults } from '../../utils/with-defaults';
 
 export const MENU = Symbol('Menu') as symbol;
 
@@ -32,15 +32,14 @@ export type TFullMenuProps = TFullListProps & {
 };
 
 class RawMenu extends React.Component<TFullMenuProps> {
-	static defaultProps = {
-		List,
-	};
-
 	render() {
 		const { children, List } = this.props;
 		return (
 			<List {...this.props}>
-				{React.Children.map(children, (child: ReactElement<TMenuChildProps>) => {
+				{React.Children.map(children, child => {
+					if (!React.isValidElement<TMenuChildProps>(child)) {
+						return child;
+					}
 					const props: TMenuChildProps = {
 						onSelect: this.props.onItemSelect,
 					};
@@ -51,8 +50,10 @@ class RawMenu extends React.Component<TFullMenuProps> {
 	}
 }
 
-export type TMenuProps = ObjectClean<PartialKeys<TFullMenuProps, 'theme' | 'List'>>;
-export const Menu: ComponentClass<TMenuProps> = withTheme(MENU)(RawMenu);
+export type TMenuProps = PartialKeys<TFullMenuProps, 'theme' | 'List'>;
+export const Menu: ComponentClass<TMenuProps> = withTheme(MENU)(
+	withDefaults<TFullMenuProps, 'List'>({ List })(RawMenu),
+);
 
 ///////////////////////////
 
@@ -71,10 +72,6 @@ export type TFullMenuItemProps = TFullListItemProps & {
 
 @PURE
 class RawMenuItem extends Component<TFullMenuItemProps> {
-	static defaultProps = {
-		ListItem,
-	};
-
 	render() {
 		const { isActive, ListItem } = this.props;
 		let { theme } = this.props;
@@ -96,8 +93,10 @@ class RawMenuItem extends Component<TFullMenuItemProps> {
 	};
 }
 
-export type TMenuItemProps = ObjectClean<PartialKeys<TFullMenuItemProps, 'theme' | 'ListItem'>>;
-export const MenuItem: ComponentClass<TMenuItemProps> = withTheme(MENU)(RawMenuItem);
+export type TMenuItemProps = PartialKeys<TFullMenuItemProps, 'theme' | 'ListItem'>;
+export const MenuItem: ComponentClass<TMenuItemProps> = withTheme(MENU)(
+	withDefaults<TFullMenuItemProps, 'ListItem'>({ ListItem })(RawMenuItem),
+);
 
 ///////////////////////////
 
@@ -118,12 +117,6 @@ type TMenuItemGroupState = {
 
 @PURE
 class RawMenuItemGroup extends React.Component<TFullMenuItemGroupProps, TMenuItemGroupState> {
-	static defaultProps = {
-		ListItemGroup,
-		List: Menu,
-		isCollapsed: true, //menu is always collapsed
-	};
-
 	state = {
 		isCollapsed: true,
 	};
@@ -168,7 +161,14 @@ class RawMenuItemGroup extends React.Component<TFullMenuItemGroupProps, TMenuIte
 	};
 }
 
-export type TMenuItemGroupProps = ObjectClean<
-	PartialKeys<TFullMenuItemGroupProps, 'theme' | 'List' | 'ListItemGroup' | 'isCollapsed'>
+export type TMenuItemGroupProps = PartialKeys<
+	TFullMenuItemGroupProps,
+	'theme' | 'List' | 'ListItemGroup' | 'isCollapsed'
 >;
-export const MenuItemGroup: ComponentClass<TMenuItemGroupProps> = withTheme(MENU)(RawMenuItemGroup);
+export const MenuItemGroup: ComponentClass<TMenuItemGroupProps> = withTheme(MENU)(
+	withDefaults<TFullMenuItemGroupProps, 'ListItemGroup' | 'isCollapsed' | 'List'>({
+		ListItemGroup,
+		List: Menu as any,
+		isCollapsed: true, //menu is always collapsed
+	})(RawMenuItemGroup),
+);

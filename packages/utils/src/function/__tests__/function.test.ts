@@ -23,7 +23,7 @@ describe('function', () => {
 	describe('throttle', () => {
 		it('should invoke decorated func once during time interval', () => {
 			const callback = jest.fn();
-			const throttled = throttle(callback, 100);
+			const throttled = throttle(callback, 1000);
 
 			throttled();
 			expect(callback).toBeCalled();

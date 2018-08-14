@@ -1,4 +1,4 @@
-import { ObjectOmit } from 'typelevel-ts';
+import { Omit } from 'typelevel-ts';
 
 import { is, hasOwnProperty } from './fb';
 
@@ -47,4 +47,6 @@ export function deepEqual(objA: object, objB: object): boolean {
 	return true;
 }
 
-export type PartialKeys<T extends {}, K extends keyof T> = ObjectOmit<T, K> & Partial<Pick<T, K>>;
+export type PartialKeys<T extends {}, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
+
+export const isNotNullable = <T>(value: T | null | undefined): value is T => value !== null && value !== undefined;

@@ -4,7 +4,6 @@ import { Scrollbar, SCROLLBAR_TYPE, TScrollbarProps } from './Scrollbar';
 import { EVENT_SCROLABLE, SCROLLABLE_CONTEXT_EMITTER } from '../Scrollable/Scrollable.const';
 
 import { PURE } from '../../utils/pure';
-import { ObjectClean } from 'typelevel-ts';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { withTheme } from '../../utils/withTheme';
 
@@ -18,12 +17,12 @@ export type TFullHorizontalProps = TScrollbarProps & TAdditionalHorizontalProps;
 
 @PURE
 export class RawHorizontalScrollbar extends Scrollbar<TAdditionalHorizontalProps> {
-	_ratio: {
+	_ratio!: {
 		size: number;
 		position: number;
 	};
-	_previousDragCoordinate: number;
-	_minBarSize: number;
+	_previousDragCoordinate!: number;
+	_minBarSize!: number;
 
 	/**
 	 * @returns {Number}
@@ -174,7 +173,7 @@ export class RawHorizontalScrollbar extends Scrollbar<TAdditionalHorizontalProps
 	};
 }
 
-export type THorizontalScrollbarProps = ObjectClean<PartialKeys<TFullHorizontalProps, 'theme'>>;
+export type THorizontalScrollbarProps = PartialKeys<TFullHorizontalProps, 'theme'>;
 export const HorizontalScrollbar: React.ComponentClass<THorizontalScrollbarProps> = withTheme(HORIZONTAL_SCROLLBAR)(
 	RawHorizontalScrollbar,
 );

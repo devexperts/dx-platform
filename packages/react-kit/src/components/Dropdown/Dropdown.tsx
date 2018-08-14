@@ -4,9 +4,9 @@ import { Component, ComponentClass, ComponentType, MouseEventHandler, ReactNode 
 import { Popover, TPopoverProps } from '../Popover/Popover';
 import { ReactRef, WithInnerRef } from '../../utils/typings';
 import { withTheme } from '../../utils/withTheme';
-import { ObjectClean } from 'typelevel-ts';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { TControlProps } from '../Control/Control';
+import { withDefaults } from '../../utils/with-defaults';
 
 export const DROPDOWN = Symbol('Dropdown') as symbol;
 
@@ -26,11 +26,7 @@ export type TFullDropdownProps = TControlProps<boolean, 'isOpened', 'onToggle'> 
 
 @PURE
 class RawDropdown extends Component<TFullDropdownProps> {
-	static defaultProps = {
-		Popover,
-	};
-
-	private anchorRef: ReactRef;
+	private anchorRef!: ReactRef;
 
 	render() {
 		const { Anchor, Popover, children, theme, hasArrow, isOpened } = this.props;
@@ -63,5 +59,9 @@ class RawDropdown extends Component<TFullDropdownProps> {
 	};
 }
 
-export type TDropdownProps = ObjectClean<PartialKeys<TFullDropdownProps, 'theme' | 'Popover'>>;
-export const Dropdown: ComponentClass<TDropdownProps> = withTheme(DROPDOWN)(RawDropdown);
+export type TDropdownProps = PartialKeys<TFullDropdownProps, 'theme' | 'Popover'>;
+export const Dropdown: ComponentClass<TDropdownProps> = withTheme(DROPDOWN)(
+	withDefaults<TFullDropdownProps, 'Popover'>({
+		Popover,
+	})(RawDropdown),
+);

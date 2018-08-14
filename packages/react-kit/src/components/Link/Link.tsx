@@ -4,7 +4,6 @@ import * as classnames from 'classnames';
 import { MouseEvent, EventHandler, ComponentClass } from 'react';
 import { withTheme } from '../../utils/withTheme';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
-import { ObjectClean } from 'typelevel-ts/lib';
 
 export const LINK = Symbol('Link') as symbol;
 
@@ -47,5 +46,5 @@ class RawLink extends React.Component<TFullLinkProps> {
 	};
 }
 
-export type TLinkProps = ObjectClean<PartialKeys<TFullLinkProps, 'theme'>>;
+export type TLinkProps = PartialKeys<TFullLinkProps, 'theme'>;
 export const Link: ComponentClass<TLinkProps> = withTheme(LINK)(RawLink);

@@ -2,7 +2,6 @@ import * as React from 'react';
 import { PURE } from '../../utils/pure';
 import { withTheme } from '../../utils/withTheme';
 import { ComponentClass } from 'react';
-import { ObjectClean } from 'typelevel-ts/lib';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
 
 import * as detectorFactory from 'element-resize-detector';
@@ -23,7 +22,7 @@ export type TFullResizeDetectorProps = {
 
 @PURE
 class RawResizeDetector extends React.Component<TFullResizeDetectorProps> {
-	private element: HTMLDivElement | null;
+	private element!: HTMLDivElement | null;
 
 	componentDidMount() {
 		if (this.element) {
@@ -47,5 +46,5 @@ class RawResizeDetector extends React.Component<TFullResizeDetectorProps> {
 	});
 }
 
-export type TResizeDetectorProps = ObjectClean<PartialKeys<TFullResizeDetectorProps, 'theme'>>;
+export type TResizeDetectorProps = PartialKeys<TFullResizeDetectorProps, 'theme'>;
 export const ResizeDetector: ComponentClass<TResizeDetectorProps> = withTheme(RESIZE_DETECTOR)(RawResizeDetector);

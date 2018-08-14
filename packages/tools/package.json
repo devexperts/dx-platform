@@ -1,6 +1,6 @@
 {
   "name": "@devexperts/tools",
-  "version": "0.12.0",
+  "version": "0.15.0",
   "description": "tool set for building FE projects",
   "main": "lib/index.js",
   "scripts": {
@@ -8,7 +8,7 @@
     "build": "tsc --noEmitOnError",
     "clean": "rimraf ./dist",
     "watch": "tsc -w --noEmitOnError",
-    "prepare": "npm run clean && npm run build"
+    "prepare": "yarn clean && yarn build"
   },
   "repository": {
     "type": "git",
@@ -89,7 +89,7 @@
     "sync-glob": "1.3.7",
     "ts-loader": "^3.2.0",
     "tslib": "^1.9.0",
-    "typescript": "2.8.1",
+    "typescript": "^3.0.1",
     "url-loader": "^0.6.2",
     "webpack": "^3.10.0",
     "webpack-dev-server": "^2.10.1",

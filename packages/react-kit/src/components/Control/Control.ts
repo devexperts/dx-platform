@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Requireable, ComponentClass } from 'react';
 import * as PropTypes from 'prop-types';
-import { ObjectOmit } from 'typelevel-ts';
+import { Omit } from 'typelevel-ts';
 import SFC = React.SFC;
 
 export function createControlProps<TValue>(valueType: Requireable<TValue>) {
@@ -94,7 +94,7 @@ export type TStatefulProps<
 	N extends string = 'value',
 	D extends string = 'defaultValue',
 	H extends string = 'onValueChange'
-> = ObjectOmit<P, 'value' | N | H> & //remove both value name and handler name from props
+> = Omit<P, 'value' | N | H> & //remove both value name and handler name from props
 	Partial<TDynamicValueHandler<V, H>> & //add optional change handler to props
 	Partial<TDynamicValue<V, D>>; //add default value name to props - pass D (defaultValue name) here instead of N (value name)
 
@@ -124,7 +124,7 @@ export function stateful<
 
 			componentWillMount() {
 				this.setState({
-					value: this.props[defaultValueName as string],
+					value: this.props[defaultValueName] as any,
 				});
 			}
 
@@ -137,11 +137,11 @@ export function stateful<
 				return React.createElement(Target as any, props);
 			}
 
-			protected onValueChange = (value?: V): void => {
+			protected onValueChange = (value: V): void => {
 				this.setState({
 					value,
 				});
-				const onValueChange = this.props[handlerName as string];
+				const onValueChange: (value: V) => void = this.props[handlerName] as any;
 				onValueChange && onValueChange(value);
 			};
 		}

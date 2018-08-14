@@ -12,7 +12,7 @@ export type TBoundsUpdateDetectorProps = {
 };
 
 export class BoundsUpdateDetector extends React.Component<TBoundsUpdateDetectorProps> {
-	private size: TSize;
+	private size!: TSize;
 
 	componentDidMount() {
 		this.size = this.getSize();
