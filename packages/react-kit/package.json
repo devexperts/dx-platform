@@ -1,6 +1,6 @@
 {
   "name": "@devexperts/react-kit",
-  "version": "0.15.1",
+  "version": "0.15.0",
   "description": "",
   "main": "dist",
   "module": "dist",

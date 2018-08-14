@@ -1,6 +1,6 @@
 {
   "name": "@devexperts/rx-utils",
-  "version": "0.15.1",
+  "version": "0.15.0",
   "description": "utilits for rxjs",
   "keywords": ["rxjs", "devexperts", "observable"],
   "main": "dist",
