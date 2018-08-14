@@ -1,6 +1,6 @@
 {
   "name": "@devexperts/utils",
-  "version": "0.15.0",
+  "version": "0.15.1",
   "description": "",
   "main": "dist",
   "module": "dist",
@@ -33,7 +33,7 @@
     "fp-ts": "^1.2.0"
   },
   "devDependencies": {
-    "@devexperts/tools": "^0.15.0",
+    "@devexperts/tools": "^0.15.1",
     "fp-ts": "^1.2.0"
   }
 }
