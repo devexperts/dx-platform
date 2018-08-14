@@ -205,7 +205,7 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 
 		return (
 			<EventListener onResize={this.onResize} onScroll={this.onScroll} target={target}>
-				{ReactDOM.createPortal(child, this.rootElement)}
+				{createPortal(child, this.rootElement)}
 			</EventListener>
 		);
 	}
