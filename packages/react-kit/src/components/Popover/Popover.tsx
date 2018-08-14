@@ -211,7 +211,7 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 	}
 
 	getPopoverSize(): TSize {
-		const popover = ReactDOM.findDOMNode(this._popover);
+		const popover = ReactDOM.findDOMNode(this._popover) as HTMLElement;
 		if (popover instanceof HTMLElement) {
 			return {
 				height: popover.offsetHeight,
