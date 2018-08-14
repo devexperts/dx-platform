@@ -40,6 +40,27 @@ export function memoize<A, B, C, D, E>(
 ): {
 	(a: A, b: B, c: C, d: D): E;
 	[key: string]: (a: A, b: B, c: C, d: D) => E;
+};
+export function memoize<A, B, C, D, E, F>(
+	this: any,
+	fn: (a: A, b: B, c: C, d: D, e: E) => F,
+): {
+	(a: A, b: B, c: C, d: D, e: E): F;
+	[key: string]: (a: A, b: B, c: C, d: D, e: E) => F;
+};
+export function memoize<A, B, C, D, E, F, G>(
+	this: any,
+	fn: (a: A, b: B, c: C, d: D, e: E, f: F) => G,
+): {
+	(a: A, b: B, c: C, d: D, e: E, f: F): G;
+	[key: string]: (a: A, b: B, c: C, d: D, e: E, f: F) => G;
+};
+export function memoize<A, B, C, D, E, F, G, H>(
+	this: any,
+	fn: (a: A, b: B, c: C, d: D, e: E, f: F, g: G) => H,
+): {
+	(a: A, b: B, c: C, d: D, e: E, f: F, g: G): H;
+	[key: string]: (a: A, b: B, c: C, d: D, e: E, f: F, g: G) => H;
 } {
 	const storage = {};
 	const result = function(this: any) {
@@ -69,7 +90,7 @@ export default memoize;
  */
 function serialize(args: any[]): string {
 	const argsAreValid = args.every(arg => {
-		return typeof arg === 'number' || typeof arg === 'string';
+		return typeof arg === 'number' || typeof arg === 'string' || typeof arg === 'boolean';
 	});
 	if (!argsAreValid) {
 		throw Error('Arguments to memoized function can only be strings or numbers');
