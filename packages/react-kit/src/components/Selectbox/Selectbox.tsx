@@ -46,6 +46,7 @@ export type TFullSelectboxProps = TControlProps<ReactText> & {
 	caretIcon?: React.ReactElement<any> | React.ReactText;
 	selectedIcon?: React.ReactElement<any> | React.ReactText;
 	shouldSyncWidth?: boolean;
+	closeOnScroll?: boolean;
 };
 
 type TSelectboxState = {
@@ -106,7 +107,24 @@ class RawSelectbox extends React.Component<TFullSelectboxProps, TSelectboxState>
 		}
 	}
 
+	closeOnScroll = (event: UIEvent) => {
+		if (this.anchor) {
+			const element = findDOMNode(this.anchor);
+			if (!element || element instanceof Text) {
+				return;
+			}
+
+			if (event.target && !element.contains(event.target as Node)) {
+				this.setState({ isOpened: false });
+			}
+		}
+	};
+
 	componentDidMount() {
+		if (this.props.closeOnScroll) {
+			document.body.addEventListener('scroll', this.closeOnScroll, { passive: true, capture: true });
+		}
+
 		// if (this.anchor && this.props.shouldSyncWidth) {
 		// 	const element = findDOMNode(this.anchor);
 		// 	NativeResizeDetector.listenTo(element, this.handleAnchorResize);
@@ -118,6 +136,8 @@ class RawSelectbox extends React.Component<TFullSelectboxProps, TSelectboxState>
 	}
 
 	componentWillUnmount() {
+		document.body.removeEventListener('scroll', this.closeOnScroll);
+
 		if (this.anchor) {
 			const element = findDOMNode(this.anchor);
 			if (!element || element instanceof Text) {
