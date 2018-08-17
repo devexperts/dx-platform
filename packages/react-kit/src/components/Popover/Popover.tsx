@@ -204,7 +204,7 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 		const target = typeof window !== 'undefined' ? window : 'window';
 
 		return (
-			<EventListener onResize={this.onResize} onScroll={this.onScroll} target={target}>
+			<EventListener onResize={this.onResize} onScrollCapture={this.onScroll} target={target}>
 				{ReactDOM.createPortal(child, this.rootElement)}
 			</EventListener>
 		);
@@ -291,7 +291,11 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 		this.updatePosition();
 	}
 
-	onScroll = () => {
+	onScroll = (event: UIEvent) => {
+		if (!this._anchor || this._anchor.contains(event.target as Node)) {
+			return;
+		}
+
 		this.handleScroll();
 	};
 
