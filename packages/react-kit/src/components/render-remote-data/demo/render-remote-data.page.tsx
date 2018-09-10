@@ -1,22 +1,35 @@
 import { storiesOf } from '@storybook/react';
 import { getRenderRemoteData } from '../get-render-remote-data';
 import * as React from 'react';
-import { SFC } from 'react';
-import { failure, success } from '@devexperts/remote-data-ts';
+import { Fragment, SFC } from 'react';
+import { failure, pending, success } from '@devexperts/remote-data-ts';
+import Demo from '../../demo/Demo';
 
-const DataStateError: SFC<{ error: Error }> = props => <div>error: {props.error.message}</div>;
-const DataStateNoDate = () => <div>no data</div>;
+const DataStatePending = () => <div>pending</div>;
+const DataStateFailure: SFC<{ error: Error }> = props => <div>error: {props.error.message}</div>;
+const DataStateNoData = () => <div>no data</div>;
 
 const RenderRemoteData = getRenderRemoteData({
-	DataStateNoData: DataStateNoDate,
-	DataStateFailure: DataStateError,
+	DataStatePending,
+	DataStateNoData,
+	DataStateFailure,
 });
 
 const renderSuccess = (data: string) => <div>{data}</div>;
 
-storiesOf('RenderRemoteData', module)
-	.add('success', () => <RenderRemoteData success={renderSuccess} data={success('success')} />)
-	.add('error', () => (
-		<RenderRemoteData success={renderSuccess} data={failure<Error, string>(new Error('some test error'))} />
-	))
-	.add('no data', () => <RenderRemoteData success={renderSuccess} data={success('')} noData={data => !data} />);
+storiesOf('RenderRemoteData', module).add('default', () => (
+	<Fragment>
+		<Demo>
+			<RenderRemoteData success={renderSuccess} data={pending} />
+		</Demo>
+		<Demo>
+			<RenderRemoteData success={renderSuccess} data={success('success')} />
+		</Demo>
+		<Demo>
+			<RenderRemoteData success={renderSuccess} data={failure<Error, string>(new Error('some test error'))} />
+		</Demo>
+		<Demo>
+			<RenderRemoteData success={renderSuccess} data={success('')} noData={data => !data} />
+		</Demo>
+	</Fragment>
+));
