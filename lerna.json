@@ -13,6 +13,9 @@
   "command": {
     "init": {
       "exact": true
+    },
+    "publish": {
+      "conventionalCommits": true
     }
   }
 }
