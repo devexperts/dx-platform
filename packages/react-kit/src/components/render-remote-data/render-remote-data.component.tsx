@@ -10,6 +10,7 @@ export type TDataStateErrorMainProps<L> = {
 export type TRenderRemoteDataStates<L, FP extends TDataStateErrorMainProps<L>> = {
 	DataStateNoData: ComponentType;
 	DataStateFailure: ComponentType<FP>;
+	DataStatePending: ComponentType;
 };
 
 export type TRenderRemoteDataMainProps<L, D> = {
@@ -28,11 +29,17 @@ export class RenderRemoteData<L, D, FP extends TDataStateErrorMainProps<L>> exte
 		const { data } = this.props;
 		return (
 			<Fragment>
+				{data.isPending() && this.renderPending()}
 				{data.isSuccess() && this.renderSuccess(data.value)}
 				{data.isFailure() && this.renderFailure(data.error)}
 			</Fragment>
 		);
 	}
+
+	private renderPending = () => {
+		const { DataStatePending } = this.props;
+		return <DataStatePending />;
+	};
 
 	private renderSuccess = (data: D) => {
 		const { noData, success, DataStateNoData } = this.props;
