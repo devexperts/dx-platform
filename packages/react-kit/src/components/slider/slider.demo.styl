@@ -1,0 +1,93 @@
+$handler-height = 10px;
+$handler-width = 10px;
+$track-height = 7px;
+
+.container {
+	&_isDisabled {
+		opacity: .8;
+		cursor: no-drop;
+		.track {
+			background: #eee !important;
+		}
+		.rail {
+			border-color: #eee;
+			pointer-events: none;
+		}
+		.handler {
+			opacity: .8;
+			box-shadow: 0 1px 4px 0 rgba(#000, 0.3);
+		}
+	}
+}
+
+.handleContainer {
+	top: -(($handler-height - $track-height) / 2);
+	width: 'calc(100% + %s)' % ($handler-height);
+	margin-left: -($handler-width / 2);
+}
+
+.handler {
+	width: $handler-width;
+	height: $handler-height;
+	border-radius: 50%;
+	box-shadow: 0 1px 4px 0 rgba(0, 72, 107, 0.3);
+	background-color: #f7fbfd;
+	border: solid 1px rgba(0, 75, 129, 0.3);
+}
+
+.track {
+	border-radius: ($track-height / 2);
+	height: 100%;
+	background-color: red
+
+	&_positive {
+		background-color: #009982;
+	}
+}
+
+.rail {
+	width: 100%;
+	margin: 0 auto;
+	height: $track-height;
+	background-color: rgba(217, 216, 212, 0.4);
+	border: solid 1px rgba(12, 26, 33, 0.1);
+	border-radius: ($track-height / 2);
+}
+
+.ticks {
+	font-size: 11px;
+	position: relative;
+	margin-top: 14px;
+	height: 15px;
+}
+
+.tick {
+	position: absolute;
+}
+
+.tickValue {
+	display: inline-block;
+	position: relative;
+	transform: translateX(-50%);
+
+	&:after {
+		content: '';
+		display: block;
+		position: absolute;
+		width: 1px;
+		height: 6px;
+		background-color: #d8d9d8;
+		bottom: 100%;
+		left: 50%;
+		transform: translateX(-50%);
+	}
+}
+
+.simple {
+	display: flex;
+	align-items: center;
+
+	> * {
+		margin: 0 4px;
+	}
+}
