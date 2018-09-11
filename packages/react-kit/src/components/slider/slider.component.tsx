@@ -124,7 +124,7 @@ class RawSlider extends Component<TFullSliderProps, TRawSliderState> {
 	private handleDrag = (event: Event, data: DraggableData) =>
 		this.props.onValueChange(this.state.xScale.invert(data.x));
 
-	buildScale(width: number, min: number, max: number): ScaleLinear<number, number> {
+	private buildScale(width: number, min: number, max: number): ScaleLinear<number, number> {
 		return scaleLinear()
 			.domain([min, max])
 			.range([0, width]);

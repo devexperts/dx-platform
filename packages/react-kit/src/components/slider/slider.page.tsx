@@ -34,7 +34,17 @@ class SliderPage extends Component<TSliderPageProps> {
 					<Button isFlat={true} onClick={this.handleClick(min)}>
 						{min}
 					</Button>
-					<Slider theme={theme} isDisabled={isDisabled} width={width} step={20} min={min} max={max} inlineTrackStyle={{ backgroundColor: this.getBackground(value) }} value={value} onValueChange={this.onValueChange} />
+					<Slider
+						theme={theme}
+						isDisabled={isDisabled}
+						width={width}
+						step={20}
+						min={min}
+						max={max}
+						inlineTrackStyle={{ backgroundColor: this.getBackground(value) }}
+						value={value}
+						onValueChange={this.onValueChange}
+					/>
 					<Button isFlat={true} onClick={this.handleClick(max)}>
 						{max}
 					</Button>
@@ -104,13 +114,19 @@ class ExtraSlider extends Component {
 
 		return (
 			<Demo>
-				<Slider theme={newTheme} width={width} step={20} min={min} max={max} value={value} inlineTrackStyle={trackStyles} onValueChange={this.onValueChange} />
+				<Slider
+					theme={newTheme}
+					width={width}
+					step={20}
+					min={min}
+					max={max}
+					value={value}
+					inlineTrackStyle={trackStyles}
+					onValueChange={this.onValueChange}
+				/>
 				<div className={theme.ticks}>
 					{ticks.map(tick => (
-						<div
-							style={{ transform: `translate(${xScale(tick)}px, 0)` }}
-							key={tick}
-							className={theme.tick}>
+						<div key={tick} style={{ transform: `translate(${xScale(tick)}px, 0)` }} className={theme.tick}>
 							<span className={theme.tickValue}>{tick}</span>
 						</div>
 					))}
