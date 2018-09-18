@@ -6,7 +6,7 @@ import { scaleLinear, ScaleLinear } from 'd3-scale';
 import { withTheme } from '../../utils/withTheme';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { MakeTheme } from '../../utils/theme.utils';
-import * as css from './slider.component.styl';
+import * as css from './theme/slider.component.styl';
 import { MouseEventHandler } from 'react';
 import { withDefaults } from '../../utils/with-defaults';
 import { ComponentType } from 'react';
@@ -43,7 +43,7 @@ type TRawSliderState = Readonly<{
 }>;
 
 class RawSlider extends Component<TFullSliderProps, TRawSliderState> {
-	private rail: any;
+	private rail = React.createRef<HTMLDivElement>();
 
 	readonly state: TRawSliderState = {
 		xScale: this.buildScale(this.props.width, this.props.min, this.props.max),
@@ -82,7 +82,7 @@ class RawSlider extends Component<TFullSliderProps, TRawSliderState> {
 		return (
 			<div style={railContainerStyles} className={className}>
 				<div style={trackStyles} className={theme.track} />
-				<div className={theme.rail} ref={el => (this.rail = el)} onClick={this.handleClick} />
+				<div className={theme.rail} ref={this.rail} onClick={this.handleClick} />
 				<div className={theme.handleContainer}>
 					<Rnd
 						position={position}
@@ -116,9 +116,12 @@ class RawSlider extends Component<TFullSliderProps, TRawSliderState> {
 
 	private handleClick: MouseEventHandler<HTMLElement> = event => {
 		const { pageX } = event;
-		const bound = this.rail.getBoundingClientRect();
-		const position = pageX - bound.left;
-		this.props.onValueChange(this.state.xScale.invert(position));
+		const rail = this.rail.current;
+		if (rail) {
+			const bound = rail.getBoundingClientRect();
+			const position = pageX - bound.left;
+			this.props.onValueChange(this.state.xScale.invert(position));
+		}
 	};
 
 	private handleDrag = (event: Event, data: DraggableData) =>
@@ -137,9 +140,10 @@ const wTheme = {
 
 export type TSliderProps = PartialKeys<TFullSliderProps, 'theme' | 'SliderHandler' | 'isDisabled'>;
 
-export const Slider: ComponentClass<TSliderProps> = withTheme(SLIDER, wTheme)(
-	withDefaults<TFullSliderProps, 'SliderHandler' | 'isDisabled'>({
-		isDisabled: false,
-		SliderHandler,
-	})(RawSlider),
-);
+type Defaults = 'SliderHandler' | 'isDisabled';
+const defaults = withDefaults<TFullSliderProps, Defaults>({
+	isDisabled: false,
+	SliderHandler,
+});
+
+export const Slider: ComponentClass<TSliderProps> = withTheme(SLIDER, wTheme)(defaults(RawSlider));

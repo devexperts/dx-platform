@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { Component } from 'react';
-import Demo from '../demo/Demo';
-import { PURE } from '../../utils/pure';
-import { Slider } from './slider.component';
+import Demo from '../../demo/Demo';
+import { PURE } from '../../../utils/pure';
+import { Slider } from '../slider.component';
 import { storiesOf, action } from '@devexperts/tools/dist/utils/storybook';
 import * as theme from './slider.demo.styl';
 import { scaleLinear } from 'd3-scale';
-import { Button } from '../Button/Button';
+import { Button } from '../../Button/Button';
 import { MouseEvent } from 'react';
 
 const log = action('change');
