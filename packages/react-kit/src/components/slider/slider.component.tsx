@@ -34,7 +34,6 @@ export type TFullSliderProps = {
 	isDisabled: boolean;
 	width: number;
 	min: number;
-	step: number;
 	max: number;
 };
 
