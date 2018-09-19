@@ -74,15 +74,17 @@ export const KEY_CODE_NUM_MAP: { [code: number]: number } = {
 //D - default value prop name (string, default: 'defaultValue')
 //H - change handler prop name (string, default: 'onValueChange')
 
-//state of HOC - no need to mess with value naming - let it just be a 'value'
+/**
+ * state of HOC - no need to mess with value naming - let it just be a 'value'
+ */
 export type TStatefulState<V> = {
 	value?: V;
 };
 
 //first part of props with constraint that props should contain a field with name N (value name) and type V (value type)
-export type TDynamicValue<V, N extends string> = { [value in N]?: V | undefined };
+export type TDynamicValue<V, N extends string> = { [value in N]: V };
 //seconds part of props with constraint that props should contain a field with name H (change handler name) and type H (change handler type)
-export type TDynamicValueHandler<V, H extends string> = { [handler in H]: (value?: V) => void };
+export type TDynamicValueHandler<V, H extends string> = { [handler in H]: (value: V) => void };
 //union of props
 export type TControlProps<V, N extends string = 'value', H extends string = 'onValueChange'> = TDynamicValue<V, N> &
 	TDynamicValueHandler<V, H>;
@@ -94,9 +96,9 @@ export type TStatefulProps<
 	N extends string = 'value',
 	D extends string = 'defaultValue',
 	H extends string = 'onValueChange'
-> = Omit<P, 'value' | N | H> & //remove both value name and handler name from props
+> = Omit<P, N | H> & //remove both value name and handler name from props
 	Partial<TDynamicValueHandler<V, H>> & //add optional change handler to props
-	Partial<TDynamicValue<V, D>>; //add default value name to props - pass D (defaultValue name) here instead of N (value name)
+	TDynamicValue<V, D>; //add default value name to props - pass D (defaultValue name) here instead of N (value name)
 
 //this will the type of resulting HOC
 type TResult<

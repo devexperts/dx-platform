@@ -56,6 +56,7 @@ class SelectboxPage extends React.Component<{}, TPageState> {
 			<Demo>
 				<div>
 					<Stateful
+						defaultValue={undefined}
 						placeholder="Choose your hero"
 						selectedIcon={<ListItemTickIcon />}
 						onValueChange={this.onHeroChange as any}
@@ -75,7 +76,7 @@ class SelectboxPage extends React.Component<{}, TPageState> {
 						<MenuItem value="batman">Batman</MenuItem>
 						<MenuItem value="flash">Flash</MenuItem>
 					</DemoSelectbox>
-					<Stateful placeholder="Loading" isDisabled={true} isLoading={true}>
+					<Stateful defaultValue={undefined} placeholder="Loading" isDisabled={true} isLoading={true}>
 						<MenuItem value="dummy">Dummy</MenuItem>
 					</Stateful>
 					<Button onClick={this.onResetClick}>Reset</Button>
@@ -83,6 +84,7 @@ class SelectboxPage extends React.Component<{}, TPageState> {
 				<section>
 					Sync width
 					<Stateful
+						defaultValue={undefined}
 						placeholder="Choose your hero"
 						shouldSyncWidth={true}
 						theme={wideSelectboxTheme}

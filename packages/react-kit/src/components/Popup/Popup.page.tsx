@@ -80,7 +80,7 @@ class PopupPage extends React.Component {
 						onRequestClose={this.onPopupRequestClose}
 						isOpened={isOpened}>
 						<div>popup content</div>
-						<Stateful placeholder="Choose your hero">
+						<Stateful defaultValue={undefined} placeholder="Choose your hero">
 							<MenuItem value="superman">Superman</MenuItem>
 							<MenuItem value="batman">Batman</MenuItem>
 							<MenuItem value="flash">Flash</MenuItem>

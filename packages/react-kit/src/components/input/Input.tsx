@@ -16,7 +16,7 @@ import { withTheme } from '../../utils/withTheme';
 
 export const INPUT = Symbol('Input') as symbol;
 
-export type TFullInputProps = TControlProps<string> & {
+export type TFullInputProps = TControlProps<string | undefined> & {
 	min?: any;
 	max?: any;
 	isDisabled?: boolean;

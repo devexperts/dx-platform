@@ -9,7 +9,7 @@ import { TControlProps } from '../Control/Control';
 
 export const CHECKBOX = Symbol('Checkbox') as symbol;
 
-export type TFullCheckboxProps = TControlProps<boolean> & {
+export type TFullCheckboxProps = TControlProps<boolean | undefined> & {
 	id?: string;
 	checkMark: React.ReactNode;
 	isDisabled?: boolean;

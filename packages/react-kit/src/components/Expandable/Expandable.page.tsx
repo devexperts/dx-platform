@@ -23,7 +23,7 @@ class CustomHandler extends React.Component<any> {
 
 storiesOf('Expandable', module).add('default', () => (
 	<Demo>
-		<Stateful Handler={CustomHandler}>
+		<Stateful defaultValue={undefined} Handler={CustomHandler}>
 			You will not be asked for further confirmation of trades. <br />
 			Trades will be executed with on click.
 		</Stateful>
