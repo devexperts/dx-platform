@@ -54,7 +54,7 @@
     "@types/storybook__addon-options": "^3.2.0",
     "@types/storybook__react": "^3.0.6",
     "@types/strong-log-transformer": "^1.0.0",
-    "@types/webpack": "3.8.1",
+    "@types/webpack": "3.8.14",
     "autoprefixer": "^7.2.1",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",

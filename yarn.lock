@@ -382,6 +382,10 @@
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/@types/tapable/-/tapable-1.0.2.tgz#e13182e1b69871a422d7863e11a4a6f5b814a4bd"
 
+"@types/tapable@^0":
+  version "0.2.5"
+  resolved "https://registry.yarnpkg.com/@types/tapable/-/tapable-0.2.5.tgz#2443fc12da514c81346b1a665675559cee21fa75"
+
 "@types/uglify-js@*":
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/@types/uglify-js/-/uglify-js-3.0.2.tgz#f30c75458d18e8ee885c792c04adcb78a13bc286"
@@ -401,13 +405,14 @@
     "@types/uglify-js" "*"
     source-map "^0.6.0"
 
-"@types/webpack@3.8.1":
-  version "3.8.1"
-  resolved "https://registry.yarnpkg.com/@types/webpack/-/webpack-3.8.1.tgz#20c11ea43f1ea7bb09eee4d6d633d830653e5a55"
+"@types/webpack@3.8.14":
+  version "3.8.14"
+  resolved "https://registry.yarnpkg.com/@types/webpack/-/webpack-3.8.14.tgz#e2bfdf7f604b3f7dc776eaa17446d7f7538f3de7"
   dependencies:
     "@types/node" "*"
-    "@types/tapable" "*"
+    "@types/tapable" "^0"
     "@types/uglify-js" "*"
+    source-map "^0.6.0"
 
 JSONStream@^1.0.4:
   version "1.3.3"
