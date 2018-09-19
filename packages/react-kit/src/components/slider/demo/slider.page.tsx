@@ -38,7 +38,6 @@ class SliderPage extends Component<TSliderPageProps> {
 						theme={theme}
 						isDisabled={isDisabled}
 						width={width}
-						step={20}
 						min={min}
 						max={max}
 						inlineTrackStyle={{ backgroundColor: this.getBackground(value) }}
@@ -117,7 +116,6 @@ class ExtraSlider extends Component {
 				<Slider
 					theme={newTheme}
 					width={width}
-					step={20}
 					min={min}
 					max={max}
 					value={value}
