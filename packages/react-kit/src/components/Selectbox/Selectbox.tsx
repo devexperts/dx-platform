@@ -15,7 +15,7 @@ import { withDefaults } from '../../utils/with-defaults';
 
 export const SELECTBOX = Symbol('Selectbox') as symbol;
 
-export type TFullSelectboxProps = TControlProps<ReactText> & {
+export type TFullSelectboxProps = TControlProps<ReactText | undefined> & {
 	theme: {
 		container_isOpened?: string;
 		container__popover?: string;

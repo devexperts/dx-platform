@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { PURE } from '../../utils/pure';
-import { ComponentClass } from 'react';
+import { ComponentClass, ComponentType, ReactElement } from 'react';
 import * as ReactDOM from 'react-dom';
 import { withTheme } from '../../utils/withTheme';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
@@ -9,6 +9,7 @@ import { Input, TInputProps } from '../input/Input';
 import { KeyCode } from '../Control/Control';
 import { Holdable } from '../Holdable/Holdable';
 import { withDefaults } from '../../utils/with-defaults';
+import { constUndefined } from 'fp-ts/lib/function';
 
 export const STEPPABLE_INPUT = Symbol('SteppableInput') as symbol;
 
@@ -20,12 +21,12 @@ export type TFullSteppableInputProps = TPickedInputProps & {
 	onIncrement?: Function;
 	onDecrement?: Function;
 	onClear?: Function;
-	incrementIcon?: React.ReactElement<any>;
-	decrementIcon?: React.ReactElement<any>;
-	clearIcon?: React.ReactElement<any>;
+	incrementIcon?: ReactElement<any>;
+	decrementIcon?: ReactElement<any>;
+	clearIcon?: ReactElement<any>;
 	children?: any;
-	Input: React.ComponentClass<TInputProps> | React.SFC<TInputProps>;
-	ButtonIcon: React.ComponentClass<TButtonIconProps> | React.SFC<TButtonIconProps>;
+	Input: ComponentType<TInputProps>;
+	ButtonIcon: ComponentType<TButtonIconProps>;
 	theme: {
 		inner?: string;
 		Input?: TInputProps['theme'];
@@ -72,6 +73,8 @@ class RawSteppableInput extends React.Component<TFullSteppableInputProps, TStepp
 
 		return (
 			<Input
+				value={undefined}
+				onValueChange={constUndefined}
 				theme={theme.Input}
 				type="hidden"
 				onFocus={this.onFocus}
@@ -81,7 +84,6 @@ class RawSteppableInput extends React.Component<TFullSteppableInputProps, TStepp
 				onWheel={this.onWheel}
 				isDisabled={isDisabled}
 				error={error}
-				onValueChange={() => console.log('onchange')}
 				tabIndex={isFocused || isDisabled ? -1 : tabIndex || 0}>
 				<div className={theme.inner}>
 					{children}

@@ -10,7 +10,7 @@ import { withDefaults } from '../../utils/with-defaults';
 
 export const EXPANDABLE = Symbol('Expandable') as symbol;
 
-export type TFullExpandableProps = TControlProps<boolean | null> & {
+export type TFullExpandableProps = TControlProps<boolean | undefined | null> & {
 	theme: {
 		container?: string;
 		handler?: string;

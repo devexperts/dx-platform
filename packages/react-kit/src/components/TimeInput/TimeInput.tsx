@@ -20,7 +20,7 @@ export enum ActiveSection {
 	Minutes,
 }
 
-export type TTimeInputOwnProps = TSteppableInputProps & TControlProps<TTime | null>;
+export type TTimeInputOwnProps = TSteppableInputProps & TControlProps<TTime | undefined | null>;
 
 export type TTimeInputFullProps = TTimeInputOwnProps & {
 	SteppableInput: React.ComponentClass<TSteppableInputProps> | React.SFC<TSteppableInputProps>;

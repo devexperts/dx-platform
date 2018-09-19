@@ -15,7 +15,7 @@ export type TAnchorProps = WithInnerRef<{
 	children: ReactNode;
 }>;
 
-export type TFullDropdownProps = TControlProps<boolean, 'isOpened', 'onToggle'> & {
+export type TFullDropdownProps = TControlProps<boolean | undefined, 'isOpened', 'onToggle'> & {
 	Anchor: ComponentType<TAnchorProps>;
 	Popover: ComponentType<TPopoverProps>;
 	theme: {

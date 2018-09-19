@@ -45,14 +45,14 @@ const AnchorSFC: SFC<TAnchorProps> = props => {
 storiesOf('Dropdown', module)
 	.add('with class Anchor', () => (
 		<Demo>
-			<StatefulDropdown Anchor={AnchorClass}>
+			<StatefulDropdown defaultValue={undefined} Anchor={AnchorClass}>
 				<div>hi!</div>
 			</StatefulDropdown>
 		</Demo>
 	))
 	.add('with SFC Anchor', () => (
 		<Demo>
-			<StatefulDropdown Anchor={AnchorSFC} onToggle={console.log.bind(console)}>
+			<StatefulDropdown defaultValue={undefined} Anchor={AnchorSFC} onToggle={console.log.bind(console)}>
 				hi
 			</StatefulDropdown>
 		</Demo>
@@ -69,7 +69,7 @@ class DropdownPage extends Component<any, any> {
 	render() {
 		return (
 			<div>
-				<StatefulDropdown Anchor={AnchorClass}>
+				<StatefulDropdown defaultValue={undefined} Anchor={AnchorClass}>
 					<Button onClick={this.onForceCloseClick}>Force close</Button>
 				</StatefulDropdown>
 			</div>
