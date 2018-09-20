@@ -9,6 +9,7 @@ import { storiesOf } from '@devexperts/tools/dist/utils/storybook';
 import { stateful } from '../Control/Control';
 
 import * as css from './Popover.page.styl';
+import { Scrollable } from '../Scrollable/Scrollable';
 
 const buttonTheme = {
 	container: css.toggleButton,
@@ -19,20 +20,25 @@ class HeavyContent extends React.Component<{ isLong?: boolean }> {
 	render() {
 		return (
 			<div>
-				<h2>Tethered Content</h2>
-				<p>A paragraph to accompany the title.</p>
-				<p>A paragraph to accompany the title.</p>
-				<p>A paragraph to accompany the title.</p>
-				<p>A paragraph to accompany the title.</p>
-				<p>A paragraph to accompany the title.</p>
-				{this.props.isLong && (
-					<div>
+				<Scrollable>
+					<div className={css.heavy}>
+						<h2>Tethered Content</h2>
+						<p>A paragraph to accompany the title.</p>
+						<p>A paragraph to accompany the title.</p>
+						<p>A paragraph to accompany the title.</p>
+						<p>A paragraph to accompany the title.</p>
+						<p>A paragraph to accompany the title.</p>
+						<p>A paragraph to accompany the title.</p>
+						<p>A paragraph to accompany the title.</p>
+						<p>A paragraph to accompany the title.</p>
+						<p>A paragraph to accompany the title.</p>
+						<p>A paragraph to accompany the title.</p>
 						<p>A paragraph to accompany the title.</p>
 						<p>A paragraph to accompany the title.</p>
 						<p>A paragraph to accompany the title.</p>
 						<p>A paragraph to accompany the title.</p>
 					</div>
-				)}
+				</Scrollable>
 			</div>
 		);
 	}
