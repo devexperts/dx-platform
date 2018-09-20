@@ -14,6 +14,7 @@ import { ReactRef } from '../../utils/typings';
 import { EventListener } from '../EventListener/EventListener';
 import { RootClose } from '../RootClose/RootClose';
 import { withDefaults } from '../../utils/with-defaults';
+import { findDOMNode } from 'react-dom';
 
 type TSize = {
 	width: number;
@@ -95,7 +96,7 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 	componentDidMount() {
 		if (this.props.isOpened) {
 			if (this.props.anchor) {
-				const anchorDOMNode = ReactDOM.findDOMNode(this.props.anchor);
+				const anchorDOMNode = findDOMNode(this.props.anchor);
 				if (!anchorDOMNode || anchorDOMNode instanceof Text) {
 					return;
 				}
@@ -125,7 +126,7 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 	componentWillReceiveProps(nextProps: TFullPopoverProps) {
 		if (nextProps.isOpened && nextProps.anchor) {
 			this._needsUpdate = true;
-			const anchorDOMNode = ReactDOM.findDOMNode(nextProps.anchor);
+			const anchorDOMNode = findDOMNode(nextProps.anchor);
 			if (!anchorDOMNode || anchorDOMNode instanceof Text) {
 				return;
 			}
@@ -211,7 +212,7 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 	}
 
 	getPopoverSize(): TSize {
-		const popover = ReactDOM.findDOMNode(this._popover) as HTMLElement;
+		const popover = findDOMNode(this._popover) as HTMLElement;
 		if (popover instanceof HTMLElement) {
 			return {
 				height: popover.offsetHeight,
@@ -291,12 +292,13 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 		this.updatePosition();
 	}
 
-	onScroll = (event: UIEvent) => {
-		if (!this._anchor || this._anchor.contains(event.target as Node)) {
-			return;
+	private onScroll = (event: UIEvent) => {
+		if (this._anchor && this._popover) {
+			const popoverNode = findDOMNode(this._popover);
+			if (popoverNode && !popoverNode.contains(event.target as Node)) {
+				this.handleScroll();
+			}
 		}
-
-		this.handleScroll();
 	};
 
 	handleScroll() {
