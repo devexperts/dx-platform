@@ -34,13 +34,13 @@ export class ApiClient {
 		const xhr: AjaxRequest = {
 			withCredentials: true,
 			responseType: 'json',
+			...request,
 			headers: {
 				'Content-Type': 'application/json; charset=UTF-8',
 				...this.headers,
+				...request.headers,
 			},
-			...request,
 			url,
-			body: request.body && JSON.stringify(request.body),
 		};
 
 		return ajax(xhr).pipe(
