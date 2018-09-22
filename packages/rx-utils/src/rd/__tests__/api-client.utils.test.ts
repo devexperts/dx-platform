@@ -108,4 +108,126 @@ describe('API Client', () => {
 			});
 		});
 	});
+
+	describe('content type header is not provided', () => {
+		it('application/json should be set as default', () => {
+			const client = ApiClient.create('/');
+			const sub$ = client
+				.request({
+					method: 'POST',
+					url: 'test'
+				})
+				.subscribe();
+
+			const request = server.requests[0];
+			expect(request.requestHeaders['Content-Type']).toBe('application/json;charset=utf-8');
+			sub$.unsubscribe();
+		});
+	});
+
+	describe('content type header is provided through constructor parameter', () => {
+		it('should override the default header', () => {
+			const client = ApiClient.create('/', {'Content-Type': 'text/plain;charset=utf-8'});
+			const sub$ = client
+				.request({
+					method: 'POST',
+					url: 'test'
+				})
+				.subscribe();
+
+			const request = server.requests[0];
+			expect(request.requestHeaders['Content-Type']).toBe('text/plain;charset=utf-8');
+			sub$.unsubscribe();
+		});
+	});
+
+	describe('content type header is provided through AjaxRequest', () => {
+		it('should override the default and extra header', () => {
+			const client = ApiClient.create('/', {'Content-Type': 'text/plain;charset=utf-8'});
+			const sub$ = client
+				.request({
+					method: 'POST',
+					url: 'test',
+					headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'}
+				})
+				.subscribe();
+
+			const request = server.requests[0];
+			expect(request.requestHeaders['Content-Type']).toBe('application/x-www-form-urlencoded;charset=utf-8');
+			sub$.unsubscribe();
+		});
+	});
+
+	describe('AjaxRequest headers', () => {
+		it('should replace matched headers but preserve others', () => {
+			const client = ApiClient.create('/', {'First-Header': 'first', 'Second-Header': 'second'});
+			const sub$ = client
+				.request({
+					method: 'POST',
+					url: 'test',
+					headers: { 'Second-Header': 'secondEx' }
+				})
+				.subscribe();
+
+			const request = server.requests[0];
+			expect(request.requestHeaders).toEqual({
+				'Content-Type': 'application/json;charset=utf-8',
+				'First-Header': 'first',
+				'Second-Header': 'secondEx'
+			});
+			sub$.unsubscribe();
+		});
+	});
+
+	describe('body is string', () => {
+		it('should be serialized without additional quotes', () => {
+			const client = ApiClient.create('/');
+			const sub$ = client
+				.request({
+					method: 'POST',
+					url: 'test',
+					body: "string"
+				})
+				.subscribe();
+
+			const request = server.requests[0];
+			expect(request.requestBody).toBe('string');
+			sub$.unsubscribe();
+		});
+	});
+
+	describe('body is object with application/json header', () => {
+		it('should be serialized as json string', () => {
+			const client = ApiClient.create('/');
+			const sub$ = client
+				.request({
+					method: 'POST',
+					url: 'test',
+					body: { 'testField1': 'testData1', 'testField2': 'testData2' }
+				})
+				.subscribe();
+
+			const request = server.requests[0];
+			expect(request.requestBody).toBe('{"testField1":"testData1","testField2":"testData2"}');
+			sub$.unsubscribe();
+		});
+	});
+
+	describe('body is object with application/x-www-form-urlencoded header', () => {
+		it('should be serialized as encoded query string', () => {
+			const client = ApiClient.create('/');
+			const sub$ = client
+				.request({
+					method: 'POST',
+					url: 'test',
+					headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+					body: { 'testField1': 'testData1', 'testField2': 'testData2' }
+				})
+				.subscribe();
+
+			const request = server.requests[0];
+			expect(request.requestBody).toBe('testField1=testData1&testField2=testData2');
+			sub$.unsubscribe();
+		});
+	});
 });
