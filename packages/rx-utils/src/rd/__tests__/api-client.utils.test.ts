@@ -115,7 +115,7 @@ describe('API Client', () => {
 			const sub$ = client
 				.request({
 					method: 'POST',
-					url: 'test'
+					url: 'test',
 				})
 				.subscribe();
 
@@ -127,11 +127,11 @@ describe('API Client', () => {
 
 	describe('content type header is provided through constructor parameter', () => {
 		it('should override the default header', () => {
-			const client = ApiClient.create('/', {'Content-Type': 'text/plain;charset=utf-8'});
+			const client = ApiClient.create('/', { 'Content-Type': 'text/plain;charset=utf-8' });
 			const sub$ = client
 				.request({
 					method: 'POST',
-					url: 'test'
+					url: 'test',
 				})
 				.subscribe();
 
@@ -143,12 +143,12 @@ describe('API Client', () => {
 
 	describe('content type header is provided through AjaxRequest', () => {
 		it('should override the default and extra header', () => {
-			const client = ApiClient.create('/', {'Content-Type': 'text/plain;charset=utf-8'});
+			const client = ApiClient.create('/', { 'Content-Type': 'text/plain;charset=utf-8' });
 			const sub$ = client
 				.request({
 					method: 'POST',
 					url: 'test',
-					headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'}
+					headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
 				})
 				.subscribe();
 
@@ -160,12 +160,12 @@ describe('API Client', () => {
 
 	describe('AjaxRequest headers', () => {
 		it('should replace matched headers but preserve others', () => {
-			const client = ApiClient.create('/', {'First-Header': 'first', 'Second-Header': 'second'});
+			const client = ApiClient.create('/', { 'First-Header': 'first', 'Second-Header': 'second' });
 			const sub$ = client
 				.request({
 					method: 'POST',
 					url: 'test',
-					headers: { 'Second-Header': 'secondEx' }
+					headers: { 'Second-Header': 'secondEx' },
 				})
 				.subscribe();
 
@@ -173,7 +173,7 @@ describe('API Client', () => {
 			expect(request.requestHeaders).toEqual({
 				'Content-Type': 'application/json;charset=utf-8',
 				'First-Header': 'first',
-				'Second-Header': 'secondEx'
+				'Second-Header': 'secondEx',
 			});
 			sub$.unsubscribe();
 		});
@@ -186,7 +186,7 @@ describe('API Client', () => {
 				.request({
 					method: 'POST',
 					url: 'test',
-					body: "string"
+					body: 'string',
 				})
 				.subscribe();
 
@@ -203,7 +203,7 @@ describe('API Client', () => {
 				.request({
 					method: 'POST',
 					url: 'test',
-					body: { 'testField1': 'testData1', 'testField2': 'testData2' }
+					body: { testField1: 'testData1', testField2: 'testData2' },
 				})
 				.subscribe();
 
@@ -221,7 +221,7 @@ describe('API Client', () => {
 					method: 'POST',
 					url: 'test',
 					headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-					body: { 'testField1': 'testData1', 'testField2': 'testData2' }
+					body: { testField1: 'testData1', testField2: 'testData2' },
 				})
 				.subscribe();
 
