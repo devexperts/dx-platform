@@ -296,7 +296,7 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 		if (this._anchor && this._popover && event.target) {
 			const popoverNode = findDOMNode(this._popover);
 			const scrolled = event.target as Node;
-			if ((popoverNode && !popoverNode.contains(scrolled)) || scrolled.contains(this._anchor)) {
+			if (popoverNode && scrolled.contains(this._anchor)) {
 				this.handleScroll();
 			}
 		}
