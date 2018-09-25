@@ -9,7 +9,7 @@ export function switchMapRD<L, A, B>(f: Function1<A, Observable<RemoteData<L, B>
 			if (data.isSuccess()) {
 				return f(data.value);
 			} else {
-				return of(source);
+				return of(data as any);
 			}
 		})(source);
 	};
