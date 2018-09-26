@@ -18,14 +18,21 @@ import { withDefaults } from '../../utils/with-defaults';
 /**
  * Undefined - value is not set, null - value is force reset
  */
-export type TDateValueProps = TControlProps<Date | null | undefined>;
+export type TFullDate = {
+	date: Date | null | undefined,
+	day?: number,
+	month?: number,
+	year?: number,
+};
+
+export type TDateValueProps = TControlProps<TFullDate>;
 
 export enum DateFormatType {
 	MDY,
 	DMY,
 }
 
-export type TCalendarProps = TDateValueProps & {
+export type TCalendarProps = TControlProps<Date | null | undefined> & {
 	onMouseDown?: React.EventHandler<React.MouseEvent<Element>>;
 	min?: Date;
 	max?: Date;
@@ -33,15 +40,15 @@ export type TCalendarProps = TDateValueProps & {
 
 export type TDateInputOwnProps = TSteppableInputProps &
 	TDateValueProps & {
-		min?: Date;
-		max?: Date;
-		calendarIcon?: React.ReactElement<any>;
-		onClear?: Function;
-		onFocus?: () => void;
-		onBlur?: () => void;
-		target?: Element;
-		Calendar?: React.ComponentClass<TCalendarProps> | React.SFC<TCalendarProps>;
-	};
+	min?: Date;
+	max?: Date;
+	calendarIcon?: React.ReactElement<any>;
+	onClear?: Function;
+	onFocus?: () => void;
+	onBlur?: () => void;
+	target?: Element;
+	Calendar?: React.ComponentClass<TCalendarProps> | React.SFC<TCalendarProps>;
+};
 
 export type TDateDefaultProps = {
 	SteppableInput: React.ComponentClass<TSteppableInputProps> | React.SFC<TSteppableInputProps>;
@@ -91,19 +98,22 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 	private calendarButtonRef!: ReactInstance;
 
 	componentWillMount() {
-		const { value } = this.props;
-		if (value) {
-			this.setState(getValuesFromDate(value));
+		const { value: { date } } = this.props;
+		if (date) {
+			this.setState(getValuesFromDate(date));
 		}
 	}
 
 	componentWillReceiveProps(newProps: TDateInputFullProps) {
-		if (this.props.value !== newProps.value && isDefined(newProps.value)) {
+		const newDate = newProps.value.date;
+		const prevDate = this.props.value.date;
+
+		if (prevDate !== newDate && isDefined(newDate)) {
 			let month;
 			let day;
 			let year;
-			if (newProps.value !== null && !isNaN(newProps.value.getTime())) {
-				const result = getValuesFromDate(newProps.value);
+			if (newDate !== null && !isNaN(newDate.getTime())) {
+				const result = getValuesFromDate(newDate);
 				month = result.month;
 				day = result.day;
 				year = result.year;
@@ -139,12 +149,12 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 
 		let onClear;
 		// check if "X" clear button should be visible - at least one part of date should be set
-		if ((isDefined(value) && value !== null) || isDefined(day) || isDefined(month) || isDefined(year)) {
+		if ((isDefined(value.date) && value.date !== null) || isDefined(day) || isDefined(month) || isDefined(year)) {
 			onClear = this.onClear;
 		}
 
 		const innerClassName = classnames(theme.inner, {
-			[theme.inner_isFilled as string]: value && !isNaN(value.getTime()),
+			[theme.inner_isFilled as string]: value.date && !isNaN(value.date.getTime()),
 		});
 
 		return (
@@ -225,7 +235,7 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 
 		const calendar = (
 			<Calendar
-				value={value}
+				value={value.date}
 				min={min}
 				max={max}
 				onMouseDown={this.onCalendarMouseDown}
@@ -291,11 +301,11 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 		const newValueDiffers =
 			canBuildValue &&
 			isDefined(month) &&
-			(!isDefined(value) ||
-				value === null ||
-				value.getDate() !== day ||
-				value.getMonth() !== month - 1 ||
-				value.getFullYear() !== year);
+			(!isDefined(value.date) || (value.date && (value === null ||
+				value.date.getDate() !== day ||
+				value.date.getMonth() !== month - 1 ||
+				value.date.getFullYear() !== year))
+			);
 
 		if (canBuildValue) {
 			if (newValueDiffers && onValueChange && isDefined(year) && isDefined(month) && isDefined(day)) {
@@ -309,11 +319,11 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 				const isOutOfBounds = (min && is_before(date, min)) || (max && is_after(date, max));
 				if (!wasAdjusted && !isOutOfBounds) {
 					//everything is ok and value hasn't been adjusted
-					onValueChange(date);
+					onValueChange({ date });
 				} else {
 					//too "smart" Date constructor has adjusted our value - date is actually invalid
 					//or date is out of bounds
-					onValueChange(undefined);
+					onValueChange({ date: undefined, day, month, year });
 					this.setState({
 						day,
 						month,
@@ -322,9 +332,7 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 				}
 			}
 		} else {
-			if (isDefined(this.props.value)) {
-				onValueChange && onValueChange(undefined);
-			}
+			onValueChange && onValueChange({ date: undefined, day, month, year });
 			this.setState({
 				day,
 				month,
@@ -389,15 +397,14 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 		if (
 			onValueChange &&
 			date &&
-			date &&
 			!isNaN(date.getTime()) &&
-			(!value ||
-				isNaN(value.getTime()) ||
-				value.getFullYear() !== date.getFullYear() ||
-				value.getMonth() !== date.getMonth() ||
-				value.getDate() !== date.getDate())
+			(!value.date ||
+				isNaN(value.date.getTime()) ||
+				value.date.getFullYear() !== date.getFullYear() ||
+				value.date.getMonth() !== date.getMonth() ||
+				value.date.getDate() !== date.getDate())
 		) {
-			onValueChange(date);
+			onValueChange({ date });
 		}
 	};
 
@@ -720,7 +727,7 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 export type TDateInputProps = PartialKeys<
 	TDateInputFullProps,
 	'theme' | 'SteppableInput' | 'ButtonIcon' | 'dateFormatType' | 'Popover'
->;
+	>;
 export const DateInput: ComponentClass<TDateInputProps> = withTheme(DATE_INPUT)(
 	withDefaults<TDateInputFullProps, 'SteppableInput' | 'ButtonIcon' | 'dateFormatType' | 'Popover'>({
 		SteppableInput,
