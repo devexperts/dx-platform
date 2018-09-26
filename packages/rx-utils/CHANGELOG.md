@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="0.17.1"></a>
+## [0.17.1](https://github.com/devex-web-frontend/dx-platform/compare/v0.17.0...v0.17.1) (2018-09-26)
+
+
+### Reverts
+
+* **rx-utils:** fix createHandler ([#76](https://github.com/devex-web-frontend/dx-platform/issues/76)) ([a7a580f](https://github.com/devex-web-frontend/dx-platform/commit/a7a580f))
+
+
+
+
 <a name="0.17.0"></a>
 # [0.17.0](https://github.com/devex-web-frontend/dx-platform/compare/v0.16.2...v0.17.0) (2018-09-25)
 
