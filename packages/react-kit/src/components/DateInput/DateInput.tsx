@@ -14,18 +14,18 @@ import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { PURE } from '../../utils/pure';
 import { Popover, TPopoverProps } from '../Popover/Popover';
 import { withDefaults } from '../../utils/with-defaults';
+import { Option, none, some, getSetoid, option } from 'fp-ts/lib/Option';
+import { setoidNumber, getRecordSetoid } from 'fp-ts/lib/Setoid';
+import { sequence } from 'fp-ts/lib/Traversable';
+import { array } from 'fp-ts/lib/Array';
 
-/**
- * Undefined - value is not set, null - value is force reset
- */
-export type TFullDate = {
-	date: Date | null | undefined,
-	day?: number,
-	month?: number,
-	year?: number,
+export type TDate = {
+	day: Option<number>,
+	month: Option<number>,
+	year: Option<number>,
 };
 
-export type TDateValueProps = TControlProps<TFullDate>;
+export type TDateValueProps = TControlProps<TDate>;
 
 export enum DateFormatType {
 	MDY,
@@ -81,11 +81,15 @@ enum ActiveSection {
 
 type TDateInputState = {
 	activeSection?: ActiveSection;
-	day?: number;
-	month?: number;
-	year?: number;
+	day: Option<number>;
+	month: Option<number>;
+	year: Option<number>;
 	isOpened?: boolean;
 };
+
+const setoidOptionNumber = getSetoid(setoidNumber);
+const dateObjSetoid = getRecordSetoid<TDate>({ day: setoidOptionNumber, month: setoidOptionNumber, year: setoidOptionNumber });
+const isDatesDifferent = (x: TDate, y: TDate): boolean => !dateObjSetoid.equals(x, y);
 
 export const DATE_INPUT = Symbol('DateInput') as symbol;
 
@@ -93,35 +97,19 @@ export const DATE_INPUT = Symbol('DateInput') as symbol;
 class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState> {
 	readonly state: TDateInputState = {
 		isOpened: false,
+		day: this.props.value.day,
+		month: this.props.value.month,
+		year: this.props.value.year,
 	};
 	private secondInput: boolean = false;
 	private calendarButtonRef!: ReactInstance;
 
-	componentWillMount() {
-		const { value: { date } } = this.props;
-		if (date) {
-			this.setState(getValuesFromDate(date));
-		}
-	}
-
 	componentWillReceiveProps(newProps: TDateInputFullProps) {
-		const newDate = newProps.value.date;
-		const prevDate = this.props.value.date;
-
-		if (prevDate !== newDate && isDefined(newDate)) {
-			let month;
-			let day;
-			let year;
-			if (newDate !== null && !isNaN(newDate.getTime())) {
-				const result = getValuesFromDate(newDate);
-				month = result.month;
-				day = result.day;
-				year = result.year;
-			}
+		if (isDatesDifferent(this.props.value, newProps.value)) {
 			this.setState({
-				month,
-				day,
-				year,
+				month: newProps.value.month,
+				day: newProps.value.day,
+				year: newProps.value.year,
 			});
 		}
 	}
@@ -149,12 +137,12 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 
 		let onClear;
 		// check if "X" clear button should be visible - at least one part of date should be set
-		if ((isDefined(value.date) && value.date !== null) || isDefined(day) || isDefined(month) || isDefined(year)) {
+		if ((value.day.isSome() && value.month.isSome() && value.year.isSome()) || day.isSome() || month.isSome() || year.isSome()) {
 			onClear = this.onClear;
 		}
 
 		const innerClassName = classnames(theme.inner, {
-			[theme.inner_isFilled as string]: value.date && !isNaN(value.date.getTime()),
+			[theme.inner_isFilled as string]: value.day.isSome() && value.month.isSome() && value.year.isSome(),
 		});
 
 		return (
@@ -259,8 +247,9 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 		}
 	}
 
-	private format(value: number | undefined, section: ActiveSection): string {
-		if (isDefined(value)) {
+	private format(date: Option<number>, section: ActiveSection): string {
+		if (date.isSome()) {
+			const value = date.value;
 			switch (section) {
 				//maybe we should use left-pad here? ;)
 				case ActiveSection.Day: //fallthrough
@@ -294,36 +283,29 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 		}
 	}
 
-	private updateStateTime(day?: number, month?: number, year?: number): void {
+	private updateStateTime(day: Option<number>, month: Option<number>, year: Option<number>): void {
 		const { onValueChange, value, min, max } = this.props;
 
-		const canBuildValue = isDefined(day) && isDefined(month) && isDefined(year);
-		const newValueDiffers =
-			canBuildValue &&
-			isDefined(month) &&
-			(!isDefined(value.date) || (value.date && (value === null ||
-				value.date.getDate() !== day ||
-				value.date.getMonth() !== month - 1 ||
-				value.date.getFullYear() !== year))
-			);
+		const canBuildValue = day.isSome() && month.isSome() && year.isSome();
+		const newValueDiffers = isDatesDifferent(value, { day, month, year });
 
 		if (canBuildValue) {
-			if (newValueDiffers && onValueChange && isDefined(year) && isDefined(month) && isDefined(day)) {
-				const date = new Date(year, month - 1, day);
+			if (newValueDiffers && onValueChange && day.isSome() && month.isSome() && year.isSome()) {
+				const date = new Date(year.value, month.value - 1, day.value);
 				//check new date
 				const wasAdjusted = !(
-					date.getFullYear() === year &&
-					date.getMonth() === month - 1 &&
-					date.getDate() === day
+					date.getFullYear() === year.value &&
+					date.getMonth() === month.value - 1 &&
+					date.getDate() === day.value
 				);
 				const isOutOfBounds = (min && is_before(date, min)) || (max && is_after(date, max));
 				if (!wasAdjusted && !isOutOfBounds) {
 					//everything is ok and value hasn't been adjusted
-					onValueChange({ date });
+					onValueChange({ day, month, year });
 				} else {
 					//too "smart" Date constructor has adjusted our value - date is actually invalid
 					//or date is out of bounds
-					onValueChange({ date: undefined, day, month, year });
+					onValueChange({ day, month, year });
 					this.setState({
 						day,
 						month,
@@ -332,7 +314,7 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 				}
 			}
 		} else {
-			onValueChange && onValueChange({ date: undefined, day, month, year });
+			onValueChange && onValueChange({ day, month, year });
 			this.setState({
 				day,
 				month,
@@ -347,18 +329,24 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 		switch (activeSection) {
 			case ActiveSection.Day: {
 				//day starts from 1 here and cannot be zero
-				const newDay = isDefined(day) ? (day + 1) % 32 || 1 : 1;
+				const newDay = day.map(value => (value + 1) % 32 || 1).orElse(() => some(1));
 				this.updateStateTime(newDay, month, year);
 				break;
 			}
 			case ActiveSection.Month: {
 				//month starts from 1 here and cannot be zero
-				const newMonth = isDefined(month) ? (month + 1) % 13 || 1 : 1;
+				const newMonth = month.map(value => (value + 1) % 13 || 1).orElse(() => some(1));
 				this.updateStateTime(day, newMonth, year);
 				break;
 			}
 			case ActiveSection.Year: {
-				const newYear = isDefined(year) && year !== 9999 ? year + 1 : new Date().getFullYear();
+				const newYear = year.chain(value => {
+					if (value !== 9999) {
+						return some(value + 1);
+					} else {
+						return none;
+					}
+				}).orElse(() => some(new Date().getFullYear()));
 				this.updateStateTime(day, month, newYear);
 				break;
 			}
@@ -371,18 +359,24 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 		switch (activeSection) {
 			case ActiveSection.Day: {
 				//day starts from 1 and cannot be zero
-				const newDay = isDefined(day) ? (day - 1) % 32 || 31 : 31;
+				const newDay = day.map(value => (value - 1) % 32 || 31).orElse(() => some(31));
 				this.updateStateTime(newDay, month, year);
 				break;
 			}
 			case ActiveSection.Month: {
 				//month starts from 1 and cannot be zero
-				const newMonth = isDefined(month) ? (month - 1) % 13 || 12 : 12;
+				const newMonth = month.map(value => (value - 1) % 13 || 12).orElse(() => some(12));
 				this.updateStateTime(day, newMonth, year);
 				break;
 			}
 			case ActiveSection.Year: {
-				const newYear = isDefined(year) && year !== 0 ? year - 1 : new Date().getFullYear();
+				const newYear = year.chain(value => {
+					if (value !== 0) {
+						return some(value - 1);
+					} else {
+						return none;
+					}
+				}).orElse(() => some(new Date().getFullYear()));
 				this.updateStateTime(day, month, newYear);
 				break;
 			}
@@ -415,7 +409,7 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 
 	private onClear = () => {
 		this.secondInput = false;
-		this.updateStateTime();
+		this.updateStateTime(none, none, none);
 		const { onClear } = this.props;
 		onClear && onClear();
 	};
@@ -490,15 +484,15 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 				this.secondInput = false;
 				switch (activeSection) {
 					case ActiveSection.Day: {
-						this.updateStateTime(undefined, month, year);
+						this.updateStateTime(none, month, year);
 						break;
 					}
 					case ActiveSection.Month: {
-						this.updateStateTime(day, undefined, year);
+						this.updateStateTime(day, none, year);
 						break;
 					}
 					case ActiveSection.Year: {
-						this.updateStateTime(day, month, undefined);
+						this.updateStateTime(day, month, none);
 						break;
 					}
 				}
@@ -662,18 +656,18 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 			case ActiveSection.Day: {
 				if (this.secondInput) {
 					let newDay;
-					if (isDefined(day) && day < 3) {
-						newDay = Number(`${day}${digit}`);
-					} else if (day === 3) {
-						newDay = Math.min(Number(`${day}${digit}`), 31);
+					if (day.isSome() && day.value < 3) {
+						newDay = Number(`${day.value}${digit}`);
+					} else if (day.isSome() && day.value === 3) {
+						newDay = Math.min(Number(`${day.value}${digit}`), 31);
 					} else {
 						newDay = digit;
 					}
-					this.updateStateTime(newDay, month, year);
+					this.updateStateTime(some(newDay), month, year);
 					this.selectNextSection();
 					this.secondInput = false;
 				} else {
-					this.updateStateTime(digit, month, year);
+					this.updateStateTime(some(digit), month, year);
 					if (digit > 3) {
 						this.selectNextSection();
 						this.secondInput = false;
@@ -686,18 +680,18 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 			case ActiveSection.Month: {
 				if (this.secondInput) {
 					let newMonth;
-					if (isDefined(month) && month < 1) {
-						newMonth = Number(`${month}${digit}`);
-					} else if (month === 1) {
-						newMonth = Math.min(Number(`${month}${digit}`), 12);
+					if (month.isSome() && month.value < 1) {
+						newMonth = Number(`${month.value}${digit}`);
+					} else if (month.isSome() && month.value === 1) {
+						newMonth = Math.min(Number(`${month.value}${digit}`), 12);
 					} else {
 						newMonth = digit;
 					}
-					this.updateStateTime(day, newMonth, year);
+					this.updateStateTime(day, some(newMonth), year);
 					this.selectNextSection();
 					this.secondInput = false;
 				} else {
-					this.updateStateTime(day, digit, year);
+					this.updateStateTime(day, some(digit), year);
 					if (digit > 1) {
 						this.selectNextSection();
 						this.secondInput = false;
@@ -709,13 +703,17 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 			}
 			case ActiveSection.Year: {
 				if (this.secondInput) {
-					let newYear = `${year}${digit}`;
-					if (isDefined(year) && year >= 1000) {
-						newYear = newYear.substr(1);
+					if (year.isSome()) {
+						if (year.value < 1000) {
+							this.updateStateTime(day, month, some(Number(`${year.value}${digit}`)));
+						} else {
+							this.updateStateTime(day, month, some(Number(`${year.value}${digit}`.substr(1))));
+						}
+					} else {
+						this.updateStateTime(day, month, none);
 					}
-					this.updateStateTime(day, month, Number(newYear));
 				} else {
-					this.updateStateTime(day, month, digit);
+					this.updateStateTime(day, month, some(digit));
 					this.secondInput = true;
 				}
 				break;

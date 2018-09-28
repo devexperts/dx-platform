@@ -5,11 +5,12 @@ import { CalendarIcon } from '../../icons/calendar-icon';
 import { DecreaseIcon } from '../../icons/decrease-icon';
 import { SmallCrossIcon as ClearIcon } from '../../icons/small-cross-icon';
 
-import { DateFormatType, DateInput, TCalendarProps, TFullDate } from './DateInput';
+import { DateFormatType, DateInput, TCalendarProps, TDate } from './DateInput';
 import { stateful } from '../Control/Control';
 import { Demo } from '../demo/Demo';
 import { Button } from '../Button/Button';
 import { ToggleButtons } from '../ToggleButtons/ToggleButtons';
+import { some, none } from 'fp-ts/lib/Option';
 
 const Stateful = stateful()(DateInput);
 const onChange = (value: { date: Date | null | undefined }) => action('change')(value);
@@ -26,14 +27,14 @@ const Calendar: React.SFC<TCalendarProps> = props => {
 };
 
 type TState = Readonly<{
-	value: TFullDate;
+	value: TDate;
 	dateFormatType: DateFormatType;
 }>;
 
 class DateInputPage extends React.Component<any, TState> {
 	private target: any;
 	readonly state: TState = {
-		value: { date: undefined },
+		value: { day: some(1), month: some(1), year: some(2018) },
 		dateFormatType: DateFormatType.DMY,
 	};
 
@@ -64,7 +65,7 @@ class DateInputPage extends React.Component<any, TState> {
 					/>
 					<Button onClick={this.onControlledManualClear}>Clear</Button>
 				</section>
-				<section>
+				{/* <section>
 					<h1>without Calendar</h1>
 					<Stateful
 						dateFormatType={this.state.dateFormatType}
@@ -129,7 +130,7 @@ class DateInputPage extends React.Component<any, TState> {
 						target={this.target}
 						defaultValue={{ date: new Date() }}
 					/>
-				</section>
+				</section> */}
 				<section>
 					<h1>calendar output target</h1>
 					<div ref={el => (this.target = el)} />
@@ -151,19 +152,20 @@ class DateInputPage extends React.Component<any, TState> {
 
 	private onControlledManualClear = () => {
 		this.setState({
-			value: { date: null },
+			value: { day: none, month: none, year: none },
 		});
 	};
 
 	private onControlledClear = () => {
 		this.setState({
-			value: { date: undefined },
+			value: { day: none, month: none, year: none },
 		});
 	};
 
-	private onControlledChange = (value: TFullDate) => {
+	private onControlledChange = (value: TDate) => {
+		console.log(value);
 		this.setState({
-			value: { date: value.date },
+			value
 		});
 	};
 
