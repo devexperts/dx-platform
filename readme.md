@@ -21,4 +21,6 @@ Also you can run several commands:
 https://github.com/angular/angular.js/blob/master/DEVELOPERS.md#commits
 
 ## Publish
-Always publish with `--conventional-commits` flag or use `npm run lerna:publish`
+`--conventional-commit` flag enabled by `lerna.json` file.
+It forces bump version to next major if breaking changes was introduced.
+To avoid this behaviour during `0.x` phase use `yarn lerna publish --cd-version <minor|patch> --force-publish=*` for publishing.
