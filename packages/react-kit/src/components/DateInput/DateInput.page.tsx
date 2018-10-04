@@ -5,14 +5,16 @@ import { CalendarIcon } from '../../icons/calendar-icon';
 import { DecreaseIcon } from '../../icons/decrease-icon';
 import { SmallCrossIcon as ClearIcon } from '../../icons/small-cross-icon';
 
-import { DateFormatType, DateInput, TCalendarProps } from './DateInput';
+import { DateInput } from './DateInput';
 import { stateful } from '../Control/Control';
 import { Demo } from '../demo/Demo';
 import { Button } from '../Button/Button';
 import { ToggleButtons } from '../ToggleButtons/ToggleButtons';
+import { some, none } from 'fp-ts/lib/Option';
+import { TDateInputValue, TCalendarProps, DateFormatType } from './DateInput.model';
 
 const Stateful = stateful()(DateInput);
-const onChange = (value: Date | null | undefined) => action('change')(value);
+const onChange = (value: TDateInputValue) => action('change')(value);
 const onClear = () => action('clear')();
 
 const Calendar: React.SFC<TCalendarProps> = props => {
@@ -26,13 +28,14 @@ const Calendar: React.SFC<TCalendarProps> = props => {
 };
 
 type TState = Readonly<{
-	value?: Date | null;
+	value: TDateInputValue;
 	dateFormatType: DateFormatType;
 }>;
 
 class DateInputPage extends React.Component<any, TState> {
 	private target: any;
 	readonly state: TState = {
+		value: { day: some(1), month: some(1), year: some(2018) },
 		dateFormatType: DateFormatType.DMY,
 	};
 
@@ -74,7 +77,7 @@ class DateInputPage extends React.Component<any, TState> {
 						error={error}
 						onValueChange={onChange}
 						onClear={onClear}
-						defaultValue={new Date()}
+						defaultValue={{ day: none, month: none, year: none }}
 					/>
 					<Stateful
 						dateFormatType={this.state.dateFormatType}
@@ -85,7 +88,7 @@ class DateInputPage extends React.Component<any, TState> {
 						onValueChange={onChange}
 						error={error}
 						onClear={onClear}
-						defaultValue={new Date()}
+						defaultValue={{ day: none, month: none, year: none }}
 					/>
 					<Stateful
 						dateFormatType={this.state.dateFormatType}
@@ -96,7 +99,7 @@ class DateInputPage extends React.Component<any, TState> {
 						onValueChange={onChange}
 						error={error}
 						onClear={onClear}
-						defaultValue={new Date()}
+						defaultValue={{ day: none, month: none, year: none }}
 					/>
 				</section>
 				<section>
@@ -112,7 +115,7 @@ class DateInputPage extends React.Component<any, TState> {
 						onValueChange={onChange}
 						onClear={onClear}
 						Calendar={Calendar}
-						defaultValue={new Date()}
+						defaultValue={{ day: none, month: none, year: none }}
 					/>
 					<Stateful
 						dateFormatType={this.state.dateFormatType}
@@ -126,7 +129,7 @@ class DateInputPage extends React.Component<any, TState> {
 						onClear={onClear}
 						Calendar={Calendar}
 						target={this.target}
-						defaultValue={new Date()}
+						defaultValue={{ day: none, month: none, year: none }}
 					/>
 				</section>
 				<section>
@@ -150,18 +153,17 @@ class DateInputPage extends React.Component<any, TState> {
 
 	private onControlledManualClear = () => {
 		this.setState({
-			value: null,
+			value: { day: none, month: none, year: none },
 		});
 	};
 
 	private onControlledClear = () => {
 		this.setState({
-			value: undefined,
+			value: { day: none, month: none, year: none },
 		});
 	};
 
-	private onControlledChange = (value: Date | undefined | null) => {
-		console.log(value);
+	private onControlledChange = (value: TDateInputValue) => {
 		this.setState({
 			value,
 		});
