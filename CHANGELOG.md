@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="0.18.0"></a>
+# [0.18.0](https://github.com/devex-web-frontend/dx-platform/compare/v0.17.1...v0.18.0) (2018-10-04)
+
+
+### Features
+
+* **react-kit:** change DateInput workflow ([#77](https://github.com/devex-web-frontend/dx-platform/issues/77)) ([88f9a81](https://github.com/devex-web-frontend/dx-platform/commit/88f9a81))
+
+
+### BREAKING CHANGES
+
+* **react-kit:** DateInput is now fully controlled and works with Option
+
+
+
+
 <a name="0.17.1"></a>
 ## [0.17.1](https://github.com/devex-web-frontend/dx-platform/compare/v0.17.0...v0.17.1) (2018-09-26)
 
