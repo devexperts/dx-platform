@@ -5,20 +5,20 @@ import { TButtonIconProps } from '../ButtonIcon/ButtonIcon';
 import { TControlProps } from '../Control/Control';
 import { TSteppableInputProps } from '../SteppableInput/SteppableInput';
 
-export type TDate = {
+export type TDateInputValue = {
 	day: Option<number>;
 	month: Option<number>;
 	year: Option<number>;
 };
 
 const setoidOptionNumber = getSetoid(setoidNumber);
-const dateSetoid = getRecordSetoid<TDate>({
+const dateSetoid = getRecordSetoid<TDateInputValue>({
 	day: setoidOptionNumber,
 	month: setoidOptionNumber,
 	year: setoidOptionNumber,
 });
 
-export const isDatesDifferent = (x: TDate, y: TDate): boolean => !dateSetoid.equals(x, y);
+export const isDatesDifferent = (x: TDateInputValue, y: TDateInputValue): boolean => !dateSetoid.equals(x, y);
 
 export enum DateFormatType {
 	MDY,
@@ -31,7 +31,7 @@ export type TCalendarProps = TControlProps<Date | null> & {
 	max?: Date;
 };
 
-type TDateValueProps = TControlProps<TDate>;
+type TDateValueProps = TControlProps<TDateInputValue>;
 
 export type TDateInputOwnProps = TSteppableInputProps &
 	TDateValueProps & {
@@ -79,7 +79,7 @@ export enum ActiveSection {
 	Year,
 }
 
-export const toObjectDate = (date: Date): TDate => ({
+export const toObjectDate = (date: Date): TDateInputValue => ({
 	day: some(date.getDate()),
 	month: some(date.getMonth()),
 	year: some(date.getFullYear()),

@@ -11,10 +11,10 @@ import { Demo } from '../demo/Demo';
 import { Button } from '../Button/Button';
 import { ToggleButtons } from '../ToggleButtons/ToggleButtons';
 import { some, none } from 'fp-ts/lib/Option';
-import { TDate, TCalendarProps, DateFormatType } from './DateInput.model';
+import { TDateInputValue, TCalendarProps, DateFormatType } from './DateInput.model';
 
 const Stateful = stateful()(DateInput);
-const onChange = (value: TDate) => action('change')(value);
+const onChange = (value: TDateInputValue) => action('change')(value);
 const onClear = () => action('clear')();
 
 const Calendar: React.SFC<TCalendarProps> = props => {
@@ -28,7 +28,7 @@ const Calendar: React.SFC<TCalendarProps> = props => {
 };
 
 type TState = Readonly<{
-	value: TDate;
+	value: TDateInputValue;
 	dateFormatType: DateFormatType;
 }>;
 
@@ -163,7 +163,7 @@ class DateInputPage extends React.Component<any, TState> {
 		});
 	};
 
-	private onControlledChange = (value: TDate) => {
+	private onControlledChange = (value: TDateInputValue) => {
 		this.setState({
 			value,
 		});
