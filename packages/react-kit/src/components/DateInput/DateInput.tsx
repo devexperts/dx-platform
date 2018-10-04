@@ -12,9 +12,7 @@ import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { PURE } from '../../utils/pure';
 import { Popover } from '../Popover/Popover';
 import { withDefaults } from '../../utils/with-defaults';
-import { Option, none, some, option } from 'fp-ts/lib/Option';
-import { sequence } from 'fp-ts/lib/Traversable';
-import { array } from 'fp-ts/lib/Array';
+import { Option, none, some } from 'fp-ts/lib/Option';
 import {
 	TDateInputFullProps,
 	TDateInputState,
@@ -23,6 +21,7 @@ import {
 	isDatesDifferent,
 	toObjectDate,
 	format,
+	buildDateOption,
 } from './DateInput.model';
 
 export const DATE_INPUT = Symbol('DateInput') as symbol;
@@ -155,13 +154,11 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 			return null;
 		}
 
-		const date = sequence(option, array)([day, month, year]).fold(
-			null,
-			([day, month, year]) => new Date(year, month, day),
-		);
+		const date = buildDateOption(day)(month)(year);
+
 		const calendar = (
 			<Calendar
-				value={date}
+				value={date.toNullable()}
 				min={min}
 				max={max}
 				onMouseDown={this.onCalendarMouseDown}

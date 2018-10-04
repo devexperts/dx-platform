@@ -1,9 +1,10 @@
-import { Option, getSetoid, some } from 'fp-ts/lib/Option';
+import { Option, getSetoid, some, option } from 'fp-ts/lib/Option';
 import { setoidNumber, getRecordSetoid } from 'fp-ts/lib/Setoid';
 import { TPopoverProps } from '../Popover/Popover';
 import { TButtonIconProps } from '../ButtonIcon/ButtonIcon';
 import { TControlProps } from '../Control/Control';
 import { TSteppableInputProps } from '../SteppableInput/SteppableInput';
+import { liftA3 } from 'fp-ts/lib/Apply';
 
 export type TDateInputValue = {
 	day: Option<number>;
@@ -19,6 +20,9 @@ const dateSetoid = getRecordSetoid<TDateInputValue>({
 });
 
 export const isDatesDifferent = (x: TDateInputValue, y: TDateInputValue): boolean => !dateSetoid.equals(x, y);
+
+const buildDate = (day: number) => (month: number) => (year: number) => new Date(year, month, day);
+export const buildDateOption = liftA3(option)(buildDate);
 
 export enum DateFormatType {
 	MDY,
