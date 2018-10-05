@@ -1,59 +1,76 @@
-import { Component, ComponentClass, ComponentType, createElement } from 'react';
-import { BehaviorSubject, isObservable, Observable, Subscription } from 'rxjs';
-import { observeOn } from 'rxjs/operators';
+import { ComponentClass, ComponentType, createElement, PureComponent } from 'react';
+import { BehaviorSubject, merge, Observable, Subscription } from 'rxjs';
+import { map, observeOn } from 'rxjs/operators';
 import { animationFrame } from 'rxjs/internal/scheduler/animationFrame';
+import { PartialKeys } from '@devexperts/utils/src/object';
 
 // tslint:disable-next-line
 const hoistNonReactStatics = require('hoist-non-react-statics');
 
-export type WithRXSelectorResultPropsOnly<P> = Observable<Partial<P>>;
-export type WithRXSelectorResultWithEffects<P> = {
-	props$: Observable<Partial<P>>;
-	effects$: Observable<void>;
+export type Observify<P extends object> = { readonly [K in keyof P]: Observable<P[K]> };
+
+const WithRXSelectorResultTag = Symbol('WithRXSelectorResult');
+export type WithRXSelectorResultTag = typeof WithRXSelectorResultTag;
+export type WithRXSelectorResult<P extends object> = {
+	_tag: WithRXSelectorResultTag;
+	props: Partial<Observify<P>>;
+	effects$?: Observable<void>;
 };
+const select = <P extends object>(
+	props: Partial<Observify<P>>,
+	effects$?: Observable<void>,
+): WithRXSelectorResult<P> => ({
+	_tag: WithRXSelectorResultTag,
+	props,
+	effects$,
+});
 
-export type ComponentDecorator<P> = (Target: ComponentType<P>) => ComponentClass<P>;
-export type WithRXSelectorResult<P> = WithRXSelectorResultPropsOnly<P> | WithRXSelectorResultWithEffects<P>;
-export type WithRXSelector<P> = (props$: Observable<Readonly<P>>) => WithRXSelectorResult<P>;
+export function withRX<P extends D, D extends object>(
+	Target: ComponentType<P>,
+	selector: (
+		props$: Observable<Readonly<P>>,
+		select: (props: Partial<Observify<P>>, effects$?: Observable<void>) => WithRXSelectorResult<P>,
+	) => WithRXSelectorResult<P>,
+	defaultProps?: D,
+): ComponentClass<PartialKeys<P, keyof D>> {
+	class WithRX extends PureComponent<P, Partial<P>> {
+		readonly state: Partial<P> = this.props;
+		static displayName = `WithRX(${Target.displayName || Target.name})`;
+		static defaultProps = defaultProps;
 
-export function withRX<P extends object = never>(select: WithRXSelector<P>): ComponentDecorator<P> {
-	return Target => {
-		class WithRX extends Component<P> {
-			static displayName = `WithRX(${Target.displayName || Target.name})`;
+		private readonly props$ = new BehaviorSubject<P>(this.props);
+		private selected = selector(this.props$.asObservable(), select);
+		private inputSubscription?: Subscription;
+		private effectsSubscription?: Subscription;
 
-			private props$ = new BehaviorSubject(this.props);
-			private selectResult = select(this.props$.asObservable());
-			private input$ = isObservable(this.selectResult) ? this.selectResult : this.selectResult.props$;
-			private effect$ = !isObservable(this.selectResult) ? this.selectResult.effects$ : undefined;
-			private inputSubscription?: Subscription;
-			private effectSubscription?: Subscription;
+		componentDidMount() {
+			const inputs = Object.keys(this.selected.props).map(key =>
+				this.selected.props[key].pipe(map((value: unknown) => ({ [key]: value }))),
+			);
+			this.inputSubscription = merge(...inputs)
+				.pipe(observeOn(animationFrame))
+				.subscribe(this.setState.bind(this));
 
-			componentDidMount() {
-				this.inputSubscription = this.input$
-					.pipe(observeOn(animationFrame))
-					.subscribe(this.setState.bind(this));
-
-				if (this.effect$) {
-					this.effectSubscription = this.effect$.pipe(observeOn(animationFrame)).subscribe();
-				}
-			}
-
-			componentWillReceiveProps(props: P) {
-				this.props$.next(props);
-			}
-
-			componentWillUnmount() {
-				this.inputSubscription && this.inputSubscription.unsubscribe();
-				this.effectSubscription && this.effectSubscription.unsubscribe();
-			}
-
-			render() {
-				return createElement(Target, Object.assign({}, this.props, this.state));
+			if (this.selected.effects$) {
+				this.effectsSubscription = this.selected.effects$.pipe(observeOn(animationFrame)).subscribe();
 			}
 		}
 
-		hoistNonReactStatics(WithRX, Target);
+		componentWillReceiveProps(props: P) {
+			this.props$.next(props);
+		}
 
-		return WithRX;
-	};
+		componentWillUnmount() {
+			this.inputSubscription && this.inputSubscription.unsubscribe();
+			this.effectsSubscription && this.effectsSubscription.unsubscribe();
+		}
+
+		render() {
+			return createElement(Target, Object.assign({}, this.props, this.state));
+		}
+	}
+
+	hoistNonReactStatics(WithRX, Target);
+
+	return WithRX as any; //defaultProps are tracked by defaultProps argument;
 }
