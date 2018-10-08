@@ -1,5 +1,5 @@
 import { ComponentClass, ComponentType, createElement, PureComponent } from 'react';
-import { BehaviorSubject, merge, Observable, Subscription } from 'rxjs';
+import { BehaviorSubject, merge, Observable, SchedulerLike, Subscription } from 'rxjs';
 import { map, observeOn } from 'rxjs/operators';
 import { animationFrame } from 'rxjs/internal/scheduler/animationFrame';
 import { PartialKeys } from '@devexperts/utils/src/object';
@@ -31,7 +31,8 @@ export function withRX<P extends D, D extends object>(
 		props$: Observable<Readonly<P>>,
 		select: (props: Partial<Observify<P>>, effects$?: Observable<void>) => WithRXSelectorResult<P>,
 	) => WithRXSelectorResult<P>,
-	defaultProps?: D,
+	defaultProps: D,
+	scheduler: SchedulerLike = animationFrame,
 ): ComponentClass<PartialKeys<P, keyof D>> {
 	class WithRX extends PureComponent<P, Partial<P>> {
 		readonly state: Partial<P> = this.props;
@@ -48,11 +49,11 @@ export function withRX<P extends D, D extends object>(
 				this.selected.props[key].pipe(map((value: unknown) => ({ [key]: value }))),
 			);
 			this.inputSubscription = merge(...inputs)
-				.pipe(observeOn(animationFrame))
+				.pipe(observeOn(scheduler))
 				.subscribe(this.setState.bind(this));
 
 			if (this.selected.effects$) {
-				this.effectsSubscription = this.selected.effects$.pipe(observeOn(animationFrame)).subscribe();
+				this.effectsSubscription = this.selected.effects$.pipe(observeOn(scheduler)).subscribe();
 			}
 		}
 
