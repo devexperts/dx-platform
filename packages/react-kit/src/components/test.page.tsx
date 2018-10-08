@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { PureComponent } from 'react';
-import { withRX } from '../utils/with-rx';
+import { withRX } from '../utils/with-rx2';
 import { interval } from 'rxjs';
 import { storiesOf } from '@storybook/react';
 
