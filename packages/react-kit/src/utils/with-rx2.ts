@@ -14,11 +14,11 @@ export type WithRXSelectorResultTag = typeof WithRXSelectorResultTag;
 export type WithRXSelectorResult<P extends object> = {
 	_tag: WithRXSelectorResultTag;
 	props: Partial<Observify<P>>;
-	effects$?: Observable<void>;
+	effects$?: Observable<unknown>;
 };
 const select = <P extends object>(
 	props: Partial<Observify<P>>,
-	effects$?: Observable<void>,
+	effects$?: Observable<unknown>,
 ): WithRXSelectorResult<P> => ({
 	_tag: WithRXSelectorResultTag,
 	props,
@@ -29,7 +29,7 @@ export function withRX<P extends D, D extends object>(
 	Target: ComponentType<P>,
 	selector: (
 		props$: Observable<Readonly<P>>,
-		select: (props: Partial<Observify<P>>, effects$?: Observable<void>) => WithRXSelectorResult<P>,
+		select: (props: Partial<Observify<P>>, effects$?: Observable<unknown>) => WithRXSelectorResult<P>,
 	) => WithRXSelectorResult<P>,
 	defaultProps: D,
 	scheduler: SchedulerLike = animationFrame,

@@ -4,7 +4,6 @@ import { mount } from 'enzyme';
 import { withRX } from '../with-rx2';
 import { Subject } from 'rxjs';
 import { TestScheduler } from 'rxjs/testing';
-import { mapTo } from 'rxjs/operators';
 
 describe('withRX2', () => {
 	let scheduler: TestScheduler;
@@ -74,22 +73,17 @@ describe('withRX2', () => {
 			src: '-a-b-|',
 			res: '-a-b-|',
 		};
-		const effects$ = scheduler.createColdObservable(timeline.src).pipe(mapTo(undefined));
+		const effects$ = scheduler.createColdObservable(timeline.src);
 		const FooContainer = withRX(Foo, (props$, select) => select({}, effects$), {}, scheduler);
 		const foo = mount(<FooContainer />);
-		scheduler.expectObservable(effects$).toBe(timeline.res, { a: undefined, b: undefined });
+		scheduler.expectObservable(effects$).toBe(timeline.res);
 		scheduler.flush();
 		foo.unmount();
 	});
 	it('should immediately unsubscribe from effects on unmount', () => {
 		const Foo = () => <div />;
 		const effects$ = scheduler.createColdObservable('-a-b-|');
-		const FooContainer = withRX(
-			Foo,
-			(props$, select) => select({}, effects$.pipe(mapTo(undefined))),
-			{},
-			scheduler,
-		);
+		const FooContainer = withRX(Foo, (props$, select) => select({}, effects$), {}, scheduler);
 		const foo = mount(<FooContainer />);
 		foo.unmount();
 		scheduler.expectSubscriptions(effects$.subscriptions).toBe('(^!)');
