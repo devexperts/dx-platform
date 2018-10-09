@@ -14,7 +14,7 @@ export type WithRXSelectorResult<P extends object> = {
 	effects$?: Observable<unknown>;
 };
 
-export type TWithRXOptions = {
+export type WithRXOptions = {
 	scheduler?: SchedulerLike;
 };
 
@@ -22,7 +22,7 @@ export function withRX<P extends D, D extends object>(
 	Target: ComponentType<P>,
 	defaultProps: D,
 	selector: (props$: Observable<Readonly<P>>) => WithRXSelectorResult<P>,
-	options: TWithRXOptions = {},
+	options: WithRXOptions = {},
 ): ComponentClass<PartialKeys<P, keyof D>> {
 	const scheduler = options.scheduler || animationFrame;
 
