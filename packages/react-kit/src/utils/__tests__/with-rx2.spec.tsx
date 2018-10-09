@@ -30,12 +30,13 @@ describe('withRX2', () => {
 		};
 		const FooContainer = withRX(
 			Foo,
-			(props$, select) =>
-				select({
+			() => ({
+				props: {
 					foo: foo$,
-				}),
+				},
+			}),
 			{},
-			scheduler,
+			{ scheduler },
 		);
 		const foo = mount(<FooContainer foo={'initial'} />);
 		scheduler.expectObservable(result$).toBe(timeline.res);
@@ -44,7 +45,7 @@ describe('withRX2', () => {
 	});
 	it('should pass defaultValues', () => {
 		const Foo: SFC<FooProps> = props => <div id={'foo'}>{props.foo}</div>;
-		const FooContainer = withRX(Foo, (props$, select) => select({}), {
+		const FooContainer = withRX(Foo, () => ({}), {
 			foo: 'default',
 		});
 		const foo = mount(<FooContainer />);
@@ -56,12 +57,13 @@ describe('withRX2', () => {
 		const foo$ = scheduler.createHotObservable<string>('^-a-b-|');
 		const FooContainer = withRX(
 			Foo,
-			(props$, select) =>
-				select({
+			props$ => ({
+				props: {
 					foo: foo$,
-				}),
+				},
+			}),
 			{},
-			scheduler,
+			{ scheduler },
 		);
 		const foo = mount(<FooContainer foo={'initial'} />);
 		foo.unmount();
@@ -74,7 +76,14 @@ describe('withRX2', () => {
 			res: '-a-b-|',
 		};
 		const effects$ = scheduler.createColdObservable(timeline.src);
-		const FooContainer = withRX(Foo, (props$, select) => select({}, effects$), {}, scheduler);
+		const FooContainer = withRX(
+			Foo,
+			() => ({
+				effects$,
+			}),
+			{},
+			{ scheduler },
+		);
 		const foo = mount(<FooContainer />);
 		scheduler.expectObservable(effects$).toBe(timeline.res);
 		scheduler.flush();
@@ -83,7 +92,7 @@ describe('withRX2', () => {
 	it('should immediately unsubscribe from effects on unmount', () => {
 		const Foo = () => <div />;
 		const effects$ = scheduler.createColdObservable('-a-b-|');
-		const FooContainer = withRX(Foo, (props$, select) => select({}, effects$), {}, scheduler);
+		const FooContainer = withRX(Foo, () => ({ effects$ }), {}, { scheduler });
 		const foo = mount(<FooContainer />);
 		foo.unmount();
 		scheduler.expectSubscriptions(effects$.subscriptions).toBe('(^!)');

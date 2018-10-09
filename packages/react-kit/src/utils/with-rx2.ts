@@ -9,51 +9,45 @@ const hoistNonReactStatics = require('hoist-non-react-statics');
 
 export type Observify<P extends object> = { readonly [K in keyof P]: Observable<P[K]> };
 
-const WithRXSelectorResultTag = Symbol('WithRXSelectorResult');
-export type WithRXSelectorResultTag = typeof WithRXSelectorResultTag;
 export type WithRXSelectorResult<P extends object> = {
-	_tag: WithRXSelectorResultTag;
-	props: Partial<Observify<P>>;
+	props?: Partial<Observify<P>>;
 	effects$?: Observable<unknown>;
 };
-const select = <P extends object>(
-	props: Partial<Observify<P>>,
-	effects$?: Observable<unknown>,
-): WithRXSelectorResult<P> => ({
-	_tag: WithRXSelectorResultTag,
-	props,
-	effects$,
-});
+
+export type TWithRXOptions = {
+	scheduler?: SchedulerLike;
+};
 
 export function withRX<P extends D, D extends object>(
 	Target: ComponentType<P>,
-	selector: (
-		props$: Observable<Readonly<P>>,
-		select: (props: Partial<Observify<P>>, effects$?: Observable<unknown>) => WithRXSelectorResult<P>,
-	) => WithRXSelectorResult<P>,
+	selector: (props$: Observable<Readonly<P>>) => WithRXSelectorResult<P>,
 	defaultProps: D,
-	scheduler: SchedulerLike = animationFrame,
+	options: TWithRXOptions = {},
 ): ComponentClass<PartialKeys<P, keyof D>> {
+	const scheduler = options.scheduler || animationFrame;
+
 	class WithRX extends PureComponent<P, Partial<P>> {
 		readonly state: Partial<P> = this.props;
 		static displayName = `WithRX(${Target.displayName || Target.name})`;
 		static defaultProps = defaultProps;
 
 		private readonly props$ = new BehaviorSubject<P>(this.props);
-		private selected = selector(this.props$.asObservable(), select);
+		private readonly selected = selector(this.props$.asObservable());
 		private inputSubscription?: Subscription;
 		private effectsSubscription?: Subscription;
 
 		componentDidMount() {
-			const inputs = Object.keys(this.selected.props).map(key =>
-				this.selected.props[key].pipe(map((value: unknown) => ({ [key]: value }))),
-			);
-			this.inputSubscription = merge(...inputs)
-				.pipe(observeOn(scheduler))
-				.subscribe(this.setState.bind(this));
-
-			if (this.selected.effects$) {
-				this.effectsSubscription = this.selected.effects$.pipe(observeOn(scheduler)).subscribe();
+			const { props, effects$ } = this.selected;
+			if (props) {
+				const inputs = Object.keys(props).map(key =>
+					props[key].pipe(map((value: unknown) => ({ [key]: value }))),
+				);
+				this.inputSubscription = merge(...inputs)
+					.pipe(observeOn(scheduler))
+					.subscribe(this.setState.bind(this));
+			}
+			if (effects$) {
+				this.effectsSubscription = effects$.pipe(observeOn(scheduler)).subscribe();
 			}
 		}
 
