@@ -18,7 +18,7 @@ export type WithRXOptions = {
 	scheduler?: SchedulerLike;
 };
 
-export function withRX<P extends D, D extends object>(
+export function withRX<P extends D, D extends Partial<P>>(
 	Target: ComponentType<P>,
 	defaultProps: D,
 	selector: (props$: Observable<Readonly<P>>) => WithRXSelectorResult<P>,

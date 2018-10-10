@@ -96,4 +96,15 @@ describe('withRX2', () => {
 		foo.unmount();
 		scheduler.expectSubscriptions(effects$.subscriptions).toBe('(^!)');
 	});
+	it('should typecheck', () => {
+		type Props = {
+			foo: string;
+			bar: number;
+		};
+		const Foo: SFC<Props> = () => <div>hi</div>;
+		const C = withRX(Foo, {}, () => ({}), { scheduler });
+		const C2 = withRX(Foo, { foo: '123' }, () => ({}), { scheduler });
+		const C3 = withRX(Foo, { foo: '123', bar: 213 }, () => ({}), { scheduler });
+		(() => [<C foo={'123'} bar={123} />, <C2 bar={123} />, <C3 />])();
+	});
 });
