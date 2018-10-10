@@ -6,17 +6,38 @@ import { animationFrame } from 'rxjs/internal/scheduler/animationFrame';
 // tslint:disable-next-line
 const hoistNonReactStatics = require('hoist-non-react-statics');
 
+/**
+ * @deprecated
+ */
 export type WithRXSelectorResultPropsOnly<P> = Observable<Partial<P>>;
+/**
+ * @deprecated
+ */
 export type WithRXSelectorResultWithEffects<P> = {
 	props$: Observable<Partial<P>>;
 	effects$: Observable<void>;
 };
 
+/**
+ * @deprecated
+ */
 export type ComponentDecorator<P> = (Target: ComponentType<P>) => ComponentClass<P>;
+/**
+ * @deprecated
+ */
 export type WithRXSelectorResult<P> = WithRXSelectorResultPropsOnly<P> | WithRXSelectorResultWithEffects<P>;
+/**
+ * @deprecated
+ */
 export type WithRXSelector<P> = (props$: Observable<Readonly<P>>) => WithRXSelectorResult<P>;
 
+/**
+ * @deprecated
+ */
 export function withRX<P extends object = never>(select: WithRXSelector<P>): ComponentDecorator<P> {
+	/**
+	 * @deprecated
+	 */
 	return Target => {
 		class WithRX extends Component<P> {
 			static displayName = `WithRX(${Target.displayName || Target.name})`;
