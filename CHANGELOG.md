@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="0.18.1"></a>
+## [0.18.1](https://github.com/devex-web-frontend/dx-platform/compare/v0.18.0...v0.18.1) (2018-10-10)
+
+
+### Features
+
+* **react-kit:** update withRX ([#78](https://github.com/devex-web-frontend/dx-platform/issues/78)) ([18a251f](https://github.com/devex-web-frontend/dx-platform/commit/18a251f)), closes [#69](https://github.com/devex-web-frontend/dx-platform/issues/69)
+
+
+
+
 <a name="0.18.0"></a>
 # [0.18.0](https://github.com/devex-web-frontend/dx-platform/compare/v0.17.1...v0.18.0) (2018-10-04)
 
