@@ -45,7 +45,7 @@ export type TFullScrollableProps = {
 	onScroll?: (scrollLeft: number, scrollTop: number) => void;
 	scrollTop?: number;
 	scrollLeft?: number;
-	contentUnderScrollbars?: boolean;
+	shouldOverlayContent?: boolean;
 };
 
 export class RawScrollable extends React.Component<TFullScrollableProps> {
@@ -113,7 +113,7 @@ export class RawScrollable extends React.Component<TFullScrollableProps> {
 	};
 
 	render() {
-		const { theme, ResizeDetector, VerticalScrollbar, HorizontalScrollbar, contentUnderScrollbars } = this.props;
+		const { theme, ResizeDetector, VerticalScrollbar, HorizontalScrollbar, shouldOverlayContent } = this.props;
 
 		const children = React.Children.only(this.props.children);
 
@@ -122,7 +122,7 @@ export class RawScrollable extends React.Component<TFullScrollableProps> {
 		const className = classnames(
 			theme.scrollable,
 			{
-				[theme.contentUnderScrollbars as string]: contentUnderScrollbars,
+				[theme.contentUnderScrollbars as string]: shouldOverlayContent,
 				[theme.withHorizontalScrollbar as string]: this._withHorizontalScrollbar,
 				[theme.withVerticalScrollbar as string]: this._withVerticalScrollbar,
 			},

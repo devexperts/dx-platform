@@ -6,27 +6,15 @@
 	position: relative;
 }
 
-.withHorizontalScrollbar {
+.withHorizontalScrollbar:not(.contentUnderScrollbars) {
 	> .wrapper > .container > .content {
 		padding-bottom: $scrollableScrollBarSize;
 	}
-
-	&.contentUnderScrollbars {
-		> .wrapper > .container > .content {
-			padding-bottom: 0;
-		}
-	}
 }
 
-.withVerticalScrollbar {
+.withVerticalScrollbar:not(.contentUnderScrollbars) {
 	> .wrapper > .container {
 		padding-right: $scrollableScrollBarSize;
-	}
-
-	&.contentUnderScrollbars {
-		> .wrapper > .container {
-			padding-right: 0;
-		}
 	}
 }
 

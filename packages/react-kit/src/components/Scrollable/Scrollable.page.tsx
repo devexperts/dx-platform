@@ -118,7 +118,7 @@ class ScrollablePage extends React.Component<{}, ScrollablePageState> {
 
 				<section className={css.section}>
 					<h1>Content under scrollbars</h1>
-					<Scrollable contentUnderScrollbars={true}>
+					<Scrollable shouldOverlayContent={true}>
 						<div className={css.scrollable}>
 							<Heavy />
 						</div>
