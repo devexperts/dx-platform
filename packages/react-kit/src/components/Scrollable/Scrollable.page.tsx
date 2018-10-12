@@ -115,6 +115,15 @@ class ScrollablePage extends React.Component<{}, ScrollablePageState> {
 						</div>
 					</Scrollable>
 				</section>
+
+				<section className={css.section}>
+					<h1>Content under scrollbars</h1>
+					<Scrollable contentUnderScrollbars={true}>
+						<div className={css.scrollable}>
+							<Heavy />
+						</div>
+					</Scrollable>
+				</section>
 			</Demo>
 		);
 	}

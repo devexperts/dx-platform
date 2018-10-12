@@ -10,10 +10,23 @@
 	> .wrapper > .container > .content {
 		padding-bottom: $scrollableScrollBarSize;
 	}
+
+	&.contentUnderScrollbars {
+		> .wrapper > .container > .content {
+			padding-bottom: 0;
+		}
+	}
 }
+
 .withVerticalScrollbar {
 	> .wrapper > .container {
 		padding-right: $scrollableScrollBarSize;
+	}
+
+	&.contentUnderScrollbars {
+		> .wrapper > .container {
+			padding-right: 0;
+		}
 	}
 }
 
