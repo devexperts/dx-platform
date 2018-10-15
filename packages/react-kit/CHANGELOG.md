@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="0.18.2"></a>
+## [0.18.2](https://github.com/devex-web-frontend/dx-platform/compare/v0.18.1...v0.18.2) (2018-10-15)
+
+
+### Bug Fixes
+
+* **react-kit:** fix invalid module reference ([8ceab0a](https://github.com/devex-web-frontend/dx-platform/commit/8ceab0a))
+
+
+
+
 <a name="0.18.1"></a>
 ## [0.18.1](https://github.com/devex-web-frontend/dx-platform/compare/v0.18.0...v0.18.1) (2018-10-10)
 
