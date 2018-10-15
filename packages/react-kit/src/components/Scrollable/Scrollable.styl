@@ -6,18 +6,6 @@
 	position: relative;
 }
 
-.withHorizontalScrollbar:not(.contentUnderScrollbars) {
-	> .wrapper > .container > .content {
-		padding-bottom: $scrollableScrollBarSize;
-	}
-}
-
-.withVerticalScrollbar:not(.contentUnderScrollbars) {
-	> .wrapper > .container {
-		padding-right: $scrollableScrollBarSize;
-	}
-}
-
 .wrapper {
 	display: block;
 	width: 100%;
@@ -31,6 +19,10 @@
 	overflow: scroll;
 	max-height: inherit;
 	box-sizing: border-box;
+
+	&:not(.overlayContent) {
+		padding-right: $scrollableScrollBarSize;
+	}
 }
 
 .content {
@@ -38,8 +30,11 @@
 	vertical-align: middle;
 	position: relative;
 	min-width: 100%;
-}
 
+	&:not(.overlayContent) {
+		padding-bottom: $scrollableScrollBarSize;
+	}
+}
 
 .resizeDetector {
 	position: absolute;
@@ -51,7 +46,6 @@
 	height: 100%;
 	border: none;
 }
-
 
 .scrollbar {
 	background-color: inherit;
