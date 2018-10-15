@@ -132,6 +132,14 @@ export class RawScrollable extends React.Component<TFullScrollableProps> {
 			withBothScrollabars: this._withHorizontalScrollbar && this._withVerticalScrollbar,
 		});
 
+		const wrapperContainerClassName = classnames(theme.container, {
+			[theme.overlayContent as string]: this._withVerticalScrollbar && shouldOverlayContent,
+		});
+
+		const wrapperContentClassName = classnames(theme.content, {
+			[theme.overlayContent as string]: this._withHorizontalScrollbar && shouldOverlayContent,
+		});
+
 		const resizeDetectorProps = {
 			theme: {
 				container: theme.resizeDetector,
@@ -142,10 +150,8 @@ export class RawScrollable extends React.Component<TFullScrollableProps> {
 		return (
 			<div className={className} ref={el => (this._scrollable = el)}>
 				<div className={theme.wrapper}>
-					<div
-						className={classnames(theme.container, shouldOverlayContent && theme.overlayContent)}
-						ref={el => (this._container = el)}>
-						<div className={classnames(theme.content, shouldOverlayContent && theme.overlayContent)}>
+					<div className={wrapperContainerClassName} ref={el => (this._container = el)}>
+						<div className={wrapperContentClassName}>
 							{React.cloneElement(children, {
 								className: null,
 							})}
