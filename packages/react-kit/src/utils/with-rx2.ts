@@ -2,7 +2,7 @@ import { ComponentClass, ComponentType, createElement, PureComponent } from 'rea
 import { BehaviorSubject, merge, Observable, SchedulerLike, Subscription } from 'rxjs';
 import { map, observeOn } from 'rxjs/operators';
 import { animationFrame } from 'rxjs/internal/scheduler/animationFrame';
-import { PartialKeys } from '@devexperts/utils/src/object';
+import { PartialKeys } from '@devexperts/utils/dist/object/object';
 
 // tslint:disable-next-line
 const hoistNonReactStatics = require('hoist-non-react-statics');
