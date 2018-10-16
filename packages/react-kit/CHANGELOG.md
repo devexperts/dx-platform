@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="0.18.3"></a>
+## [0.18.3](https://github.com/devex-web-frontend/dx-platform/compare/v0.18.2...v0.18.3) (2018-10-16)
+
+
+### Bug Fixes
+
+* **react-kit:** fix invalid defaultProps typings ([#81](https://github.com/devex-web-frontend/dx-platform/issues/81)) ([15e949a](https://github.com/devex-web-frontend/dx-platform/commit/15e949a))
+
+
+
+
 <a name="0.18.2"></a>
 ## [0.18.2](https://github.com/devex-web-frontend/dx-platform/compare/v0.18.1...v0.18.2) (2018-10-15)
 
