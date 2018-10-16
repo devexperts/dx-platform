@@ -2,7 +2,7 @@ import { ComponentClass, ComponentType, createElement, PureComponent } from 'rea
 import { BehaviorSubject, merge, Observable, SchedulerLike, Subscription } from 'rxjs';
 import { map, observeOn } from 'rxjs/operators';
 import { animationFrame } from 'rxjs/internal/scheduler/animationFrame';
-import { PartialKeys } from '@devexperts/utils/dist/object/object';
+import { Omit } from 'typelevel-ts';
 
 // tslint:disable-next-line
 const hoistNonReactStatics = require('hoist-non-react-statics');
@@ -18,12 +18,12 @@ export type WithRXOptions = {
 	scheduler?: SchedulerLike;
 };
 
-export function withRX<P extends D, D extends Partial<P>>(
+export function withRX<P extends object, D extends Partial<P>>(
 	Target: ComponentType<P>,
 	defaultProps: D,
 	selector: (props$: Observable<Readonly<P>>) => WithRXSelectorResult<P>,
 	options: WithRXOptions = {},
-): ComponentClass<PartialKeys<P, keyof D>> {
+): ComponentClass<Omit<P, keyof D> & Partial<D>> {
 	const scheduler = options.scheduler || animationFrame;
 
 	class WithRX extends PureComponent<P, Partial<P>> {
