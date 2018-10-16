@@ -15,7 +15,10 @@
     "jest": "jest",
     "prettier": "prettier --list-different \"./packages/**/src/**/*.{ts,tsx}\"",
     "prettier:fix": "prettier --write \"./packages/**/src/**/*.{ts,tsx}\"",
-    "tslint": "tslint -c tslint.json --project tsconfig.json './packages/*/src/**/*.ts' './packages/*/src/**/*.tsx'"
+    "tslint": "tslint -c tslint.json --project tsconfig.json './packages/*/src/**/*.ts' './packages/*/src/**/*.tsx'",
+    "publish:patch": "yarn lerna publish --cd-version patch --force-publish=*",
+    "publish:minor": "yarn lerna publish --cd-version minor --force-publish=*",
+    "publish:major": "yarn lerna publish --cd-version major --force-publish=*"
   },
   "private": true,
   "workspaces": ["packages/*"],
