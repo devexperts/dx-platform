@@ -4,6 +4,7 @@ import { mount } from 'enzyme';
 import { withRX } from '../with-rx2';
 import { Subject } from 'rxjs';
 import { TestScheduler } from 'rxjs/testing';
+import { constUndefined } from 'fp-ts/lib/function';
 
 describe('withRX2', () => {
 	let scheduler: TestScheduler;
@@ -100,11 +101,18 @@ describe('withRX2', () => {
 		type Props = {
 			foo: string;
 			bar: number;
+			handler: (arg: number) => void;
 		};
 		const Foo: SFC<Props> = () => <div>hi</div>;
 		const C = withRX(Foo, {}, () => ({}), { scheduler });
-		const C2 = withRX(Foo, { foo: '123' }, () => ({}), { scheduler });
+		const C1 = withRX(Foo, { handler: constUndefined }, () => ({}), { scheduler });
+		const C2 = withRX(Foo, { foo: '123', adsfsd: 123 }, () => ({}), { scheduler });
 		const C3 = withRX(Foo, { foo: '123', bar: 213 }, () => ({}), { scheduler });
-		(() => [<C foo={'123'} bar={123} />, <C2 bar={123} />, <C3 />])();
+		(() => [
+			<C handler={constUndefined} foo={'123'} bar={123} />,
+			<C1 foo={'123'} bar={123} handler={constUndefined} />,
+			<C2 handler={constUndefined} bar={123} />,
+			<C3 handler={constUndefined} />,
+		])();
 	});
 });
