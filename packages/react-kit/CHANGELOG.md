@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="0.19.0"></a>
+# [0.19.0](https://github.com/devex-web-frontend/dx-platform/compare/v0.18.3...v0.19.0) (2018-10-17)
+
+
+### Features
+
+* **react-kit:** accept defaultProps in withrx selector result ([#83](https://github.com/devex-web-frontend/dx-platform/issues/83)) ([471706f](https://github.com/devex-web-frontend/dx-platform/commit/471706f)), closes [/github.com/Microsoft/TypeScript/issues/15005#issuecomment-430588884](https://github.com//github.com/Microsoft/TypeScript/issues/15005/issues/issuecomment-430588884)
+
+
+### BREAKING CHANGES
+
+* **react-kit:** - `defaultProps` argument is moved to `WithRXSelectorResult`; 
+- `static defaultProps` property is removed; 
+- `props$` stream passed to `selector` doesn't contain fields from `defaultProps` anymore
+- `withRX` now accepts `Target` separately for better type inference in `props`/`defaultProps`
+
+* chore(react-kit): update with-rx typechecking test
+
+
+
+
 <a name="0.18.3"></a>
 ## [0.18.3](https://github.com/devex-web-frontend/dx-platform/compare/v0.18.2...v0.18.3) (2018-10-16)
 
