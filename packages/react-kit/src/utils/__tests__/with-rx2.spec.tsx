@@ -121,6 +121,7 @@ describe('withRX2', () => {
 		const C3 = withRX(Foo, () => ({ defaultProps: { foo: '123', bar: 213 } }), { scheduler });
 		(() => [
 			<C handler={constUndefined} foo={'123'} bar={123} />,
+			<C1 foo={'123'} bar={123} />,
 			<C1 foo={'123'} bar={123} handler={constUndefined} />,
 			<C2 handler={constUndefined} bar={123} />,
 			<C3 handler={constUndefined} />,
