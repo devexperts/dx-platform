@@ -19,11 +19,14 @@ export type WithRXOptions = {
 	scheduler?: SchedulerLike;
 };
 
-export function withRX<P extends object, D extends Partial<P>>(
-	Target: ComponentType<P>,
+/**
+ * curried for better type inference
+ * @see https://github.com/Microsoft/TypeScript/issues/15005#issuecomment-430588884
+ */
+export const withRX = <P extends object>(Target: ComponentType<P>) => <D extends Partial<P>>(
 	selector: (props$: Observable<Readonly<P>>) => WithRXSelectorResult<P, D>,
 	options: WithRXOptions = {},
-): ComponentClass<Omit<P, keyof D> & Partial<D>> {
+): ComponentClass<Omit<P, keyof D> & Partial<D>> => {
 	const scheduler = options.scheduler || animationFrame;
 
 	class WithRX extends PureComponent<P, Partial<P>> {
@@ -66,4 +69,4 @@ export function withRX<P extends object, D extends Partial<P>>(
 	hoistNonReactStatics(WithRX, Target);
 
 	return WithRX as any; //defaultProps are tracked by defaultProps argument;
-}
+};
