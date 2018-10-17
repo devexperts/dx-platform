@@ -9,8 +9,9 @@ const hoistNonReactStatics = require('hoist-non-react-statics');
 
 export type Observify<P extends object> = { readonly [K in keyof P]: Observable<P[K]> };
 
-export type WithRXSelectorResult<P extends object> = {
+export type WithRXSelectorResult<P extends object, D extends Partial<P>> = {
 	props?: Partial<Observify<P>>;
+	defaultProps?: D;
 	effects$?: Observable<unknown>;
 };
 
@@ -20,16 +21,13 @@ export type WithRXOptions = {
 
 export function withRX<P extends object, D extends Partial<P>>(
 	Target: ComponentType<P>,
-	defaultProps: D,
-	selector: (props$: Observable<Readonly<P>>) => WithRXSelectorResult<P>,
+	selector: (props$: Observable<Readonly<P>>) => WithRXSelectorResult<P, D>,
 	options: WithRXOptions = {},
 ): ComponentClass<Omit<P, keyof D> & Partial<D>> {
 	const scheduler = options.scheduler || animationFrame;
 
 	class WithRX extends PureComponent<P, Partial<P>> {
-		readonly state: Partial<P> = this.props;
 		static displayName = `WithRX(${Target.displayName || Target.name})`;
-		static defaultProps = defaultProps;
 
 		private readonly props$ = new BehaviorSubject<P>(this.props);
 		private readonly selected = selector(this.props$.asObservable());
@@ -61,7 +59,7 @@ export function withRX<P extends object, D extends Partial<P>>(
 		}
 
 		render() {
-			return createElement(Target, Object.assign({}, this.props, this.state));
+			return createElement(Target, Object.assign({}, this.selected.defaultProps, this.props, this.state || {}));
 		}
 	}
 
