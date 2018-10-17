@@ -1,4 +1,4 @@
-import { SFC } from 'react';
+import { PureComponent, SFC } from 'react';
 import * as React from 'react';
 import { mount } from 'enzyme';
 import { withRX } from '../with-rx2';
@@ -29,9 +29,7 @@ describe('withRX2', () => {
 			result$.next(props.foo);
 			return <div>{props.foo}</div>;
 		};
-		const FooContainer = withRX(
-			Foo,
-			{},
+		const FooContainer = withRX(Foo)(
 			() => ({
 				props: {
 					foo: foo$,
@@ -44,9 +42,23 @@ describe('withRX2', () => {
 		scheduler.flush();
 		foo.unmount();
 	});
+	it('should pass handlers', () => {
+		type Props = { foo: string; handler: (arg: string) => void };
+		class Foo extends PureComponent<Props> {
+			render() {
+				return <div id={'id'} onClick={() => this.props.handler(this.props.foo)} />;
+			}
+		}
+		const handler = jest.fn();
+		const FooContainer = withRX(Foo)(() => ({ defaultProps: { handler } }));
+		const foo = mount(<FooContainer foo={'test'} />);
+		foo.find('#id').simulate('click');
+		expect(handler).toHaveBeenCalledWith('test');
+		foo.unmount();
+	});
 	it('should pass defaultValues', () => {
 		const Foo: SFC<FooProps> = props => <div id={'foo'}>{props.foo}</div>;
-		const FooContainer = withRX(Foo, { foo: 'default' }, () => ({}));
+		const FooContainer = withRX(Foo)(() => ({ defaultProps: { foo: 'default' } }));
 		const foo = mount(<FooContainer />);
 		expect(foo.find('#foo').text()).toBe('default');
 		foo.unmount();
@@ -54,9 +66,7 @@ describe('withRX2', () => {
 	it('should immediately unsubscribe on unmount', () => {
 		const Foo: SFC<FooProps> = props => <div id={'foo'}>{props.foo}</div>;
 		const foo$ = scheduler.createHotObservable<string>('^-a-b-|');
-		const FooContainer = withRX(
-			Foo,
-			{},
+		const FooContainer = withRX(Foo)(
 			props$ => ({
 				props: {
 					foo: foo$,
@@ -75,9 +85,7 @@ describe('withRX2', () => {
 			res: '-a-b-|',
 		};
 		const effects$ = scheduler.createColdObservable(timeline.src);
-		const FooContainer = withRX(
-			Foo,
-			{},
+		const FooContainer = withRX(Foo)(
 			() => ({
 				effects$,
 			}),
@@ -92,7 +100,7 @@ describe('withRX2', () => {
 	it('should immediately unsubscribe from effects on unmount', () => {
 		const Foo = () => <div />;
 		const effects$ = scheduler.createColdObservable('-a-b-|');
-		const FooContainer = withRX(Foo, {}, () => ({ effects$ }), { scheduler });
+		const FooContainer = withRX(Foo)(() => ({ effects$ }), { scheduler });
 		const foo = mount(<FooContainer />);
 		foo.unmount();
 		scheduler.expectSubscriptions(effects$.subscriptions).toBe('(^!)');
@@ -104,15 +112,19 @@ describe('withRX2', () => {
 			handler: (arg: number) => void;
 		};
 		const Foo: SFC<Props> = () => <div>hi</div>;
-		const C = withRX(Foo, {}, () => ({}), { scheduler });
-		const C1 = withRX(Foo, { handler: constUndefined }, () => ({}), { scheduler });
-		const C2 = withRX(Foo, { foo: '123', adsfsd: 123 }, () => ({}), { scheduler });
-		const C3 = withRX(Foo, { foo: '123', bar: 213 }, () => ({}), { scheduler });
+		const C = withRX(Foo)(() => ({}), { scheduler });
+		const C1 = withRX(Foo)(() => ({ defaultProps: { handler: constUndefined } }), { scheduler });
+		const C2 = withRX(Foo)(() => ({ defaultProps: { foo: '123', adsfsd: 123 } }), { scheduler });
+		const C3 = withRX(Foo)(() => ({ defaultProps: { foo: '123', bar: 213 } }), { scheduler });
+		//argument inference is working
+		const C4 = withRX(Foo)(() => ({ defaultProps: { handler(arg) {} } }), { scheduler });
 		(() => [
 			<C handler={constUndefined} foo={'123'} bar={123} />,
+			<C1 foo={'123'} bar={123} />,
 			<C1 foo={'123'} bar={123} handler={constUndefined} />,
 			<C2 handler={constUndefined} bar={123} />,
 			<C3 handler={constUndefined} />,
+			<C4 foo={'123'} bar={123} />,
 		])();
 	});
 });
