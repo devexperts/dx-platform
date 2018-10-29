@@ -239,14 +239,16 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 			}
 			case ActiveSection.Month: {
 				//month starts from 1 and cannot be zero
-				const newMonth = month.map(value => {
-					if ((value - 1) === 0) {
-						return 0;
-					} else if ((value - 1) < 0) {
-						return 11;
-					}
-					return value - 1;
-				}).orElse(() => some(11));
+				const newMonth = month
+					.map(value => {
+						if (value - 1 === 0) {
+							return 0;
+						} else if (value - 1 < 0) {
+							return 11;
+						}
+						return value - 1;
+					})
+					.orElse(() => some(11));
 				this.onValueChange(day, newMonth, year);
 				break;
 			}
@@ -615,7 +617,7 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 export type TDateInputProps = PartialKeys<
 	TDateInputFullProps,
 	'theme' | 'SteppableInput' | 'ButtonIcon' | 'dateFormatType' | 'Popover'
-	>;
+>;
 export const DateInput: ComponentClass<TDateInputProps> = withTheme(DATE_INPUT)(
 	withDefaults<TDateInputFullProps, 'SteppableInput' | 'ButtonIcon' | 'dateFormatType' | 'Popover'>({
 		SteppableInput,
