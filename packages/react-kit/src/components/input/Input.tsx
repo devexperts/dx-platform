@@ -35,6 +35,8 @@ export type TFullInputProps = TControlProps<string | undefined> & {
 	onClick?: MouseEventHandler<HTMLElement>;
 	onMouseDown?: MouseEventHandler<HTMLElement>;
 	onMouseUp?: MouseEventHandler<HTMLElement>;
+	onMouseEnter?: MouseEventHandler<HTMLElement>;
+	onMouseLeave?: MouseEventHandler<HTMLElement>;
 	onKeyPress?: KeyboardEventHandler<HTMLElement | HTMLInputElement>;
 	onKeyDown?: KeyboardEventHandler<HTMLElement | HTMLInputElement>;
 	onKeyUp?: KeyboardEventHandler<HTMLElement | HTMLInputElement>;
@@ -80,6 +82,8 @@ class RawInput extends React.Component<TFullInputProps, TInputState> {
 			onClick,
 			onMouseDown,
 			onMouseUp,
+			onMouseEnter,
+			onMouseLeave,
 			onKeyDown,
 			onKeyUp,
 			onKeyPress,
@@ -116,6 +120,8 @@ class RawInput extends React.Component<TFullInputProps, TInputState> {
 				onClick={onClick}
 				onMouseDown={onMouseDown}
 				onMouseUp={onMouseUp}
+				onMouseEnter={onMouseEnter}
+				onMouseLeave={onMouseLeave}
 				onFocus={this.onFocus}
 				onBlur={this.onBlur}
 				onWheel={onWheel}

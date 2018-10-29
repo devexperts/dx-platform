@@ -76,7 +76,9 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 				onBlur={this.onBlur}
 				onFocus={this.onFocus}
 				onKeyDown={this.onKeyDown}
-				onClick={this.onSteppableInputClick}>
+				onClick={this.onSteppableInputClick}
+				onMouseEnter={this.onMouseEnter}
+				onMouseLeave={this.onMouseLeave}>
 				<div className={innerClassName}>
 					{dateFormatType === DateFormatType.DMY && this.renderDay()}
 					{dateFormatType === DateFormatType.MDY && this.renderMonth()}
@@ -430,6 +432,14 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 		}
 	};
 
+	private onMouseEnter = (e: React.MouseEvent<HTMLElement>) => {
+		this.props.onMouseEnter && this.props.onMouseEnter();
+	};
+
+	private onMouseLeave = (e: React.MouseEvent<HTMLElement>) => {
+		this.props.onMouseLeave && this.props.onMouseLeave();
+	};
+
 	private getDefaultActiveSection(dateFormatType: DateFormatType): ActiveSection {
 		switch (dateFormatType) {
 			case DateFormatType.DMY: {
@@ -606,7 +616,7 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 export type TDateInputProps = PartialKeys<
 	TDateInputFullProps,
 	'theme' | 'SteppableInput' | 'ButtonIcon' | 'dateFormatType' | 'Popover'
->;
+	>;
 export const DateInput: ComponentClass<TDateInputProps> = withTheme(DATE_INPUT)(
 	withDefaults<TDateInputFullProps, 'SteppableInput' | 'ButtonIcon' | 'dateFormatType' | 'Popover'>({
 		SteppableInput,
