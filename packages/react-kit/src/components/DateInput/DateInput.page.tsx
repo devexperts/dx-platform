@@ -41,6 +41,7 @@ class DateInputPage extends React.Component<any, TState> {
 
 	render() {
 		const { isDisabled, error } = this.props;
+		const { value } = this.state;
 
 		return (
 			<Demo>
@@ -62,7 +63,7 @@ class DateInputPage extends React.Component<any, TState> {
 						decrementIcon={<DecreaseIcon />}
 						onClear={this.onControlledClear}
 						error={error}
-						value={this.state.value}
+						value={value}
 					/>
 					<Button onClick={this.onControlledManualClear}>Clear</Button>
 				</section>

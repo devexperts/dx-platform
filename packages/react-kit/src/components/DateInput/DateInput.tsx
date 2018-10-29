@@ -132,9 +132,10 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 		const monthClassName = classnames(theme.section, {
 			[theme.section_isActive as string]: !isDisabled && activeSection === ActiveSection.Month,
 		});
+		const monthValue = month.map(value => value + 1);
 		return (
 			<span className={monthClassName} onMouseDown={this.onMonthMouseDown}>
-				{format(month, ActiveSection.Month)}
+				{format(monthValue, ActiveSection.Month)}
 			</span>
 		);
 	}
@@ -203,7 +204,7 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 			}
 			case ActiveSection.Month: {
 				//month starts from 1 here and cannot be zero
-				const newMonth = month.map(value => (value + 1) % 13 || 1).orElse(() => some(1));
+				const newMonth = month.map(value => (value + 1) % 12).orElse(() => some(0));
 				this.onValueChange(day, newMonth, year);
 				break;
 			}
@@ -238,7 +239,14 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 			}
 			case ActiveSection.Month: {
 				//month starts from 1 and cannot be zero
-				const newMonth = month.map(value => (value - 1) % 13 || 12).orElse(() => some(12));
+				const newMonth = month.map(value => {
+					if ((value - 1) === 0) {
+						return 0;
+					} else if ((value - 1) < 0) {
+						return 11;
+					}
+					return value - 1;
+				}).orElse(() => some(11));
 				this.onValueChange(day, newMonth, year);
 				break;
 			}
@@ -268,7 +276,7 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 			if (isDatesDifferent(value, selectedDate) && onValueChange) {
 				onValueChange({
 					day: selectedDate.day,
-					month: selectedDate.month.map(value => value + 1),
+					month: selectedDate.month,
 					year: selectedDate.year,
 				});
 			}
@@ -560,11 +568,12 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 			case ActiveSection.Month: {
 				if (this.secondInput) {
 					const newMonth = month.map(value => {
-						const monthValue = Number(`${value}${digit}`);
-						if (value < 1) {
+						const fixedValue = value + 1;
+						const monthValue = Number(`${fixedValue}${digit}`) - 1;
+						if (fixedValue < 1) {
 							return monthValue;
-						} else if (value === 1) {
-							return Math.min(Number(`${value}${digit}`), 12);
+						} else if (fixedValue === 1) {
+							return Math.min(monthValue, 11);
 						} else {
 							return digit;
 						}
@@ -573,7 +582,7 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 					this.selectNextSection();
 					this.secondInput = false;
 				} else {
-					this.onValueChange(day, some(digit), year);
+					this.onValueChange(day, some(digit - 1), year);
 					if (digit > 1) {
 						this.selectNextSection();
 						this.secondInput = false;
@@ -606,7 +615,7 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 export type TDateInputProps = PartialKeys<
 	TDateInputFullProps,
 	'theme' | 'SteppableInput' | 'ButtonIcon' | 'dateFormatType' | 'Popover'
->;
+	>;
 export const DateInput: ComponentClass<TDateInputProps> = withTheme(DATE_INPUT)(
 	withDefaults<TDateInputFullProps, 'SteppableInput' | 'ButtonIcon' | 'dateFormatType' | 'Popover'>({
 		SteppableInput,
