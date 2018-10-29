@@ -45,6 +45,8 @@ export type TDateInputOwnProps = TSteppableInputProps &
 		onClear?: Function;
 		onFocus?: () => void;
 		onBlur?: () => void;
+		onMouseEnter?: () => void;
+		onMouseLeave?: () => void;
 		target?: Element;
 		Calendar?: React.ComponentClass<TCalendarProps> | React.SFC<TCalendarProps>;
 	};

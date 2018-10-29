@@ -76,7 +76,9 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 				onBlur={this.onBlur}
 				onFocus={this.onFocus}
 				onKeyDown={this.onKeyDown}
-				onClick={this.onSteppableInputClick}>
+				onClick={this.onSteppableInputClick}
+				onMouseEnter={this.onMouseEnter}
+				onMouseLeave={this.onMouseLeave}>
 				<div className={innerClassName}>
 					{dateFormatType === DateFormatType.DMY && this.renderDay()}
 					{dateFormatType === DateFormatType.MDY && this.renderMonth()}
@@ -428,6 +430,15 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 				activeSection: this.getDefaultActiveSection(this.props.dateFormatType),
 			});
 		}
+		this.props.onFocus && this.props.onFocus();
+	};
+
+	private onMouseEnter = (e: React.MouseEvent<HTMLElement>) => {
+		this.props.onMouseEnter && this.props.onMouseEnter();
+	};
+
+	private onMouseLeave = (e: React.MouseEvent<HTMLElement>) => {
+		this.props.onMouseLeave && this.props.onMouseLeave();
 	};
 
 	private getDefaultActiveSection(dateFormatType: DateFormatType): ActiveSection {
