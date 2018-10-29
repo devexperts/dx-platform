@@ -430,6 +430,7 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 				activeSection: this.getDefaultActiveSection(this.props.dateFormatType),
 			});
 		}
+		this.props.onFocus && this.props.onFocus();
 	};
 
 	private onMouseEnter = (e: React.MouseEvent<HTMLElement>) => {
