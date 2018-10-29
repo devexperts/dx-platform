@@ -13,7 +13,10 @@ import { constUndefined } from 'fp-ts/lib/function';
 
 export const STEPPABLE_INPUT = Symbol('SteppableInput') as symbol;
 
-export type TPickedInputProps = Pick<TInputProps, 'error' | 'onBlur' | 'onFocus' | 'onKeyDown' | 'onClick' | 'onMouseEnter' | 'onMouseLeave'>;
+export type TPickedInputProps = Pick<
+	TInputProps,
+	'error' | 'onBlur' | 'onFocus' | 'onKeyDown' | 'onClick' | 'onMouseEnter' | 'onMouseLeave'
+>;
 
 export type TFullSteppableInputProps = TPickedInputProps & {
 	isDisabled?: TInputProps['isDisabled'];

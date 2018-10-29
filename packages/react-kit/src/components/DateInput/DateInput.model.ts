@@ -39,17 +39,17 @@ type TDateValueProps = TControlProps<TDateInputValue>;
 
 export type TDateInputOwnProps = TSteppableInputProps &
 	TDateValueProps & {
-	min?: Date;
-	max?: Date;
-	calendarIcon?: React.ReactElement<any>;
-	onClear?: Function;
-	onFocus?: () => void;
-	onBlur?: () => void;
-	onMouseEnter?: () => void;
-	onMouseLeave?: () => void;
-	target?: Element;
-	Calendar?: React.ComponentClass<TCalendarProps> | React.SFC<TCalendarProps>;
-};
+		min?: Date;
+		max?: Date;
+		calendarIcon?: React.ReactElement<any>;
+		onClear?: Function;
+		onFocus?: () => void;
+		onBlur?: () => void;
+		onMouseEnter?: () => void;
+		onMouseLeave?: () => void;
+		target?: Element;
+		Calendar?: React.ComponentClass<TCalendarProps> | React.SFC<TCalendarProps>;
+	};
 
 type TDateDefaultProps = {
 	SteppableInput: React.ComponentClass<TSteppableInputProps> | React.SFC<TSteppableInputProps>;

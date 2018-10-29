@@ -617,7 +617,7 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 export type TDateInputProps = PartialKeys<
 	TDateInputFullProps,
 	'theme' | 'SteppableInput' | 'ButtonIcon' | 'dateFormatType' | 'Popover'
-	>;
+>;
 export const DateInput: ComponentClass<TDateInputProps> = withTheme(DATE_INPUT)(
 	withDefaults<TDateInputFullProps, 'SteppableInput' | 'ButtonIcon' | 'dateFormatType' | 'Popover'>({
 		SteppableInput,
