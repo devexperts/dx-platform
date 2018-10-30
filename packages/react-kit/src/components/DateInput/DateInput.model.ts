@@ -127,3 +127,25 @@ export function format(date: Option<number>, section: ActiveSection): string {
 		},
 	);
 }
+
+export function decrementMonth(month: number): number {
+	if (month >= 0 && month <= 11) {
+		return (month - 1 + 12) % 12;
+	}
+	return 11;
+}
+
+export function decrementMonthOption(month: Option<number>): Option<number> {
+	return month.ap(some(decrementMonth)).orElse(() => some(11));
+}
+
+export function incrementMonth(month: number): number {
+	if (month >= 0 && month <= 11) {
+		return (month + 1) % 12;
+	}
+	return 0;
+}
+
+export function incrementMonthOption(month: Option<number>): Option<number> {
+	return month.ap(some(incrementMonth)).orElse(() => some(0));
+}

@@ -22,6 +22,8 @@ import {
 	toObjectDate,
 	format,
 	buildDateOption,
+	decrementMonthOption,
+	incrementMonthOption,
 } from './DateInput.model';
 
 export const DATE_INPUT = Symbol('DateInput') as symbol;
@@ -204,7 +206,7 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 			}
 			case ActiveSection.Month: {
 				//month starts from 1 here and cannot be zero
-				const newMonth = month.map(value => (value + 1) % 12).orElse(() => some(0));
+				const newMonth = incrementMonthOption(month);
 				this.onValueChange(day, newMonth, year);
 				break;
 			}
@@ -239,7 +241,7 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 			}
 			case ActiveSection.Month: {
 				//month starts from 1 and cannot be zero
-				const newMonth = month.map(value => (value - 1 + 12) % 12).orElse(() => some(11));
+				const newMonth = decrementMonthOption(month);
 				this.onValueChange(day, newMonth, year);
 				break;
 			}
