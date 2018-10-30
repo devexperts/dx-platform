@@ -570,11 +570,11 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 			case ActiveSection.Month: {
 				if (this.secondInput) {
 					const newMonth = month.map(value => {
-						const fixedValue = value + 1;
-						const monthValue = Number(`${fixedValue}${digit}`) - 1;
-						if (fixedValue < 1) {
+						const correctedMonth = value + 1;
+						const monthValue = Number(`${correctedMonth}${digit}`) - 1;
+						if (correctedMonth < 1) {
 							return monthValue;
-						} else if (fixedValue === 1) {
+						} else if (correctedMonth === 1) {
 							return Math.min(monthValue, 11);
 						} else {
 							return digit;
