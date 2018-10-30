@@ -136,7 +136,7 @@ export function decrementMonth(month: number): number {
 }
 
 export function decrementMonthOption(month: Option<number>): Option<number> {
-	return month.ap(some(decrementMonth)).orElse(() => some(11));
+	return month.map(decrementMonth).alt(some(11));
 }
 
 export function incrementMonth(month: number): number {
@@ -147,5 +147,5 @@ export function incrementMonth(month: number): number {
 }
 
 export function incrementMonthOption(month: Option<number>): Option<number> {
-	return month.ap(some(incrementMonth)).orElse(() => some(0));
+	return month.map(incrementMonth).alt(some(0));
 }
