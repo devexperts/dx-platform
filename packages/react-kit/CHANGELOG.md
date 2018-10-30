@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="0.19.1"></a>
+## [0.19.1](https://github.com/devex-web-frontend/dx-platform/compare/v0.19.0...v0.19.1) (2018-10-30)
+
+
+### Bug Fixes
+
+* render correct month ([#86](https://github.com/devex-web-frontend/dx-platform/issues/86)) ([b780e75](https://github.com/devex-web-frontend/dx-platform/commit/b780e75))
+
+
+
+
 <a name="0.19.0"></a>
 # [0.19.0](https://github.com/devex-web-frontend/dx-platform/compare/v0.18.3...v0.19.0) (2018-10-17)
 
