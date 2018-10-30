@@ -239,16 +239,7 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 			}
 			case ActiveSection.Month: {
 				//month starts from 1 and cannot be zero
-				const newMonth = month
-					.map(value => {
-						if (value - 1 === 0) {
-							return 0;
-						} else if (value - 1 < 0) {
-							return 11;
-						}
-						return value - 1;
-					})
-					.orElse(() => some(11));
+				const newMonth = month.map(value => (value - 1 + 12) % 12).orElse(() => some(11));
 				this.onValueChange(day, newMonth, year);
 				break;
 			}
