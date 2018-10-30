@@ -36,7 +36,7 @@ export class RawVerticalScrollbar extends Scrollbar<TAdditionalVerticalScrollBar
 	 */
 	_hideNativeScrollContainer() {
 		const { width } = this.context.size;
-		if (this._container) {
+		if (this._container && width) {
 			this._container.style.marginRight = `-${width}px`;
 			this._container.style.width = `calc(100% + ${width}px)`;
 		}
@@ -68,9 +68,9 @@ export class RawVerticalScrollbar extends Scrollbar<TAdditionalVerticalScrollBar
 	_toggle() {
 		if (this._container) {
 			const bounds = this._container.getBoundingClientRect();
-			const hegiht = Math.round(bounds.height);
+			const height = Math.round(bounds.height);
 			const scrollHeight = this._container.scrollHeight;
-			const isVisible = scrollHeight > hegiht;
+			const isVisible = scrollHeight > height;
 
 			if (isVisible !== this.state.isVisible) {
 				this.setState({

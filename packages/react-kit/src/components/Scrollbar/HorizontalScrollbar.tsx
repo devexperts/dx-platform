@@ -39,8 +39,10 @@ export class RawHorizontalScrollbar extends Scrollbar<TAdditionalHorizontalProps
 	_hideNativeScrollContainer() {
 		const { container } = this.props;
 		const { height } = this.context.size;
-		container.style.marginBottom = `-${height}px`;
-		container.style.height = `calc(100% + ${height}px)`;
+		if (height) {
+			container.style.marginBottom = `-${height}px`;
+			container.style.height = `calc(100% + ${height}px)`;
+		}
 	}
 
 	componentDidMount() {
