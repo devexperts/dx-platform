@@ -22,6 +22,8 @@ import {
 	toObjectDate,
 	format,
 	buildDateOption,
+	decrementMonthOption,
+	incrementMonthOption,
 } from './DateInput.model';
 
 export const DATE_INPUT = Symbol('DateInput') as symbol;
@@ -134,9 +136,10 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 		const monthClassName = classnames(theme.section, {
 			[theme.section_isActive as string]: !isDisabled && activeSection === ActiveSection.Month,
 		});
+		const monthValue = month.map(value => value + 1);
 		return (
 			<span className={monthClassName} onMouseDown={this.onMonthMouseDown}>
-				{format(month, ActiveSection.Month)}
+				{format(monthValue, ActiveSection.Month)}
 			</span>
 		);
 	}
@@ -205,7 +208,7 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 			}
 			case ActiveSection.Month: {
 				//month starts from 1 here and cannot be zero
-				const newMonth = month.map(value => (value + 1) % 13 || 1).orElse(() => some(1));
+				const newMonth = incrementMonthOption(month);
 				this.onValueChange(day, newMonth, year);
 				break;
 			}
@@ -240,7 +243,7 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 			}
 			case ActiveSection.Month: {
 				//month starts from 1 and cannot be zero
-				const newMonth = month.map(value => (value - 1) % 13 || 12).orElse(() => some(12));
+				const newMonth = decrementMonthOption(month);
 				this.onValueChange(day, newMonth, year);
 				break;
 			}
@@ -270,7 +273,7 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 			if (isDatesDifferent(value, selectedDate) && onValueChange) {
 				onValueChange({
 					day: selectedDate.day,
-					month: selectedDate.month.map(value => value + 1),
+					month: selectedDate.month,
 					year: selectedDate.year,
 				});
 			}
@@ -571,11 +574,12 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 			case ActiveSection.Month: {
 				if (this.secondInput) {
 					const newMonth = month.map(value => {
-						const monthValue = Number(`${value}${digit}`);
-						if (value < 1) {
+						const correctedMonth = value + 1;
+						const monthValue = Number(`${correctedMonth}${digit}`) - 1;
+						if (correctedMonth < 1) {
 							return monthValue;
-						} else if (value === 1) {
-							return Math.min(Number(`${value}${digit}`), 12);
+						} else if (correctedMonth === 1) {
+							return Math.min(monthValue, 11);
 						} else {
 							return digit;
 						}
@@ -584,7 +588,7 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 					this.selectNextSection();
 					this.secondInput = false;
 				} else {
-					this.onValueChange(day, some(digit), year);
+					this.onValueChange(day, some(digit - 1), year);
 					if (digit > 1) {
 						this.selectNextSection();
 						this.secondInput = false;
