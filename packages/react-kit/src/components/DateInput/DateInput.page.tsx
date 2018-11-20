@@ -5,13 +5,13 @@ import { CalendarIcon } from '../../icons/calendar-icon';
 import { DecreaseIcon } from '../../icons/decrease-icon';
 import { SmallCrossIcon as ClearIcon } from '../../icons/small-cross-icon';
 
-import { DateInput } from './DateInput';
+import { DateInput, TCalendarProps } from './DateInput';
 import { stateful } from '../Control/Control';
 import { Demo } from '../demo/Demo';
 import { Button } from '../Button/Button';
 import { ToggleButtons } from '../ToggleButtons/ToggleButtons';
 import { some, none } from 'fp-ts/lib/Option';
-import { TDateInputValue, TCalendarProps, DateFormatType } from './DateInput.model';
+import { TDateInputValue, DateFormatType } from './DateInput.model';
 
 const Stateful = stateful()(DateInput);
 const onChange = (value: TDateInputValue) => action('change')(value);

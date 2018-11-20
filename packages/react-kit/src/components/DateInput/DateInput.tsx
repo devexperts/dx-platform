@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { SteppableInput, checkParentsUpTo } from '../SteppableInput/SteppableInput';
 import { ComponentClass } from 'react';
-import { KeyCode, KEY_CODE_NUM_MAP } from '../Control/Control';
+import { KeyCode, KEY_CODE_NUM_MAP, TControlProps } from '../Control/Control';
 import * as classnames from 'classnames';
 import { createPortal } from 'react-dom';
 import { withTheme } from '../../utils/withTheme';
@@ -14,7 +14,6 @@ import { Popover } from '../Popover/Popover';
 import { withDefaults } from '../../utils/with-defaults';
 import { Option, none, some } from 'fp-ts/lib/Option';
 import {
-	TDateInputFullProps,
 	TDateInputState,
 	ActiveSection,
 	DateFormatType,
@@ -24,9 +23,58 @@ import {
 	buildDateOption,
 	decrementMonthOption,
 	incrementMonthOption,
+	TDateInputValue,
 } from './DateInput.model';
+import { TPopoverProps } from '../Popover/Popover';
+import { TButtonIconProps } from '../ButtonIcon/ButtonIcon';
+import { TSteppableInputProps } from '../SteppableInput/SteppableInput';
 
 export const DATE_INPUT = Symbol('DateInput') as symbol;
+
+export type TCalendarProps = TControlProps<Date | null> & {
+	onMouseDown?: React.EventHandler<React.MouseEvent<Element>>;
+	min?: Date;
+	max?: Date;
+};
+
+type TDateValueProps = TControlProps<TDateInputValue>;
+
+export type TDateInputOwnProps = TSteppableInputProps &
+	TDateValueProps & {
+		min?: Date;
+		max?: Date;
+		calendarIcon?: React.ReactElement<any>;
+		onClear?: Function;
+		onFocus?: () => void;
+		onBlur?: () => void;
+		onMouseEnter?: () => void;
+		onMouseLeave?: () => void;
+		target?: Element;
+		Calendar?: React.ComponentClass<TCalendarProps> | React.SFC<TCalendarProps>;
+	};
+
+type TDateDefaultProps = {
+	SteppableInput: React.ComponentClass<TSteppableInputProps> | React.SFC<TSteppableInputProps>;
+	ButtonIcon: React.ComponentClass<TButtonIconProps>;
+	Popover: React.ComponentClass<TPopoverProps> | React.SFC<TPopoverProps>;
+	dateFormatType: DateFormatType;
+};
+
+export type TDateInputInjectedProps = {
+	theme: {
+		inner?: string;
+		inner_isFilled?: string;
+		section?: string;
+		section_isActive?: string;
+		separator?: string;
+		SteppableInput?: TSteppableInputProps['theme'];
+		ButtonIcon?: TButtonIconProps['theme'];
+		CalendarButtonIcon?: TButtonIconProps['theme'];
+		Popover?: TPopoverProps['theme'];
+	};
+};
+
+export type TDateInputFullProps = TDateInputOwnProps & TDateInputInjectedProps & TDateDefaultProps;
 
 @PURE
 class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState> {
