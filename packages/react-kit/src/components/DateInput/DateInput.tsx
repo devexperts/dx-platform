@@ -25,9 +25,7 @@ import {
 	incrementMonthOption,
 	TDateInputValue,
 } from './DateInput.model';
-import { TPopoverProps } from '../Popover/Popover';
-import { TButtonIconProps } from '../ButtonIcon/ButtonIcon';
-import { TSteppableInputProps } from '../SteppableInput/SteppableInput';
+import { ReactRef } from '../../utils/typings';
 
 export const DATE_INPUT = Symbol('DateInput') as symbol;
 
@@ -58,6 +56,7 @@ type TDateDefaultProps = {
 	ButtonIcon: ComponentClass<TButtonIconProps>;
 	Popover: ComponentClass<TPopoverProps> | React.SFC<TPopoverProps>;
 	dateFormatType: DateFormatType;
+	innerRef?: (instance: ReactRef) => void;
 };
 
 export type TDateInputInjectedProps = {
@@ -125,7 +124,8 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 				onKeyDown={this.onKeyDown}
 				onClick={this.onSteppableInputClick}
 				onMouseEnter={this.onMouseEnter}
-				onMouseLeave={this.onMouseLeave}>
+				onMouseLeave={this.onMouseLeave}
+				innerRef={this.props.innerRef}>
 				<div className={innerClassName}>
 					{dateFormatType === DateFormatType.DMY && this.renderDay()}
 					{dateFormatType === DateFormatType.MDY && this.renderMonth()}

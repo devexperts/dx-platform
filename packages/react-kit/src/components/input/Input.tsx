@@ -13,6 +13,7 @@ import {
 } from 'react';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { withTheme } from '../../utils/withTheme';
+import { ReactRef } from '../../utils/typings';
 
 export const INPUT = Symbol('Input') as symbol;
 
@@ -28,6 +29,7 @@ export type TFullInputProps = TControlProps<string | undefined> & {
 	name?: string;
 	id?: string;
 	error?: React.ReactNode; //for possible Input Class extensions
+	innerRef?: (instance: ReactRef) => void;
 
 	onChange?: ChangeEventHandler<HTMLInputElement>;
 	onFocus?: FocusEventHandler<HTMLElement>;
@@ -126,10 +128,10 @@ class RawInput extends React.Component<TFullInputProps, TInputState> {
 				onBlur={this.onBlur}
 				onWheel={onWheel}
 				tabIndex={!isCustom && (isFocused || isDisabled) ? -1 : tabIndex}
+				ref={this.getRef}
 				{...isCustom && keyboardEvents}>
 				<input
 					className={theme.input}
-					ref={el => (this.input = el)}
 					value={value}
 					type={type}
 					min={min}
@@ -147,6 +149,16 @@ class RawInput extends React.Component<TFullInputProps, TInputState> {
 			</div>
 		);
 	}
+
+	private getRef = (input: ReactRef<HTMLElement>): void => {
+		const { innerRef } = this.props;
+
+		this.input = input;
+
+		if (innerRef) {
+			innerRef(input);
+		}
+	};
 
 	onFocus = (e: React.FocusEvent<HTMLElement>) => {
 		if (!this.props.isDisabled && !this.state.isFocused && !this.isFocusingOnInput && this.input) {
