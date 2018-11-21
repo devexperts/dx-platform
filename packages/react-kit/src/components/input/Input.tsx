@@ -132,6 +132,7 @@ class RawInput extends React.Component<TFullInputProps, TInputState> {
 				{...isCustom && keyboardEvents}>
 				<input
 					className={theme.input}
+					ref={el => (this.input = el)}
 					value={value}
 					type={type}
 					min={min}
@@ -152,8 +153,6 @@ class RawInput extends React.Component<TFullInputProps, TInputState> {
 
 	private getRef = (input: ReactRef<HTMLElement>): void => {
 		const { innerRef } = this.props;
-
-		this.input = input;
 
 		if (innerRef) {
 			innerRef(input);
