@@ -12,6 +12,7 @@ import { Button } from '../Button/Button';
 import { ToggleButtons } from '../ToggleButtons/ToggleButtons';
 import { some, none } from 'fp-ts/lib/Option';
 import { TDateInputValue, DateFormatType } from './DateInput.model';
+import { DateRange } from './DateRange';
 
 const Stateful = stateful()(DateInput);
 const onChange = (value: TDateInputValue) => action('change')(value);
@@ -191,4 +192,9 @@ class DateInputPage extends React.Component<any, TState> {
 storiesOf('DateInput', module)
 	.add('default', () => <DateInputPage />)
 	.add('disabled', () => <DateInputPage isDisabled={true} />)
-	.add('invalid', () => <DateInputPage error={true} />);
+	.add('invalid', () => <DateInputPage error={true} />)
+	.add('dateRange', () => (
+		<Demo>
+			<DateRange isDisabled={false} error={false} dateFormatType={DateFormatType.DMY} />
+		</Demo>
+	));
