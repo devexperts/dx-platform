@@ -5,13 +5,15 @@ import { CalendarIcon } from '../../icons/calendar-icon';
 import { DecreaseIcon } from '../../icons/decrease-icon';
 import { SmallCrossIcon as ClearIcon } from '../../icons/small-cross-icon';
 
-import { DateInput } from './DateInput';
+import { DateInput, TCalendarProps } from './DateInput';
 import { stateful } from '../Control/Control';
 import { Demo } from '../demo/Demo';
 import { Button } from '../Button/Button';
 import { ToggleButtons } from '../ToggleButtons/ToggleButtons';
 import { some, none } from 'fp-ts/lib/Option';
-import { TDateInputValue, TCalendarProps, DateFormatType } from './DateInput.model';
+import { TDateInputValue, DateFormatType } from './DateInput.model';
+import { ReactRef } from '../../utils/typings';
+import { findDOMNode } from 'react-dom';
 
 const Stateful = stateful()(DateInput);
 const onChange = (value: TDateInputValue) => action('change')(value);
@@ -27,16 +29,21 @@ const Calendar: React.SFC<TCalendarProps> = props => {
 	);
 };
 
-type TState = Readonly<{
+type TDateInputPageState = Readonly<{
 	value: TDateInputValue;
 	dateFormatType: DateFormatType;
+	isStartDateFocused: boolean;
+	isEndDateFocused: boolean;
 }>;
 
-class DateInputPage extends React.Component<any, TState> {
+class DateInputPage extends React.Component<any, TDateInputPageState> {
+	private endDateInput: ReactRef<HTMLElement> | null = null;
 	private target: any;
-	readonly state: TState = {
+	readonly state: TDateInputPageState = {
 		value: { day: some(1), month: some(1), year: some(2018) },
 		dateFormatType: DateFormatType.DMY,
+		isStartDateFocused: false,
+		isEndDateFocused: false,
 	};
 
 	render() {
@@ -137,9 +144,78 @@ class DateInputPage extends React.Component<any, TState> {
 					<h1>calendar output target</h1>
 					<div ref={el => (this.target = el)} />
 				</section>
+				<section>
+					<h1>Date range</h1>
+					<p>Example how to combine two DateInputs and test case with focus/blur inputs by press enter</p>
+					<div onKeyPress={this.onKeyPress}>
+						<Stateful
+							dateFormatType={this.state.dateFormatType}
+							onValueChange={onChange}
+							clearIcon={<ClearIcon />}
+							incrementIcon={<AddIcon />}
+							decrementIcon={<DecreaseIcon />}
+							onClear={onClear}
+							error={error}
+							defaultValue={{ day: none, month: none, year: none }}
+							onFocus={this.onStartDateFocus}
+							onBlur={this.onStartDateBlur}
+							isDisabled={isDisabled}
+						/>
+						<Stateful
+							dateFormatType={this.state.dateFormatType}
+							onValueChange={onChange}
+							clearIcon={<ClearIcon />}
+							incrementIcon={<AddIcon />}
+							decrementIcon={<DecreaseIcon />}
+							onClear={onClear}
+							error={error}
+							defaultValue={{ day: none, month: none, year: none }}
+							innerRef={this.getEndDateRef}
+							onFocus={this.onEndDateFocus}
+							onBlur={this.onEndDateBlur}
+							isDisabled={isDisabled}
+						/>
+					</div>
+				</section>
 			</Demo>
 		);
 	}
+
+	private onStartDateFocus = () => this.setState({ isStartDateFocused: true });
+	private onEndDateFocus = () => this.setState({ isEndDateFocused: true });
+	private onStartDateBlur = () => this.setState({ isStartDateFocused: false });
+	private onEndDateBlur = () => this.setState({ isEndDateFocused: false });
+
+	private onKeyPress = (e: React.KeyboardEvent<HTMLElement>) => {
+		if (e.charCode === 13) {
+			if (this.state.isStartDateFocused && this.endDateInput) {
+				this.onFocus(this.endDateInput);
+			}
+			if (this.state.isEndDateFocused && this.endDateInput) {
+				this.onBlur(this.endDateInput);
+			}
+		}
+	};
+
+	private onFocus = (reference: React.ReactInstance) => {
+		const element = findDOMNode(reference);
+
+		if (element instanceof HTMLElement) {
+			element.focus();
+		}
+	};
+
+	private onBlur = (reference: React.ReactInstance) => {
+		const element = findDOMNode(reference);
+
+		if (element instanceof HTMLElement) {
+			element.blur();
+		}
+	};
+
+	private getEndDateRef = (input: ReactRef<HTMLElement>): void => {
+		this.endDateInput = input;
+	};
 
 	private getToggleIndex() {
 		switch (this.state.dateFormatType) {
