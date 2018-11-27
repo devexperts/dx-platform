@@ -10,6 +10,7 @@ import { stateful } from '../Control/Control';
 
 import * as css from './Popover.page.styl';
 import { Scrollable } from '../Scrollable/Scrollable';
+import { InputWithPopoverPage } from './InputWithPopover.page';
 
 const buttonTheme = {
 	container: css.toggleButton,
@@ -165,4 +166,6 @@ class PopoverPage extends React.Component {
 	};
 }
 
-storiesOf('Popover', module).add('default', () => <PopoverPage />);
+storiesOf('Popover', module)
+	.add('default', () => <PopoverPage />)
+	.add('input with popover', () => <InputWithPopoverPage />);
