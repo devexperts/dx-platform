@@ -2,6 +2,7 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import prefix from '@devexperts/utils/dist/dom/prefix';
 import * as classnames from 'classnames';
+import { CSSTransition } from "react-transition-group";
 
 import { PURE } from '../../utils/pure';
 import { BoundsUpdateDetector } from '../BoundsUpdateDetector/BoundsUpdateDetector';
@@ -15,6 +16,8 @@ import { EventListener } from '../EventListener/EventListener';
 import { RootClose } from '../RootClose/RootClose';
 import { withDefaults } from '../../utils/with-defaults';
 import { findDOMNode } from 'react-dom';
+
+import * as transitions from './Popover.transitions.styl';
 
 type TSize = {
 	width: number;
@@ -69,6 +72,7 @@ type TPopoverState = {
 	top?: number;
 	left?: number;
 	arrowOffset?: number;
+	opened?: boolean;
 };
 
 @PURE
@@ -135,6 +139,7 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 	}
 
 	componentDidUpdate(prevProps: TFullPopoverProps) {
+		const { isOpened } = this.props;
 		//@PURE check is passed here - update anyway
 		if (this._needsUpdate) {
 			/** set in {@link componentWillReceiveProps} */
@@ -142,16 +147,18 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 			this._popoverSize = this.getPopoverSize();
 			this.updatePosition();
 		}
+        if(isOpened !== prevProps.isOpened)
+            this.setState({ opened: isOpened });
 	}
 
 	render() {
 		const { closeOnClickAway, theme, hasArrow, onMouseDown, isOpened, onRequestClose, anchor } = this.props;
+		const { top, left, arrowOffset, finalPlacement, finalAlign, opened } = this.state;
 
-		if (!isOpened || !anchor) {
+		if ((!isOpened && opened === undefined) || !anchor) {
+		// if (!isOpened || !anchor) {
 			return null;
 		}
-
-		const { top, left, arrowOffset, finalPlacement, finalAlign } = this.state;
 
 		const isMeasured = !!finalAlign && !!finalPlacement;
 
@@ -176,30 +183,37 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 
 		let child = (
 			<BoundsUpdateDetector onUpdate={this.onSizeUpdate}>
-				<div
-					ref={(el: any) => (this._popover = el)}
-					style={style}
-					onMouseDown={onMouseDown}
-					onClick={stopPropagation}
-					className={popoverClassName}>
-					<div className={theme.content}>
-						{isMeasured &&
-							finalPlacement &&
-							finalAlign &&
-							hasArrow && (
-								<div
-									className={theme.arrow}
-									style={getArrowStyle(finalPlacement, finalAlign, arrowOffset)}
-								/>
-							)}
-						{this.props.children}
+				<CSSTransition
+					in={opened}
+					timeout={200}
+					classNames={transitions}
+					onExited={onRequestClose}
+				>
+					<div
+						ref={(el: any) => (this._popover = el)}
+						style={style}
+						onMouseDown={onMouseDown}
+						onClick={stopPropagation}
+						className={popoverClassName}>
+						<div className={theme.content}>
+							{isMeasured &&
+								finalPlacement &&
+								finalAlign &&
+								hasArrow && (
+									<div
+										className={theme.arrow}
+										style={getArrowStyle(finalPlacement, finalAlign, arrowOffset)}
+									/>
+								)}
+							{this.props.children}
+						</div>
 					</div>
-				</div>
+				</CSSTransition>
 			</BoundsUpdateDetector>
 		);
 
 		if (closeOnClickAway) {
-			child = <RootClose onRootClose={onRequestClose}>{child}</RootClose>;
+			child = <RootClose onRootClose={this.toggle(false)}>{child}</RootClose>;
 		}
 
 		const target = typeof window !== 'undefined' ? window : 'window';
@@ -288,6 +302,14 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 		this.handleResize();
 	};
 
+	toggle = (opened?:boolean) => () => {
+		this.setState({
+			opened: opened === undefined
+				? !this.state.opened
+				: opened
+		}); 
+	}
+
 	handleResize() {
 		this.updatePosition();
 	}
@@ -303,9 +325,9 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 	};
 
 	handleScroll() {
-		const { onRequestClose, isOpened } = this.props;
-		if (onRequestClose && isOpened) {
-			onRequestClose();
+		const { isOpened } = this.props;
+		if (isOpened) {
+			this.toggle(false)();
 		}
 	}
 }
