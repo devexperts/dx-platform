@@ -72,7 +72,6 @@ type TPopoverState = {
 	top?: number;
 	left?: number;
 	arrowOffset?: number;
-	opened?: boolean;
 };
 
 @PURE
@@ -139,7 +138,6 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 	}
 
 	componentDidUpdate(prevProps: TFullPopoverProps) {
-		const { isOpened } = this.props;
 		//@PURE check is passed here - update anyway
 		if (this._needsUpdate) {
 			/** set in {@link componentWillReceiveProps} */
@@ -147,19 +145,17 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 			this._popoverSize = this.getPopoverSize();
 			this.updatePosition();
 		}
-        if(isOpened !== prevProps.isOpened)
-            this.setState({ opened: isOpened });
 	}
 
 	render() {
 		const { closeOnClickAway, theme, hasArrow, onMouseDown, isOpened, onRequestClose, anchor } = this.props;
-		const { top, left, arrowOffset, finalPlacement, finalAlign, opened } = this.state;
-
-		if ((!isOpened && opened === undefined) || !anchor) {
-		// if (!isOpened || !anchor) {
+		
+		if (!anchor) {
 			return null;
 		}
 
+		const { top, left, arrowOffset, finalPlacement, finalAlign } = this.state;
+			
 		const isMeasured = !!finalAlign && !!finalPlacement;
 
 		let style;
@@ -169,6 +165,7 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 				transform: `translate(${left || 0}px, ${top || 0}px)`,
 			});
 			popoverClassName = classnames(
+				transitions.enter,
 				popoverClassName,
 				{
 					[theme.container_hasArrow as string]: hasArrow,
@@ -182,13 +179,16 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 		};
 
 		let child = (
-			<BoundsUpdateDetector onUpdate={this.onSizeUpdate}>
-				<CSSTransition
-					in={opened}
-					timeout={200}
-					classNames={transitions}
-					onExited={onRequestClose}
-				>
+			<CSSTransition
+				appear
+				mountOnEnter
+				unmountOnExit
+				in={isOpened}
+				timeout={200}
+				classNames={transitions}
+				onExited={onRequestClose}
+			>
+				<BoundsUpdateDetector onUpdate={this.onSizeUpdate}>
 					<div
 						ref={(el: any) => (this._popover = el)}
 						style={style}
@@ -208,12 +208,12 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 							{this.props.children}
 						</div>
 					</div>
-				</CSSTransition>
-			</BoundsUpdateDetector>
+				</BoundsUpdateDetector>
+			</CSSTransition>
 		);
 
 		if (closeOnClickAway) {
-			child = <RootClose onRootClose={this.toggle(false)}>{child}</RootClose>;
+			child = <RootClose onRootClose={onRequestClose}>{child}</RootClose>;
 		}
 
 		const target = typeof window !== 'undefined' ? window : 'window';
@@ -302,14 +302,6 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 		this.handleResize();
 	};
 
-	toggle = (opened?:boolean) => () => {
-		this.setState({
-			opened: opened === undefined
-				? !this.state.opened
-				: opened
-		}); 
-	}
-
 	handleResize() {
 		this.updatePosition();
 	}
@@ -325,9 +317,9 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 	};
 
 	handleScroll() {
-		const { isOpened } = this.props;
-		if (isOpened) {
-			this.toggle(false)();
+		const { onRequestClose, isOpened } = this.props;
+		if (onRequestClose && isOpened) {
+			onRequestClose();
 		}
 	}
 }
