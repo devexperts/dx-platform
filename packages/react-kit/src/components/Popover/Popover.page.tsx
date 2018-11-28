@@ -2,6 +2,7 @@ import * as React from 'react';
 import Demo from '../demo/Demo';
 import { Button } from '../Button/Button';
 import { Popover, PopoverPlacement, PopoverAlign } from './Popover';
+import { PopoverAnimated } from './PopoverAnimated';
 import { Selectbox } from '../Selectbox/Selectbox';
 import { MenuItem } from '../Menu/Menu';
 import { PURE } from '../../utils/pure';
@@ -9,10 +10,23 @@ import { storiesOf } from '@devexperts/tools/dist/utils/storybook';
 import { stateful } from '../Control/Control';
 
 import * as css from './Popover.page.styl';
+import * as popoverTransitionsHeightTheme from '../Popover/Popover.transitions.styl';
+import * as popoverTransitionsOpacityTheme from '../Popover/Popover.transitions-opacity.styl';
+import * as popoverTheme from '../Popover/Popover.styl';
 import { Scrollable } from '../Scrollable/Scrollable';
 
 const buttonTheme = {
 	container: css.toggleButton,
+};
+
+enum PopoverTransitionsNames {
+	Height = 'Height',
+	Opacity = 'Opacity',
+}
+
+const popoverTransitions = {
+	[PopoverTransitionsNames.Height]: popoverTransitionsHeightTheme,
+	[PopoverTransitionsNames.Opacity]: popoverTransitionsOpacityTheme,
 };
 
 @PURE
@@ -52,14 +66,17 @@ class PopoverPage extends React.Component {
 		placement: PopoverPlacement.Bottom,
 		align: PopoverAlign.Left,
 		isOpened: false,
+		isOpenedPopoverAnimated: false,
 		isLongText: false,
 		closeOnClickAway: false,
+		transitions: popoverTransitions.Height,
 	};
 
-	_anchor: any;
+	anchorPopover: any;
+	anchorPopoverAnimated: any;
 
 	render() {
-		const { placement, align, isOpened, closeOnClickAway } = this.state;
+		const { placement, align, transitions, isOpened, isOpenedPopoverAnimated, closeOnClickAway } = this.state;
 
 		return (
 			<Demo>
@@ -87,6 +104,13 @@ class PopoverPage extends React.Component {
 								<MenuItem value={PopoverAlign.Bottom}>Bottom</MenuItem>
 							</Stateful>
 						)}
+						<label className={css.label}>Animation</label>
+						<Stateful
+							defaultValue={PopoverTransitionsNames.Height}
+							onValueChange={this.onTransitionsSelect as any}>
+							<MenuItem value={PopoverTransitionsNames.Height}>Height</MenuItem>
+							<MenuItem value={PopoverTransitionsNames.Opacity}>Opacity</MenuItem>
+						</Stateful>
 						<label className={css.label}>
 							Close on clickaway{' '}
 							<input
@@ -98,20 +122,40 @@ class PopoverPage extends React.Component {
 					</div>
 					<Button
 						isPrimary={true}
-						onClick={this.onToggleClick}
-						ref={el => (this._anchor = el)}
+						onClick={this.onTogglePopover}
+						ref={el => (this.anchorPopover = el)}
 						theme={buttonTheme}>
-						{isOpened ? 'Hide' : 'Open'}
+						{isOpened ? 'Hide popover' : 'Open popover'}
 						<Popover
+							theme={popoverTheme}
 							placement={placement}
 							isOpened={isOpened}
 							onRequestClose={this.onPopoverRequestClose}
 							closeOnClickAway={closeOnClickAway}
 							hasArrow={true}
 							align={align}
-							anchor={this._anchor}>
+							anchor={this.anchorPopover}>
 							<HeavyContent />
 						</Popover>
+					</Button>
+					<Button
+						isPrimary={true}
+						onClick={this.onTogglePopoverAnimated}
+						ref={el => (this.anchorPopoverAnimated = el)}
+						theme={buttonTheme}>
+						{isOpenedPopoverAnimated ? 'Hide animated popover' : 'Open animated popover'}
+						<PopoverAnimated
+							theme={popoverTheme}
+							transitions={transitions}
+							placement={placement}
+							isOpened={isOpenedPopoverAnimated}
+							onRequestClose={this.onPopoverAnimatedRequestClose}
+							closeOnClickAway={closeOnClickAway}
+							hasArrow={true}
+							align={align}
+							anchor={this.anchorPopoverAnimated}>
+							<HeavyContent />
+						</PopoverAnimated>
 					</Button>
 				</div>
 			</Demo>
@@ -146,15 +190,33 @@ class PopoverPage extends React.Component {
 		});
 	};
 
-	onToggleClick = () => {
+	onTransitionsSelect = (transitions: PopoverTransitionsNames) => {
+		this.setState({
+			transitions: popoverTransitions[transitions],
+		});
+	};
+
+	onTogglePopover = () => {
 		this.setState({
 			isOpened: !this.state.isOpened,
+		});
+	};
+
+	onTogglePopoverAnimated = () => {
+		this.setState({
+			isOpenedPopoverAnimated: !this.state.isOpenedPopoverAnimated,
 		});
 	};
 
 	onPopoverRequestClose = () => {
 		this.setState({
 			isOpened: false,
+		});
+	};
+
+	onPopoverAnimatedRequestClose = () => {
+		this.setState({
+			isOpenedPopoverAnimated: false,
 		});
 	};
 
