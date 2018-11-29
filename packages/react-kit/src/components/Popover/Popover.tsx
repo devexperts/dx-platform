@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import prefix from '@devexperts/utils/dist/dom/prefix';
 import * as classnames from 'classnames';
-import { CSSTransition } from "react-transition-group";
+import { CSSTransition } from 'react-transition-group';
 
 import { PURE } from '../../utils/pure';
 import { BoundsUpdateDetector } from '../BoundsUpdateDetector/BoundsUpdateDetector';
@@ -16,7 +16,6 @@ import { EventListener } from '../EventListener/EventListener';
 import { RootClose } from '../RootClose/RootClose';
 import { withDefaults } from '../../utils/with-defaults';
 import { findDOMNode } from 'react-dom';
-
 
 type TSize = {
 	width: number;
@@ -39,7 +38,7 @@ export enum PopoverAlign {
 	Right = 'Right',
 	Middle = 'Middle',
 	Center = 'Center',
-}
+};
 
 type TPopoverTransitionsTheme = {
 	init?: string;
@@ -52,7 +51,7 @@ type TPopoverTransitionsTheme = {
 	exit?: string;
 	exitActive?: string;
 	exitDone?: string;
-}
+};
 
 type TPopoverTheme = {
 	container?: string;
@@ -88,7 +87,6 @@ type TPopoverState = {
 	left?: number;
 	arrowOffset?: number;
 };
-
 
 @PURE
 class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
@@ -230,10 +228,9 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 				mountOnEnter={true}
 				unmountOnExit={true}
 				in={isOpened}
-				timeout={parseInt(duration)}
+				timeout={parseInt(duration, 10)}
 				classNames={transitions}
-				onExited={onRequestClose}
-			>
+				onExited={onRequestClose}>
 			{child}
 			</CSSTransition>
 		);
