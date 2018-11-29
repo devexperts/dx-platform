@@ -17,7 +17,6 @@ import { RootClose } from '../RootClose/RootClose';
 import { withDefaults } from '../../utils/with-defaults';
 import { findDOMNode } from 'react-dom';
 
-import * as transitions from './Popover.transitions.styl';
 
 type TSize = {
 	width: number;
@@ -42,6 +41,28 @@ export enum PopoverAlign {
 	Center = 'Center',
 }
 
+type TThemeTransitions = {
+	appear?: string;
+	enter?: string;
+	appearActive?: string;
+	enterActive?: string;
+	enterDone?: string;
+	exit?: string;
+	exitActive?: string;
+	exitDone?: string;
+}
+
+type TTheme = TThemeTransitions & {
+	container?: string;
+	container_hasArrow?: string;
+	container_placementTop?: string;
+	container_placementBottom?: string;
+	container_placementLeft?: string;
+	container_placementRight?: string;
+	content?: string;
+	arrow?: string;
+};
+
 export type TFullPopoverProps = {
 	children: ReactNode;
 	isOpened?: boolean;
@@ -53,16 +74,7 @@ export type TFullPopoverProps = {
 	container?: Element;
 	onRequestClose?: () => any;
 	hasArrow?: boolean;
-	theme: {
-		container?: string;
-		container_hasArrow?: string;
-		container_placementTop?: string;
-		container_placementBottom?: string;
-		container_placementLeft?: string;
-		container_placementRight?: string;
-		content?: string;
-		arrow?: string;
-	};
+	theme: TTheme;
 	style?: object;
 };
 
@@ -73,6 +85,10 @@ type TPopoverState = {
 	left?: number;
 	arrowOffset?: number;
 };
+
+const getTransitionsClasses = ({ appear, enter, appearActive, enterActive, enterDone, exit, exitActive, exitDone }: TThemeTransitions): TThemeTransitions => ({
+	appear, enter, appearActive, enterActive, enterDone, exit, exitActive, exitDone,
+});
 
 @PURE
 class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
@@ -149,7 +165,7 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 
 	render() {
 		const { closeOnClickAway, theme, hasArrow, onMouseDown, isOpened, onRequestClose, anchor } = this.props;
-		
+
 		if (!anchor) {
 			return null;
 		}
@@ -165,7 +181,7 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 				transform: `translate(${left || 0}px, ${top || 0}px)`,
 			});
 			popoverClassName = classnames(
-				transitions.enter,
+				getTransitionsClasses(theme).enter,
 				popoverClassName,
 				{
 					[theme.container_hasArrow as string]: hasArrow,
@@ -185,7 +201,7 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 				unmountOnExit
 				in={isOpened}
 				timeout={200}
-				classNames={transitions}
+				classNames={getTransitionsClasses(theme)}
 				onExited={onRequestClose}
 			>
 				<BoundsUpdateDetector onUpdate={this.onSizeUpdate}>
