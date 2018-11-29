@@ -1,23 +1,30 @@
-.appear,
-.enter {
-    opacity: 0;
+$duration = 500;
+
+.init {
+    max-height: 0;
+    transition: max-height ($duration)ms ease;
 }
+// .appear,
+// .enter {
+// }
 .appearActive,
 .enterActive {
-    opacity: 1;
-    transition: 200ms linear;
+    max-height: 100%;
 }
 .enterDone {
-    opacity: 1;
+    max-height: 100%;
 }
 
 .exit {
-    opacity: 1;
+    max-height: 100%;
 }
 .exitActive {
-    opacity: 0;
-    transition: 200ms linear;
+    max-height: 0;
 }
 .exitDone {
-    opacity: 0;
+    max-height: 0;
+}
+
+:export {
+    duration: $duration;
 }
