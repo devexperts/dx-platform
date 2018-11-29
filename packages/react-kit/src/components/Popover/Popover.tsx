@@ -41,7 +41,7 @@ export enum PopoverAlign {
 	Center = 'Center',
 }
 
-type TThemeTransitions = {
+type TPopoverTransitionsTheme = {
 	init?: string;
 	duration?: string;
 	appear?: string;
@@ -54,7 +54,7 @@ type TThemeTransitions = {
 	exitDone?: string;
 }
 
-type TTheme = {
+type TPopoverTheme = {
 	container?: string;
 	container_hasArrow?: string;
 	container_placementTop?: string;
@@ -63,7 +63,7 @@ type TTheme = {
 	container_placementRight?: string;
 	content?: string;
 	arrow?: string;
-	transitions: TThemeTransitions;
+	transitions: TPopoverTransitionsTheme;
 };
 
 export type TFullPopoverProps = {
@@ -77,7 +77,7 @@ export type TFullPopoverProps = {
 	container?: Element;
 	onRequestClose?: () => any;
 	hasArrow?: boolean;
-	theme: TTheme;
+	theme: TPopoverTheme;
 	style?: object;
 };
 
@@ -173,7 +173,7 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 		const { top, left, arrowOffset, finalPlacement, finalAlign } = this.state;
 		const { transitions = {} } = theme;
 		const { duration = '200' } = transitions;
-			
+
 		const isMeasured = !!finalAlign && !!finalPlacement;
 
 		let style;
@@ -239,7 +239,7 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 		);
 
 		const target = typeof window !== 'undefined' ? window : 'window';
-		
+
 		return (
 			<EventListener onResize={this.onResize} onScrollCapture={this.onScroll} target={target}>
 				{ReactDOM.createPortal(child, this.rootElement)}
