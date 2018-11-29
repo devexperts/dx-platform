@@ -197,6 +197,34 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 		};
 
 		let child = (
+			<BoundsUpdateDetector onUpdate={this.onSizeUpdate}>
+				<div
+					ref={(el: any) => (this._popover = el)}
+					style={style}
+					onMouseDown={onMouseDown}
+					onClick={stopPropagation}
+					className={popoverClassName}>
+					<div className={theme.content}>
+						{isMeasured &&
+							finalPlacement &&
+							finalAlign &&
+							hasArrow && (
+								<div
+									className={theme.arrow}
+									style={getArrowStyle(finalPlacement, finalAlign, arrowOffset)}
+								/>
+							)}
+						{this.props.children}
+					</div>
+				</div>
+			</BoundsUpdateDetector>
+		);
+
+		if (closeOnClickAway) {
+			child = <RootClose onRootClose={onRequestClose}>{child}</RootClose>;
+		}
+
+		child = (
 			<CSSTransition
 				appear={true}
 				mountOnEnter={true}
@@ -206,36 +234,12 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 				classNames={transitions}
 				onExited={onRequestClose}
 			>
-				<BoundsUpdateDetector onUpdate={this.onSizeUpdate}>
-					<div
-						ref={(el: any) => (this._popover = el)}
-						style={style}
-						onMouseDown={onMouseDown}
-						onClick={stopPropagation}
-						className={popoverClassName}>
-						<div className={theme.content}>
-							{isMeasured &&
-								finalPlacement &&
-								finalAlign &&
-								hasArrow && (
-									<div
-										className={theme.arrow}
-										style={getArrowStyle(finalPlacement, finalAlign, arrowOffset)}
-									/>
-								)}
-							{this.props.children}
-						</div>
-					</div>
-				</BoundsUpdateDetector>
+			{child}
 			</CSSTransition>
 		);
 
-		if (closeOnClickAway) {
-			child = <RootClose onRootClose={onRequestClose}>{child}</RootClose>;
-		}
-
 		const target = typeof window !== 'undefined' ? window : 'window';
-
+		
 		return (
 			<EventListener onResize={this.onResize} onScrollCapture={this.onScroll} target={target}>
 				{ReactDOM.createPortal(child, this.rootElement)}
