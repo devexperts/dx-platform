@@ -196,9 +196,9 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 
 		let child = (
 			<CSSTransition
-				appear
-				mountOnEnter
-				unmountOnExit
+				appear={true}
+				mountOnEnter={true}
+				unmountOnExit={true}
 				in={isOpened}
 				timeout={200}
 				classNames={getTransitionsClasses(theme)}
