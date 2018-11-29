@@ -63,7 +63,7 @@ type TPopoverTheme = {
 	container_placementRight?: string;
 	content?: string;
 	arrow?: string;
-	transitions: TPopoverTransitionsTheme;
+	transitions?: TPopoverTransitionsTheme;
 };
 
 export type TFullPopoverProps = {
