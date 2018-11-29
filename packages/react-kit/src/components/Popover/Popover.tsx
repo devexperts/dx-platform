@@ -168,8 +168,6 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 			return null;
 		}
 
-		console.warn({ theme });
-
 		const { top, left, arrowOffset, finalPlacement, finalAlign } = this.state;
 			
 		const isMeasured = !!finalAlign && !!finalPlacement;
