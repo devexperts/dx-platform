@@ -61,7 +61,7 @@ type TTheme = {
 	container_placementRight?: string;
 	content?: string;
 	arrow?: string;
-	transitions?: TThemeTransitions;
+	transitions: TThemeTransitions;
 };
 
 export type TFullPopoverProps = {
