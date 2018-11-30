@@ -21,7 +21,7 @@ const buttonTheme = {
 enum PopoverTransitions {
 	Height = popoverTransitionsHeightTheme,
 	Opacity = popoverTransitionsOpacityTheme,
-};
+}
 
 @PURE
 class HeavyContent extends React.Component<{ isLong?: boolean }> {
@@ -69,9 +69,7 @@ class PopoverPage extends React.Component {
 
 	render() {
 		const { placement, align, transitions, isOpened, closeOnClickAway } = this.state;
-		const popoverThemeWithTransitions = {
-			...popoverTheme, transitions,
-		};
+		const popoverThemeWithTransitions = { ...popoverTheme,transitions };
 
 		return (
 			<Demo>
@@ -100,7 +98,9 @@ class PopoverPage extends React.Component {
 							</Stateful>
 						)}
 						<label className={css.label}>Animation</label>
-						<Stateful defaultValue={PopoverTransitions.Height} onValueChange={this.onTransitionsSelect as any}>
+						<Stateful
+							defaultValue={PopoverTransitions.Height}
+							onValueChange={this.onTransitionsSelect as any}>
 							<MenuItem value={PopoverTransitions.Height}>Height</MenuItem>
 							<MenuItem value={PopoverTransitions.Opacity}>Opacity</MenuItem>
 						</Stateful>
