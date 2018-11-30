@@ -69,7 +69,7 @@ class PopoverPage extends React.Component {
 
 	render() {
 		const { placement, align, transitions, isOpened, closeOnClickAway } = this.state;
-		const popoverThemeWithTransitions = { ...popoverTheme,transitions };
+		const popoverThemeWithTransitions = { ...popoverTheme, transitions };
 
 		return (
 			<Demo>
