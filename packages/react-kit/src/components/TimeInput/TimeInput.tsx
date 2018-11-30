@@ -1,26 +1,41 @@
 import * as React from 'react';
 import { PURE } from '../../utils/pure';
 import { ComponentClass } from 'react';
-import { TControlProps, KeyCode, KEY_CODE_NUM_MAP } from '../Control/Control';
+import { TControlProps, KeyCode, KEY_CODE_NUM_MAP, KEY_CODE_LETR_MAP } from '../Control/Control';
 import * as classnames from 'classnames';
 import { withTheme } from '../../utils/withTheme';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { SteppableInput, TSteppableInputProps } from '../SteppableInput/SteppableInput';
 import { withDefaults } from '../../utils/with-defaults';
+import { Fragment } from 'react';
 
 export const TIME_INPUT = Symbol('TimeInput') as symbol;
+
+type TTimeInputConfig = {
+	withSeconds?: boolean;
+	withDayType?: boolean;
+};
 
 export type TTime = {
 	hours: number;
 	minutes: number;
+	seconds?: number;
+	dayType?: string;
 };
 
 export enum ActiveSection {
 	Hours,
 	Minutes,
+	Seconds,
+	DayType,
 }
 
-export type TTimeInputOwnProps = TSteppableInputProps & TControlProps<TTime | undefined | null>;
+export enum DayType {
+	AM,
+	PM,
+}
+
+export type TTimeInputOwnProps = TTimeInputConfig & TSteppableInputProps & TControlProps<TTime | undefined | null>;
 
 export type TTimeInputFullProps = TTimeInputOwnProps & {
 	SteppableInput: React.ComponentClass<TSteppableInputProps> | React.SFC<TSteppableInputProps>;
@@ -38,43 +53,64 @@ export type TTimeInputState = {
 	activeSection?: ActiveSection;
 	hours?: number;
 	minutes?: number;
+	seconds?: number;
+	dayType?: DayType;
 };
 
 @PURE
 class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState> {
 	readonly state: TTimeInputState = {};
 	private secondInput: boolean = false;
+	private fourthInput: boolean = false;
 
 	componentWillMount() {
-		const { value } = this.props;
+		const { value, withSeconds, withDayType } = this.props;
 		if (value) {
-			const { hours, minutes } = value;
+			const { hours, minutes, seconds, dayType } = value;
 			this.setState({
 				hours,
 				minutes,
 			});
+			if (withSeconds) {
+				this.setState({ seconds });
+			}
+			if (withDayType) {
+				this.setState({ dayType: stringToDayType(dayType) });
+			}
 		}
 	}
 
 	componentWillReceiveProps(newProps: TTimeInputFullProps) {
+		const { withSeconds, withDayType } = this.props;
 		if (this.props.value !== newProps.value && isDefined(newProps.value)) {
 			//value can be null here
 			let hours;
 			let minutes;
+			let seconds;
+			let dayType;
 			if (newProps.value) {
 				hours = newProps.value.hours;
 				minutes = newProps.value.minutes;
+				seconds = newProps.value.seconds;
+				dayType = newProps.value.dayType;
 			}
 			this.setState({
 				hours,
 				minutes,
 			});
+			if (withSeconds) {
+				this.setState({ seconds });
+			}
+			if (withDayType) {
+				this.setState({ dayType: stringToDayType(dayType) });
+			}
 		}
 	}
 
 	render() {
 		const { theme, decrementIcon, incrementIcon, isDisabled, clearIcon, error, value, SteppableInput } = this.props;
-		const { hours, minutes, activeSection } = this.state;
+		const { hours, minutes, seconds, dayType, activeSection } = this.state;
+		const { withSeconds, withDayType } = this.props;
 
 		const hoursClassName = classnames(theme.section, {
 			[theme.section_isActive as string]: !isDisabled && activeSection === ActiveSection.Hours,
@@ -83,6 +119,20 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState>
 		const minutesClassName = classnames(theme.section, {
 			[theme.section_isActive as string]: !isDisabled && activeSection === ActiveSection.Minutes,
 		});
+
+		let secondsClassName;
+		if (withSeconds) {
+			secondsClassName = classnames(theme.section, {
+				[theme.section_isActive as string]: !isDisabled && activeSection === ActiveSection.Seconds,
+			});
+		}
+
+		let dayTypeClassName;
+		if (withDayType) {
+			dayTypeClassName = classnames(theme.section, {
+				[theme.section_isActive as string]: !isDisabled && activeSection === ActiveSection.DayType,
+			});
+		}
 
 		let onClear;
 		if ((isDefined(value) && value !== null) || isDefined(hours) || isDefined(minutes)) {
@@ -115,6 +165,22 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState>
 					<span className={minutesClassName} onMouseDown={this.onMinutesMouseDown}>
 						{this.format(minutes)}
 					</span>
+					{withSeconds && (
+						<Fragment>
+							<span className={theme.separator}>:</span>
+							<span className={secondsClassName} onMouseDown={this.onSecondsMouseDown}>
+								{this.format(seconds)}
+							</span>
+						</Fragment>
+					)}
+					{withDayType && (
+						<Fragment>
+							&nbsp;
+							<span className={dayTypeClassName} onMouseDown={this.onDayTypeDown}>
+								{this.formatDayType(dayTypeToString(dayType))}
+							</span>
+						</Fragment>
+					)}
 				</div>
 			</SteppableInput>
 		);
@@ -128,12 +194,20 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState>
 		}
 	}
 
+	private formatDayType(value?: string): string {
+		if (isDefined(value)) {
+			return value;
+		} else {
+			return 'am';
+		}
+	}
+
 	private onHoursMouseDown = (e: React.MouseEvent<HTMLElement>) => {
 		if (!this.props.isDisabled) {
 			this.setState({
 				activeSection: ActiveSection.Hours,
 			});
-			this.correctMinutes();
+			this.correctTime();
 		}
 	};
 
@@ -145,23 +219,43 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState>
 		}
 	};
 
+	private onSecondsMouseDown = (e: React.MouseEvent<HTMLElement>) => {
+		if (!this.props.isDisabled) {
+			this.setState({
+				activeSection: ActiveSection.Seconds,
+			});
+		}
+	};
+
+	private onDayTypeDown = (e: React.MouseEvent<HTMLElement>) => {
+		if (!this.props.isDisabled) {
+			this.setState({
+				activeSection: ActiveSection.DayType,
+			});
+		}
+	};
+
 	private onIncrement = () => {
 		this.secondInput = false;
+		this.fourthInput = false;
 		this.step(1);
 	};
 
 	private onDecrement = () => {
 		this.secondInput = false;
+		this.fourthInput = false;
 		this.step(-1);
 	};
 
 	private onClear = () => {
 		this.secondInput = false;
+		this.fourthInput = false;
 		this.updateStateTime();
 	};
 
 	private onFocus = (e: React.FocusEvent<HTMLElement>) => {
 		this.secondInput = false;
+		this.fourthInput = false;
 		if (!isDefined(this.state.activeSection)) {
 			this.setState({
 				activeSection: ActiveSection.Hours,
@@ -171,64 +265,83 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState>
 
 	private onBlur = (e: React.FocusEvent<HTMLElement>) => {
 		this.secondInput = false;
-		this.correctMinutes();
+		this.fourthInput = false;
+		this.correctTime();
 		this.setState({
 			activeSection: undefined,
 		});
 	};
 
 	private onKeyDown = (e: React.KeyboardEvent<HTMLElement>) => {
-		const { activeSection, hours, minutes } = this.state;
+		const { activeSection, hours, minutes, seconds, dayType } = this.state;
+		const { withSeconds, withDayType } = this.props;
+
 		switch (e.keyCode) {
 			case KeyCode.Left: {
 				e.preventDefault(); //block h-scrolling
-				if (activeSection === ActiveSection.Minutes) {
-					this.secondInput = false;
-					this.correctMinutes();
-					this.setState({
-						activeSection: ActiveSection.Hours,
-					});
-				}
+				this.secondInput = false;
+				this.fourthInput = false;
+				this.correctTime();
+				this.setState({
+					activeSection: findActiveSectionOnKeyLeft(activeSection, withSeconds),
+				});
 				break;
 			}
 			case KeyCode.Right: {
 				e.preventDefault(); //block h-scrolling
-				if (activeSection === ActiveSection.Hours) {
-					this.secondInput = false;
-					this.correctMinutes();
-					this.setState({
-						activeSection: ActiveSection.Minutes,
-					});
-				}
+				this.secondInput = false;
+				this.fourthInput = false;
+				this.correctTime();
+				this.setState({
+					activeSection: findActiveSectionOnKeyRight(activeSection, withSeconds, withDayType),
+				});
 				break;
 			}
 			case KeyCode.Delete: //fallthrough
 			case KeyCode.Backspace: {
 				this.secondInput = false;
+				this.fourthInput = false;
 				switch (activeSection) {
-					case ActiveSection.Minutes: {
-						this.updateStateTime(hours, undefined);
+					case ActiveSection.Hours: {
+						this.updateStateTime(undefined, minutes, seconds, dayType);
 						break;
 					}
-					case ActiveSection.Hours: {
-						this.updateStateTime(undefined, minutes);
+					case ActiveSection.Minutes: {
+						this.updateStateTime(hours, undefined, seconds, dayType);
+						break;
+					}
+					case ActiveSection.Seconds: {
+						this.updateStateTime(hours, minutes, undefined, dayType);
 						break;
 					}
 				}
 				break;
 			}
 			default: {
-				const number = KEY_CODE_NUM_MAP[e.keyCode];
-				if (isDefined(number)) {
-					this.handleDigitKeyDown(number);
+				if (isNumber(KEY_CODE_NUM_MAP[e.keyCode])) {
+					this.handleDigitKeyDown(KEY_CODE_NUM_MAP[e.keyCode]);
+				} else if (isString(KEY_CODE_LETR_MAP[e.keyCode])) {
+					this.handleLetterKeyDown(KEY_CODE_LETR_MAP[e.keyCode]);
 				}
 			}
 		}
 	};
 
+	private handleLetterKeyDown(letter: string) {
+		const { hours, minutes, seconds, dayType, activeSection } = this.state;
+		const currentDayTypeStringed = dayTypeToString(dayType);
+		if (
+			(activeSection === ActiveSection.DayType && letter === KEY_CODE_LETR_MAP[KeyCode.LETR_A]) ||
+			(activeSection === ActiveSection.DayType && letter === KEY_CODE_LETR_MAP[KeyCode.LETR_P])
+		) {
+			const newDayType = `${letter}${currentDayTypeStringed.slice(1)}`;
+			this.updateStateTime(hours, minutes, seconds, stringToDayType(newDayType));
+		}
+	}
+
 	private handleDigitKeyDown(digit: number) {
-		const { hours, minutes } = this.state;
-		switch (this.state.activeSection) {
+		const { hours, minutes, seconds, dayType, activeSection } = this.state;
+		switch (activeSection) {
 			case ActiveSection.Hours: {
 				if (this.secondInput && isDefined(hours)) {
 					let newHours;
@@ -239,13 +352,13 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState>
 					} else {
 						newHours = digit;
 					}
-					this.updateStateTime(newHours, minutes);
+					this.updateStateTime(newHours, minutes, seconds, dayType);
 					this.setState({
 						activeSection: ActiveSection.Minutes,
 					});
 					this.secondInput = false;
 				} else {
-					this.updateStateTime(digit, minutes);
+					this.updateStateTime(digit, minutes, seconds, dayType);
 					if (digit > 2) {
 						this.setState({
 							activeSection: ActiveSection.Minutes,
@@ -260,60 +373,130 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState>
 			case ActiveSection.Minutes: {
 				if (this.secondInput && isDefined(minutes)) {
 					const newMinutes = Number(`${minutes >= 10 ? ('' + minutes)[1] : minutes}${digit}`);
-					this.updateStateTime(hours, newMinutes);
+					this.updateStateTime(hours, newMinutes, seconds, dayType);
+					if (this.props.withSeconds) {
+						this.setState({
+							activeSection: ActiveSection.Seconds,
+						});
+					} else if (this.props.withDayType) {
+						this.setState({
+							activeSection: ActiveSection.DayType,
+						});
+					}
 				} else {
-					this.updateStateTime(hours, digit);
+					this.updateStateTime(hours, digit, seconds, dayType);
 					this.secondInput = true;
 				}
+				break;
+			}
+			case ActiveSection.Seconds: {
+				if (isDefined(seconds)) {
+					const newSeconds = Number(`${seconds >= 10 ? ('' + seconds)[1] : seconds}${digit}`);
+					this.updateStateTime(hours, minutes, newSeconds, dayType);
+					if (this.props.withDayType) {
+						if (!this.fourthInput) {
+							this.fourthInput = true;
+						} else {
+							this.setState({
+								activeSection: ActiveSection.DayType,
+							});
+							this.fourthInput = false;
+						}
+					}
+				} else {
+					this.updateStateTime(hours, minutes, digit, dayType);
+					if (this.props.withDayType) {
+						this.fourthInput = true;
+					}
+				}
+				break;
 			}
 		}
 	}
 
 	private step(amount: number): void {
-		const { hours, minutes, activeSection } = this.state;
+		const { hours, minutes, seconds, dayType, activeSection } = this.state;
 		switch (activeSection) {
 			case ActiveSection.Hours: {
-				this.updateStateTime(add(hours, amount, 23), minutes);
+				this.updateStateTime(add(hours, amount, 23), minutes, seconds, dayType);
 				break;
 			}
 			case ActiveSection.Minutes: {
-				this.updateStateTime(hours, add(minutes, amount, 59));
+				this.updateStateTime(hours, add(minutes, amount, 59), seconds, dayType);
+				break;
+			}
+			case ActiveSection.Seconds: {
+				this.updateStateTime(hours, minutes, add(seconds, amount, 59), dayType);
+				break;
+			}
+			case ActiveSection.DayType: {
+				this.updateStateTime(hours, minutes, seconds, toggleDayType(dayType));
 				break;
 			}
 		}
 	}
 
-	private updateStateTime(hours?: number, minutes?: number): void {
-		const { onValueChange, value } = this.props;
+	private updateStateTime(hours?: number, minutes?: number, seconds?: number, dayType?: DayType): void {
+		const { onValueChange, value, withSeconds, withDayType } = this.props;
+		const stringDayType = dayTypeToString(dayType);
 
 		const canBuildValue = isDefined(hours) && isDefined(minutes) && minutes < 60;
 		const newValueDiffers =
 			canBuildValue &&
-			(!isDefined(value) || value === null || value.hours !== hours || value.minutes !== minutes);
-
+			(!isDefined(value) ||
+				value === null ||
+				value.hours !== hours ||
+				value.minutes !== minutes ||
+				value.seconds !== seconds ||
+				value.dayType !== stringDayType);
 		if (canBuildValue) {
 			if (newValueDiffers) {
+				const newValue = {
+					hours,
+					minutes,
+				};
+				if (withSeconds && isDefined(seconds)) {
+					newValue['seconds'] = seconds;
+				}
+				if (withDayType && isDefined(dayType)) {
+					newValue['dayType'] = stringDayType;
+				}
 				onValueChange &&
 					onValueChange({
-						hours,
-						minutes,
+						...newValue,
 					} as any);
 			}
 		} else {
 			if (isDefined(this.props.value)) {
 				onValueChange && onValueChange(undefined);
 			}
-			this.setState({
+			const newValue = {
 				hours,
 				minutes,
+			};
+			if (withSeconds && isDefined(seconds)) {
+				newValue['seconds'] = seconds;
+			} else if (withSeconds && !isDefined(seconds)) {
+				newValue['seconds'] = undefined;
+			}
+			if (withDayType && isDefined(dayType)) {
+				newValue['dayType'] = dayType;
+			}
+			this.setState({
+				...newValue,
 			});
 		}
 	}
 
-	private correctMinutes() {
-		const { minutes } = this.state;
-		if (isDefined(minutes) && minutes >= 60) {
-			this.updateStateTime(this.state.hours, 59);
+	private correctTime() {
+		const { withSeconds } = this.props;
+		const { minutes, hours, seconds, dayType } = this.state;
+		const isMinutesInvalid = isDefined(minutes) && minutes >= 60;
+		const isSecondsInvalid = withSeconds && isDefined(seconds) && seconds >= 60;
+		if (isMinutesInvalid || isSecondsInvalid) {
+			const correctedMinutes = isMinutesInvalid ? 59 : minutes;
+			const correctedSeconds = isSecondsInvalid ? 59 : seconds;
+			this.updateStateTime(hours, correctedMinutes, correctedSeconds, dayType);
 		}
 	}
 }
@@ -341,4 +524,91 @@ function add(a: number | undefined, b: number, max: number): number {
 
 function isDefined<A>(value?: A): value is A {
 	return typeof value !== 'undefined';
+}
+
+function isNumber<A>(val: A | number): val is number {
+	return typeof val === 'number' && !isNaN(val) && isFinite(val);
+}
+
+function isString<A>(val: A | string): val is string {
+	return typeof val === 'string';
+}
+
+function findActiveSectionOnKeyLeft(activeState?: ActiveSection, isSecondsExist?: boolean): ActiveSection {
+	switch (activeState) {
+		case ActiveSection.DayType: {
+			return isSecondsExist ? ActiveSection.Seconds : ActiveSection.Minutes;
+		}
+		case ActiveSection.Seconds: {
+			return ActiveSection.Minutes;
+		}
+		case ActiveSection.Minutes: {
+			return ActiveSection.Hours;
+		}
+		default:
+			return ActiveSection.Hours;
+	}
+}
+
+function findActiveSectionOnKeyRight(
+	activeSection?: ActiveSection,
+	isSecondsExist?: boolean,
+	isClockFormatExist?: boolean,
+): ActiveSection {
+	switch (activeSection) {
+		case ActiveSection.Hours: {
+			return ActiveSection.Minutes;
+		}
+		case ActiveSection.Minutes: {
+			if (isSecondsExist) {
+				return ActiveSection.Seconds;
+			} else if (isClockFormatExist) {
+				return ActiveSection.DayType;
+			} else {
+				return ActiveSection.Minutes;
+			}
+		}
+		case ActiveSection.Seconds: {
+			return isClockFormatExist ? ActiveSection.DayType : ActiveSection.Seconds;
+		}
+		case ActiveSection.DayType: {
+			return ActiveSection.DayType;
+		}
+		default:
+			return ActiveSection.Hours;
+	}
+}
+
+function stringToDayType(dayType?: string): DayType {
+	const dayTypeToUpperCase = isDefined(dayType) && dayType.toLowerCase();
+	switch (dayTypeToUpperCase) {
+		case 'am':
+			return DayType.AM;
+		case 'pm':
+			return DayType.PM;
+		default:
+			return DayType.AM;
+	}
+}
+
+function dayTypeToString(dayType?: DayType): string {
+	switch (dayType) {
+		case DayType.AM:
+			return 'am';
+		case DayType.PM:
+			return 'pm';
+		default:
+			return 'am';
+	}
+}
+
+function toggleDayType(dayType?: DayType): DayType {
+	switch (dayType) {
+		case DayType.AM:
+			return DayType.PM;
+		case DayType.PM:
+			return DayType.AM;
+		default:
+			return DayType.AM;
+	}
 }
