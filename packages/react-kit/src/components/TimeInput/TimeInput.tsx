@@ -277,7 +277,7 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState>
 				break;
 			}
 			case ActiveSection.Minutes: {
-				this.updateStateTime(hours, add(Math.min(isDefined(minutes) ? minutes : Infinity, 59), amount, 59));
+				this.updateStateTime(hours, add(minutes, amount, 59));
 				break;
 			}
 		}
