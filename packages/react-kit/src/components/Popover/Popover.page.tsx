@@ -9,6 +9,8 @@ import { storiesOf } from '@devexperts/tools/dist/utils/storybook';
 import { stateful } from '../Control/Control';
 
 import * as css from './Popover.page.styl';
+import * as popoverTransitionsTheme from '../Popover/Popover.transitions.styl';
+import * as popoverTheme from '../Popover/Popover.styl';
 import { Scrollable } from '../Scrollable/Scrollable';
 
 const buttonTheme = {
@@ -60,6 +62,10 @@ class PopoverPage extends React.Component {
 
 	render() {
 		const { placement, align, isOpened, closeOnClickAway } = this.state;
+		const popoverThemeWithTransitions = {
+			...popoverTheme,
+			transitions: popoverTransitionsTheme,
+		};
 
 		return (
 			<Demo>
@@ -103,6 +109,7 @@ class PopoverPage extends React.Component {
 						theme={buttonTheme}>
 						{isOpened ? 'Hide' : 'Open'}
 						<Popover
+							theme={popoverThemeWithTransitions}
 							placement={placement}
 							isOpened={isOpened}
 							onRequestClose={this.onPopoverRequestClose}
