@@ -18,9 +18,14 @@ const buttonTheme = {
 	container: css.toggleButton,
 };
 
-enum PopoverTransitions {
-	Height = popoverTransitionsHeightTheme,
-	Opacity = popoverTransitionsOpacityTheme,
+enum PopoverTransitionsNames {
+	Height = 'Height',
+	Opacity = 'Opacity',
+}
+
+const popoverTransitions = {
+	[PopoverTransitionsNames.Height]: popoverTransitionsHeightTheme,
+	[PopoverTransitionsNames.Opacity]: popoverTransitionsOpacityTheme,
 }
 
 @PURE
@@ -62,7 +67,7 @@ class PopoverPage extends React.Component {
 		isOpened: false,
 		isLongText: false,
 		closeOnClickAway: false,
-		transitions: PopoverTransitions.Height,
+		transitions: popoverTransitions.Height,
 	};
 
 	_anchor: any;
@@ -99,10 +104,10 @@ class PopoverPage extends React.Component {
 						)}
 						<label className={css.label}>Animation</label>
 						<Stateful
-							defaultValue={PopoverTransitions.Height}
+							defaultValue={PopoverTransitionsNames.Height}
 							onValueChange={this.onTransitionsSelect as any}>
-							<MenuItem value={PopoverTransitions.Height}>Height</MenuItem>
-							<MenuItem value={PopoverTransitions.Opacity}>Opacity</MenuItem>
+							<MenuItem value={PopoverTransitionsNames.Height}>Height</MenuItem>
+							<MenuItem value={PopoverTransitionsNames.Opacity}>Opacity</MenuItem>
 						</Stateful>
 						<label className={css.label}>
 							Close on clickaway{' '}
@@ -164,9 +169,9 @@ class PopoverPage extends React.Component {
 		});
 	};
 
-	onTransitionsSelect = (transitions: PopoverTransitions) => {
+	onTransitionsSelect = (transitions: PopoverTransitionsNames) => {
 		this.setState({
-			transitions,
+			transitions: popoverTransitions[transitions],
 		});
 	};
 
