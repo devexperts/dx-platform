@@ -9,12 +9,18 @@ import { storiesOf } from '@devexperts/tools/dist/utils/storybook';
 import { stateful } from '../Control/Control';
 
 import * as css from './Popover.page.styl';
-import * as popoverTransitionsTheme from '../Popover/Popover.transitions.styl';
+import * as popoverTransitionsHeightTheme from '../Popover/Popover.transitions.styl';
+import * as popoverTransitionsOpacityTheme from '../Popover/Popover.transitions-opacity.styl';
 import * as popoverTheme from '../Popover/Popover.styl';
 import { Scrollable } from '../Scrollable/Scrollable';
 
 const buttonTheme = {
 	container: css.toggleButton,
+};
+
+enum PopoverTransitions {
+	Height = popoverTransitionsHeightTheme,
+	Opacity = popoverTransitionsOpacityTheme,
 };
 
 @PURE
@@ -56,15 +62,15 @@ class PopoverPage extends React.Component {
 		isOpened: false,
 		isLongText: false,
 		closeOnClickAway: false,
+		transitions: PopoverTransitions.Height,
 	};
 
 	_anchor: any;
 
 	render() {
-		const { placement, align, isOpened, closeOnClickAway } = this.state;
+		const { placement, align, transitions, isOpened, closeOnClickAway } = this.state;
 		const popoverThemeWithTransitions = {
-			...popoverTheme,
-			transitions: popoverTransitionsTheme,
+			...popoverTheme, transitions,
 		};
 
 		return (
@@ -93,6 +99,11 @@ class PopoverPage extends React.Component {
 								<MenuItem value={PopoverAlign.Bottom}>Bottom</MenuItem>
 							</Stateful>
 						)}
+						<label className={css.label}>Animation</label>
+						<Stateful defaultValue={PopoverTransitions.Height} onValueChange={this.onTransitionsSelect as any}>
+							<MenuItem value={PopoverTransitions.Height}>Height</MenuItem>
+							<MenuItem value={PopoverTransitions.Opacity}>Opacity</MenuItem>
+						</Stateful>
 						<label className={css.label}>
 							Close on clickaway{' '}
 							<input
@@ -150,6 +161,12 @@ class PopoverPage extends React.Component {
 	onAlignSelect = (align: PopoverPlacement) => {
 		this.setState({
 			align,
+		});
+	};
+
+	onTransitionsSelect = (transitions: PopoverTransitions) => {
+		this.setState({
+			transitions,
 		});
 	};
 
