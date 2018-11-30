@@ -38,7 +38,7 @@ export enum PopoverAlign {
 	Right = 'Right',
 	Middle = 'Middle',
 	Center = 'Center',
-};
+}
 
 type TPopoverTransitionsTheme = {
 	init?: string;
@@ -231,7 +231,7 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 				timeout={parseInt(duration, 10)}
 				classNames={transitions}
 				onExited={onRequestClose}>
-			{child}
+				{child}
 			</CSSTransition>
 		);
 
