@@ -12,7 +12,6 @@ import * as checkboxTheme from '../Checkbox/Checkbox.demo.styl';
 
 import { POPOVER } from '../Popover/Popover';
 import * as popoverTheme from '../Popover/Popover.demo.styl';
-import * as popoverTransitionsTheme from '../Popover/Popover.transitions.styl';
 
 import { LIST } from '../List/List';
 import * as listTheme from '../List/List.demo.styl';
@@ -79,10 +78,7 @@ export default {
 	[BUTTON]: buttonTheme,
 	[LOADING_INDICATOR]: loadingIndicatorTheme,
 	[CHECKBOX]: checkboxTheme,
-	[POPOVER]: {
-		...popoverTheme,
-		transitions: popoverTransitionsTheme,
-	},
+	[POPOVER]: popoverTheme,
 	[LIST]: listTheme,
 	[MENU]: menuTheme,
 	[SELECTBOX]: selectBoxTheme,
