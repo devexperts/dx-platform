@@ -17,11 +17,13 @@ export type TRootCloseProps = {
 @PURE
 export class RootClose extends Component<TRootCloseProps> {
 	private preventMouseRootClose = false;
+	private ignoreMouseUp = true;
 
 	render() {
 		return (
 			<EventListener
 				target={document}
+				onMouseDown={this.onMouseDown}
 				onClick={this.handleClick}
 				onClickCapture={this.handleClickCapture}
 				onTouchStart={this.handleTouchStart}
@@ -32,12 +34,17 @@ export class RootClose extends Component<TRootCloseProps> {
 		);
 	}
 
+	private onMouseDown = () => {
+		this.ignoreMouseUp = false;
+	};
+
 	private handleClickCapture: MouseEventHandler<HTMLElement> = e => {
 		const domNode = findDOMNode(this);
 		if (!domNode) {
 			return;
 		}
-		this.preventMouseRootClose = isModifiedEvent(e) || !isLeftClickEvent(e) || domNode.contains(e.target as Node);
+		this.preventMouseRootClose =
+			this.ignoreMouseUp || isModifiedEvent(e) || !isLeftClickEvent(e) || domNode.contains(e.target as Node);
 	};
 
 	private handleClick: MouseEventHandler<HTMLElement> = e => {
