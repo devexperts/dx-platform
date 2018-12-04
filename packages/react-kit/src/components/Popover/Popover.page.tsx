@@ -1,7 +1,8 @@
 import * as React from 'react';
 import Demo from '../demo/Demo';
 import { Button } from '../Button/Button';
-import { Popover, PopoverPlacement, PopoverAlign, PopoverAnimated } from './Popover';
+import { Popover, PopoverPlacement, PopoverAlign } from './Popover';
+import { PopoverAnimated } from './PopoverAnimated';
 import { Selectbox } from '../Selectbox/Selectbox';
 import { MenuItem } from '../Menu/Menu';
 import { PURE } from '../../utils/pure';

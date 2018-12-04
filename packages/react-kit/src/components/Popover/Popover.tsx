@@ -2,7 +2,6 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import prefix from '@devexperts/utils/dist/dom/prefix';
 import * as classnames from 'classnames';
-import { CSSTransition } from 'react-transition-group';
 
 import { PURE } from '../../utils/pure';
 import { BoundsUpdateDetector } from '../BoundsUpdateDetector/BoundsUpdateDetector';
@@ -40,19 +39,6 @@ export enum PopoverAlign {
 	Center = 'Center',
 }
 
-type TPopoverTransitionsTheme = {
-	init?: string;
-	duration?: string;
-	appear?: string;
-	appearActive?: string;
-	enter?: string;
-	enterActive?: string;
-	enterDone?: string;
-	exit?: string;
-	exitActive?: string;
-	exitDone?: string;
-};
-
 type TPopoverTheme = {
 	container?: string;
 	container_hasArrow?: string;
@@ -62,10 +48,6 @@ type TPopoverTheme = {
 	container_placementRight?: string;
 	content?: string;
 	arrow?: string;
-};
-
-type TPopoverAnimatedProps = TFullPopoverProps & {
-	transitions: TPopoverTransitionsTheme;
 };
 
 export type TFullPopoverProps = {
@@ -226,11 +208,13 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 
 		const target = typeof window !== 'undefined' ? window : 'window';
 
-		return (
+		child = (
 			<EventListener onResize={this.onResize} onScrollCapture={this.onScroll} target={target}>
-				{ReactDOM.createPortal(child, this.rootElement)}
+				{child}
 			</EventListener>
 		);
+
+		return ReactDOM.createPortal(child, this.rootElement);
 	}
 
 	getPopoverSize(): TSize {
@@ -298,7 +282,7 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 			finalPlacement,
 			finalAlign,
 			arrowOffset,
-		}, () => console.warn(this.state));
+		});
 	};
 
 	onSizeUpdate = (newSize: TSize) => {
@@ -334,34 +318,6 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 	}
 }
 
-export const PopoverAnimated = ({transitions, isOpened, ...props}: TPopoverAnimatedProps) => {
-	const duration = parseInt(transitions.duration || '', 10) || 0;
-
-	return (
-		<CSSTransition
-			appear={true}
-			mountOnEnter={true}
-			unmountOnExit={true}
-			in={isOpened}
-			timeout={duration}
-			classNames={transitions}
-			>
-			{
-				(state) => {
-					console.warn({ state });
-					return (
-						<Popover
-							isOpened={true}
-							className={transitions.init}
-							{...props}
-						/>
-					);
-				}
-			}
-		</CSSTransition>
-	);
-}
-
 export type TPopoverProps = PartialKeys<TFullPopoverProps, 'theme' | 'align' | 'placement'>;
 export const Popover: ComponentClass<TPopoverProps> = withTheme(POPOVER)(
 	withDefaults<TFullPopoverProps, 'align' | 'placement'>({
@@ -369,8 +325,6 @@ export const Popover: ComponentClass<TPopoverProps> = withTheme(POPOVER)(
 		placement: PopoverPlacement.Bottom,
 	})(RawPopover),
 );
-
-
 
 function stopPropagation<T>(e: SyntheticEvent<T>) {
 	e.stopPropagation();
