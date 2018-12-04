@@ -39,11 +39,14 @@ export type TFullScrollableProps = {
 		resizeDetector?: string;
 		horizontal_scrollbar__bar?: string;
 		vertical_scrollbar__bar?: string;
+		verticalPadding?: string;
+		horizontalPadding?: string;
 	};
 	onUpdate?: (withHorizantal: boolean, withVertical: boolean) => void;
 	onScroll?: (scrollLeft: number, scrollTop: number) => void;
 	scrollTop?: number;
 	scrollLeft?: number;
+	shouldOverlayContent?: boolean;
 };
 
 export class RawScrollable extends React.Component<TFullScrollableProps> {
@@ -111,7 +114,7 @@ export class RawScrollable extends React.Component<TFullScrollableProps> {
 	};
 
 	render() {
-		const { theme, ResizeDetector, VerticalScrollbar, HorizontalScrollbar } = this.props;
+		const { theme, ResizeDetector, VerticalScrollbar, HorizontalScrollbar, shouldOverlayContent } = this.props;
 
 		const children = React.Children.only(this.props.children);
 
@@ -130,6 +133,11 @@ export class RawScrollable extends React.Component<TFullScrollableProps> {
 			withBothScrollabars: this._withHorizontalScrollbar && this._withVerticalScrollbar,
 		});
 
+		const wrapperContentClassName = classnames(theme.content, {
+			[theme.verticalPadding as string]: !shouldOverlayContent && this._withVerticalScrollbar,
+			[theme.horizontalPadding as string]: !shouldOverlayContent && this._withHorizontalScrollbar,
+		});
+
 		const resizeDetectorProps = {
 			theme: {
 				container: theme.resizeDetector,
@@ -141,7 +149,7 @@ export class RawScrollable extends React.Component<TFullScrollableProps> {
 			<div className={className} ref={el => (this._scrollable = el)}>
 				<div className={theme.wrapper}>
 					<div className={theme.container} ref={el => (this._container = el)}>
-						<div className={theme.content}>
+						<div className={wrapperContentClassName}>
 							{React.cloneElement(children, {
 								className: null,
 							})}
