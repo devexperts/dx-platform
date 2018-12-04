@@ -10,14 +10,10 @@ import { KeyCode } from '../Control/Control';
 import { Holdable } from '../Holdable/Holdable';
 import { withDefaults } from '../../utils/with-defaults';
 import { constUndefined } from 'fp-ts/lib/function';
-import { ReactRef } from '../../utils/typings';
 
 export const STEPPABLE_INPUT = Symbol('SteppableInput') as symbol;
 
-export type TPickedInputProps = Pick<
-	TInputProps,
-	'error' | 'onBlur' | 'onFocus' | 'onKeyDown' | 'onClick' | 'onMouseEnter' | 'onMouseLeave'
->;
+export type TPickedInputProps = Pick<TInputProps, 'error' | 'onBlur' | 'onFocus' | 'onKeyDown' | 'onClick'>;
 
 export type TFullSteppableInputProps = TPickedInputProps & {
 	isDisabled?: TInputProps['isDisabled'];
@@ -28,7 +24,6 @@ export type TFullSteppableInputProps = TPickedInputProps & {
 	incrementIcon?: ReactElement<any>;
 	decrementIcon?: ReactElement<any>;
 	clearIcon?: ReactElement<any>;
-	innerRef?: (instance: ReactRef) => void;
 	children?: any;
 	Input: ComponentType<TInputProps>;
 	ButtonIcon: ComponentType<TButtonIconProps>;
@@ -66,13 +61,10 @@ class RawSteppableInput extends React.Component<TFullSteppableInputProps, TStepp
 			decrementIcon,
 			incrementIcon,
 			clearIcon,
-			innerRef,
 			onIncrement,
 			onDecrement,
 			onClear,
 			onClick,
-			onMouseEnter,
-			onMouseLeave,
 			Input,
 			ButtonIcon,
 		} = this.props;
@@ -89,13 +81,10 @@ class RawSteppableInput extends React.Component<TFullSteppableInputProps, TStepp
 				onBlur={this.onBlur}
 				onKeyDown={this.onKeyDown}
 				onClick={onClick}
-				onMouseEnter={onMouseEnter}
-				onMouseLeave={onMouseLeave}
 				onWheel={this.onWheel}
 				isDisabled={isDisabled}
 				error={error}
-				tabIndex={isFocused || isDisabled ? -1 : tabIndex || 0}
-				innerRef={innerRef}>
+				tabIndex={isFocused || isDisabled ? -1 : tabIndex || 0}>
 				<div className={theme.inner}>
 					{children}
 					{onClear &&

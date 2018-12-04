@@ -2,16 +2,15 @@ import { ComponentClass, ComponentType, createElement, PureComponent } from 'rea
 import { BehaviorSubject, merge, Observable, SchedulerLike, Subscription } from 'rxjs';
 import { map, observeOn } from 'rxjs/operators';
 import { animationFrame } from 'rxjs/internal/scheduler/animationFrame';
-import { Omit } from 'typelevel-ts';
+import { PartialKeys } from '@devexperts/utils/src/object';
 
 // tslint:disable-next-line
 const hoistNonReactStatics = require('hoist-non-react-statics');
 
 export type Observify<P extends object> = { readonly [K in keyof P]: Observable<P[K]> };
 
-export type WithRXSelectorResult<P extends object, D extends Partial<P>> = {
+export type WithRXSelectorResult<P extends object> = {
 	props?: Partial<Observify<P>>;
-	defaultProps?: D;
 	effects$?: Observable<unknown>;
 };
 
@@ -19,18 +18,18 @@ export type WithRXOptions = {
 	scheduler?: SchedulerLike;
 };
 
-/**
- * curried for better type inference
- * @see https://github.com/Microsoft/TypeScript/issues/15005#issuecomment-430588884
- */
-export const withRX = <P extends object>(Target: ComponentType<P>) => <D extends Partial<P>>(
-	selector: (props$: Observable<Readonly<P>>) => WithRXSelectorResult<P, D>,
+export function withRX<P extends D, D extends Partial<P>>(
+	Target: ComponentType<P>,
+	defaultProps: D,
+	selector: (props$: Observable<Readonly<P>>) => WithRXSelectorResult<P>,
 	options: WithRXOptions = {},
-): ComponentClass<Omit<P, keyof D> & Partial<D>> => {
+): ComponentClass<PartialKeys<P, keyof D>> {
 	const scheduler = options.scheduler || animationFrame;
 
 	class WithRX extends PureComponent<P, Partial<P>> {
+		readonly state: Partial<P> = this.props;
 		static displayName = `WithRX(${Target.displayName || Target.name})`;
+		static defaultProps = defaultProps;
 
 		private readonly props$ = new BehaviorSubject<P>(this.props);
 		private readonly selected = selector(this.props$.asObservable());
@@ -62,11 +61,11 @@ export const withRX = <P extends object>(Target: ComponentType<P>) => <D extends
 		}
 
 		render() {
-			return createElement(Target, Object.assign({}, this.selected.defaultProps, this.props, this.state || {}));
+			return createElement(Target, Object.assign({}, this.props, this.state));
 		}
 	}
 
 	hoistNonReactStatics(WithRX, Target);
 
 	return WithRX as any; //defaultProps are tracked by defaultProps argument;
-};
+}

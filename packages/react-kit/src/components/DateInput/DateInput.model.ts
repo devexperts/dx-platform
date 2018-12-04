@@ -1,5 +1,9 @@
 import { Option, getSetoid, some, option } from 'fp-ts/lib/Option';
 import { setoidNumber, getRecordSetoid } from 'fp-ts/lib/Setoid';
+import { TPopoverProps } from '../Popover/Popover';
+import { TButtonIconProps } from '../ButtonIcon/ButtonIcon';
+import { TControlProps } from '../Control/Control';
+import { TSteppableInputProps } from '../SteppableInput/SteppableInput';
 import { liftA3 } from 'fp-ts/lib/Apply';
 
 export type TDateInputValue = {
@@ -17,13 +21,56 @@ const dateSetoid = getRecordSetoid<TDateInputValue>({
 
 export const isDatesDifferent = (x: TDateInputValue, y: TDateInputValue): boolean => !dateSetoid.equals(x, y);
 
-export const buildDate = (day: number) => (month: number) => (year: number) => new Date(year, month, day);
+const buildDate = (day: number) => (month: number) => (year: number) => new Date(year, month, day);
 export const buildDateOption = liftA3(option)(buildDate);
 
 export enum DateFormatType {
 	MDY,
 	DMY,
 }
+
+export type TCalendarProps = TControlProps<Date | null> & {
+	onMouseDown?: React.EventHandler<React.MouseEvent<Element>>;
+	min?: Date;
+	max?: Date;
+};
+
+type TDateValueProps = TControlProps<TDateInputValue>;
+
+export type TDateInputOwnProps = TSteppableInputProps &
+	TDateValueProps & {
+		min?: Date;
+		max?: Date;
+		calendarIcon?: React.ReactElement<any>;
+		onClear?: Function;
+		onFocus?: () => void;
+		onBlur?: () => void;
+		target?: Element;
+		Calendar?: React.ComponentClass<TCalendarProps> | React.SFC<TCalendarProps>;
+	};
+
+type TDateDefaultProps = {
+	SteppableInput: React.ComponentClass<TSteppableInputProps> | React.SFC<TSteppableInputProps>;
+	ButtonIcon: React.ComponentClass<TButtonIconProps>;
+	Popover: React.ComponentClass<TPopoverProps> | React.SFC<TPopoverProps>;
+	dateFormatType: DateFormatType;
+};
+
+export type TDateInputInjectedProps = {
+	theme: {
+		inner?: string;
+		inner_isFilled?: string;
+		section?: string;
+		section_isActive?: string;
+		separator?: string;
+		SteppableInput?: TSteppableInputProps['theme'];
+		ButtonIcon?: TButtonIconProps['theme'];
+		CalendarButtonIcon?: TButtonIconProps['theme'];
+		Popover?: TPopoverProps['theme'];
+	};
+};
+
+export type TDateInputFullProps = TDateInputOwnProps & TDateInputInjectedProps & TDateDefaultProps;
 
 export type TDateInputState = {
 	activeSection?: ActiveSection;
@@ -79,26 +126,4 @@ export function format(date: Option<number>, section: ActiveSection): string {
 			}
 		},
 	);
-}
-
-export function decrementMonth(month: number): number {
-	if (month >= 0 && month <= 11) {
-		return (month - 1 + 12) % 12;
-	}
-	return 11;
-}
-
-export function decrementMonthOption(month: Option<number>): Option<number> {
-	return month.map(decrementMonth).alt(some(11));
-}
-
-export function incrementMonth(month: number): number {
-	if (month >= 0 && month <= 11) {
-		return (month + 1) % 12;
-	}
-	return 0;
-}
-
-export function incrementMonthOption(month: Option<number>): Option<number> {
-	return month.map(incrementMonth).alt(some(0));
 }

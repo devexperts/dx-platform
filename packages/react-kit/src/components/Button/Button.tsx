@@ -3,7 +3,7 @@ import * as classnames from 'classnames';
 import { PURE } from '../../utils/pure';
 import { LoadingIndicator, TLoadingIndicatorProps } from '../LoadingIndicator/LoadingIndicator';
 import { withTheme } from '../../utils/withTheme';
-import { ComponentClass, EventHandler, MouseEvent, TouchEvent } from 'react';
+import { ComponentClass, EventHandler, MouseEvent } from 'react';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
 
 export const BUTTON = Symbol('Button') as symbol;
@@ -19,31 +19,14 @@ export type TFullButtonProps = {
 	};
 	isDisabled?: boolean;
 	isFlat?: boolean;
-	isLoading?: boolean;
-	isPrimary?: boolean;
 	style?: {};
 	type?: string;
+	isLoading?: boolean;
+	isPrimary?: boolean;
 	onMouseLeave?: EventHandler<MouseEvent<HTMLButtonElement>>;
 	onMouseDown?: EventHandler<MouseEvent<HTMLButtonElement>>;
 	onMouseUp?: EventHandler<MouseEvent<HTMLButtonElement>>;
-	onMouseEnter?: EventHandler<MouseEvent<HTMLButtonElement>>;
-	onMouseMove?: EventHandler<MouseEvent<HTMLButtonElement>>;
-	onMouseOut?: EventHandler<MouseEvent<HTMLButtonElement>>;
-	onMouseOver?: EventHandler<MouseEvent<HTMLButtonElement>>;
-	onDoubleClick?: EventHandler<MouseEvent<HTMLButtonElement>>;
-	onDrag?: EventHandler<MouseEvent<HTMLButtonElement>>;
-	onDragEnd?: EventHandler<MouseEvent<HTMLButtonElement>>;
-	onDragEnter?: EventHandler<MouseEvent<HTMLButtonElement>>;
-	onDragExit?: EventHandler<MouseEvent<HTMLButtonElement>>;
-	onDragLeave?: EventHandler<MouseEvent<HTMLButtonElement>>;
-	onDragOver?: EventHandler<MouseEvent<HTMLButtonElement>>;
-	onDragStart?: EventHandler<MouseEvent<HTMLButtonElement>>;
-	onDrop?: EventHandler<MouseEvent<HTMLButtonElement>>;
 	onClick?: EventHandler<MouseEvent<HTMLButtonElement>>;
-	onTouchCancel?: EventHandler<TouchEvent<HTMLButtonElement>>;
-	onTouchEnd?: EventHandler<TouchEvent<HTMLButtonElement>>;
-	onTouchMove?: EventHandler<TouchEvent<HTMLButtonElement>>;
-	onTouchStart?: EventHandler<TouchEvent<HTMLButtonElement>>;
 	tabIndex?: number;
 };
 
@@ -59,27 +42,10 @@ class RawButton extends React.Component<TFullButtonProps> {
 			style,
 			type,
 			children,
-			onMouseLeave,
-			onMouseDown,
-			onMouseUp,
-			onMouseEnter,
-			onMouseMove,
-			onMouseOut,
-			onMouseOver,
-			onDoubleClick,
-			onDrag,
-			onDragEnd,
-			onDragEnter,
-			onDragExit,
-			onDragLeave,
-			onDragOver,
-			onDragStart,
-			onDrop,
 			onClick,
-			onTouchCancel,
-			onTouchEnd,
-			onTouchMove,
-			onTouchStart,
+			onMouseDown,
+			onMouseLeave,
+			onMouseUp,
 			isFlat,
 			isPrimary,
 			isLoading,
@@ -96,27 +62,10 @@ class RawButton extends React.Component<TFullButtonProps> {
 		return (
 			<button
 				className={className}
+				onClick={onClick}
 				onMouseLeave={onMouseLeave}
 				onMouseDown={onMouseDown}
 				onMouseUp={onMouseUp}
-				onMouseEnter={onMouseEnter}
-				onMouseMove={onMouseMove}
-				onMouseOut={onMouseOut}
-				onMouseOver={onMouseOver}
-				onDoubleClick={onDoubleClick}
-				onDrag={onDrag}
-				onDragEnd={onDragEnd}
-				onDragEnter={onDragEnter}
-				onDragExit={onDragExit}
-				onDragLeave={onDragLeave}
-				onDragOver={onDragOver}
-				onDragStart={onDragStart}
-				onDrop={onDrop}
-				onClick={onClick}
-				onTouchCancel={onTouchCancel}
-				onTouchEnd={onTouchEnd}
-				onTouchMove={onTouchMove}
-				onTouchStart={onTouchStart}
 				type={type}
 				style={style}
 				tabIndex={tabIndex}
