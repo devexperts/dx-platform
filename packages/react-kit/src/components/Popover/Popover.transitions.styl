@@ -1,25 +1,33 @@
 $duration = 200;
 
+transition()
+    transition: max-height ($duration)ms linear;
+
 .init {
     max-height: 0;
-    transition: max-height ($duration)ms linear;
+    transition();
 }
 .appearActive,
 .enterActive {
     max-height: 100%;
+    transition();
 }
 .enterDone {
     max-height: 100%;
+    transition();
 }
 
 .exit {
     max-height: 100%;
+    transition();
 }
 .exitActive {
     max-height: 0;
+    transition();
 }
 .exitDone {
     max-height: 0;
+    transition();
 }
 
 :export {

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Demo from '../demo/Demo';
 import { Button } from '../Button/Button';
-import { Popover, PopoverPlacement, PopoverAlign } from './Popover';
+import { Popover, PopoverPlacement, PopoverAlign, PopoverAnimated } from './Popover';
 import { Selectbox } from '../Selectbox/Selectbox';
 import { MenuItem } from '../Menu/Menu';
 import { PURE } from '../../utils/pure';
@@ -65,16 +65,17 @@ class PopoverPage extends React.Component {
 		placement: PopoverPlacement.Bottom,
 		align: PopoverAlign.Left,
 		isOpened: false,
+		isOpenedPopoverAnimated: false,
 		isLongText: false,
 		closeOnClickAway: false,
 		transitions: popoverTransitions.Height,
 	};
 
 	_anchor: any;
+	__anchor: any;
 
 	render() {
-		const { placement, align, transitions, isOpened, closeOnClickAway } = this.state;
-		const popoverThemeWithTransitions = { ...popoverTheme, transitions };
+		const { placement, align, transitions, isOpened, isOpenedPopoverAnimated, closeOnClickAway } = this.state;
 
 		return (
 			<Demo>
@@ -120,12 +121,12 @@ class PopoverPage extends React.Component {
 					</div>
 					<Button
 						isPrimary={true}
-						onClick={this.onToggleClick}
+						onClick={this.onTogglePopover}
 						ref={el => (this._anchor = el)}
 						theme={buttonTheme}>
-						{isOpened ? 'Hide' : 'Open'}
+						{isOpened ? 'Hide popover' : 'Open popover'}
 						<Popover
-							theme={popoverThemeWithTransitions}
+							theme={popoverTheme}
 							placement={placement}
 							isOpened={isOpened}
 							onRequestClose={this.onPopoverRequestClose}
@@ -135,6 +136,25 @@ class PopoverPage extends React.Component {
 							anchor={this._anchor}>
 							<HeavyContent />
 						</Popover>
+					</Button>
+					<Button
+						isPrimary={true}
+						onClick={this.onTogglePopoverAnimated}
+						ref={el => (this.__anchor = el)}
+						theme={buttonTheme}>
+						{isOpenedPopoverAnimated ? 'Hide animated popover' : 'Open animated popover'}
+						<PopoverAnimated
+							theme={popoverTheme}
+							transitions={transitions}
+							placement={placement}
+							isOpened={isOpenedPopoverAnimated}
+							onRequestClose={this.onPopoverAnimatedRequestClose}
+							closeOnClickAway={closeOnClickAway}
+							hasArrow={true}
+							align={align}
+							anchor={this.__anchor}>
+							<HeavyContent />
+						</PopoverAnimated>
 					</Button>
 				</div>
 			</Demo>
@@ -175,15 +195,27 @@ class PopoverPage extends React.Component {
 		});
 	};
 
-	onToggleClick = () => {
+	onTogglePopover = () => {
 		this.setState({
 			isOpened: !this.state.isOpened,
+		});
+	};
+
+	onTogglePopoverAnimated = () => {
+		this.setState({
+			isOpenedPopoverAnimated: !this.state.isOpenedPopoverAnimated,
 		});
 	};
 
 	onPopoverRequestClose = () => {
 		this.setState({
 			isOpened: false,
+		});
+	};
+
+	onPopoverAnimatedRequestClose = () => {
+		this.setState({
+			isOpenedPopoverAnimated: false,
 		});
 	};
 
