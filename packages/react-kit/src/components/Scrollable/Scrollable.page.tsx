@@ -54,6 +54,17 @@ const Heavy = () => (
 	</div>
 );
 
+const SmallContent = (props: { className: string }) => (
+	<div className={props.className}>
+		<p>
+			Sit nulla est ex deserunt exercitation anim occaecat. Nostrud ullamco deserunt aute id consequat veniam
+			incididunt duis in sint irure nisi. Mollit officia cillum Lorem ullamco minim nostrud elit officia tempor
+			esse quis. Cillum sunt ad dolore quis aute consequat ipsum magna exercitation reprehenderit magna. Tempor
+			cupidatat consequat elit dolor adipisicing.
+		</p>
+	</div>
+);
+
 export type ScrollablePageState = {
 	scrollTop: number;
 	scrollLeft: number;
@@ -112,6 +123,42 @@ class ScrollablePage extends React.Component<{}, ScrollablePageState> {
 					<Scrollable scrollTop={this.state.scrollTop} scrollLeft={this.state.scrollLeft}>
 						<div className={css.scrollable}>
 							<Heavy />
+						</div>
+					</Scrollable>
+				</section>
+
+				<section className={css.section}>
+					<h1>Scrollbars overlay content</h1>
+					<Scrollable shouldOverlayContent={true}>
+						<div className={css.scrollable}>
+							<Heavy />
+						</div>
+					</Scrollable>
+				</section>
+
+				<section className={css.section}>
+					<h1>Only vertical scrollbar</h1>
+					<Scrollable>
+						<div className={css.scrollable}>
+							<SmallContent className={css.contentLong} />
+						</div>
+					</Scrollable>
+				</section>
+
+				<section className={css.section}>
+					<h1>Only horizontal scrollbar</h1>
+					<Scrollable>
+						<div className={css.scrollable}>
+							<SmallContent className={css.contentWide} />
+						</div>
+					</Scrollable>
+				</section>
+
+				<section className={css.section}>
+					<h1>No scrollbars</h1>
+					<Scrollable>
+						<div className={css.scrollable}>
+							<SmallContent className={css.contentFit} />
 						</div>
 					</Scrollable>
 				</section>

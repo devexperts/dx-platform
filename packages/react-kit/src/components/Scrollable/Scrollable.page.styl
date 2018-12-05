@@ -1,12 +1,6 @@
 .container {
 	background: #8e8e8e;
 	padding: 20px;
-	position: fixed;
-	top: 0;
-	right: 0;
-	bottom: 0;
-	left: 0;
-	overflow: auto;
 }
 
 .scrollable {
@@ -22,14 +16,37 @@
 			margin: 10px;
 		}
 	}
+
+	.contentLong {
+		:global {
+			p {
+				width: 130px;
+			}
+		}
+	}
+
+	.contentWide {
+		:global {
+			p {
+				width: 500px;
+			}
+		}
+	}
+
+	.contentFit {
+		:global {
+			p {
+				width: auto;
+			}
+		}
+	}
 }
 
 .section {
 	display: inline-block;
 	vertical-align: top;
-	+ .section {
-		margin-left: 20px;
-	}
+	margin-right: 20px;
+	margin-bottom: 20px;
 
 	h1 {
 		margin-bottom: 10px;
