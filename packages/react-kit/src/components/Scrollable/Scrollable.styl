@@ -5,6 +5,17 @@
 	position: relative;
 }
 
+.withHorizontalScrollbar:not(.overlayContent) {
+	> .wrapper > .container > .content {
+		padding-bottom: $scrollableScrollBarSize;
+	}
+}
+.withVerticalScrollbar:not(.overlayContent) {
+	> .wrapper > .container > .content {
+		padding-right: $scrollableScrollBarSize;
+	}
+}
+
 .wrapper {
 	display: block;
 	width: 100%;
@@ -24,14 +35,6 @@
 	&::-webkit-scrollbar {
 		display: none;
 	}
-}
-
-.verticalPadding {
-	padding-right: $scrollableScrollBarSize;
-}
-
-.horizontalPadding {
-	padding-bottom: $scrollableScrollBarSize;
 }
 
 .content {
