@@ -102,9 +102,9 @@ export interface CoproductMap<F extends URIS2> {
 const internal = <F extends URIS2>(F: Apply2<F>) => {
 	const sequenceTF = sequenceT(F);
 	return <E, A, R>(...args: Array<A | ProjectMany<A, R>>) => {
-		const fas: Type2<F, E, A>[] = args.slice(0, args.length - 1) as any; //typesafe
-		const project: ProjectMany<A, R> = args[args.length - 1] as any; //typesafe
-		const sequenced: Type2<F, E, A[]> = sequenceTF.apply(null, fas);
+		const fas: Type2<F, E, A>[] = args.slice(0, args.length - 1) as any;
+		const project: ProjectMany<A, R> = args[args.length - 1] as any;
+		const sequenced: Type2<F, E, A[]> = sequenceTF.apply(null, fas as any) as any;
 		return F.map(sequenced, as => project(...as));
 	};
 };

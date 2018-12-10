@@ -1,5 +1,5 @@
 import { asks } from 'fp-ts/lib/Reader';
-import { combine, defer } from '../reader.utils';
+import { combineReader, deferReader } from '../reader.utils';
 
 type TFirst = {
 	foo: number;
@@ -12,18 +12,17 @@ type TSecond = {
 describe('Reader utils', () => {
 	describe('combine', () => {
 		it('should combine context of provided readers', () => {
-			const first = asks((e: TFirst) => () => {});
-			const second = asks((e: TSecond) => () => {});
+			const first = asks((e: TFirst) => 1);
+			const second = asks((e: TSecond) => 2);
 
-			const combined = combine(first, second, (a, b, e) => {
-				expect(e.bar).toBe('bar');
-				expect(e.foo).toBe(2);
-			});
+			const combined = combineReader(first, second, (a, b) => 1 + 2);
 
-			combined.run({
-				foo: 2,
-				bar: 'bar',
-			});
+			expect(
+				combined.run({
+					foo: 2,
+					bar: 'bar',
+				}),
+			).toBe(3);
 		});
 
 		it('should be possible to use each components with bundled context', () => {
@@ -31,7 +30,7 @@ describe('Reader utils', () => {
 			const first = asks((e: TFirst) => () => fn(e.foo));
 			const second = asks((e: TSecond) => () => fn(e.bar));
 
-			const combined = combine(first, second, (a, b, e) => {
+			const combined = combineReader(first, second, (a, b) => {
 				a();
 				expect(fn).toHaveBeenCalledWith(2);
 				b();
@@ -45,10 +44,10 @@ describe('Reader utils', () => {
 		});
 	});
 
-	describe('defer', () => {
+	describe('deferReader', () => {
 		it('should defer part of the context', () => {
 			type E = TFirst & TSecond;
-			const result = defer(asks((e: E) => 0), 'foo');
+			const result = deferReader(asks((e: E) => 0), 'foo');
 			const withBar = result.run({
 				bar: '123',
 			});
