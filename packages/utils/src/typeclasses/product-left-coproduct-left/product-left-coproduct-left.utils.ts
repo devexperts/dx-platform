@@ -132,11 +132,15 @@ export interface CoproductLeft<F extends URIS2> extends Apply2<F> {
  * applicatively accumulating their values and then applying `project` function to those values
  * and wrapping its result in the same {@link ProductLeft} with a `product` (`&`) of types of _left_ side
  */
-export const productMapLeft = <F extends URIS2>(F: ProductLeft<F>): ProductMap<F> => internal(F);
+export function productMapLeft<F extends URIS2>(F: ProductLeft<F>): ProductMap<F> {
+	return internal(F);
+}
 
 /**
  * Sequences multiple {@link CoproductLeft}s of kind `*->*->*`
  * applicatively accumulating their values and then applying `project` function to those values
  * and wrapping its result in the same {@link CoproductLeft} with a `coproduct` (`|`) of types of _left_ side
  */
-export const coproductMapLeft = <F extends URIS2>(F: CoproductLeft<F>): CoproductMap<F> => internal(F);
+export function coproductMapLeft<F extends URIS2>(F: CoproductLeft<F>): CoproductMap<F> {
+	return internal(F);
+}

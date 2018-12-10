@@ -8,11 +8,11 @@ import { sequenceT } from 'fp-ts/lib/Apply';
 import {
 	ProductLeft,
 	productMapLeft,
-} from '@devexperts/utils/dist/typeclasses/product-coproduct/product-coproduct.utils';
+} from '@devexperts/utils/dist/typeclasses/product-left-coproduct-left/product-left-coproduct-left.utils';
 import { defer, MonadReader } from '@devexperts/utils/dist/typeclasses/monad-reader/monad-reader.utils';
 
 export const URI = 'Context';
-export type URI = 'Context';
+export type URI = typeof URI;
 declare module 'fp-ts/lib/HKT' {
 	interface URI2HKT2<L, A> {
 		Context: Context<L, A>;
@@ -64,7 +64,7 @@ export const context: Monad2<URI> & MonadReader<URI> & ProductLeft<URI> = {
 	productLeft,
 };
 
-export const combineContext = productMapLeft(context as any);
+export const combineContext = productMapLeft(context);
 export const deferContext = defer(context);
 export const sequenceContext = array.sequence(context);
 export const sequenceTContext = sequenceT(context);
