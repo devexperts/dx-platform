@@ -1,7 +1,6 @@
 import { sequenceTSink, sink, Sink } from './sink.utils';
 import { getReaderT } from 'fp-ts/lib/ReaderT';
 import { Monad2 } from 'fp-ts/lib/Monad';
-import { sequence } from 'fp-ts/lib/Traversable';
 import { array } from 'fp-ts/lib/Array';
 import { identity } from 'fp-ts/lib/function';
 import { Reader } from 'fp-ts/lib/Reader';
@@ -67,7 +66,7 @@ export const context: Monad2<URI> & MonadReader<URI> & ProductLeft<URI> = {
 
 export const combineContext = productMapLeft(context);
 export const deferContext = defer(context);
-export const sequenceContext = sequence(context, array);
+export const sequenceContext = array.sequence(context);
 export const sequenceTContext = sequenceT(context);
 
 export const fromReader = <E, A>(r: Reader<E, A>): Context<E, A> => new Context(e => new Sink(r.run(e)));
