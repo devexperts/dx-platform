@@ -38,13 +38,13 @@
     "@devexperts/tools": "^0.19.2",
     "@types/jest": "^21.1.8",
     "@types/sinon": "^5.0.1",
-    "fp-ts": "^1.2.0",
+    "fp-ts": "^1.11.3",
     "rxjs": "^6.2.1",
     "sinon": "^5.1.0"
   },
   "peerDependencies": {
     "@devexperts/remote-data-ts": "^0.2.0",
-    "fp-ts": "^1.2.0",
+    "fp-ts": "^1.11.3",
     "rxjs": "^6.2.1"
   },
   "publishConfig": {
