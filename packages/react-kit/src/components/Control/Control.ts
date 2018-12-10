@@ -71,7 +71,6 @@ export const KEY_CODE_NUM_MAP: { [code: number]: number } = {
 
 export const KEY_CODE_LETR_MAP: { [code: number]: string } = {
 	[KeyCode.LETR_A]: 'A',
-	[KeyCode.LETR_M]: 'M',
 	[KeyCode.LETR_P]: 'P',
 };
 

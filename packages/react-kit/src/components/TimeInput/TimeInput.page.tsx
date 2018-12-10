@@ -11,7 +11,7 @@ const time = {
 	hours: 1,
 	minutes: 20,
 	seconds: 35,
-	dayType: 'AM',
+	periodType: 'AM',
 };
 
 const log = action('change');
@@ -27,7 +27,7 @@ class TimeInputPage extends React.Component<any, any> {
 				<input type="time" id="time" />
 				<div>
 					<TimeInput
-						withDayType={this.props.withDayType}
+						withPeriodType={this.props.withPeriodType}
 						withSeconds={this.props.withSeconds}
 						decrementIcon={<DecreaseIcon />}
 						isDisabled={this.props.isDisabled}
@@ -62,5 +62,5 @@ storiesOf('TimeInput', module)
 	.add('disabled', () => <TimeInputPage isDisabled={true} />)
 	.add('invalid', () => <TimeInputPage error={true} />)
 	.add('With seconds only', () => <TimeInputPage withSeconds={true} />)
-	.add('With day type only ', () => <TimeInputPage withDayType={true} />)
-	.add('With seconds and day type', () => <TimeInputPage withSeconds={true} withDayType={true} />);
+	.add('With period type only ', () => <TimeInputPage withPeriodType={true} />)
+	.add('With seconds and period type', () => <TimeInputPage withSeconds={true} withPeriodType={true} />);

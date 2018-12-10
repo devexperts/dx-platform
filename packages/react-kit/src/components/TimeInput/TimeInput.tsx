@@ -13,24 +13,24 @@ export const TIME_INPUT = Symbol('TimeInput') as symbol;
 
 type TTimeInputConfig = {
 	withSeconds?: boolean;
-	withDayType?: boolean;
+	withPeriodType?: boolean;
 };
 
 export type TTime = {
 	hours: number;
 	minutes: number;
 	seconds?: number;
-	dayType?: string;
+	periodType?: string;
 };
 
 export enum ActiveSection {
 	Hours,
 	Minutes,
 	Seconds,
-	DayType,
+	PeriodType,
 }
 
-export enum DayType {
+export enum PeriodType {
 	AM,
 	PM,
 }
@@ -54,7 +54,7 @@ export type TTimeInputState = {
 	hours?: number;
 	minutes?: number;
 	seconds?: number;
-	dayType?: DayType;
+	periodType?: PeriodType;
 };
 
 @PURE
@@ -64,53 +64,62 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState>
 	private fourthInput: boolean = false;
 
 	componentWillMount() {
-		const { value, withSeconds, withDayType } = this.props;
+		const { value, withSeconds, withPeriodType } = this.props;
 		if (value) {
-			const { hours, minutes, seconds, dayType } = value;
-			this.setState({
+			const { hours, minutes, seconds, periodType } = value;
+			const initValue: TTimeInputState = {
 				hours,
 				minutes,
+			};
+			if (withSeconds && isDefined(seconds)) {
+				initValue['seconds'] = seconds;
+			}
+			if (withPeriodType && isDefined(periodType)) {
+				initValue['periodType'] = stringToPeriodType(periodType);
+			} else if (withPeriodType && !isDefined(periodType)) {
+				// set default period type if it is not defined by parent component
+				initValue['periodType'] = PeriodType.AM;
+			}
+			this.setState({
+				...initValue,
 			});
-			if (withSeconds) {
-				this.setState({ seconds });
-			}
-			if (withDayType) {
-				this.setState({ dayType: stringToDayType(dayType) });
-			}
 		}
 	}
 
 	componentWillReceiveProps(newProps: TTimeInputFullProps) {
-		const { withSeconds, withDayType } = this.props;
+		const { withSeconds, withPeriodType } = this.props;
 		if (this.props.value !== newProps.value && isDefined(newProps.value)) {
 			//value can be null here
 			let hours;
 			let minutes;
 			let seconds;
-			let dayType;
+			let periodType;
 			if (newProps.value) {
 				hours = newProps.value.hours;
 				minutes = newProps.value.minutes;
 				seconds = newProps.value.seconds;
-				dayType = newProps.value.dayType;
+				periodType = newProps.value.periodType;
 			}
-			this.setState({
+			const newValue: TTimeInputState = {
 				hours,
 				minutes,
-			});
+			};
 			if (withSeconds) {
-				this.setState({ seconds });
+				newValue['seconds'] = seconds;
 			}
-			if (withDayType) {
-				this.setState({ dayType: stringToDayType(dayType) });
+			if (withPeriodType) {
+				newValue['periodType'] = stringToPeriodType(periodType);
 			}
+			this.setState({
+				...newValue,
+			});
 		}
 	}
 
 	render() {
 		const { theme, decrementIcon, incrementIcon, isDisabled, clearIcon, error, value, SteppableInput } = this.props;
-		const { hours, minutes, seconds, dayType, activeSection } = this.state;
-		const { withSeconds, withDayType } = this.props;
+		const { hours, minutes, seconds, periodType, activeSection } = this.state;
+		const { withSeconds, withPeriodType } = this.props;
 
 		const hoursClassName = classnames(theme.section, {
 			[theme.section_isActive as string]: !isDisabled && activeSection === ActiveSection.Hours,
@@ -127,10 +136,10 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState>
 			});
 		}
 
-		let dayTypeClassName;
-		if (withDayType) {
-			dayTypeClassName = classnames(theme.section, {
-				[theme.section_isActive as string]: !isDisabled && activeSection === ActiveSection.DayType,
+		let periodTypeClassName;
+		if (withPeriodType) {
+			periodTypeClassName = classnames(theme.section, {
+				[theme.section_isActive as string]: !isDisabled && activeSection === ActiveSection.PeriodType,
 			});
 		}
 
@@ -173,11 +182,11 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState>
 							</span>
 						</Fragment>
 					)}
-					{withDayType && (
+					{withPeriodType && (
 						<Fragment>
 							&nbsp;
-							<span className={dayTypeClassName} onMouseDown={this.onDayTypeDown}>
-								{this.formatDayType(dayTypeToString(dayType))}
+							<span className={periodTypeClassName} onMouseDown={this.onPeriodTypeDown}>
+								{this.formatPeriodType(periodTypeToString(periodType))}
 							</span>
 						</Fragment>
 					)}
@@ -194,7 +203,7 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState>
 		}
 	}
 
-	private formatDayType(value?: string): string {
+	private formatPeriodType(value?: string): string {
 		if (isDefined(value)) {
 			return value;
 		} else {
@@ -227,15 +236,15 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState>
 		}
 	};
 
-	private onDayTypeDown = (e: React.MouseEvent<HTMLElement>) => {
+	private onPeriodTypeDown = (e: React.MouseEvent<HTMLElement>) => {
 		if (!this.props.isDisabled) {
 			this.setState({
-				activeSection: ActiveSection.DayType,
+				activeSection: ActiveSection.PeriodType,
 			});
 		}
 	};
 
-	private onIncrement = () => {
+	private onIncrement = (e: any) => {
 		this.secondInput = false;
 		this.fourthInput = false;
 		this.step(1);
@@ -273,8 +282,8 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState>
 	};
 
 	private onKeyDown = (e: React.KeyboardEvent<HTMLElement>) => {
-		const { activeSection, hours, minutes, seconds, dayType } = this.state;
-		const { withSeconds, withDayType } = this.props;
+		const { activeSection, hours, minutes, seconds, periodType } = this.state;
+		const { withSeconds, withPeriodType } = this.props;
 
 		switch (e.keyCode) {
 			case KeyCode.Left: {
@@ -293,7 +302,7 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState>
 				this.fourthInput = false;
 				this.correctTime();
 				this.setState({
-					activeSection: findActiveSectionOnKeyRight(activeSection, withSeconds, withDayType),
+					activeSection: findActiveSectionOnKeyRight(activeSection, withSeconds, withPeriodType),
 				});
 				break;
 			}
@@ -303,15 +312,15 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState>
 				this.fourthInput = false;
 				switch (activeSection) {
 					case ActiveSection.Hours: {
-						this.updateStateTime(undefined, minutes, seconds, dayType);
+						this.updateStateTime(undefined, minutes, seconds, periodType);
 						break;
 					}
 					case ActiveSection.Minutes: {
-						this.updateStateTime(hours, undefined, seconds, dayType);
+						this.updateStateTime(hours, undefined, seconds, periodType);
 						break;
 					}
 					case ActiveSection.Seconds: {
-						this.updateStateTime(hours, minutes, undefined, dayType);
+						this.updateStateTime(hours, minutes, undefined, periodType);
 						break;
 					}
 				}
@@ -328,37 +337,46 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState>
 	};
 
 	private handleLetterKeyDown(letter: string) {
-		const { hours, minutes, seconds, dayType, activeSection } = this.state;
-		const currentDayTypeStringed = dayTypeToString(dayType);
+		const { hours, minutes, seconds, periodType, activeSection } = this.state;
+		const currentPeriodTypeStringed = periodTypeToString(periodType);
 		if (
-			(activeSection === ActiveSection.DayType && letter === KEY_CODE_LETR_MAP[KeyCode.LETR_A]) ||
-			(activeSection === ActiveSection.DayType && letter === KEY_CODE_LETR_MAP[KeyCode.LETR_P])
+			(activeSection === ActiveSection.PeriodType && letter === KEY_CODE_LETR_MAP[KeyCode.LETR_A]) ||
+			(activeSection === ActiveSection.PeriodType && letter === KEY_CODE_LETR_MAP[KeyCode.LETR_P])
 		) {
-			const newDayType = `${letter}${currentDayTypeStringed.slice(1)}`;
-			this.updateStateTime(hours, minutes, seconds, stringToDayType(newDayType));
+			const newPeriodType = `${letter}${currentPeriodTypeStringed.slice(1)}`;
+			this.updateStateTime(hours, minutes, seconds, stringToPeriodType(newPeriodType));
 		}
 	}
 
 	private handleDigitKeyDown(digit: number) {
-		const { hours, minutes, seconds, dayType, activeSection } = this.state;
+		const { hours, minutes, seconds, periodType, activeSection } = this.state;
+		const { withPeriodType } = this.props;
 		switch (activeSection) {
 			case ActiveSection.Hours: {
 				if (this.secondInput && isDefined(hours)) {
 					let newHours;
-					if (hours < 2) {
-						newHours = Number(`${hours}${digit}`);
-					} else if (hours === 2) {
-						newHours = Math.min(Number(`${hours}${digit}`), 23);
+					if (!withPeriodType) {
+						if (hours < 2) {
+							newHours = Number(`${hours}${digit}`);
+						} else if (hours === 2) {
+							newHours = Math.min(Number(`${hours}${digit}`), 23);
+						} else {
+							newHours = digit;
+						}
 					} else {
-						newHours = digit;
+						if (hours <= 1) {
+							newHours = Math.min(Number(`${hours}${digit}`), 12);
+						} else {
+							newHours = digit;
+						}
 					}
-					this.updateStateTime(newHours, minutes, seconds, dayType);
+					this.updateStateTime(newHours, minutes, seconds, periodType);
 					this.setState({
 						activeSection: ActiveSection.Minutes,
 					});
 					this.secondInput = false;
 				} else {
-					this.updateStateTime(digit, minutes, seconds, dayType);
+					this.updateStateTime(digit, minutes, seconds, periodType);
 					if (digit > 2) {
 						this.setState({
 							activeSection: ActiveSection.Minutes,
@@ -373,18 +391,18 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState>
 			case ActiveSection.Minutes: {
 				if (this.secondInput && isDefined(minutes)) {
 					const newMinutes = Number(`${minutes >= 10 ? ('' + minutes)[1] : minutes}${digit}`);
-					this.updateStateTime(hours, newMinutes, seconds, dayType);
+					this.updateStateTime(hours, newMinutes, seconds, periodType);
 					if (this.props.withSeconds) {
 						this.setState({
 							activeSection: ActiveSection.Seconds,
 						});
-					} else if (this.props.withDayType) {
+					} else if (this.props.withPeriodType) {
 						this.setState({
-							activeSection: ActiveSection.DayType,
+							activeSection: ActiveSection.PeriodType,
 						});
 					}
 				} else {
-					this.updateStateTime(hours, digit, seconds, dayType);
+					this.updateStateTime(hours, digit, seconds, periodType);
 					this.secondInput = true;
 				}
 				break;
@@ -392,20 +410,20 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState>
 			case ActiveSection.Seconds: {
 				if (isDefined(seconds)) {
 					const newSeconds = Number(`${seconds >= 10 ? ('' + seconds)[1] : seconds}${digit}`);
-					this.updateStateTime(hours, minutes, newSeconds, dayType);
-					if (this.props.withDayType) {
+					this.updateStateTime(hours, minutes, newSeconds, periodType);
+					if (this.props.withPeriodType) {
 						if (!this.fourthInput) {
 							this.fourthInput = true;
 						} else {
 							this.setState({
-								activeSection: ActiveSection.DayType,
+								activeSection: ActiveSection.PeriodType,
 							});
 							this.fourthInput = false;
 						}
 					}
 				} else {
-					this.updateStateTime(hours, minutes, digit, dayType);
-					if (this.props.withDayType) {
+					this.updateStateTime(hours, minutes, digit, periodType);
+					if (this.props.withPeriodType) {
 						this.fourthInput = true;
 					}
 				}
@@ -415,32 +433,47 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState>
 	}
 
 	private step(amount: number): void {
-		const { hours, minutes, seconds, dayType, activeSection } = this.state;
+		const { hours, minutes, seconds, periodType, activeSection } = this.state;
+		const { withPeriodType } = this.props;
 		switch (activeSection) {
 			case ActiveSection.Hours: {
-				this.updateStateTime(add(hours, amount, 23), minutes, seconds, dayType);
+				if (withPeriodType) {
+					this.updateStateTime(add(hours, amount, 12), minutes, seconds, periodType);
+				} else {
+					this.updateStateTime(add(hours, amount, 23), minutes, seconds, periodType);
+				}
 				break;
 			}
 			case ActiveSection.Minutes: {
-				this.updateStateTime(hours, add(minutes, amount, 59), seconds, dayType);
+				this.updateStateTime(hours, add(minutes, amount, 59), seconds, periodType);
 				break;
 			}
 			case ActiveSection.Seconds: {
-				this.updateStateTime(hours, minutes, add(seconds, amount, 59), dayType);
+				this.updateStateTime(hours, minutes, add(seconds, amount, 59), periodType);
 				break;
 			}
-			case ActiveSection.DayType: {
-				this.updateStateTime(hours, minutes, seconds, toggleDayType(dayType));
+			case ActiveSection.PeriodType: {
+				this.updateStateTime(hours, minutes, seconds, togglePeriodType(periodType));
 				break;
 			}
 		}
 	}
 
-	private updateStateTime(hours?: number, minutes?: number, seconds?: number, dayType?: DayType): void {
-		const { onValueChange, value, withSeconds, withDayType } = this.props;
-		const stringDayType = dayTypeToString(dayType);
+	private updateStateTime(hours?: number, minutes?: number, seconds?: number, periodType?: PeriodType): void {
+		const { onValueChange, value, withSeconds, withPeriodType } = this.props;
+		const stringedPeriodType = periodTypeToString(periodType);
 
-		const canBuildValue = isDefined(hours) && isDefined(minutes) && minutes < 60;
+		let canBuildValue;
+		const isValidHoursAndMins = isDefined(hours) && isDefined(minutes) && minutes < 60;
+		if (!withSeconds && !withPeriodType) {
+			canBuildValue = isValidHoursAndMins;
+		} else if (withSeconds && withPeriodType) {
+			canBuildValue = isValidHoursAndMins && isDefined(seconds) && seconds < 60 && isDefined(periodType);
+		} else if (withSeconds) {
+			canBuildValue = isValidHoursAndMins && isDefined(seconds) && seconds < 60;
+		} else if (withPeriodType) {
+			canBuildValue = isValidHoursAndMins && isDefined(periodType);
+		}
 		const newValueDiffers =
 			canBuildValue &&
 			(!isDefined(value) ||
@@ -448,7 +481,7 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState>
 				value.hours !== hours ||
 				value.minutes !== minutes ||
 				value.seconds !== seconds ||
-				value.dayType !== stringDayType);
+				value.periodType !== stringedPeriodType);
 		if (canBuildValue) {
 			if (newValueDiffers) {
 				const newValue = {
@@ -458,8 +491,8 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState>
 				if (withSeconds && isDefined(seconds)) {
 					newValue['seconds'] = seconds;
 				}
-				if (withDayType && isDefined(dayType)) {
-					newValue['dayType'] = stringDayType;
+				if (withPeriodType && isDefined(periodType)) {
+					newValue['periodType'] = stringedPeriodType;
 				}
 				onValueChange &&
 					onValueChange({
@@ -479,8 +512,8 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState>
 			} else if (withSeconds && !isDefined(seconds)) {
 				newValue['seconds'] = undefined;
 			}
-			if (withDayType && isDefined(dayType)) {
-				newValue['dayType'] = dayType;
+			if (withPeriodType && isDefined(periodType)) {
+				newValue['periodType'] = periodType;
 			}
 			this.setState({
 				...newValue,
@@ -490,13 +523,13 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState>
 
 	private correctTime() {
 		const { withSeconds } = this.props;
-		const { minutes, hours, seconds, dayType } = this.state;
+		const { minutes, hours, seconds, periodType } = this.state;
 		const isMinutesInvalid = isDefined(minutes) && minutes >= 60;
 		const isSecondsInvalid = withSeconds && isDefined(seconds) && seconds >= 60;
 		if (isMinutesInvalid || isSecondsInvalid) {
 			const correctedMinutes = isMinutesInvalid ? 59 : minutes;
 			const correctedSeconds = isSecondsInvalid ? 59 : seconds;
-			this.updateStateTime(hours, correctedMinutes, correctedSeconds, dayType);
+			this.updateStateTime(hours, correctedMinutes, correctedSeconds, periodType);
 		}
 	}
 }
@@ -536,7 +569,7 @@ function isString<A>(val: A | string): val is string {
 
 function findActiveSectionOnKeyLeft(activeState?: ActiveSection, isSecondsExist?: boolean): ActiveSection {
 	switch (activeState) {
-		case ActiveSection.DayType: {
+		case ActiveSection.PeriodType: {
 			return isSecondsExist ? ActiveSection.Seconds : ActiveSection.Minutes;
 		}
 		case ActiveSection.Seconds: {
@@ -563,52 +596,52 @@ function findActiveSectionOnKeyRight(
 			if (isSecondsExist) {
 				return ActiveSection.Seconds;
 			} else if (isClockFormatExist) {
-				return ActiveSection.DayType;
+				return ActiveSection.PeriodType;
 			} else {
 				return ActiveSection.Minutes;
 			}
 		}
 		case ActiveSection.Seconds: {
-			return isClockFormatExist ? ActiveSection.DayType : ActiveSection.Seconds;
+			return isClockFormatExist ? ActiveSection.PeriodType : ActiveSection.Seconds;
 		}
-		case ActiveSection.DayType: {
-			return ActiveSection.DayType;
+		case ActiveSection.PeriodType: {
+			return ActiveSection.PeriodType;
 		}
 		default:
 			return ActiveSection.Hours;
 	}
 }
 
-function stringToDayType(dayType?: string): DayType {
-	const dayTypeToUpperCase = isDefined(dayType) && dayType.toLowerCase();
-	switch (dayTypeToUpperCase) {
+function stringToPeriodType(stringedPeriodType?: string): PeriodType {
+	const periodTypeToUpperCase = isDefined(stringedPeriodType) && stringedPeriodType.toLowerCase();
+	switch (periodTypeToUpperCase) {
 		case 'am':
-			return DayType.AM;
+			return PeriodType.AM;
 		case 'pm':
-			return DayType.PM;
+			return PeriodType.PM;
 		default:
-			return DayType.AM;
+			return PeriodType.AM;
 	}
 }
 
-function dayTypeToString(dayType?: DayType): string {
-	switch (dayType) {
-		case DayType.AM:
+function periodTypeToString(periodType?: PeriodType): string {
+	switch (periodType) {
+		case PeriodType.AM:
 			return 'am';
-		case DayType.PM:
+		case PeriodType.PM:
 			return 'pm';
 		default:
 			return 'am';
 	}
 }
 
-function toggleDayType(dayType?: DayType): DayType {
-	switch (dayType) {
-		case DayType.AM:
-			return DayType.PM;
-		case DayType.PM:
-			return DayType.AM;
+function togglePeriodType(periodType?: PeriodType): PeriodType {
+	switch (periodType) {
+		case PeriodType.AM:
+			return PeriodType.PM;
+		case PeriodType.PM:
+			return PeriodType.AM;
 		default:
-			return DayType.AM;
+			return PeriodType.AM;
 	}
 }
