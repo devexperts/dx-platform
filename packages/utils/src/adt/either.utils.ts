@@ -1,0 +1,27 @@
+import { Either, either as fptseither, right, URI } from 'fp-ts/lib/Either';
+import { tuple } from 'fp-ts/lib/function';
+import {
+	CoproductLeft,
+	coproductMapLeft,
+} from '../typeclasses/product-left-coproduct-left/product-left-coproduct-left.utils';
+import { sequenceT } from 'fp-ts/lib/Apply';
+import { array } from 'fp-ts/lib/Array';
+
+const coproductLeft = <LA, A, LB, B>(fa: Either<LA, A>, fb: Either<LB, B>): Either<LA | LB, [A, B]> => {
+	if (fa.isRight()) {
+		if (fb.isRight()) {
+			return right(tuple(fa.value, fb.value));
+		}
+		return fb as any;
+	}
+	return fa as any;
+};
+
+export const either: typeof fptseither & CoproductLeft<URI> = {
+	...fptseither,
+	coproductLeft,
+};
+
+export const combineEither = coproductMapLeft(either);
+export const sequenceTEither = sequenceT(either);
+export const sequenceEither = array.sequence(either);
