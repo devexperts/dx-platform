@@ -64,7 +64,7 @@ export const context: Monad2<URI> & MonadReader<URI> & ProductLeft<URI> = {
 	productLeft,
 };
 
-export const combineContext = productMapLeft(context);
+export const combineContext = productMapLeft(context as any);
 export const deferContext = defer(context);
 export const sequenceContext = array.sequence(context);
 export const sequenceTContext = sequenceT(context);

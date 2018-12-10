@@ -1,7 +1,7 @@
 import { Reader, asks, reader as fptsreader, URI } from 'fp-ts/lib/Reader';
 import { sequenceT } from 'fp-ts/lib/Apply';
 import { tuple } from 'fp-ts/lib/function';
-import { ProductLeft, productMapLeft } from '../typeclasses/product-coproduct/product-coproduct.utils';
+import { ProductLeft, productMapLeft } from '../typeclasses/product-left-coproduct-left/product-left-coproduct-left.utils';
 import { defer, MonadReader } from '../typeclasses/monad-reader/monad-reader.utils';
 
 const productLeft = <EA, A, EB, B>(fa: Reader<EA, A>, fb: Reader<EB, B>): Reader<EA & EB, [A, B]> =>
