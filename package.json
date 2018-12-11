@@ -69,7 +69,7 @@
     "lerna": "^2.5.1",
     "prettier": "1.12.1",
     "ts-jest": "^22.4.6",
-    "tslint": "^5.10.0",
+    "tslint": "^5.11.0",
     "typescript": "^3.2.2"
   }
 }
