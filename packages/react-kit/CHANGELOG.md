@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="0.22.0"></a>
+# [0.22.0](https://github.com/devex-web-frontend/dx-platform/compare/v0.21.0...v0.22.0) (2018-11-26)
+
+
+
+
+**Note:** Version bump only for package @devexperts/react-kit
+
+<a name="0.21.0"></a>
+# [0.21.0](https://github.com/devex-web-frontend/dx-platform/compare/v0.20.0...v0.21.0) (2018-11-26)
+
+
+
+
+**Note:** Version bump only for package @devexperts/react-kit
+
+<a name="0.20.0"></a>
+# [0.20.0](https://github.com/devex-web-frontend/dx-platform/compare/v0.19.2...v0.20.0) (2018-11-26)
+
+
+### Features
+
+* **react-kit:** Date input add inner ref ([#91](https://github.com/devex-web-frontend/dx-platform/issues/91)) ([8ac4e80](https://github.com/devex-web-frontend/dx-platform/commit/8ac4e80))
+
+
+### BREAKING CHANGES
+
+* **react-kit:** move types for dateInput out of component to make the model independent
+
+
+
+
 <a name="0.19.2"></a>
 ## [0.19.2](https://github.com/devex-web-frontend/dx-platform/compare/v0.19.1...v0.19.2) (2018-10-31)
 
