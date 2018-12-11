@@ -7,24 +7,21 @@ export type TDataStateErrorMainProps<L> = {
 	error: L;
 };
 
-export type TRenderRemoteDataStates<L, FP extends TDataStateErrorMainProps<L>> = {
+export type TRenderRemoteDataStates<L> = {
 	DataStateNoData: ComponentType;
-	DataStateFailure: ComponentType<FP>;
+	DataStateFailure: ComponentType<TDataStateErrorMainProps<L>>;
 	DataStatePending: ComponentType;
 };
 
-export type TRenderRemoteDataMainProps<L, D> = {
-	data: RemoteData<L, D>;
-	success: (data: D) => JSX.Element;
-	noData?: (data: D) => boolean;
+export type TRenderRemoteDataMainProps<L, A> = {
+	data: RemoteData<L, A>;
+	success: (data: A) => JSX.Element;
+	noData?: (data: A) => boolean;
 };
 
-export type TRenderRemoteDataProps<L, D, FP extends TDataStateErrorMainProps<L>> = TRenderRemoteDataStates<L, FP> &
-	TRenderRemoteDataMainProps<L, D>;
+export type TRenderRemoteDataProps<L, A> = TRenderRemoteDataStates<L> & TRenderRemoteDataMainProps<L, A>;
 
-export class RenderRemoteData<L, D, FP extends TDataStateErrorMainProps<L>> extends Component<
-	TRenderRemoteDataProps<L, D, FP>
-> {
+export class RenderRemoteData<L, A> extends Component<TRenderRemoteDataProps<L, A>> {
 	public render() {
 		const { data } = this.props;
 		return (
@@ -36,22 +33,22 @@ export class RenderRemoteData<L, D, FP extends TDataStateErrorMainProps<L>> exte
 		);
 	}
 
-	private renderPending = () => {
+	private renderPending() {
 		const { DataStatePending } = this.props;
 		return <DataStatePending />;
-	};
+	}
 
-	private renderSuccess = (data: D) => {
+	private renderSuccess(data: A) {
 		const { noData, success, DataStateNoData } = this.props;
 		if (isNotNullable(noData) && noData(data)) {
 			return <DataStateNoData />;
 		}
 		return success(data);
-	};
+	}
 
-	private renderFailure = (error: L) => {
+	private renderFailure(error: L) {
 		const { DataStateFailure } = this.props;
 		console.warn('[RemoteFailure]', error);
 		return <DataStateFailure error={error} />;
-	};
+	}
 }

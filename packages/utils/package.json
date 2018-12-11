@@ -30,10 +30,10 @@
     "typelevel-ts": "^0.3.1"
   },
   "peerDependencies": {
-    "fp-ts": "^1.2.0"
+    "fp-ts": "^1.11.3"
   },
   "devDependencies": {
     "@devexperts/tools": "^0.22.0",
-    "fp-ts": "^1.2.0"
+    "fp-ts": "^1.11.3"
   }
 }

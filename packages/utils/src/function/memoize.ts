@@ -67,7 +67,7 @@ export function memoize<A, B, C, D, E, F, G, H>(
 		const args = Array.prototype.slice.call(arguments);
 		const key = serialize(args);
 		if (typeof storage[key] === 'undefined') {
-			storage[key] = fn.apply(this, args);
+			storage[key] = fn.apply(this, args as any);
 		}
 		return storage[key];
 	}.bind(this);
@@ -79,7 +79,7 @@ export function memoize<A, B, C, D, E, F, G, H>(
 		delete storage[key];
 	};
 
-	return result;
+	return result as any;
 }
 
 export default memoize;
