@@ -54,6 +54,56 @@ export interface ProductMap<F extends URIS2> {
 		h: Type2<F, EH, H>,
 		project: (a: A, b: B, c: C, d: D, e: E, g: G, h: H) => R,
 	): Type2<F, EA & EB & EC & ED & EE & EG & EH, R>;
+	<EA, A, EB, B, EC, C, ED, D, EE, E, EG, G, EH, H, EI, I, R>(
+		a: Type2<F, EA, A>,
+		b: Type2<F, EB, B>,
+		c: Type2<F, EC, C>,
+		d: Type2<F, ED, D>,
+		e: Type2<F, EE, E>,
+		g: Type2<F, EG, G>,
+		h: Type2<F, EH, H>,
+		i: Type2<F, EI, I>,
+		project: (a: A, b: B, c: C, d: D, e: E, g: G, h: H, i: I) => R,
+	): Type2<F, EA & EB & EC & ED & EE & EG & EH & EI, R>;
+	<EA, A, EB, B, EC, C, ED, D, EE, E, EG, G, EH, H, EI, I, EJ, J, R>(
+		a: Type2<F, EA, A>,
+		b: Type2<F, EB, B>,
+		c: Type2<F, EC, C>,
+		d: Type2<F, ED, D>,
+		e: Type2<F, EE, E>,
+		g: Type2<F, EG, G>,
+		h: Type2<F, EH, H>,
+		i: Type2<F, EI, I>,
+		j: Type2<F, EJ, J>,
+		project: (a: A, b: B, c: C, d: D, e: E, g: G, h: H, i: I, j: J) => R,
+	): Type2<F, EA & EB & EC & ED & EE & EG & EH & EI & EJ, R>;
+	<EA, A, EB, B, EC, C, ED, D, EE, E, EG, G, EH, H, EI, I, EJ, J, EK, K, R>(
+		a: Type2<F, EA, A>,
+		b: Type2<F, EB, B>,
+		c: Type2<F, EC, C>,
+		d: Type2<F, ED, D>,
+		e: Type2<F, EE, E>,
+		g: Type2<F, EG, G>,
+		h: Type2<F, EH, H>,
+		i: Type2<F, EI, I>,
+		j: Type2<F, EJ, J>,
+		k: Type2<F, EK, K>,
+		project: (a: A, b: B, c: C, d: D, e: E, g: G, h: H, i: I, j: J, k: K) => R,
+	): Type2<F, EA & EB & EC & ED & EE & EG & EH & EI & EJ & EK, R>;
+	<EA, A, EB, B, EC, C, ED, D, EE, E, EG, G, EH, H, EI, I, EJ, J, EK, K, EL, L, R>(
+		a: Type2<F, EA, A>,
+		b: Type2<F, EB, B>,
+		c: Type2<F, EC, C>,
+		d: Type2<F, ED, D>,
+		e: Type2<F, EE, E>,
+		g: Type2<F, EG, G>,
+		h: Type2<F, EH, H>,
+		i: Type2<F, EI, I>,
+		j: Type2<F, EJ, J>,
+		k: Type2<F, EK, K>,
+		l: Type2<F, EL, L>,
+		project: (a: A, b: B, c: C, d: D, e: E, g: G, h: H, i: I, j: J, k: K, l: L) => R,
+	): Type2<F, EA & EB & EC & ED & EE & EG & EH & EI & EJ & EK & EL, R>;
 }
 
 export interface CoproductMap<F extends URIS2> {
@@ -97,6 +147,66 @@ export interface CoproductMap<F extends URIS2> {
 		g: Type2<F, EG, G>,
 		project: (a: A, b: B, c: C, d: D, e: E, g: G) => R,
 	): Type2<F, EA | EB | EC | ED | EE | EG, R>;
+	<EA, A, EB, B, EC, C, ED, D, EE, E, EG, G, EH, H, R>(
+		a: Type2<F, EA, A>,
+		b: Type2<F, EB, B>,
+		c: Type2<F, EC, C>,
+		d: Type2<F, ED, D>,
+		e: Type2<F, EE, E>,
+		g: Type2<F, EG, G>,
+		h: Type2<F, EH, H>,
+		project: (a: A, b: B, c: C, d: D, e: E, g: G, h: H) => R,
+	): Type2<F, EA | EB | EC | ED | EE | EG | EH, R>;
+	<EA, A, EB, B, EC, C, ED, D, EE, E, EG, G, EH, H, EI, I, R>(
+		a: Type2<F, EA, A>,
+		b: Type2<F, EB, B>,
+		c: Type2<F, EC, C>,
+		d: Type2<F, ED, D>,
+		e: Type2<F, EE, E>,
+		g: Type2<F, EG, G>,
+		h: Type2<F, EH, H>,
+		i: Type2<F, EI, I>,
+		project: (a: A, b: B, c: C, d: D, e: E, g: G, h: H, i: I) => R,
+	): Type2<F, EA | EB | EC | ED | EE | EG | EH | EI, R>;
+	<EA, A, EB, B, EC, C, ED, D, EE, E, EG, G, EH, H, EI, I, EJ, J, R>(
+		a: Type2<F, EA, A>,
+		b: Type2<F, EB, B>,
+		c: Type2<F, EC, C>,
+		d: Type2<F, ED, D>,
+		e: Type2<F, EE, E>,
+		g: Type2<F, EG, G>,
+		h: Type2<F, EH, H>,
+		i: Type2<F, EI, I>,
+		j: Type2<F, EJ, J>,
+		project: (a: A, b: B, c: C, d: D, e: E, g: G, h: H, i: I, j: J) => R,
+	): Type2<F, EA | EB | EC | ED | EE | EG | EH | EI | EJ, R>;
+	<EA, A, EB, B, EC, C, ED, D, EE, E, EG, G, EH, H, EI, I, EJ, J, EK, K, R>(
+		a: Type2<F, EA, A>,
+		b: Type2<F, EB, B>,
+		c: Type2<F, EC, C>,
+		d: Type2<F, ED, D>,
+		e: Type2<F, EE, E>,
+		g: Type2<F, EG, G>,
+		h: Type2<F, EH, H>,
+		i: Type2<F, EI, I>,
+		j: Type2<F, EJ, J>,
+		k: Type2<F, EK, K>,
+		project: (a: A, b: B, c: C, d: D, e: E, g: G, h: H, i: I, j: J, k: K) => R,
+	): Type2<F, EA | EB | EC | ED | EE | EG | EH | EI | EJ | EK, R>;
+	<EA, A, EB, B, EC, C, ED, D, EE, E, EG, G, EH, H, EI, I, EJ, J, EK, K, EL, L, R>(
+		a: Type2<F, EA, A>,
+		b: Type2<F, EB, B>,
+		c: Type2<F, EC, C>,
+		d: Type2<F, ED, D>,
+		e: Type2<F, EE, E>,
+		g: Type2<F, EG, G>,
+		h: Type2<F, EH, H>,
+		i: Type2<F, EI, I>,
+		j: Type2<F, EJ, J>,
+		k: Type2<F, EK, K>,
+		l: Type2<F, EL, L>,
+		project: (a: A, b: B, c: C, d: D, e: E, g: G, h: H, i: I, j: J, k: K, l: L) => R,
+	): Type2<F, EA | EB | EC | ED | EE | EG | EH | EI | EJ | EK | EL, R>;
 }
 
 const internal = <F extends URIS2>(F: Apply2<F>) => {
