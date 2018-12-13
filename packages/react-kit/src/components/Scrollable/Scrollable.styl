@@ -1,4 +1,3 @@
-//@require '~config';
 @require './Scrollable.config.styl';
 
 .scrollable {
@@ -6,12 +5,12 @@
 	position: relative;
 }
 
-.withHorizontalScrollbar {
+.withHorizontalScrollbar:not(.overlayContent) {
 	> .wrapper > .container > .content {
 		padding-bottom: $scrollableScrollBarSize;
 	}
 }
-.withVerticalScrollbar {
+.withVerticalScrollbar:not(.overlayContent) {
 	> .wrapper > .container > .content {
 		padding-right: $scrollableScrollBarSize;
 	}
@@ -43,6 +42,7 @@
 	vertical-align: middle;
 	position: relative;
 	min-width: 100%;
+	box-sizing: border-box;
 }
 
 .resizeDetector {
