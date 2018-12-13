@@ -3,6 +3,55 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="0.22.1"></a>
+## [0.22.1](https://github.com/devex-web-frontend/dx-platform/compare/v0.19.2...v0.22.1) (2018-12-13)
+
+
+### Bug Fixes
+
+* **react-kit:** Scrollable incorrectly sets content padding in Chrome and IE/FF ([#89](https://github.com/devex-web-frontend/dx-platform/issues/89)) ([8b11a7a](https://github.com/devex-web-frontend/dx-platform/commit/8b11a7a)), closes [#82](https://github.com/devex-web-frontend/dx-platform/issues/82)
+
+
+* Feature/new utils (#99) ([b0d3105](https://github.com/devex-web-frontend/dx-platform/commit/b0d3105)), closes [#99](https://github.com/devex-web-frontend/dx-platform/issues/99)
+
+
+### Features
+
+* **react-kit:** Add ability to display content under scrollbars ([#97](https://github.com/devex-web-frontend/dx-platform/issues/97)) ([5304dc5](https://github.com/devex-web-frontend/dx-platform/commit/5304dc5))
+* **react-kit:** Closing root close correctly ([#93](https://github.com/devex-web-frontend/dx-platform/issues/93)) ([af7c011](https://github.com/devex-web-frontend/dx-platform/commit/af7c011))
+* **react-kit:** Date input add inner ref ([#91](https://github.com/devex-web-frontend/dx-platform/issues/91)) ([8ac4e80](https://github.com/devex-web-frontend/dx-platform/commit/8ac4e80))
+* **utils:** add more reader combine overloads ([#92](https://github.com/devex-web-frontend/dx-platform/issues/92)) ([a8f6ad8](https://github.com/devex-web-frontend/dx-platform/commit/a8f6ad8))
+
+
+### BREAKING CHANGES
+
+* TRenderRemoteDataStates accepts 1 type-parameter, TRenderRemoteDataProps and RenderRemoteData accept 2 type-parameters. renderPending, renderSuccess and renderFailure are moved to prototype
+
+* chore(rx-utils): Use Array.sequence instead of Traversable.sequence (fp-ts deprecation)
+
+* chore(utils): Replace reader helpers with generalized from MonadReader and ProductLeft. Add sequenceTReader, ReaderValueType, ReaderEnvType and extended instance
+* ProjectMany is removed, combine is renamed to combineReader, defer is renamed to deferReader
+
+* chore(utils): rename product-coproduct module to product-left-coproduct-left
+
+* fix(utils): Relax memoized signature for new TS
+
+* chore(rx-utils): fix incorrect type inference for Context
+
+* feat(utils): Add CoproductLeft instance to either, add sequenceTEither, sequenceEither and combineEither
+
+* feat(utils): Add LeftType and RightType to Either
+
+* chore: bump tslint@^5.11.0
+
+* style: fix
+
+* feat(utils): Add missing overloading from old Reader combine
+* **react-kit:** move types for dateInput out of component to make the model independent
+
+
+
+
 <a name="0.22.0"></a>
 # [0.22.0](https://github.com/devex-web-frontend/dx-platform/compare/v0.21.0...v0.22.0) (2018-11-26)
 
