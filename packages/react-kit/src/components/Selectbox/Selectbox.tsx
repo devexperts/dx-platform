@@ -42,14 +42,14 @@ export type TFullSelectboxProps = TControlProps<ReactText | undefined> & {
 	Anchor: ComponentClass<TSelectboxAnchorProps>;
 	Menu: ComponentType<TMenuProps>;
 	Popover: ComponentType<TPopoverProps>;
-
+	isOpened?: boolean;
+	onToggle?: (isOpened: boolean) => void;
 	caretIcon?: React.ReactElement<any> | React.ReactText;
 	selectedIcon?: React.ReactElement<any> | React.ReactText;
 	shouldSyncWidth?: boolean;
 };
 
 type TSelectboxState = {
-	isOpened: boolean;
 	width?: number;
 };
 
@@ -74,9 +74,7 @@ class RawSelectbox extends React.Component<TFullSelectboxProps, TSelectboxState>
 		},
 	};
 
-	readonly state: TSelectboxState = {
-		isOpened: false,
-	};
+	readonly state: TSelectboxState = {};
 
 	private _anchor!: Component<TSelectboxAnchorProps> | null;
 	private get anchor() {
@@ -140,6 +138,7 @@ class RawSelectbox extends React.Component<TFullSelectboxProps, TSelectboxState>
 			selectedIcon,
 			isDisabled,
 			isLoading,
+			isOpened,
 		} = this.props;
 
 		const menuTheme: TFullMenuProps['theme'] = {
@@ -160,7 +159,7 @@ class RawSelectbox extends React.Component<TFullSelectboxProps, TSelectboxState>
 
 		if (caretIcon) {
 			anchorTheme.caret = classnames(theme.container__anchor__caret, {
-				[theme.container__anchor__caret_isReversed as string]: this.state.isOpened,
+				[theme.container__anchor__caret_isReversed as string]: isOpened,
 			});
 			anchorTheme.wrapperCaret = theme.container__anchor__wrapperCaret;
 		}
@@ -195,12 +194,12 @@ class RawSelectbox extends React.Component<TFullSelectboxProps, TSelectboxState>
 				isLoading={isLoading}
 				theme={anchorTheme}
 				caretIcon={caretIcon}
-				isOpened={this.state.isOpened}
+				isOpened={isOpened}
 				value={value}
 				valueText={valueText}
 				onClick={this.onAnchorClick}>
 				<Popover
-					isOpened={this.state.isOpened}
+					isOpened={isOpened}
 					style={popoverStyle}
 					theme={popoverTheme}
 					closeOnClickAway={true}
@@ -236,23 +235,29 @@ class RawSelectbox extends React.Component<TFullSelectboxProps, TSelectboxState>
 	};
 
 	onAnchorClick = () => {
-		this.setState({
-			isOpened: !this.state.isOpened,
-		});
+		const { onToggle } = this.props;
+
+		if (onToggle) {
+			onToggle(true);
+		}
 	};
 
 	onItemSelect = (value: ReactText | undefined) => {
-		this.setState({
-			isOpened: false,
-		});
+		const { onToggle } = this.props;
 		this.props.onValueChange && this.props.onValueChange(value);
 		this.focusOnAnchor();
+
+		if (onToggle) {
+			onToggle(false);
+		}
 	};
 
 	onPopoverRequestClose = () => {
-		this.setState({
-			isOpened: false,
-		});
+		const { onToggle } = this.props;
+
+		if (onToggle) {
+			onToggle(false);
+		}
 	};
 
 	handleAnchorResize = raf((element: Element) => {
