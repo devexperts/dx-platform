@@ -40,13 +40,14 @@ class DemoSelectbox extends React.Component<PartialKeys<TFullSelectboxProps, 'th
 }
 
 const Stateful = stateful()(DemoSelectbox);
+const StatefulOpened = stateful('isOpened', 'onToggle')(Stateful);
 
 type TPageState = {
 	hero: string;
-	isFirstSelectboxOpened: boolean;
-	isSecondSelectboxOpened: boolean;
-	isThirdSelectboxOpened: boolean;
-	isFoughtSelectboxOpened: boolean;
+	isFirstSelectboxOpened: boolean | undefined;
+	isSecondSelectboxOpened: boolean | undefined;
+	isThirdSelectboxOpened: boolean | undefined;
+	isFoughtSelectboxOpened: boolean | undefined;
 };
 
 @PURE
@@ -115,6 +116,20 @@ class SelectboxPage extends React.Component<{}, TPageState> {
 						<MenuItem value="flash">Flash</MenuItem>
 					</Stateful>
 				</section>
+				<section>
+					Uncontrolled by isOpened
+					<StatefulOpened
+						defaultValue={undefined}
+						placeholder="Choose your hero"
+						shouldSyncWidth={true}
+						theme={wideSelectboxTheme}
+						selectedIcon={<ListItemTickIcon />}
+						caretIcon={<SmallDropDownArrowIcon />}>
+						<MenuItem value="superman">Superman</MenuItem>
+						<MenuItem value="batman">Batman</MenuItem>
+						<MenuItem value="flash">Flash</MenuItem>
+					</StatefulOpened>
+				</section>
 			</Demo>
 		);
 	}
@@ -131,25 +146,25 @@ class SelectboxPage extends React.Component<{}, TPageState> {
 		});
 	};
 
-	onFirstSelectboxToggle = (isFirstSelectboxOpened: boolean) => {
+	onFirstSelectboxToggle = (isFirstSelectboxOpened: boolean | undefined) => {
 		this.setState({
 			isFirstSelectboxOpened,
 		});
 	};
 
-	onSecondSelectboxToggle = (isSecondSelectboxOpened: boolean) => {
+	onSecondSelectboxToggle = (isSecondSelectboxOpened: boolean | undefined) => {
 		this.setState({
 			isSecondSelectboxOpened,
 		});
 	};
 
-	onThirdSelectboxToggle = (isThirdSelectboxOpened: boolean) => {
+	onThirdSelectboxToggle = (isThirdSelectboxOpened: boolean | undefined) => {
 		this.setState({
 			isThirdSelectboxOpened,
 		});
 	};
 
-	onFoughtSelectboxToggle = (isFoughtSelectboxOpened: boolean) => {
+	onFoughtSelectboxToggle = (isFoughtSelectboxOpened: boolean | undefined) => {
 		this.setState({
 			isFoughtSelectboxOpened,
 		});

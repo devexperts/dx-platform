@@ -46,6 +46,7 @@ class HeavyContent extends React.Component<{ isLong?: boolean }> {
 }
 
 const Stateful = stateful()(Selectbox);
+const StatefulOpened = stateful('isOpened', 'onToggle', 'defaultIsOpened')(Stateful);
 
 @PURE
 class PopoverPage extends React.Component {
@@ -67,26 +68,35 @@ class PopoverPage extends React.Component {
 				<div className={css.container}>
 					<div>
 						<label className={css.label}>Placement</label>
-						<Stateful defaultValue={PopoverPlacement.Bottom} onValueChange={this.onPlacementSelect as any}>
+						<StatefulOpened
+							defaultIsOpened={false}
+							defaultValue={PopoverPlacement.Bottom}
+							onValueChange={this.onPlacementSelect as any}>
 							<MenuItem value={PopoverPlacement.Top}>Top</MenuItem>
 							<MenuItem value={PopoverPlacement.Bottom}>Bottom</MenuItem>
 							<MenuItem value={PopoverPlacement.Left}>Left</MenuItem>
 							<MenuItem value={PopoverPlacement.Right}>Right</MenuItem>
-						</Stateful>
+						</StatefulOpened>
 						<label className={css.label}>Align</label>
 						{(placement === PopoverPlacement.Top || placement === PopoverPlacement.Bottom) && (
-							<Stateful defaultValue={PopoverAlign.Left} onValueChange={this.onAlignSelect as any}>
+							<StatefulOpened
+								defaultIsOpened={false}
+								defaultValue={PopoverAlign.Left}
+								onValueChange={this.onAlignSelect as any}>
 								<MenuItem value={PopoverAlign.Left}>Left</MenuItem>
 								<MenuItem value={PopoverAlign.Center}>Center</MenuItem>
 								<MenuItem value={PopoverAlign.Right}>Right</MenuItem>
-							</Stateful>
+							</StatefulOpened>
 						)}
 						{(placement === PopoverPlacement.Left || placement === PopoverPlacement.Right) && (
-							<Stateful defaultValue={PopoverAlign.Top} onValueChange={this.onAlignSelect as any}>
+							<StatefulOpened
+								defaultIsOpened={false}
+								defaultValue={PopoverAlign.Top}
+								onValueChange={this.onAlignSelect as any}>
 								<MenuItem value={PopoverAlign.Top}>Top</MenuItem>
 								<MenuItem value={PopoverAlign.Middle}>Middle</MenuItem>
 								<MenuItem value={PopoverAlign.Bottom}>Bottom</MenuItem>
-							</Stateful>
+							</StatefulOpened>
 						)}
 						<label className={css.label}>
 							Close on clickaway{' '}

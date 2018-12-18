@@ -15,39 +15,38 @@ import { withDefaults } from '../../utils/with-defaults';
 
 export const SELECTBOX = Symbol('Selectbox') as symbol;
 
-export type TFullSelectboxProps = TControlProps<ReactText | undefined> & {
-	theme: {
-		container_isOpened?: string;
-		container__popover?: string;
-		container__popover__content?: string;
-		container__menu?: string;
-		container__menu_hasSelectedItem?: string;
-		container__item?: string;
-		container__item_isActive?: string;
-		container__item__text?: string;
-		container__item__activeIcon?: string;
-		container__anchor?: string;
-		container__anchor__content?: string;
-		container__anchor__text?: string;
-		container__anchor__content_hasCaret?: string;
-		container__anchor__wrapperCaret?: string;
-		container__anchor__caret?: string;
-		container__anchor__caret_isReversed?: string;
-	};
-	children: ReactElement<TMenuItemProps>[] | ReactElement<TMenuItemProps>;
-	isDisabled?: boolean;
-	isLoading?: boolean;
-	placeholder?: string;
+export type TFullSelectboxProps = TControlProps<ReactText | undefined> &
+	TControlProps<boolean | undefined, 'isOpened', 'onToggle'> & {
+		theme: {
+			container_isOpened?: string;
+			container__popover?: string;
+			container__popover__content?: string;
+			container__menu?: string;
+			container__menu_hasSelectedItem?: string;
+			container__item?: string;
+			container__item_isActive?: string;
+			container__item__text?: string;
+			container__item__activeIcon?: string;
+			container__anchor?: string;
+			container__anchor__content?: string;
+			container__anchor__text?: string;
+			container__anchor__content_hasCaret?: string;
+			container__anchor__wrapperCaret?: string;
+			container__anchor__caret?: string;
+			container__anchor__caret_isReversed?: string;
+		};
+		children: ReactElement<TMenuItemProps>[] | ReactElement<TMenuItemProps>;
+		isDisabled?: boolean;
+		isLoading?: boolean;
+		placeholder?: string;
 
-	Anchor: ComponentClass<TSelectboxAnchorProps>;
-	Menu: ComponentType<TMenuProps>;
-	Popover: ComponentType<TPopoverProps>;
-	isOpened?: boolean;
-	onToggle?: (isOpened: boolean) => void;
-	caretIcon?: React.ReactElement<any> | React.ReactText;
-	selectedIcon?: React.ReactElement<any> | React.ReactText;
-	shouldSyncWidth?: boolean;
-};
+		Anchor: ComponentClass<TSelectboxAnchorProps>;
+		Menu: ComponentType<TMenuProps>;
+		Popover: ComponentType<TPopoverProps>;
+		caretIcon?: React.ReactElement<any> | React.ReactText;
+		selectedIcon?: React.ReactElement<any> | React.ReactText;
+		shouldSyncWidth?: boolean;
+	};
 
 type TSelectboxState = {
 	width?: number;
