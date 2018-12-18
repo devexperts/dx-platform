@@ -40,15 +40,24 @@ class DemoSelectbox extends React.Component<PartialKeys<TFullSelectboxProps, 'th
 }
 
 const Stateful = stateful()(DemoSelectbox);
+const StatefulOpened = stateful('isOpened', 'onToggle')(Stateful);
 
 type TPageState = {
 	hero: string;
+	isFirstSelectboxOpened: boolean | undefined;
+	isSecondSelectboxOpened: boolean | undefined;
+	isThirdSelectboxOpened: boolean | undefined;
+	isFoughtSelectboxOpened: boolean | undefined;
 };
 
 @PURE
 class SelectboxPage extends React.Component<{}, TPageState> {
 	state = {
 		hero: '',
+		isFirstSelectboxOpened: false,
+		isSecondSelectboxOpened: false,
+		isThirdSelectboxOpened: false,
+		isFoughtSelectboxOpened: false,
 	};
 
 	render() {
@@ -58,6 +67,8 @@ class SelectboxPage extends React.Component<{}, TPageState> {
 					<Stateful
 						defaultValue={undefined}
 						placeholder="Choose your hero"
+						isOpened={this.state.isFirstSelectboxOpened}
+						onToggle={this.onFirstSelectboxToggle}
 						selectedIcon={<ListItemTickIcon />}
 						onValueChange={this.onHeroChange as any}
 						caretIcon={<SmallDropDownArrowIcon />}>
@@ -69,6 +80,8 @@ class SelectboxPage extends React.Component<{}, TPageState> {
 						placeholder="Controlled by left"
 						value={this.state.hero}
 						theme={{}}
+						isOpened={this.state.isSecondSelectboxOpened}
+						onToggle={this.onSecondSelectboxToggle}
 						selectedIcon={<ListItemTickIcon />}
 						onValueChange={this.onHeroChange as any}
 						caretIcon={<SmallDropDownArrowIcon />}>
@@ -76,7 +89,13 @@ class SelectboxPage extends React.Component<{}, TPageState> {
 						<MenuItem value="batman">Batman</MenuItem>
 						<MenuItem value="flash">Flash</MenuItem>
 					</DemoSelectbox>
-					<Stateful defaultValue={undefined} placeholder="Loading" isDisabled={true} isLoading={true}>
+					<Stateful
+						defaultValue={undefined}
+						placeholder="Loading"
+						isOpened={this.state.isThirdSelectboxOpened}
+						onToggle={this.onThirdSelectboxToggle}
+						isDisabled={true}
+						isLoading={true}>
 						<MenuItem value="dummy">Dummy</MenuItem>
 					</Stateful>
 					<Button onClick={this.onResetClick}>Reset</Button>
@@ -86,6 +105,8 @@ class SelectboxPage extends React.Component<{}, TPageState> {
 					<Stateful
 						defaultValue={undefined}
 						placeholder="Choose your hero"
+						isOpened={this.state.isFoughtSelectboxOpened}
+						onToggle={this.onFoughtSelectboxToggle}
 						shouldSyncWidth={true}
 						theme={wideSelectboxTheme}
 						selectedIcon={<ListItemTickIcon />}
@@ -94,6 +115,20 @@ class SelectboxPage extends React.Component<{}, TPageState> {
 						<MenuItem value="batman">Batman</MenuItem>
 						<MenuItem value="flash">Flash</MenuItem>
 					</Stateful>
+				</section>
+				<section>
+					Uncontrolled by isOpened
+					<StatefulOpened
+						defaultValue={undefined}
+						placeholder="Choose your hero"
+						shouldSyncWidth={true}
+						theme={wideSelectboxTheme}
+						selectedIcon={<ListItemTickIcon />}
+						caretIcon={<SmallDropDownArrowIcon />}>
+						<MenuItem value="superman">Superman</MenuItem>
+						<MenuItem value="batman">Batman</MenuItem>
+						<MenuItem value="flash">Flash</MenuItem>
+					</StatefulOpened>
 				</section>
 			</Demo>
 		);
@@ -108,6 +143,30 @@ class SelectboxPage extends React.Component<{}, TPageState> {
 	onResetClick = () => {
 		this.setState({
 			hero: '',
+		});
+	};
+
+	onFirstSelectboxToggle = (isFirstSelectboxOpened: boolean | undefined) => {
+		this.setState({
+			isFirstSelectboxOpened,
+		});
+	};
+
+	onSecondSelectboxToggle = (isSecondSelectboxOpened: boolean | undefined) => {
+		this.setState({
+			isSecondSelectboxOpened,
+		});
+	};
+
+	onThirdSelectboxToggle = (isThirdSelectboxOpened: boolean | undefined) => {
+		this.setState({
+			isThirdSelectboxOpened,
+		});
+	};
+
+	onFoughtSelectboxToggle = (isFoughtSelectboxOpened: boolean | undefined) => {
+		this.setState({
+			isFoughtSelectboxOpened,
 		});
 	};
 }

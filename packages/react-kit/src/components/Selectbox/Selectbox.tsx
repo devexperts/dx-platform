@@ -15,41 +15,40 @@ import { withDefaults } from '../../utils/with-defaults';
 
 export const SELECTBOX = Symbol('Selectbox') as symbol;
 
-export type TFullSelectboxProps = TControlProps<ReactText | undefined> & {
-	theme: {
-		container_isOpened?: string;
-		container__popover?: string;
-		container__popover__content?: string;
-		container__menu?: string;
-		container__menu_hasSelectedItem?: string;
-		container__item?: string;
-		container__item_isActive?: string;
-		container__item__text?: string;
-		container__item__activeIcon?: string;
-		container__anchor?: string;
-		container__anchor__content?: string;
-		container__anchor__text?: string;
-		container__anchor__content_hasCaret?: string;
-		container__anchor__wrapperCaret?: string;
-		container__anchor__caret?: string;
-		container__anchor__caret_isReversed?: string;
+export type TFullSelectboxProps = TControlProps<ReactText | undefined> &
+	TControlProps<boolean | undefined, 'isOpened', 'onToggle'> & {
+		theme: {
+			container_isOpened?: string;
+			container__popover?: string;
+			container__popover__content?: string;
+			container__menu?: string;
+			container__menu_hasSelectedItem?: string;
+			container__item?: string;
+			container__item_isActive?: string;
+			container__item__text?: string;
+			container__item__activeIcon?: string;
+			container__anchor?: string;
+			container__anchor__content?: string;
+			container__anchor__text?: string;
+			container__anchor__content_hasCaret?: string;
+			container__anchor__wrapperCaret?: string;
+			container__anchor__caret?: string;
+			container__anchor__caret_isReversed?: string;
+		};
+		children: ReactElement<TMenuItemProps>[] | ReactElement<TMenuItemProps>;
+		isDisabled?: boolean;
+		isLoading?: boolean;
+		placeholder?: string;
+
+		Anchor: ComponentClass<TSelectboxAnchorProps>;
+		Menu: ComponentType<TMenuProps>;
+		Popover: ComponentType<TPopoverProps>;
+		caretIcon?: React.ReactElement<any> | React.ReactText;
+		selectedIcon?: React.ReactElement<any> | React.ReactText;
+		shouldSyncWidth?: boolean;
 	};
-	children: ReactElement<TMenuItemProps>[] | ReactElement<TMenuItemProps>;
-	isDisabled?: boolean;
-	isLoading?: boolean;
-	placeholder?: string;
-
-	Anchor: ComponentClass<TSelectboxAnchorProps>;
-	Menu: ComponentType<TMenuProps>;
-	Popover: ComponentType<TPopoverProps>;
-
-	caretIcon?: React.ReactElement<any> | React.ReactText;
-	selectedIcon?: React.ReactElement<any> | React.ReactText;
-	shouldSyncWidth?: boolean;
-};
 
 type TSelectboxState = {
-	isOpened: boolean;
 	width?: number;
 };
 
@@ -74,9 +73,7 @@ class RawSelectbox extends React.Component<TFullSelectboxProps, TSelectboxState>
 		},
 	};
 
-	readonly state: TSelectboxState = {
-		isOpened: false,
-	};
+	readonly state: TSelectboxState = {};
 
 	private _anchor!: Component<TSelectboxAnchorProps> | null;
 	private get anchor() {
@@ -140,6 +137,7 @@ class RawSelectbox extends React.Component<TFullSelectboxProps, TSelectboxState>
 			selectedIcon,
 			isDisabled,
 			isLoading,
+			isOpened,
 		} = this.props;
 
 		const menuTheme: TFullMenuProps['theme'] = {
@@ -160,7 +158,7 @@ class RawSelectbox extends React.Component<TFullSelectboxProps, TSelectboxState>
 
 		if (caretIcon) {
 			anchorTheme.caret = classnames(theme.container__anchor__caret, {
-				[theme.container__anchor__caret_isReversed as string]: this.state.isOpened,
+				[theme.container__anchor__caret_isReversed as string]: isOpened,
 			});
 			anchorTheme.wrapperCaret = theme.container__anchor__wrapperCaret;
 		}
@@ -195,12 +193,12 @@ class RawSelectbox extends React.Component<TFullSelectboxProps, TSelectboxState>
 				isLoading={isLoading}
 				theme={anchorTheme}
 				caretIcon={caretIcon}
-				isOpened={this.state.isOpened}
+				isOpened={isOpened}
 				value={value}
 				valueText={valueText}
 				onClick={this.onAnchorClick}>
 				<Popover
-					isOpened={this.state.isOpened}
+					isOpened={isOpened}
 					style={popoverStyle}
 					theme={popoverTheme}
 					closeOnClickAway={true}
@@ -236,23 +234,29 @@ class RawSelectbox extends React.Component<TFullSelectboxProps, TSelectboxState>
 	};
 
 	onAnchorClick = () => {
-		this.setState({
-			isOpened: !this.state.isOpened,
-		});
+		const { onToggle } = this.props;
+
+		if (onToggle) {
+			onToggle(!this.props.isOpened);
+		}
 	};
 
 	onItemSelect = (value: ReactText | undefined) => {
-		this.setState({
-			isOpened: false,
-		});
+		const { onToggle } = this.props;
 		this.props.onValueChange && this.props.onValueChange(value);
 		this.focusOnAnchor();
+
+		if (onToggle) {
+			onToggle(false);
+		}
 	};
 
 	onPopoverRequestClose = () => {
-		this.setState({
-			isOpened: false,
-		});
+		const { onToggle } = this.props;
+
+		if (onToggle) {
+			onToggle(false);
+		}
 	};
 
 	handleAnchorResize = raf((element: Element) => {

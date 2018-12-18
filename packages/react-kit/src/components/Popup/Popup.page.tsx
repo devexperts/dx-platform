@@ -23,6 +23,7 @@ const header = <div>HEADER</div>;
 const footer = <div>FOOTER</div>;
 
 const Stateful = stateful()(Selectbox);
+const StatefulOpened = stateful('isOpened', 'onToggle')(Stateful);
 
 @PURE
 class PopupPage extends React.Component {
@@ -80,11 +81,11 @@ class PopupPage extends React.Component {
 						onRequestClose={this.onPopupRequestClose}
 						isOpened={isOpened}>
 						<div>popup content</div>
-						<Stateful defaultValue={undefined} placeholder="Choose your hero">
+						<StatefulOpened defaultValue={undefined} placeholder="Choose your hero">
 							<MenuItem value="superman">Superman</MenuItem>
 							<MenuItem value="batman">Batman</MenuItem>
 							<MenuItem value="flash">Flash</MenuItem>
-						</Stateful>
+						</StatefulOpened>
 					</Popup>
 				</Button>
 			</Demo>
