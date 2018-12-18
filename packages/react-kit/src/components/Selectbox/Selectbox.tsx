@@ -237,7 +237,7 @@ class RawSelectbox extends React.Component<TFullSelectboxProps, TSelectboxState>
 		const { onToggle } = this.props;
 
 		if (onToggle) {
-			onToggle(true);
+			onToggle(!this.props.isOpened);
 		}
 	};
 
