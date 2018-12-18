@@ -3,6 +3,46 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="0.23.0"></a>
+# [0.23.0](https://github.com/devex-web-frontend/dx-platform/compare/v0.19.2...v0.23.0) (2018-12-18)
+
+
+### Features
+
+* **utils:** add more reader combine overloads ([#92](https://github.com/devex-web-frontend/dx-platform/issues/92)) ([a8f6ad8](https://github.com/devex-web-frontend/dx-platform/commit/a8f6ad8))
+
+
+* Feature/new utils (#99) ([b0d3105](https://github.com/devex-web-frontend/dx-platform/commit/b0d3105)), closes [#99](https://github.com/devex-web-frontend/dx-platform/issues/99)
+
+
+### BREAKING CHANGES
+
+* TRenderRemoteDataStates accepts 1 type-parameter, TRenderRemoteDataProps and RenderRemoteData accept 2 type-parameters. renderPending, renderSuccess and renderFailure are moved to prototype
+
+* chore(rx-utils): Use Array.sequence instead of Traversable.sequence (fp-ts deprecation)
+
+* chore(utils): Replace reader helpers with generalized from MonadReader and ProductLeft. Add sequenceTReader, ReaderValueType, ReaderEnvType and extended instance
+* ProjectMany is removed, combine is renamed to combineReader, defer is renamed to deferReader
+
+* chore(utils): rename product-coproduct module to product-left-coproduct-left
+
+* fix(utils): Relax memoized signature for new TS
+
+* chore(rx-utils): fix incorrect type inference for Context
+
+* feat(utils): Add CoproductLeft instance to either, add sequenceTEither, sequenceEither and combineEither
+
+* feat(utils): Add LeftType and RightType to Either
+
+* chore: bump tslint@^5.11.0
+
+* style: fix
+
+* feat(utils): Add missing overloading from old Reader combine
+
+
+
+
 <a name="0.22.1"></a>
 ## [0.22.1](https://github.com/devex-web-frontend/dx-platform/compare/v0.19.2...v0.22.1) (2018-12-13)
 
