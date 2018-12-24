@@ -1,0 +1,20 @@
+$duration = 200;
+
+.init {
+    opacity: 0;
+    transition: opacity ($duration)ms linear;
+}
+
+.exited,
+.exiting {
+    opacity: 0;
+}
+
+.entering,
+.entered  {
+    opacity: 1;
+}
+
+:export {
+    duration: $duration;
+}
