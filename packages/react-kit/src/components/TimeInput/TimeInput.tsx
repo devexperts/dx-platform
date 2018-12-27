@@ -35,6 +35,9 @@ export enum PeriodType {
 	PM,
 }
 
+const secondsField = 'seconds';
+const periodTypeField = 'periodType';
+
 export type TTimeInputOwnProps = TTimeInputConfig & TSteppableInputProps & TControlProps<TTime | undefined | null>;
 
 export type TTimeInputFullProps = TTimeInputOwnProps & {
@@ -72,13 +75,13 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState>
 				minutes,
 			};
 			if (withSeconds && isDefined(seconds)) {
-				initValue['seconds'] = seconds;
+				initValue[secondsField] = seconds;
 			}
 			if (withPeriodType && isDefined(periodType)) {
-				initValue['periodType'] = stringToPeriodType(periodType);
+				initValue[periodTypeField] = stringToPeriodType(periodType);
 			} else if (withPeriodType && !isDefined(periodType)) {
 				// set default period type if it is not defined by parent component
-				initValue['periodType'] = PeriodType.AM;
+				initValue[periodTypeField] = PeriodType.AM;
 			}
 			this.setState({
 				...initValue,
@@ -105,10 +108,10 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState>
 				minutes,
 			};
 			if (withSeconds) {
-				newValue['seconds'] = seconds;
+				newValue[secondsField] = seconds;
 			}
 			if (withPeriodType) {
-				newValue['periodType'] = stringToPeriodType(periodType);
+				newValue[periodTypeField] = stringToPeriodType(periodType);
 			}
 			this.setState({
 				...newValue,
@@ -513,10 +516,10 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState>
 					minutes,
 				};
 				if (withSeconds && isDefined(seconds)) {
-					newValue['seconds'] = seconds;
+					newValue[secondsField] = seconds;
 				}
 				if (withPeriodType && isDefined(periodType)) {
-					newValue['periodType'] = stringedPeriodType;
+					newValue[periodTypeField] = stringedPeriodType;
 				}
 				onValueChange &&
 					onValueChange({
@@ -532,12 +535,12 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState>
 				minutes,
 			};
 			if (withSeconds && isDefined(seconds)) {
-				newValue['seconds'] = seconds;
+				newValue[secondsField] = seconds;
 			} else if (withSeconds && !isDefined(seconds)) {
-				newValue['seconds'] = undefined;
+				newValue[secondsField] = undefined;
 			}
 			if (withPeriodType && isDefined(periodType)) {
-				newValue['periodType'] = periodType;
+				newValue[periodTypeField] = periodType;
 			}
 			this.setState({
 				...newValue,
