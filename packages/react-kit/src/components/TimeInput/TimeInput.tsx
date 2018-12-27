@@ -60,8 +60,8 @@ export type TTimeInputState = {
 @PURE
 class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState> {
 	readonly state: TTimeInputState = {};
+	// Helper, which helps to detect order of input in the two-digit field;
 	private secondInput: boolean = false;
-	private fourthInput: boolean = false;
 
 	componentWillMount() {
 		const { value, withSeconds, withPeriodType } = this.props;
@@ -216,6 +216,7 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState>
 			this.setState({
 				activeSection: ActiveSection.Hours,
 			});
+			this.secondInput = false;
 			this.correctTime();
 		}
 	};
@@ -225,6 +226,8 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState>
 			this.setState({
 				activeSection: ActiveSection.Minutes,
 			});
+			this.secondInput = false;
+			this.correctTime();
 		}
 	};
 
@@ -233,6 +236,8 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState>
 			this.setState({
 				activeSection: ActiveSection.Seconds,
 			});
+			this.secondInput = false;
+			this.correctTime();
 		}
 	};
 
@@ -244,27 +249,23 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState>
 		}
 	};
 
-	private onIncrement = (e: any) => {
+	private onIncrement = () => {
 		this.secondInput = false;
-		this.fourthInput = false;
 		this.step(1);
 	};
 
 	private onDecrement = () => {
 		this.secondInput = false;
-		this.fourthInput = false;
 		this.step(-1);
 	};
 
 	private onClear = () => {
 		this.secondInput = false;
-		this.fourthInput = false;
 		this.updateStateTime();
 	};
 
 	private onFocus = (e: React.FocusEvent<HTMLElement>) => {
 		this.secondInput = false;
-		this.fourthInput = false;
 		if (!isDefined(this.state.activeSection)) {
 			this.setState({
 				activeSection: ActiveSection.Hours,
@@ -274,7 +275,6 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState>
 
 	private onBlur = (e: React.FocusEvent<HTMLElement>) => {
 		this.secondInput = false;
-		this.fourthInput = false;
 		this.correctTime();
 		this.setState({
 			activeSection: undefined,
@@ -289,7 +289,6 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState>
 			case KeyCode.Left: {
 				e.preventDefault(); //block h-scrolling
 				this.secondInput = false;
-				this.fourthInput = false;
 				this.correctTime();
 				this.setState({
 					activeSection: findActiveSectionOnKeyLeft(activeSection, withSeconds),
@@ -299,7 +298,6 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState>
 			case KeyCode.Right: {
 				e.preventDefault(); //block h-scrolling
 				this.secondInput = false;
-				this.fourthInput = false;
 				this.correctTime();
 				this.setState({
 					activeSection: findActiveSectionOnKeyRight(activeSection, withSeconds, withPeriodType),
@@ -309,7 +307,6 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState>
 			case KeyCode.Delete: //fallthrough
 			case KeyCode.Backspace: {
 				this.secondInput = false;
-				this.fourthInput = false;
 				switch (activeSection) {
 					case ActiveSection.Hours: {
 						this.updateStateTime(undefined, minutes, seconds, periodType);
@@ -350,7 +347,8 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState>
 
 	private handleDigitKeyDown(digit: number) {
 		const { hours, minutes, seconds, periodType, activeSection } = this.state;
-		const { withPeriodType } = this.props;
+		const { withPeriodType = false, withSeconds = false } = this.props;
+
 		switch (activeSection) {
 			case ActiveSection.Hours: {
 				if (this.secondInput && isDefined(hours)) {
@@ -363,21 +361,31 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState>
 						} else {
 							newHours = digit;
 						}
+						this.updateStateTime(newHours, minutes, seconds, periodType);
+						this.setState({
+							activeSection: ActiveSection.Minutes,
+						});
+						this.secondInput = false;
 					} else {
-						if (hours <= 1) {
+						if (hours < 2) {
 							newHours = Math.min(Number(`${hours}${digit}`), 12);
 						} else {
 							newHours = digit;
 						}
+						this.updateStateTime(newHours, minutes, seconds, periodType);
+						this.setState({
+							activeSection: ActiveSection.Minutes,
+						});
+						this.secondInput = false;
 					}
-					this.updateStateTime(newHours, minutes, seconds, periodType);
-					this.setState({
-						activeSection: ActiveSection.Minutes,
-					});
-					this.secondInput = false;
 				} else {
 					this.updateStateTime(digit, minutes, seconds, periodType);
-					if (digit > 2) {
+					if (digit > 2 && !withPeriodType) {
+						this.setState({
+							activeSection: ActiveSection.Minutes,
+						});
+						this.secondInput = false;
+					} else if (digit > 1 && withPeriodType) {
 						this.setState({
 							activeSection: ActiveSection.Minutes,
 						});
@@ -389,44 +397,60 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState>
 				break;
 			}
 			case ActiveSection.Minutes: {
-				if (this.secondInput && isDefined(minutes)) {
-					const newMinutes = Number(`${minutes >= 10 ? ('' + minutes)[1] : minutes}${digit}`);
-					this.updateStateTime(hours, newMinutes, seconds, periodType);
-					if (this.props.withSeconds) {
-						this.setState({
-							activeSection: ActiveSection.Seconds,
-						});
-					} else if (this.props.withPeriodType) {
-						this.setState({
-							activeSection: ActiveSection.PeriodType,
-						});
+				if (!withSeconds) {
+					let newMinutes;
+					if (this.secondInput) {
+						newMinutes = isDefined(minutes) ? Number(`${minutes % 10}${digit}`) : digit;
+					} else {
+						newMinutes = digit;
+						this.secondInput = true;
 					}
+					this.updateStateTime(hours, newMinutes, seconds, periodType);
 				} else {
-					this.updateStateTime(hours, digit, seconds, periodType);
-					this.secondInput = true;
+					if (this.secondInput && isDefined(minutes)) {
+						const newMinutes = Number(`${minutes}${digit}`);
+						this.updateStateTime(hours, newMinutes, seconds, periodType);
+						if (withSeconds) {
+							this.setState({
+								activeSection: ActiveSection.Seconds,
+							});
+						} else if (withPeriodType) {
+							this.setState({
+								activeSection: ActiveSection.PeriodType,
+							});
+						}
+						this.updateStateTime(hours, newMinutes, seconds, periodType);
+						this.secondInput = false;
+					} else {
+						const newMinutes = digit;
+						if (digit > 5 && (withPeriodType || withSeconds)) {
+							if (withSeconds) {
+								this.setState({
+									activeSection: ActiveSection.Seconds,
+								});
+							} else if (withPeriodType) {
+								this.setState({
+									activeSection: ActiveSection.PeriodType,
+								});
+							}
+							this.secondInput = false;
+						} else {
+							this.secondInput = true;
+						}
+						this.updateStateTime(hours, newMinutes, seconds, periodType);
+					}
 				}
 				break;
 			}
 			case ActiveSection.Seconds: {
-				if (isDefined(seconds)) {
-					const newSeconds = Number(`${seconds >= 10 ? ('' + seconds)[1] : seconds}${digit}`);
-					this.updateStateTime(hours, minutes, newSeconds, periodType);
-					if (this.props.withPeriodType) {
-						if (!this.fourthInput) {
-							this.fourthInput = true;
-						} else {
-							this.setState({
-								activeSection: ActiveSection.PeriodType,
-							});
-							this.fourthInput = false;
-						}
-					}
+				let newSeconds;
+				if (this.secondInput) {
+					newSeconds = isDefined(seconds) ? Number(`${seconds % 10}${digit}`) : digit;
 				} else {
-					this.updateStateTime(hours, minutes, digit, periodType);
-					if (this.props.withPeriodType) {
-						this.fourthInput = true;
-					}
+					newSeconds = digit;
+					this.secondInput = true;
 				}
+				this.updateStateTime(hours, minutes, newSeconds, periodType);
 				break;
 			}
 		}
@@ -497,7 +521,7 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState>
 				onValueChange &&
 					onValueChange({
 						...newValue,
-					} as any);
+					} as TTime);
 			}
 		} else {
 			if (isDefined(this.props.value)) {
@@ -613,8 +637,8 @@ function findActiveSectionOnKeyRight(
 }
 
 function stringToPeriodType(stringedPeriodType?: string): PeriodType {
-	const periodTypeToUpperCase = isDefined(stringedPeriodType) && stringedPeriodType.toLowerCase();
-	switch (periodTypeToUpperCase) {
+	const periodTypeToLowerCase = isDefined(stringedPeriodType) && stringedPeriodType.toLowerCase();
+	switch (periodTypeToLowerCase) {
 		case 'am':
 			return PeriodType.AM;
 		case 'pm':

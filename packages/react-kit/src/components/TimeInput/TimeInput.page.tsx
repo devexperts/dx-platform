@@ -6,6 +6,7 @@ import { Button } from '../Button/Button';
 import { AddIcon } from '../../icons/add-icon';
 import { DecreaseIcon } from '../../icons/decrease-icon';
 import { SmallCrossIcon as ClearIcon } from '../../icons/small-cross-icon';
+import { Component } from 'react';
 
 const time = {
 	hours: 1,
@@ -24,7 +25,7 @@ class TimeInputPage extends React.Component<any, any> {
 	render() {
 		return (
 			<Demo>
-				<input type="time" id="time" />
+				<NativeInput withSeconds={this.props.withSeconds} />
 				<div>
 					<TimeInput
 						withPeriodType={this.props.withPeriodType}
@@ -55,6 +56,22 @@ class TimeInputPage extends React.Component<any, any> {
 			value: null,
 		});
 	};
+}
+
+type TNativeInputProps = {
+	withSeconds: boolean;
+};
+class NativeInput extends Component<TNativeInputProps> {
+	render() {
+		const { withSeconds } = this.props;
+		console.log(withSeconds);
+		return (
+			<>
+				{withSeconds && <input type="time" id="time" step="1" />}
+				{!withSeconds && <input type="time" id="time" />}
+			</>
+		);
+	}
 }
 
 storiesOf('TimeInput', module)
