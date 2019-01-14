@@ -1,18 +1,20 @@
 import * as React from 'react';
 import { storiesOf, action } from '@devexperts/tools/dist/utils/storybook';
-import { TimeInput, TTime } from './TimeInput';
+import { TimeInput } from './TimeInput';
 import { Demo } from '../demo/Demo';
 import { Button } from '../Button/Button';
 import { AddIcon } from '../../icons/add-icon';
 import { DecreaseIcon } from '../../icons/decrease-icon';
 import { SmallCrossIcon as ClearIcon } from '../../icons/small-cross-icon';
 import { Component } from 'react';
+import { some, none } from 'fp-ts/lib/Option';
+import { TTimeOption } from './TimeInput.model';
 
 const time = {
-	hours: 1,
-	minutes: 20,
-	seconds: 35,
-	periodType: 'AM',
+	hours: some(1),
+	minutes: some(20),
+	seconds: some(35),
+	periodType: some('AM'),
 };
 
 const log = action('change');
@@ -44,16 +46,19 @@ class TimeInputPage extends React.Component<any, any> {
 		);
 	}
 
-	onTimeInputChange = (value: TTime | undefined | null) => {
+	onTimeInputChange = (value: TTimeOption) => {
 		log(value);
-		this.setState({
-			value,
-		});
+		this.setState({ value });
 	};
 
 	onClearClick = () => {
 		this.setState({
-			value: null,
+			value: {
+				hours: none,
+				minutes: none,
+				seconds: none,
+				periodType: none,
+			},
 		});
 	};
 }
@@ -64,7 +69,6 @@ type TNativeInputProps = {
 class NativeInput extends Component<TNativeInputProps> {
 	render() {
 		const { withSeconds } = this.props;
-		console.log(withSeconds);
 		return (
 			<>
 				{withSeconds && <input type="time" id="time" step="1" />}
