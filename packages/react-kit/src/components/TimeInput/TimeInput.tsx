@@ -105,14 +105,7 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputStateO
 	private formatDigitOption(time: Option<string | number>, section: Section): string {
 		return time.foldL(
 			() => {
-				switch (section) {
-					case Section.PeriodType: {
-						return 'am';
-					}
-					default: {
-						return '--';
-					}
-				}
+				return '--';
 			},
 			value => {
 				switch (section) {
@@ -131,7 +124,7 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputStateO
 						return `${value}`;
 					}
 					case Section.PeriodType: {
-						return periodTypeToString(value as string);
+						return `${value}`;
 					}
 				}
 			},
@@ -163,7 +156,6 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputStateO
 				activeSection: Section.Minutes,
 			});
 			this.secondInput = false;
-			// this.correctTime();
 			this.correctTime();
 		}
 	};
@@ -544,18 +536,6 @@ function findActiveSectionOnKeyRight(
 		}
 		default:
 			return Section.Hours;
-	}
-}
-
-function periodTypeToString(periodType: string): string {
-	const periodTypeNormalized = periodType.toLowerCase();
-	switch (periodTypeNormalized) {
-		case 'am':
-			return 'am';
-		case 'pm':
-			return 'pm';
-		default:
-			return 'am';
 	}
 }
 

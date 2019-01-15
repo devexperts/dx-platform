@@ -14,7 +14,7 @@ const time = {
 	hours: some(1),
 	minutes: some(20),
 	seconds: some(35),
-	periodType: some('AM'),
+	periodType: some('am'),
 };
 
 const log = action('change');
