@@ -6,6 +6,7 @@ import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { ComponentClass } from 'react';
 import { Input, TInputProps } from '../input/Input';
 import { withDefaults } from '../../utils/with-defaults';
+import { fromNullable } from 'fp-ts/lib/Option';
 
 export const NUMERIC_STEPPER = Symbol('NumericStepper') as symbol;
 
@@ -151,9 +152,14 @@ class RawNumericStepper extends React.Component<TNumericStepperFullProps, TNumer
 			return;
 		}
 		if (this.state.isFocused) {
+			const { onValueChange } = this.props;
+			const newValue = this.parseValue(fromNullable(value).getOrElse(''));
+
 			this.setState({
-				displayedValue: value,
+				displayedValue: this.formatValue(newValue),
 			});
+
+			onValueChange && onValueChange(newValue);
 		}
 	};
 

@@ -31,6 +31,8 @@ export class EntityStore<L = never, A = never> {
 		shareReplay(1),
 	);
 
+	readonly keys$ = this.cache.keys$;
+
 	get(key: string, get: () => LiveData<L, A>): LiveData<L, A> {
 		let sharedGetter: Observable<RemoteData<L, A>> | undefined = this.cachedStreams.get(key);
 
