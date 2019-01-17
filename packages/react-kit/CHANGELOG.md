@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="0.23.1"></a>
+## [0.23.1](https://github.com/devex-web-frontend/dx-platform/compare/v0.23.0...v0.23.1) (2019-01-17)
+
+
+### Bug Fixes
+
+* **react-kit, rx-utils:** run parseValue and formatValue in NumericStepper, expose keys$ in EntityStore ([e06bc7c](https://github.com/devex-web-frontend/dx-platform/commit/e06bc7c))
+
+
+
+
 <a name="0.23.0"></a>
 # [0.23.0](https://github.com/devex-web-frontend/dx-platform/compare/v0.19.2...v0.23.0) (2018-12-18)
 
