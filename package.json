@@ -16,9 +16,9 @@
     "prettier": "prettier --list-different \"./packages/**/src/**/*.{ts,tsx}\"",
     "prettier:fix": "prettier --write \"./packages/**/src/**/*.{ts,tsx}\"",
     "tslint": "tslint -c tslint.json --project tsconfig.json './packages/*/src/**/*.ts' './packages/*/src/**/*.tsx'",
-    "publish:patch": "yarn lerna publish --cd-version patch --force-publish=*",
-    "publish:minor": "yarn lerna publish --cd-version minor --force-publish=*",
-    "publish:major": "yarn lerna publish --cd-version major --force-publish=*"
+    "publish:patch": "yarn lerna publish patch --force-publish=*",
+    "publish:minor": "yarn lerna publish minor --force-publish=*",
+    "publish:major": "yarn lerna publish major --force-publish=*"
   },
   "private": true,
   "workspaces": ["packages/*"],
@@ -66,7 +66,7 @@
     "@types/jest": "^23.0.0",
     "babel-core": "^6.26.3",
     "jest": "^23.1.0",
-    "lerna": "^2.5.1",
+    "lerna": "^3.10.5",
     "prettier": "1.12.1",
     "ts-jest": "^22.4.6",
     "tslint": "^5.11.0",
