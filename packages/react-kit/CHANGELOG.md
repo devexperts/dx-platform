@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="0.23.5"></a>
+## [0.23.5](https://github.com/devex-web-frontend/dx-platform/compare/v0.23.4...v0.23.5) (2019-01-18)
+
+
+
+
+**Note:** Version bump only for package @devexperts/react-kit
+
 <a name="0.23.4"></a>
 ## [0.23.4](https://github.com/devex-web-frontend/dx-platform/compare/v0.23.3...v0.23.4) (2019-01-18)
 
