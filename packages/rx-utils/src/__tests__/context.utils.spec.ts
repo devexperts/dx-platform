@@ -1,18 +1,9 @@
 import { Context, deferContext } from '../context.utils';
 import { Sink } from '../sink.utils';
-import { TestScheduler } from 'rxjs/testing';
 import { of } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
 describe('Context', () => {
-	let scheduler: TestScheduler;
-	beforeEach(() => {
-		scheduler = new TestScheduler((a, b) => expect(a).toEqual(b));
-	});
-	afterEach(() => {
-		scheduler.flush();
-	});
-
 	describe('deferContext', () => {
 		type E = { foo: string; bar: number };
 		const cb = jest.fn();
