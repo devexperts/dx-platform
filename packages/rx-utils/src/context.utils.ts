@@ -9,7 +9,7 @@ import {
 	ProductLeft,
 	productMapLeft,
 } from '@devexperts/utils/dist/typeclasses/product-left-coproduct-left/product-left-coproduct-left.utils';
-import { defer, MonadReader } from '@devexperts/utils/dist/typeclasses/monad-reader/monad-reader.utils';
+import { Omit } from 'typelevel-ts';
 
 export const URI = 'Context';
 export type URI = typeof URI;
@@ -49,23 +49,24 @@ const chain = <E, A, B>(fa: Context<E, A>, f: (a: A) => Context<E, B>): Context<
 
 export const asks = <E, A>(f: (e: E) => A): Context<E, A> => new Context(e => new Sink(f(e)));
 export const ask = <E>(): Context<E, E> => asks(identity);
-const runReader = <E, A>(fa: Context<E, A>, e: E) => fa.run(e).value;
 const productLeft = <EA, A, EB, B>(fa: Context<EA, A>, fb: Context<EB, B>): Context<EA & EB, [A, B]> =>
 	new Context(e => sequenceTSink(fa.run(e), fb.run(e)));
 
-export const context: Monad2<URI> & MonadReader<URI> & ProductLeft<URI> = {
+export const context: Monad2<URI> & ProductLeft<URI> = {
 	URI,
 	of,
 	map,
 	ap,
 	chain,
-	asks,
-	runReader,
 	productLeft,
 };
 
 export const combineContext = productMapLeft(context);
-export const deferContext = defer(context);
+export const deferContext = <E extends object, A, K extends keyof E>(
+	fa: Context<E, A>,
+	...keys: K[]
+): Context<Omit<E, K>, Context<Pick<E, K>, A>> =>
+	new Context(outerE => new Sink(new Context(innerE => fa.run(Object.assign({}, outerE, innerE) as E))));
 export const sequenceContext = array.sequence(context);
 export const sequenceTContext = sequenceT(context);
 
