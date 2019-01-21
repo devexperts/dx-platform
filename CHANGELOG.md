@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.24.0](https://github.com/devex-web-frontend/dx-platform/compare/v0.23.6...v0.24.0) (2019-01-21)
+
+
+### Bug Fixes
+
+* **rx-utils:** fix deferContext ([83d431d](https://github.com/devex-web-frontend/dx-platform/commit/83d431d))
+
+
+### BREAKING CHANGES
+
+* **rx-utils:** removed instance of MonadReader for Context
+
+
+
+
+
 ## [0.23.6](https://github.com/devex-web-frontend/dx-platform/compare/v0.23.3...v0.23.6) (2019-01-18)
 
 **Note:** Version bump only for package @devexperts/platform
