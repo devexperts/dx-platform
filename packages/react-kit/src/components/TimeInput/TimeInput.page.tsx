@@ -6,15 +6,14 @@ import { Button } from '../Button/Button';
 import { AddIcon } from '../../icons/add-icon';
 import { DecreaseIcon } from '../../icons/decrease-icon';
 import { SmallCrossIcon as ClearIcon } from '../../icons/small-cross-icon';
-import { Component } from 'react';
 import { some, none } from 'fp-ts/lib/Option';
-import { TTimeOption } from './TimeInput.model';
+import { PeriodType, TTimeOption } from './TimeInput.model';
 
 const time = {
 	hours: some(1),
 	minutes: some(20),
 	seconds: some(35),
-	periodType: some('am'),
+	periodType: some(PeriodType.AM),
 };
 
 const log = action('change');
@@ -25,9 +24,11 @@ class TimeInputPage extends React.Component<any, any> {
 	};
 
 	render() {
+		const { withSeconds } = this.props;
 		return (
 			<Demo>
-				<NativeInput withSeconds={this.props.withSeconds} />
+				{withSeconds && <input type="time" id="time" step="1" />}
+				{!withSeconds && <input type="time" id="time" />}
 				<div>
 					<TimeInput
 						withPeriodType={this.props.withPeriodType}
@@ -61,21 +62,6 @@ class TimeInputPage extends React.Component<any, any> {
 			},
 		});
 	};
-}
-
-type TNativeInputProps = {
-	withSeconds: boolean;
-};
-class NativeInput extends Component<TNativeInputProps> {
-	render() {
-		const { withSeconds } = this.props;
-		return (
-			<>
-				{withSeconds && <input type="time" id="time" step="1" />}
-				{!withSeconds && <input type="time" id="time" />}
-			</>
-		);
-	}
 }
 
 storiesOf('TimeInput', module)

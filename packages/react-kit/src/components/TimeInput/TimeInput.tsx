@@ -1,15 +1,22 @@
 import * as React from 'react';
+import { ComponentClass, Fragment } from 'react';
 import { PURE } from '../../utils/pure';
-import { ComponentClass } from 'react';
-import { TControlProps, KeyCode, KEY_CODE_NUM_MAP, KEY_CODE_LETR_MAP } from '../Control/Control';
+import { KEY_CODE_LETR_MAP, KEY_CODE_NUM_MAP, KeyCode, TControlProps } from '../Control/Control';
 import * as classnames from 'classnames';
 import { withTheme } from '../../utils/withTheme';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { SteppableInput, TSteppableInputProps } from '../SteppableInput/SteppableInput';
 import { withDefaults } from '../../utils/with-defaults';
-import { Fragment } from 'react';
 import { none, Option, some } from 'fp-ts/lib/Option';
-import { isTimesDifferent, Section, TTimeOption } from './TimeInput.model';
+import {
+	EMPTY_SECTION,
+	formatValue,
+	isTimesDifferent,
+	MAX_VALID_MINS_AND_SEC,
+	PeriodType,
+	Section,
+	TTimeOption,
+} from './TimeInput.model';
 
 export const TIME_INPUT = Symbol('TimeInput') as symbol;
 
@@ -32,13 +39,13 @@ export type TTimeInputFullProps = TTimeInputOwnProps & {
 	};
 };
 
-type TTimeInputStateOption = {
+type TTimeInputState = {
 	activeSection?: Section;
 };
 
 @PURE
-class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputStateOption> {
-	readonly state: TTimeInputStateOption = {};
+class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState> {
+	readonly state: TTimeInputState = {};
 	// Helper, which helps to detect order of input in the two-digit field;
 	private secondInput: boolean = false;
 
@@ -47,14 +54,7 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputStateO
 		const { hours, minutes, seconds, periodType } = value;
 		const { withSeconds, withPeriodType } = this.props;
 
-		let onClear;
-		if ((isDefined(value) && value !== null) || hours.isSome() || minutes.isSome()) {
-			onClear = this.onClear;
-		}
-
-		const innerClassName = classnames(theme.inner, {
-			[theme.inner_isFilled as string]: Boolean(value),
-		});
+		const onClear = hours.isSome() || minutes.isSome() ? this.onClear : undefined;
 		return (
 			<SteppableInput
 				isDisabled={isDisabled}
@@ -69,13 +69,13 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputStateO
 				onClear={onClear}
 				onDecrement={this.onDecrement}
 				onIncrement={this.onIncrement}>
-				<div className={innerClassName}>
+				<div className={theme.inner}>
 					<span className={this.getSectionClassName(Section.Hours)} onMouseDown={this.onHoursMouseDown}>
-						{this.formatDigitOption(hours, Section.Hours)}
+						{this.renderSection(hours, Section.Hours)}
 					</span>
 					<span className={theme.separator}>:</span>
 					<span className={this.getSectionClassName(Section.Minutes)} onMouseDown={this.onMinutesMouseDown}>
-						{this.formatDigitOption(minutes, Section.Minutes)}
+						{this.renderSection(minutes, Section.Minutes)}
 					</span>
 					{withSeconds && (
 						<Fragment>
@@ -83,7 +83,7 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputStateO
 							<span
 								className={this.getSectionClassName(Section.Seconds)}
 								onMouseDown={this.onSecondsMouseDown}>
-								{this.formatDigitOption(seconds, Section.Seconds)}
+								{this.renderSection(seconds, Section.Seconds)}
 							</span>
 						</Fragment>
 					)}
@@ -92,8 +92,8 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputStateO
 							&nbsp;
 							<span
 								className={this.getSectionClassName(Section.PeriodType)}
-								onMouseDown={this.onPeriodTypeDown}>
-								{this.formatDigitOption(periodType, Section.PeriodType)}
+								onMouseDown={this.onPeriodTypeMouseDown}>
+								{this.renderSection(periodType, Section.PeriodType)}
 							</span>
 						</Fragment>
 					)}
@@ -102,33 +102,10 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputStateO
 		);
 	}
 
-	private formatDigitOption(time: Option<string | number>, section: Section): string {
-		return time.foldL(
-			() => {
-				return '--';
-			},
-			value => {
-				switch (section) {
-					//maybe we should use left-pad here? ;)
-					case Section.Minutes: //fallthrough
-					case Section.Seconds: {
-						if (value < 10) {
-							return `0${value}`;
-						}
-						return `${value}`;
-					}
-					case Section.Hours: {
-						if (value < 10) {
-							return `0${value}`;
-						}
-						return `${value}`;
-					}
-					case Section.PeriodType: {
-						return `${value}`;
-					}
-				}
-			},
-		);
+	private renderSection(time: Option<string | number>, section: Section): string {
+		return time.fold(EMPTY_SECTION, value => {
+			return formatValue(value, section);
+		});
 	}
 
 	private getSectionClassName = (section: Section): string => {
@@ -146,7 +123,7 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputStateO
 				activeSection: Section.Hours,
 			});
 			this.secondInput = false;
-			this.correctTime();
+			this.correctTimeAndUpdate();
 		}
 	};
 
@@ -156,7 +133,7 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputStateO
 				activeSection: Section.Minutes,
 			});
 			this.secondInput = false;
-			this.correctTime();
+			this.correctTimeAndUpdate();
 		}
 	};
 
@@ -166,11 +143,11 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputStateO
 				activeSection: Section.Seconds,
 			});
 			this.secondInput = false;
-			this.correctTime();
+			this.correctTimeAndUpdate();
 		}
 	};
 
-	private onPeriodTypeDown = (e: React.MouseEvent<HTMLElement>) => {
+	private onPeriodTypeMouseDown = (e: React.MouseEvent<HTMLElement>) => {
 		if (!this.props.isDisabled) {
 			this.setState({
 				activeSection: Section.PeriodType,
@@ -190,7 +167,7 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputStateO
 
 	private onClear = () => {
 		this.secondInput = false;
-		this.updateStateTime(none, none, none, none);
+		this.updateTime(none, none, none, none);
 	};
 
 	private onFocus = (e: React.FocusEvent<HTMLElement>) => {
@@ -204,7 +181,7 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputStateO
 
 	private onBlur = (e: React.FocusEvent<HTMLElement>) => {
 		this.secondInput = false;
-		this.correctTime();
+		this.correctTimeAndUpdate();
 		this.setState({
 			activeSection: undefined,
 		});
@@ -219,7 +196,7 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputStateO
 			case KeyCode.Left: {
 				e.preventDefault(); //block h-scrolling
 				this.secondInput = false;
-				this.correctTime();
+				this.correctTimeAndUpdate();
 				this.setState({
 					activeSection: findActiveSectionOnKeyLeft(activeSection, withSeconds),
 				});
@@ -228,7 +205,7 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputStateO
 			case KeyCode.Right: {
 				e.preventDefault(); //block h-scrolling
 				this.secondInput = false;
-				this.correctTime();
+				this.correctTimeAndUpdate();
 				this.setState({
 					activeSection: findActiveSectionOnKeyRight(activeSection, withSeconds, withPeriodType),
 				});
@@ -239,40 +216,42 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputStateO
 				this.secondInput = false;
 				switch (activeSection) {
 					case Section.Hours: {
-						this.updateStateTime(none, minutes, seconds, periodType);
+						this.updateTime(none, minutes, seconds, periodType);
 						break;
 					}
 					case Section.Minutes: {
-						this.updateStateTime(hours, none, seconds, periodType);
+						this.updateTime(hours, none, seconds, periodType);
 						break;
 					}
 					case Section.Seconds: {
-						this.updateStateTime(hours, minutes, none, periodType);
+						this.updateTime(hours, minutes, none, periodType);
 						break;
 					}
 				}
 				break;
 			}
 			default: {
-				if (isNumber(KEY_CODE_NUM_MAP[e.keyCode])) {
-					this.handleDigitKeyDown(KEY_CODE_NUM_MAP[e.keyCode]);
-				} else if (isString(KEY_CODE_LETR_MAP[e.keyCode])) {
-					this.handleLetterKeyDown(KEY_CODE_LETR_MAP[e.keyCode]);
+				const keyCode = e.keyCode;
+				const number = KEY_CODE_NUM_MAP[keyCode];
+				const letter = KEY_CODE_LETR_MAP[keyCode];
+				if (isDefined(number)) {
+					this.handleDigitKeyDown(number);
+				} else if (isDefined(letter)) {
+					this.handleLetterKeyDown(letter);
 				}
 			}
 		}
 	};
 
 	private handleLetterKeyDown(letter: string) {
-		const { hours, minutes, seconds, periodType } = this.props.value;
+		const { hours, minutes, seconds } = this.props.value;
 		const { activeSection } = this.state;
-		const currentPeriodTypeStringed = periodType.getOrElse('am');
-		if (
-			(activeSection === Section.PeriodType && letter === KEY_CODE_LETR_MAP[KeyCode.LETR_A]) ||
-			(activeSection === Section.PeriodType && letter === KEY_CODE_LETR_MAP[KeyCode.LETR_P])
-		) {
-			const newPeriodType = `${letter.toLowerCase()}${currentPeriodTypeStringed.slice(1)}`;
-			this.updateStateTime(hours, minutes, seconds, some(newPeriodType));
+		if (activeSection === Section.PeriodType) {
+			if (letter === KEY_CODE_LETR_MAP[KeyCode.LETR_A]) {
+				this.updateTime(hours, minutes, seconds, some(PeriodType.AM));
+			} else if (letter === KEY_CODE_LETR_MAP[KeyCode.LETR_P]) {
+				this.updateTime(hours, minutes, seconds, some(PeriodType.PM));
+			}
 		}
 	}
 
@@ -293,7 +272,7 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputStateO
 						} else {
 							newHours = digit;
 						}
-						this.updateStateTime(some(newHours), minutes, seconds, periodType);
+						this.updateTime(some(newHours), minutes, seconds, periodType);
 						this.setState({
 							activeSection: Section.Minutes,
 						});
@@ -304,14 +283,14 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputStateO
 						} else {
 							newHours = digit;
 						}
-						this.updateStateTime(some(newHours), minutes, seconds, periodType);
+						this.updateTime(some(newHours), minutes, seconds, periodType);
 						this.setState({
 							activeSection: Section.Minutes,
 						});
 						this.secondInput = false;
 					}
 				} else {
-					this.updateStateTime(some(digit), minutes, seconds, periodType);
+					this.updateTime(some(digit), minutes, seconds, periodType);
 					if (digit > 2 && !withPeriodType) {
 						this.setState({
 							activeSection: Section.Minutes,
@@ -337,11 +316,11 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputStateO
 						newMinutes = digit;
 						this.secondInput = true;
 					}
-					this.updateStateTime(hours, some(newMinutes), seconds, periodType);
+					this.updateTime(hours, some(newMinutes), seconds, periodType);
 				} else {
 					if (this.secondInput && minutes.isSome()) {
 						const newMinutes = Number(`${minutes.value}${digit}`);
-						this.updateStateTime(hours, some(newMinutes), seconds, periodType);
+						this.updateTime(hours, some(newMinutes), seconds, periodType);
 						if (withSeconds) {
 							this.setState({
 								activeSection: Section.Seconds,
@@ -351,7 +330,7 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputStateO
 								activeSection: Section.PeriodType,
 							});
 						}
-						this.updateStateTime(hours, some(newMinutes), seconds, periodType);
+						this.updateTime(hours, some(newMinutes), seconds, periodType);
 						this.secondInput = false;
 					} else {
 						const newMinutes = digit;
@@ -369,7 +348,7 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputStateO
 						} else {
 							this.secondInput = true;
 						}
-						this.updateStateTime(hours, some(newMinutes), seconds, periodType);
+						this.updateTime(hours, some(newMinutes), seconds, periodType);
 					}
 				}
 				break;
@@ -382,7 +361,7 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputStateO
 					newSeconds = digit;
 					this.secondInput = true;
 				}
-				this.updateStateTime(hours, minutes, some(newSeconds), periodType);
+				this.updateTime(hours, minutes, some(newSeconds), periodType);
 				break;
 			}
 		}
@@ -395,32 +374,32 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputStateO
 		switch (activeSection) {
 			case Section.Hours: {
 				if (withPeriodType) {
-					this.updateStateTime(add(hours, amount, 12), minutes, seconds, periodType);
+					this.updateTime(add(hours, amount, 12), minutes, seconds, periodType);
 				} else {
-					this.updateStateTime(add(hours, amount, 23), minutes, seconds, periodType);
+					this.updateTime(add(hours, amount, 23), minutes, seconds, periodType);
 				}
 				break;
 			}
 			case Section.Minutes: {
-				this.updateStateTime(hours, add(minutes, amount, 59), seconds, periodType);
+				this.updateTime(hours, add(minutes, amount, MAX_VALID_MINS_AND_SEC), seconds, periodType);
 				break;
 			}
 			case Section.Seconds: {
-				this.updateStateTime(hours, minutes, add(seconds, amount, 59), periodType);
+				this.updateTime(hours, minutes, add(seconds, amount, MAX_VALID_MINS_AND_SEC), periodType);
 				break;
 			}
 			case Section.PeriodType: {
-				this.updateStateTime(hours, minutes, seconds, togglePeriodType(periodType));
+				this.updateTime(hours, minutes, seconds, togglePeriodType(periodType));
 				break;
 			}
 		}
 	}
 
-	private updateStateTime(
+	private updateTime(
 		newHours: Option<number>,
 		newMinutes: Option<number>,
 		newSeconds: Option<number>,
-		newPeriodType: Option<string>,
+		newPeriodType: Option<PeriodType>,
 	): void {
 		const { onValueChange, value } = this.props;
 		const { hours, minutes, seconds, periodType } = value;
@@ -447,15 +426,15 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputStateO
 			});
 	}
 
-	private correctTime() {
+	private correctTimeAndUpdate() {
 		const { minutes, hours, seconds, periodType } = this.props.value;
 
-		const isMinutesInvalid = minutes.map(min => min >= 60);
-		const isSecondsInvalid = seconds.map(sec => sec >= 60);
+		const isMinutesInvalid = minutes.map(min => min > MAX_VALID_MINS_AND_SEC);
+		const isSecondsInvalid = seconds.map(sec => sec > MAX_VALID_MINS_AND_SEC);
 		if (isMinutesInvalid.toNullable() || isSecondsInvalid.toNullable()) {
-			const correctedMinutes = isMinutesInvalid.toNullable() ? some(59) : minutes;
-			const correctedSeconds = isSecondsInvalid.toNullable() ? some(59) : seconds;
-			this.updateStateTime(hours, correctedMinutes, correctedSeconds, periodType);
+			const correctedMinutes = isMinutesInvalid.toNullable() ? some(MAX_VALID_MINS_AND_SEC) : minutes;
+			const correctedSeconds = isSecondsInvalid.toNullable() ? some(MAX_VALID_MINS_AND_SEC) : seconds;
+			this.updateTime(hours, correctedMinutes, correctedSeconds, periodType);
 		}
 	}
 }
@@ -471,27 +450,16 @@ export const TimeInput: ComponentClass<TTimeInputProps> = withTheme(TIME_INPUT)(
  * Values can be zeros (start from 0). Max is included value.
  */
 function add(a: Option<number>, b: number, max: number): Option<number> {
-	if (a.isNone()) {
-		return some(b < 0 ? max : 0);
-	} else {
-		let result = (a.value + b) % (max + 1);
-		if (result < 0) {
-			result += max + 1;
-		}
-		return some(result);
-	}
+	return a
+		.map(a => {
+			const rawResult = (a + b) % (max + 1);
+			return rawResult < 0 ? rawResult + max + 1 : rawResult;
+		})
+		.alt(some(b < 0 ? max : 0));
 }
 
 function isDefined<A>(value?: A): value is A {
 	return typeof value !== 'undefined';
-}
-
-function isNumber<A>(val: A | number): val is number {
-	return typeof val === 'number' && !isNaN(val) && isFinite(val);
-}
-
-function isString<A>(val: A | string): val is string {
-	return typeof val === 'string';
 }
 
 function findActiveSectionOnKeyLeft(activeState?: Section, isSecondsExist?: boolean): Section {
@@ -539,14 +507,14 @@ function findActiveSectionOnKeyRight(
 	}
 }
 
-function togglePeriodType(periodType: Option<string>): Option<string> {
-	const periodTypeNormalized = periodType.getOrElse('am').toLowerCase();
+function togglePeriodType(periodType: Option<PeriodType>): Option<PeriodType> {
+	const periodTypeNormalized = periodType.getOrElse(PeriodType.AM);
 	switch (periodTypeNormalized) {
-		case 'am':
-			return some('pm');
-		case 'pm':
-			return some('am');
+		case PeriodType.AM:
+			return some(PeriodType.PM);
+		case PeriodType.PM:
+			return some(PeriodType.AM);
 		default:
-			return some('am');
+			return some(PeriodType.AM);
 	}
 }
