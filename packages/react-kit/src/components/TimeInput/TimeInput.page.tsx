@@ -7,7 +7,7 @@ import { AddIcon } from '../../icons/add-icon';
 import { DecreaseIcon } from '../../icons/decrease-icon';
 import { SmallCrossIcon as ClearIcon } from '../../icons/small-cross-icon';
 import { some, none } from 'fp-ts/lib/Option';
-import { PeriodType, TTimeOption } from './TimeInput.model';
+import { PeriodType, TTimeInputValue } from './TimeInput.model';
 
 const time = {
 	hours: some(1),
@@ -47,7 +47,7 @@ class TimeInputPage extends React.Component<any, any> {
 		);
 	}
 
-	onTimeInputChange = (value: TTimeOption) => {
+	onTimeInputChange = (value: TTimeInputValue) => {
 		log(value);
 		this.setState({ value });
 	};

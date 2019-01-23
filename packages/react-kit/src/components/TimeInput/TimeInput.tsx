@@ -12,10 +12,12 @@ import {
 	EMPTY_SECTION,
 	formatValue,
 	isTimesDifferent,
+	MAX_VALID_HOURS_FOR_12H_FORMAT,
+	MAX_VALID_HOURS_FOR_24H_FORMAT,
 	MAX_VALID_MINS_AND_SEC,
 	PeriodType,
 	Section,
-	TTimeOption,
+	TTimeInputValue,
 } from './TimeInput.model';
 
 export const TIME_INPUT = Symbol('TimeInput') as symbol;
@@ -25,7 +27,7 @@ type TTimeInputConfig = {
 	withPeriodType?: boolean;
 };
 
-export type TTimeInputOwnProps = TTimeInputConfig & TSteppableInputProps & TControlProps<TTimeOption>;
+export type TTimeInputOwnProps = TTimeInputConfig & TSteppableInputProps & TControlProps<TTimeInputValue>;
 
 export type TTimeInputFullProps = TTimeInputOwnProps & {
 	SteppableInput: React.ComponentClass<TSteppableInputProps> | React.SFC<TSteppableInputProps>;
@@ -102,7 +104,7 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState>
 		);
 	}
 
-	private renderSection(time: Option<string | number>, section: Section): string {
+	private renderSection(time: Option<number>, section: Section): string {
 		return time.fold(EMPTY_SECTION, value => {
 			return formatValue(value, section);
 		});
@@ -152,6 +154,8 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState>
 			this.setState({
 				activeSection: Section.PeriodType,
 			});
+			this.secondInput = false;
+			this.correctTimeAndUpdate();
 		}
 	};
 
@@ -268,7 +272,7 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState>
 						if (hours.value < 2) {
 							newHours = Number(`${hours.value}${digit}`);
 						} else if (hours.value === 2) {
-							newHours = Math.min(Number(`${hours.value}${digit}`), 23);
+							newHours = Math.min(Number(`${hours.value}${digit}`), MAX_VALID_HOURS_FOR_24H_FORMAT);
 						} else {
 							newHours = digit;
 						}
@@ -279,7 +283,7 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState>
 						this.secondInput = false;
 					} else {
 						if (hours.value < 2) {
-							newHours = Math.min(Number(`${hours.value}${digit}`), 12);
+							newHours = Math.min(Number(`${hours.value}${digit}`), MAX_VALID_HOURS_FOR_12H_FORMAT);
 						} else {
 							newHours = digit;
 						}
@@ -374,9 +378,9 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState>
 		switch (activeSection) {
 			case Section.Hours: {
 				if (withPeriodType) {
-					this.updateTime(add(hours, amount, 12), minutes, seconds, periodType);
+					this.updateTime(add(hours, amount, MAX_VALID_HOURS_FOR_12H_FORMAT), minutes, seconds, periodType);
 				} else {
-					this.updateTime(add(hours, amount, 23), minutes, seconds, periodType);
+					this.updateTime(add(hours, amount, MAX_VALID_HOURS_FOR_24H_FORMAT), minutes, seconds, periodType);
 				}
 				break;
 			}
@@ -513,8 +517,6 @@ function togglePeriodType(periodType: Option<PeriodType>): Option<PeriodType> {
 		case PeriodType.AM:
 			return some(PeriodType.PM);
 		case PeriodType.PM:
-			return some(PeriodType.AM);
-		default:
 			return some(PeriodType.AM);
 	}
 }
