@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.25.0](https://github.com/devex-web-frontend/dx-platform/compare/v0.24.0...v0.25.0) (2019-01-23)
+
+
+### Bug Fixes
+
+* **rx-utils:** fix combineContext to subscribe to Sink returned fromo project ([#109](https://github.com/devex-web-frontend/dx-platform/issues/109)) ([143b9f2](https://github.com/devex-web-frontend/dx-platform/commit/143b9f2))
+
+
+### BREAKING CHANGES
+
+* **rx-utils:** Context is not a ProductLeft anymore
+
+
+
+
+
 # [0.24.0](https://github.com/devex-web-frontend/dx-platform/compare/v0.23.6...v0.24.0) (2019-01-21)
 
 
