@@ -1,14 +1,10 @@
-import { sequenceTSink, sink, Sink } from './sink.utils';
+import { sink, Sink } from './sink.utils';
 import { getReaderT } from 'fp-ts/lib/ReaderT';
 import { Monad2 } from 'fp-ts/lib/Monad';
 import { array } from 'fp-ts/lib/Array';
 import { identity } from 'fp-ts/lib/function';
 import { Reader } from 'fp-ts/lib/Reader';
 import { sequenceT } from 'fp-ts/lib/Apply';
-import {
-	ProductLeft,
-	productMapLeft,
-} from '@devexperts/utils/dist/typeclasses/product-left-coproduct-left/product-left-coproduct-left.utils';
 import { Omit } from 'typelevel-ts';
 
 export const URI = 'Context';
@@ -49,19 +45,15 @@ const chain = <E, A, B>(fa: Context<E, A>, f: (a: A) => Context<E, B>): Context<
 
 export const asks = <E, A>(f: (e: E) => A): Context<E, A> => new Context(e => new Sink(f(e)));
 export const ask = <E>(): Context<E, E> => asks(identity);
-const productLeft = <EA, A, EB, B>(fa: Context<EA, A>, fb: Context<EB, B>): Context<EA & EB, [A, B]> =>
-	new Context(e => sequenceTSink(fa.run(e), fb.run(e)));
 
-export const context: Monad2<URI> & ProductLeft<URI> = {
+export const context: Monad2<URI> = {
 	URI,
 	of,
 	map,
 	ap,
 	chain,
-	productLeft,
 };
 
-export const combineContext = productMapLeft(context);
 export const deferContext = <E extends object, A, K extends keyof E>(
 	fa: Context<E, A>,
 	...keys: K[]
@@ -74,3 +66,119 @@ export const fromReader = <E, A>(r: Reader<E, A>): Context<E, A> => new Context(
 
 export type ContextEnvType<C extends Context<any, any>> = C extends Context<infer E, infer A> ? E : never;
 export type ContextValueType<C extends Context<any, any>> = C extends Context<infer E, infer A> ? A : never;
+
+export interface CombineContext {
+	<E, A, R>(a: Context<E, A>, project: (a: A) => R | Sink<R>): Context<E, R>;
+	<EA, A, EB, B, R>(a: Context<EA, A>, b: Context<EB, B>, project: (a: A, b: B) => R | Sink<R>): Context<EA & EB, R>;
+	<EA, A, EB, B, EC, C, R>(
+		a: Context<EA, A>,
+		b: Context<EB, B>,
+		C: Context<EC, C>,
+		project: (a: A, b: B, c: C) => R | Sink<R>,
+	): Context<EA & EB & EC, R>;
+	<EA, A, EB, B, EC, C, ED, D, R>(
+		a: Context<EA, A>,
+		b: Context<EB, B>,
+		c: Context<EC, C>,
+		d: Context<ED, D>,
+		project: (a: A, b: B, c: C, d: D) => R | Sink<R>,
+	): Context<EA & EB & EC & ED, R>;
+	<EA, A, EB, B, EC, C, ED, D, EE, E, R>(
+		a: Context<EA, A>,
+		b: Context<EB, B>,
+		c: Context<EC, C>,
+		d: Context<ED, D>,
+		e: Context<EE, E>,
+		project: (a: A, b: B, c: C, d: D, e: E) => R | Sink<R>,
+	): Context<EA & EB & EC & ED & EE, R>;
+	<EA, A, EB, B, EC, C, ED, D, EE, E, R>(
+		a: Context<EA, A>,
+		b: Context<EB, B>,
+		c: Context<EC, C>,
+		d: Context<ED, D>,
+		e: Context<EE, E>,
+		project: (a: A, b: B, c: C, d: D, e: E) => R | Sink<R>,
+	): Context<EA & EB & EC & ED & EE, R>;
+	<EA, A, EB, B, EC, C, ED, D, EE, E, EG, G, R>(
+		a: Context<EA, A>,
+		b: Context<EB, B>,
+		c: Context<EC, C>,
+		d: Context<ED, D>,
+		e: Context<EE, E>,
+		g: Context<EG, G>,
+		project: (a: A, b: B, c: C, d: D, e: E, g: G) => R | Sink<R>,
+	): Context<EA & EB & EC & ED & EE & EG, R>;
+	<EA, A, EB, B, EC, C, ED, D, EE, E, EG, G, EH, H, R>(
+		a: Context<EA, A>,
+		b: Context<EB, B>,
+		c: Context<EC, C>,
+		d: Context<ED, D>,
+		e: Context<EE, E>,
+		g: Context<EG, G>,
+		h: Context<EH, H>,
+		project: (a: A, b: B, c: C, d: D, e: E, g: G, h: H) => R | Sink<R>,
+	): Context<EA & EB & EC & ED & EE & EG & EH, R>;
+	<EA, A, EB, B, EC, C, ED, D, EE, E, EG, G, EH, H, EI, I, R>(
+		a: Context<EA, A>,
+		b: Context<EB, B>,
+		c: Context<EC, C>,
+		d: Context<ED, D>,
+		e: Context<EE, E>,
+		g: Context<EG, G>,
+		h: Context<EH, H>,
+		i: Context<EI, I>,
+		project: (a: A, b: B, c: C, d: D, e: E, g: G, h: H, i: I) => R | Sink<R>,
+	): Context<EA & EB & EC & ED & EE & EG & EH & EI, R>;
+	<EA, A, EB, B, EC, C, ED, D, EE, E, EG, G, EH, H, EI, I, EJ, J, R>(
+		a: Context<EA, A>,
+		b: Context<EB, B>,
+		c: Context<EC, C>,
+		d: Context<ED, D>,
+		e: Context<EE, E>,
+		g: Context<EG, G>,
+		h: Context<EH, H>,
+		i: Context<EI, I>,
+		j: Context<EJ, J>,
+		project: (a: A, b: B, c: C, d: D, e: E, g: G, h: H, i: I, j: J) => R | Sink<R>,
+	): Context<EA & EB & EC & ED & EE & EG & EH & EI & EJ, R>;
+	<EA, A, EB, B, EC, C, ED, D, EE, E, EG, G, EH, H, EI, I, EJ, J, EK, K, R>(
+		a: Context<EA, A>,
+		b: Context<EB, B>,
+		c: Context<EC, C>,
+		d: Context<ED, D>,
+		e: Context<EE, E>,
+		g: Context<EG, G>,
+		h: Context<EH, H>,
+		i: Context<EI, I>,
+		j: Context<EJ, J>,
+		k: Context<EK, K>,
+		project: (a: A, b: B, c: C, d: D, e: E, g: G, h: H, i: I, j: J, k: K) => R | Sink<R>,
+	): Context<EA & EB & EC & ED & EE & EG & EH & EI & EJ & EK, R>;
+	<EA, A, EB, B, EC, C, ED, D, EE, E, EG, G, EH, H, EI, I, EJ, J, EK, K, EL, L, R>(
+		a: Context<EA, A>,
+		b: Context<EB, B>,
+		c: Context<EC, C>,
+		d: Context<ED, D>,
+		e: Context<EE, E>,
+		g: Context<EG, G>,
+		h: Context<EH, H>,
+		i: Context<EI, I>,
+		j: Context<EJ, J>,
+		k: Context<EK, K>,
+		l: Context<EL, L>,
+		project: (a: A, b: B, c: C, d: D, e: E, g: G, h: H, i: I, j: J, k: K, l: L) => R | Sink<R>,
+	): Context<EA & EB & EC & ED & EE & EG & EH & EI & EJ & EK & EL, R>;
+}
+export type ProjectMany<A, R> = (...args: A[]) => R;
+export const combineContext: CombineContext = <E, A, R>(...args: Array<A | ProjectMany<A, R | Sink<R>>>) => {
+	const fas: Context<E, A>[] = args.slice(0, args.length - 1) as any; //typesafe
+	const project: ProjectMany<A, R | Sink<R>> = args[args.length - 1] as any; //typesafe
+	const sequenced: Context<E, A[]> = sequenceContext(fas);
+	return sequenced.chain(
+		as =>
+			new Context(() => {
+				const result = project(...as);
+				return result instanceof Sink ? result : new Sink(result);
+			}),
+	);
+};
