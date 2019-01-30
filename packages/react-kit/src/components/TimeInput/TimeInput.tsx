@@ -9,14 +9,20 @@ import { SteppableInput, TSteppableInputProps } from '../SteppableInput/Steppabl
 import { withDefaults } from '../../utils/with-defaults';
 import { none, Option, some } from 'fp-ts/lib/Option';
 import {
+	add,
 	EMPTY_SECTION,
-	formatValue,
+	findActiveSectionOnKeyLeft,
+	findActiveSectionOnKeyRight,
+	formatNumericValue,
+	formatTimePeriod,
+	isDefined,
 	isTimesDifferent,
 	MAX_VALID_HOURS_FOR_12H_FORMAT,
 	MAX_VALID_HOURS_FOR_24H_FORMAT,
 	MAX_VALID_MINS_AND_SEC,
 	PeriodType,
 	Section,
+	togglePeriodType,
 	TTimeInputValue,
 } from './TimeInput.model';
 
@@ -73,11 +79,11 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState>
 				onIncrement={this.onIncrement}>
 				<div className={theme.inner}>
 					<span className={this.getSectionClassName(Section.Hours)} onMouseDown={this.onHoursMouseDown}>
-						{this.renderSection(hours, Section.Hours)}
+						{this.renderSection(hours.map(hours => formatNumericValue(hours)))}
 					</span>
 					<span className={theme.separator}>:</span>
 					<span className={this.getSectionClassName(Section.Minutes)} onMouseDown={this.onMinutesMouseDown}>
-						{this.renderSection(minutes, Section.Minutes)}
+						{this.renderSection(minutes.map(minutes => formatNumericValue(minutes)))}
 					</span>
 					{withSeconds && (
 						<Fragment>
@@ -85,7 +91,7 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState>
 							<span
 								className={this.getSectionClassName(Section.Seconds)}
 								onMouseDown={this.onSecondsMouseDown}>
-								{this.renderSection(seconds, Section.Seconds)}
+								{this.renderSection(seconds.map(seconds => formatNumericValue(seconds)))}
 							</span>
 						</Fragment>
 					)}
@@ -95,7 +101,7 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState>
 							<span
 								className={this.getSectionClassName(Section.PeriodType)}
 								onMouseDown={this.onPeriodTypeMouseDown}>
-								{this.renderSection(periodType, Section.PeriodType)}
+								{this.renderSection(periodType.map(periodType => formatTimePeriod(periodType)))}
 							</span>
 						</Fragment>
 					)}
@@ -104,10 +110,8 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState>
 		);
 	}
 
-	private renderSection(time: Option<number>, section: Section): string {
-		return time.fold(EMPTY_SECTION, value => {
-			return formatValue(value, section);
-		});
+	private renderSection(time: Option<string>): string {
+		return time.getOrElse(EMPTY_SECTION);
 	}
 
 	private getSectionClassName = (section: Section): string => {
@@ -449,74 +453,3 @@ export const TimeInput: ComponentClass<TTimeInputProps> = withTheme(TIME_INPUT)(
 		SteppableInput,
 	})(RawTimeInput),
 );
-
-/**
- * Values can be zeros (start from 0). Max is included value.
- */
-function add(a: Option<number>, b: number, max: number): Option<number> {
-	return a
-		.map(a => {
-			const rawResult = (a + b) % (max + 1);
-			return rawResult < 0 ? rawResult + max + 1 : rawResult;
-		})
-		.alt(some(b < 0 ? max : 0));
-}
-
-function isDefined<A>(value?: A): value is A {
-	return typeof value !== 'undefined';
-}
-
-function findActiveSectionOnKeyLeft(activeState?: Section, isSecondsExist?: boolean): Section {
-	switch (activeState) {
-		case Section.PeriodType: {
-			return isSecondsExist ? Section.Seconds : Section.Minutes;
-		}
-		case Section.Seconds: {
-			return Section.Minutes;
-		}
-		case Section.Minutes: {
-			return Section.Hours;
-		}
-		default:
-			return Section.Hours;
-	}
-}
-
-function findActiveSectionOnKeyRight(
-	activeSection?: Section,
-	isSecondsExist?: boolean,
-	isClockFormatExist?: boolean,
-): Section {
-	switch (activeSection) {
-		case Section.Hours: {
-			return Section.Minutes;
-		}
-		case Section.Minutes: {
-			if (isSecondsExist) {
-				return Section.Seconds;
-			} else if (isClockFormatExist) {
-				return Section.PeriodType;
-			} else {
-				return Section.Minutes;
-			}
-		}
-		case Section.Seconds: {
-			return isClockFormatExist ? Section.PeriodType : Section.Seconds;
-		}
-		case Section.PeriodType: {
-			return Section.PeriodType;
-		}
-		default:
-			return Section.Hours;
-	}
-}
-
-function togglePeriodType(periodType: Option<PeriodType>): Option<PeriodType> {
-	const periodTypeNormalized = periodType.getOrElse(PeriodType.AM);
-	switch (periodTypeNormalized) {
-		case PeriodType.AM:
-			return some(PeriodType.PM);
-		case PeriodType.PM:
-			return some(PeriodType.AM);
-	}
-}

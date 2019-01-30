@@ -42,7 +42,6 @@ export enum KeyCode {
 	NUM8 = 104,
 	NUM9 = 105,
 	LETR_A = 65,
-	LETR_M = 77,
 	LETR_P = 80,
 }
 
