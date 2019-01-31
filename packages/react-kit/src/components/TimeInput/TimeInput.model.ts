@@ -128,3 +128,7 @@ export function togglePeriodType(periodType: Option<PeriodType>): Option<PeriodT
 			return some(PeriodType.AM);
 	}
 }
+
+export const renderSection = (time: Option<string>): string => {
+	return time.getOrElse(EMPTY_SECTION);
+};

@@ -10,19 +10,19 @@ import { withDefaults } from '../../utils/with-defaults';
 import { none, Option, some } from 'fp-ts/lib/Option';
 import {
 	add,
-	EMPTY_SECTION,
 	findActiveSectionOnKeyLeft,
 	findActiveSectionOnKeyRight,
 	formatNumericValue,
 	formatTimePeriod,
 	isDefined,
 	isTimesDifferent,
+	togglePeriodType,
+	renderSection,
 	MAX_VALID_HOURS_FOR_12H_FORMAT,
 	MAX_VALID_HOURS_FOR_24H_FORMAT,
 	MAX_VALID_MINS_AND_SEC,
 	PeriodType,
 	Section,
-	togglePeriodType,
 	TTimeInputValue,
 } from './TimeInput.model';
 
@@ -79,11 +79,11 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState>
 				onIncrement={this.onIncrement}>
 				<div className={theme.inner}>
 					<span className={this.getSectionClassName(Section.Hours)} onMouseDown={this.onHoursMouseDown}>
-						{this.renderSection(hours.map(hours => formatNumericValue(hours)))}
+						{renderSection(hours.map(hours => formatNumericValue(hours)))}
 					</span>
 					<span className={theme.separator}>:</span>
 					<span className={this.getSectionClassName(Section.Minutes)} onMouseDown={this.onMinutesMouseDown}>
-						{this.renderSection(minutes.map(minutes => formatNumericValue(minutes)))}
+						{renderSection(minutes.map(minutes => formatNumericValue(minutes)))}
 					</span>
 					{withSeconds && (
 						<Fragment>
@@ -91,7 +91,7 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState>
 							<span
 								className={this.getSectionClassName(Section.Seconds)}
 								onMouseDown={this.onSecondsMouseDown}>
-								{this.renderSection(seconds.map(seconds => formatNumericValue(seconds)))}
+								{renderSection(seconds.map(seconds => formatNumericValue(seconds)))}
 							</span>
 						</Fragment>
 					)}
@@ -101,17 +101,13 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState>
 							<span
 								className={this.getSectionClassName(Section.PeriodType)}
 								onMouseDown={this.onPeriodTypeMouseDown}>
-								{this.renderSection(periodType.map(periodType => formatTimePeriod(periodType)))}
+								{renderSection(periodType.map(periodType => formatTimePeriod(periodType)))}
 							</span>
 						</Fragment>
 					)}
 				</div>
 			</SteppableInput>
 		);
-	}
-
-	private renderSection(time: Option<string>): string {
-		return time.getOrElse(EMPTY_SECTION);
 	}
 
 	private getSectionClassName = (section: Section): string => {
@@ -123,7 +119,7 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState>
 		});
 	};
 
-	private onHoursMouseDown = (e: React.MouseEvent<HTMLElement>) => {
+	private onHoursMouseDown = () => {
 		if (!this.props.isDisabled) {
 			this.setState({
 				activeSection: Section.Hours,
@@ -133,7 +129,7 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState>
 		}
 	};
 
-	private onMinutesMouseDown = (e: React.MouseEvent<HTMLElement>) => {
+	private onMinutesMouseDown = () => {
 		if (!this.props.isDisabled) {
 			this.setState({
 				activeSection: Section.Minutes,
@@ -143,7 +139,7 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState>
 		}
 	};
 
-	private onSecondsMouseDown = (e: React.MouseEvent<HTMLElement>) => {
+	private onSecondsMouseDown = () => {
 		if (!this.props.isDisabled) {
 			this.setState({
 				activeSection: Section.Seconds,
@@ -153,7 +149,7 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState>
 		}
 	};
 
-	private onPeriodTypeMouseDown = (e: React.MouseEvent<HTMLElement>) => {
+	private onPeriodTypeMouseDown = () => {
 		if (!this.props.isDisabled) {
 			this.setState({
 				activeSection: Section.PeriodType,
@@ -178,7 +174,7 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState>
 		this.updateTime(none, none, none, none);
 	};
 
-	private onFocus = (e: React.FocusEvent<HTMLElement>) => {
+	private onFocus = () => {
 		this.secondInput = false;
 		if (!isDefined(this.state.activeSection)) {
 			this.setState({
@@ -187,7 +183,7 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState>
 		}
 	};
 
-	private onBlur = (e: React.FocusEvent<HTMLElement>) => {
+	private onBlur = () => {
 		this.secondInput = false;
 		this.correctTimeAndUpdate();
 		this.setState({
