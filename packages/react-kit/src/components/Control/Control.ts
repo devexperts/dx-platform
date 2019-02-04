@@ -41,6 +41,8 @@ export enum KeyCode {
 	NUM7 = 103,
 	NUM8 = 104,
 	NUM9 = 105,
+	LETR_A = 65,
+	LETR_P = 80,
 }
 
 export const KEY_CODE_NUM_MAP: { [code: number]: number } = {
@@ -64,6 +66,11 @@ export const KEY_CODE_NUM_MAP: { [code: number]: number } = {
 	[KeyCode.NUM7]: 7,
 	[KeyCode.NUM8]: 8,
 	[KeyCode.NUM9]: 9,
+};
+
+export const KEY_CODE_LETR_MAP: { [code: number]: string } = {
+	[KeyCode.LETR_A]: 'A',
+	[KeyCode.LETR_P]: 'P',
 };
 
 //tslint:disable max-line-length

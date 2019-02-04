@@ -1,15 +1,19 @@
 import * as React from 'react';
 import { storiesOf, action } from '@devexperts/tools/dist/utils/storybook';
-import { TimeInput, TTime } from './TimeInput';
+import { TimeInput } from './TimeInput';
 import { Demo } from '../demo/Demo';
 import { Button } from '../Button/Button';
 import { AddIcon } from '../../icons/add-icon';
 import { DecreaseIcon } from '../../icons/decrease-icon';
 import { SmallCrossIcon as ClearIcon } from '../../icons/small-cross-icon';
+import { some, none } from 'fp-ts/lib/Option';
+import { PeriodType, TTimeInputValue } from './TimeInput.model';
 
 const time = {
-	hours: 1,
-	minutes: 20,
+	hours: some(1),
+	minutes: some(20),
+	seconds: some(35),
+	periodType: some(PeriodType.AM),
 };
 
 const log = action('change');
@@ -20,11 +24,15 @@ class TimeInputPage extends React.Component<any, any> {
 	};
 
 	render() {
+		const { withSeconds } = this.props;
 		return (
 			<Demo>
-				<input type="time" id="time" />
+				{withSeconds && <input type="time" id="time" step="1" />}
+				{!withSeconds && <input type="time" id="time" />}
 				<div>
 					<TimeInput
+						withPeriodType={this.props.withPeriodType}
+						withSeconds={this.props.withSeconds}
 						decrementIcon={<DecreaseIcon />}
 						isDisabled={this.props.isDisabled}
 						incrementIcon={<AddIcon />}
@@ -39,16 +47,19 @@ class TimeInputPage extends React.Component<any, any> {
 		);
 	}
 
-	onTimeInputChange = (value: TTime | undefined | null) => {
+	onTimeInputChange = (value: TTimeInputValue) => {
 		log(value);
-		this.setState({
-			value,
-		});
+		this.setState({ value });
 	};
 
 	onClearClick = () => {
 		this.setState({
-			value: null,
+			value: {
+				hours: none,
+				minutes: none,
+				seconds: none,
+				periodType: none,
+			},
 		});
 	};
 }
@@ -56,4 +67,7 @@ class TimeInputPage extends React.Component<any, any> {
 storiesOf('TimeInput', module)
 	.add('default', () => <TimeInputPage />)
 	.add('disabled', () => <TimeInputPage isDisabled={true} />)
-	.add('invalid', () => <TimeInputPage error={true} />);
+	.add('invalid', () => <TimeInputPage error={true} />)
+	.add('With seconds only', () => <TimeInputPage withSeconds={true} />)
+	.add('With period type only ', () => <TimeInputPage withPeriodType={true} />)
+	.add('With seconds and period type', () => <TimeInputPage withSeconds={true} withPeriodType={true} />);
