@@ -26,7 +26,7 @@ export class ObservableMap<K, V> {
 	private isInTransaction = false;
 	private hasChanges = false;
 
-	readonly keys$: Observable<K[]> = this.allSubject$.pipe(map(() => Array.from(this.cache.keys())), shareReplay(1));
+	readonly keys$ = new BehaviorSubject<K[]>([]);
 
 	readonly values$: Observable<V[]> = this.allSubject$.pipe(
 		map(() => {
@@ -70,10 +70,14 @@ export class ObservableMap<K, V> {
 
 	set(key: K, value: V): void {
 		this.transaction(() => {
+			const isCachedKey = this.cache.has(key);
 			let cached = this.getOrCreateCached(key);
 			if (cached.hasValue === false) {
 				cached = initializeEntity(cached);
 				this.cache.set(key, cached);
+				if (!isCachedKey) {
+					this.keys$.next(Array.from(this.cache.keys()));
+				}
 			}
 
 			if (cached.subject.getValue() !== value) {
@@ -109,7 +113,11 @@ export class ObservableMap<K, V> {
 
 	delete(key: K): void {
 		this.transaction(() => {
+			const isCachedKey = this.cache.has(key);
 			this.cache.delete(key);
+			if (isCachedKey) {
+				this.keys$.next(Array.from(this.cache.keys()));
+			}
 			this.hasChanges = true;
 		});
 	}
@@ -125,6 +133,7 @@ export class ObservableMap<K, V> {
 	clear(): void {
 		this.transaction(() => {
 			this.cache.clear();
+			this.keys$.next(Array.from(this.cache.keys()));
 			this.hasChanges = true;
 		});
 	}
