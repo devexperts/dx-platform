@@ -92,19 +92,19 @@ class PopupPage extends React.Component {
 		);
 	}
 
-	onToggleClick = (e: any) => {
+	onToggleClick = () => {
 		this.setState({
 			isOpened: !this.state.isOpened,
 		});
 	};
 
-	onIsModalChange = (e: any) => {
+	onIsModalChange = () => {
 		this.setState({
 			isModal: !this.state.isModal,
 		});
 	};
 
-	onCloseOnClickAwayChange = (e: any) => {
+	onCloseOnClickAwayChange = () => {
 		this.setState({
 			shouldCloseOnClickAway: !this.state.shouldCloseOnClickAway,
 		});
