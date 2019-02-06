@@ -4,7 +4,7 @@ import * as classnames from 'classnames';
 import { Component, MouseEventHandler, ReactNode } from 'react';
 import { ReactRef } from '../../utils/typings';
 
-export type TRawPopupUiProps = {
+export type TRawPopupUIProps = {
 	theme: {
 		container?: string;
 		header?: string;
@@ -22,13 +22,13 @@ export type TRawPopupUiProps = {
 	shouldCloseOnClickAway?: boolean;
 };
 
-export type TRawPopupUiFullProps = TRawPopupUiProps & {
+export type TRawPopupUIFullProps = TRawPopupUIProps & {
 	innerRef?: (instance: ReactRef) => void;
 	onBackdropClick: MouseEventHandler<HTMLElement>;
 };
 
 @PURE
-export class PopupUi extends Component<TRawPopupUiFullProps> {
+export class PopupUI extends Component<TRawPopupUIFullProps> {
 	render() {
 		const { theme, header, children, footer, isModal, shouldCloseOnClickAway } = this.props;
 

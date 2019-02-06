@@ -5,16 +5,16 @@ import { Component, MouseEventHandler } from 'react';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { withTheme } from '../../utils/withTheme';
 import { RootClose } from '../RootClose/RootClose';
-import { PopupUi, TRawPopupUiFullProps, TRawPopupUiProps } from './popup.ui.component';
+import { PopupUI, TRawPopupUIFullProps, TRawPopupUIProps } from './popup.ui.component';
 import { ComponentClass } from 'react';
 import { ReactRef } from '../../utils/typings';
 import { withDefaults } from '../../utils/with-defaults';
 
 export const POPUP = Symbol('Popup') as symbol;
 
-export type TFullPopupProps = TRawPopupUiProps & {
+export type TFullPopupProps = TRawPopupUIProps & {
 	onRequestClose?: () => any;
-	PopupUi: ComponentClass<TRawPopupUiFullProps>;
+	PopupUI: ComponentClass<TRawPopupUIFullProps>;
 	container?: Element;
 	isOpened?: boolean;
 };
@@ -45,7 +45,7 @@ class RawPopup extends Component<TFullPopupProps> {
 			children,
 			footer,
 			isModal,
-			PopupUi,
+			PopupUI,
 			isOpened,
 			shouldCloseOnClickAway,
 			onRequestClose,
@@ -60,7 +60,7 @@ class RawPopup extends Component<TFullPopupProps> {
 				onRootClose={onRequestClose}
 				ignoreKeyUp={!shouldCloseOnClickAway}
 				ignoreClick={!shouldCloseOnClickAway || isModal}>
-				<PopupUi
+				<PopupUI
 					theme={theme}
 					isModal={isModal}
 					header={header}
@@ -68,7 +68,7 @@ class RawPopup extends Component<TFullPopupProps> {
 					footer={footer}
 					onBackdropClick={this.handleBackdropClick}>
 					{children}
-				</PopupUi>
+				</PopupUI>
 			</RootClose>
 		);
 
@@ -95,9 +95,9 @@ class RawPopup extends Component<TFullPopupProps> {
 	};
 }
 
-export type TPopupProps = PartialKeys<TFullPopupProps, 'theme' | 'PopupUi'>;
-type Defaults = 'PopupUi';
+export type TPopupProps = PartialKeys<TFullPopupProps, 'theme' | 'PopupUI'>;
+type Defaults = 'PopupUI';
 const defaults = withDefaults<TFullPopupProps, Defaults>({
-	PopupUi,
+	PopupUI,
 });
 export const Popup: ComponentClass<TPopupProps> = withTheme(POPUP)(defaults(RawPopup));
