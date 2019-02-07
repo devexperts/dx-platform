@@ -5,7 +5,7 @@ import { Component, MouseEventHandler } from 'react';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { withTheme } from '../../utils/withTheme';
 import { RootClose } from '../RootClose/RootClose';
-import { PopupUI, TRawPopupUIFullProps, TRawPopupUIProps } from './popup.ui.component';
+import { PopupUI, TRawPopupUIFullProps, TRawPopupUIProps } from './popup-ui.component';
 import { ComponentClass } from 'react';
 import { ReactRef } from '../../utils/typings';
 import { withDefaults } from '../../utils/with-defaults';
