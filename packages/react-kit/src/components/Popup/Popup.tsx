@@ -1,44 +1,31 @@
 import * as React from 'react';
 import { createPortal } from 'react-dom';
 import { PURE } from '../../utils/pure';
-import * as classnames from 'classnames';
-import { Component, MouseEventHandler, ReactNode } from 'react';
+import { Component, MouseEventHandler } from 'react';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { withTheme } from '../../utils/withTheme';
 import { RootClose } from '../RootClose/RootClose';
+import { PopupUI, TRawPopupUIFullProps, TRawPopupUIProps } from './popup-ui.component';
+import { ComponentClass } from 'react';
+import { ReactRef } from '../../utils/typings';
+import { withDefaults } from '../../utils/with-defaults';
 
 export const POPUP = Symbol('Popup') as symbol;
 
-export type TRawPopupProps = {
-	theme: {
-		container?: string;
-		header?: string;
-		body?: string;
-		footer?: string;
-		backdrop?: string;
-		backdrop_isModal?: string;
-		backdrop_closeOnClickAway?: string;
-	};
-	children: ReactNode;
-	header?: ReactNode;
-	footer?: ReactNode;
-
-	isModal?: boolean;
-	isOpened?: boolean;
-
-	shouldCloseOnClickAway?: boolean;
+export type TFullPopupProps = TRawPopupUIProps & {
 	onRequestClose?: () => any;
-
+	PopupUI: ComponentClass<TRawPopupUIFullProps>;
 	container?: Element;
+	isOpened?: boolean;
 };
 
 @PURE
-class RawPopup extends Component<TRawPopupProps> {
-	private backdrop!: Element | null;
+class RawPopup extends Component<TFullPopupProps> {
+	private backdrop: ReactRef<HTMLElement> = null;
 
 	private rootElement: Element;
 
-	constructor(props: TRawPopupProps) {
+	constructor(props: TFullPopupProps) {
 		super(props);
 
 		this.rootElement = document.createElement('div');
@@ -58,6 +45,7 @@ class RawPopup extends Component<TRawPopupProps> {
 			children,
 			footer,
 			isModal,
+			PopupUI,
 			isOpened,
 			shouldCloseOnClickAway,
 			onRequestClose,
@@ -67,28 +55,29 @@ class RawPopup extends Component<TRawPopupProps> {
 			return null;
 		}
 
-		const backdropClassName = classnames(theme.backdrop, {
-			[theme.backdrop_isModal as string]: isModal,
-			[theme.backdrop_closeOnClickAway as string]: shouldCloseOnClickAway,
-		});
-
 		const child = (
 			<RootClose
 				onRootClose={onRequestClose}
 				ignoreKeyUp={!shouldCloseOnClickAway}
 				ignoreClick={!shouldCloseOnClickAway || isModal}>
-				<div className={backdropClassName} ref={el => (this.backdrop = el)} onClick={this.handleBackdropClick}>
-					<div className={theme.container}>
-						{header && <div className={theme.header}>{header}</div>}
-						{<div className={theme.body}>{children}</div>}
-						{footer && <div className={theme.footer}>{footer}</div>}
-					</div>
-				</div>
+				<PopupUI
+					theme={theme}
+					isModal={isModal}
+					header={header}
+					innerRef={this.innerRef}
+					footer={footer}
+					onBackdropClick={this.handleBackdropClick}>
+					{children}
+				</PopupUI>
 			</RootClose>
 		);
 
 		return createPortal(child, this.rootElement);
 	}
+
+	private innerRef = (backdrop: ReactRef<HTMLElement>) => {
+		this.backdrop = backdrop;
+	};
 
 	private handleBackdropClick: MouseEventHandler<HTMLElement> = e => {
 		const { shouldCloseOnClickAway, onRequestClose } = this.props;
@@ -103,9 +92,12 @@ class RawPopup extends Component<TRawPopupProps> {
 			}
 			//if popup isn't modal then it's closed by RootClose
 		}
-		e.stopPropagation();
 	};
 }
 
-export type TPopupProps = PartialKeys<TRawPopupProps, 'theme'>;
-export const Popup = withTheme(POPUP)(RawPopup);
+export type TPopupProps = PartialKeys<TFullPopupProps, 'theme' | 'PopupUI'>;
+type Defaults = 'PopupUI';
+const defaults = withDefaults<TFullPopupProps, Defaults>({
+	PopupUI,
+});
+export const Popup: ComponentClass<TPopupProps> = withTheme(POPUP)(defaults(RawPopup));
