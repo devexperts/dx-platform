@@ -21,6 +21,8 @@ export type TPickedInputProps = Pick<
 
 export type TFullSteppableInputProps = TPickedInputProps & {
 	isDisabled?: TInputProps['isDisabled'];
+	isDisabledMinButton?: boolean;
+	isDisabledMaxButton?: boolean;
 	tabIndex?: number;
 	onIncrement?: Function;
 	onDecrement?: Function;
@@ -78,6 +80,8 @@ class RawSteppableInput extends React.Component<TFullSteppableInputProps, TStepp
 		} = this.props;
 
 		const { isFocused } = this.state;
+		const isDisabledMinButton = isDisabled || this.props.isDisabledMinButton;
+		const isDisabledMaxButton = isDisabled || this.props.isDisabledMaxButton;
 
 		return (
 			<Input
@@ -112,26 +116,26 @@ class RawSteppableInput extends React.Component<TFullSteppableInputProps, TStepp
 						)}
 					{onDecrement &&
 						decrementIcon && (
-							<Holdable onHold={onDecrement}>
+							<Holdable onHold={onDecrement} isDisabled={isDisabledMinButton}>
 								<ButtonIcon
 									icon={decrementIcon}
 									theme={theme.ButtonIcon}
 									onClick={this.onDecrementClick}
 									onMouseDown={this.onButtonMouseDown}
-									isDisabled={isDisabled}
+									isDisabled={isDisabledMinButton}
 									tabIndex={-1}
 								/>
 							</Holdable>
 						)}
 					{onIncrement &&
 						incrementIcon && (
-							<Holdable onHold={onIncrement}>
+							<Holdable onHold={onIncrement} isDisabled={isDisabledMaxButton}>
 								<ButtonIcon
 									icon={incrementIcon}
 									theme={theme.ButtonIcon}
 									onClick={this.onIncrementClick}
 									onMouseDown={this.onButtonMouseDown}
-									isDisabled={isDisabled}
+									isDisabled={isDisabledMaxButton}
 									tabIndex={-1}
 								/>
 							</Holdable>

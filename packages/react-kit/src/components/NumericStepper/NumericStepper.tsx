@@ -101,6 +101,8 @@ class RawNumericStepper extends React.Component<TNumericStepperFullProps, TNumer
 			incrementIcon,
 			value,
 			isDisabled,
+			isDisabledMaxButton,
+			isDisabledMinButton,
 			clearIcon,
 			min,
 			max,
@@ -112,6 +114,8 @@ class RawNumericStepper extends React.Component<TNumericStepperFullProps, TNumer
 		return (
 			<SteppableInput
 				isDisabled={isDisabled}
+				isDisabledMinButton={isDisabledMinButton}
+				isDisabledMaxButton={isDisabledMaxButton}
 				error={hasError}
 				theme={theme.SteppableInput}
 				onDecrement={this.onDecrement}

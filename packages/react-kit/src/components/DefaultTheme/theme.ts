@@ -58,7 +58,7 @@ import * as popupTheme from '../Popup/Popup.demo.styl';
 import { STEPPABLE_INPUT } from '../SteppableInput/SteppableInput';
 import * as steppableInput from '../SteppableInput/theme/SteppableInput.styl';
 import * as steppableInputInput from '../SteppableInput/theme/Input.styl';
-import * as steppableInputButtonIcon from '../SteppableInput/theme/ButtonIcon.styl';
+import * as steppableInputButtonIcon from '../SteppableInput/theme/ButtonIcon.demo.styl';
 
 import { TIME_INPUT } from '../TimeInput/TimeInput';
 import * as timeInput from '../TimeInput/theme/TimeInput.styl';
