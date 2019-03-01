@@ -12,10 +12,19 @@ import { mapRD } from './operators/mapRD';
 import { switchMapRD } from './operators/switchMapRD';
 
 export class EntityStore<L = never, A = never> {
+	/**
+	 * Returns all values of current store.
+	 * By default returns Observable<RemoteData<L, A[]>>, but can be overwritten by "getAllValues$" setter.
+	 *
+	 */
 	get getAllValues$(): any {
 		return this._getAllValues$;
 	}
 
+	/**
+	 * Overwrites default return-value for "getAllValues$" getter.
+	 *
+	 */
 	set getAllValues$(value: any) {
 		this._getAllValues$ = value;
 	}
@@ -33,6 +42,17 @@ export class EntityStore<L = never, A = never> {
 
 	readonly keys$ = this.cache.keys$;
 
+	/**
+	 * Returns entity by a key.
+	 * If there is no data by a key it triggers "get" to receive data and put it in the cache.
+	 *
+	 * @param key
+	 * Key (name) of an entity you want to receive
+	 *
+	 * @param get
+	 * How to receive data if cache by key is empty. Typically it's an API call
+	 *
+	 */
 	get(key: string, get: () => LiveData<L, A>): LiveData<L, A> {
 		let sharedGetter: Observable<RemoteData<L, A>> | undefined = this.cachedStreams.get(key);
 
@@ -66,6 +86,19 @@ export class EntityStore<L = never, A = never> {
 		return sharedGetter;
 	}
 
+	/**
+	 * Triggers receiving all entities using "partialGetAll" and put them in cache
+	 *
+	 * @param pk
+	 * Describes how to get a key from an entity (required for "updateCache")
+	 *
+	 * @param partialGetAll
+	 * Describes how to get all values for current entity store
+	 *
+	 * @param predicate
+	 * Predicate to filter "partialGetAll" result
+	 *
+	 */
 	getAll(
 		pk: (value: A) => string,
 		partialGetAll: () => LiveData<L, A[]>,
@@ -100,6 +133,26 @@ export class EntityStore<L = never, A = never> {
 		);
 	}
 
+	/**
+	 * Remove an entity from current entity store
+	 *
+	 * @param key
+	 * Key of an entity you want to remove.
+	 * Using only in optimistic scenario, but required all the time
+	 *
+	 * @param pk
+	 * Describes how to get a key from an entity (required for "updateCache")
+	 *
+	 * @param remove
+	 * Describes how to remove an entity. Typically it's an API call.
+	 * Should returns an array of existing entities.
+	 * Exception should be handled inside this stream.
+	 *
+	 * @param optimistic
+	 * Is optimistic scenario?
+	 * If yes, entity will be removed from the cache before API call
+	 *
+	 */
 	remove(
 		key: string,
 		pk: (value: A) => string,
@@ -117,6 +170,17 @@ export class EntityStore<L = never, A = never> {
 		);
 	}
 
+	/**
+	 * Create an entity
+	 *
+	 * @param pk
+	 * Describes how to get a key from an entity (required for "updateCache")
+	 *
+	 * @param create
+	 * Describes how to create an entity.
+	 * Returns a stream with a created entity.
+	 *
+	 */
 	create(pk: (value: A) => string, create: () => LiveData<L, A>): LiveData<L, A> {
 		return create().pipe(
 			switchMapRD(value => {
@@ -127,6 +191,17 @@ export class EntityStore<L = never, A = never> {
 		);
 	}
 
+	/**
+	 * Update an entity
+	 *
+	 * @param key
+	 * key for an entity you want to update.
+	 *
+	 * @param update
+	 * Describes how to update an entity.
+	 * Returns a stream with updated entity.
+	 *
+	 */
 	update(key: string, update: () => LiveData<L, A>): LiveData<L, A> {
 		return update().pipe(
 			tap(value => {
