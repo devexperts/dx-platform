@@ -43,6 +43,7 @@ export type TFullPopoverProps = {
 	children: ReactNode;
 	isOpened?: boolean;
 	closeOnClickAway?: boolean;
+	disableCloseOnScroll?: boolean;
 	anchor?: ReactRef;
 	onMouseDown?: MouseEventHandler<Element>;
 	placement: PopoverPlacement;
@@ -69,6 +70,16 @@ type TPopoverState = {
 	top?: number;
 	left?: number;
 	arrowOffset?: number;
+};
+
+type AnchorProperties = {
+	left: number;
+	right: number;
+	top: number;
+	bottom: number;
+	width: number;
+	parentWidth: number;
+	parentHeight: number;
 };
 
 @PURE
@@ -225,12 +236,47 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 		};
 	}
 
+	private getAnchorProperties(): AnchorProperties | undefined {
+		const container = this.props.container;
+		const anchor = this._anchor;
+
+		if (container && anchor) {
+			const containerRect = container.getBoundingClientRect();
+			const anchorRect = anchor.getBoundingClientRect();
+
+			return {
+				left: anchorRect.left - containerRect.left,
+				right: anchorRect.right - containerRect.left,
+				top: anchorRect.top - containerRect.top,
+				bottom: anchorRect.bottom - containerRect.top,
+				width: anchorRect.width,
+				parentWidth: containerRect.width,
+				parentHeight: containerRect.height,
+			};
+		} else if (anchor) {
+			const anchorRect = anchor.getBoundingClientRect();
+
+			return {
+				left: anchorRect.left,
+				right: anchorRect.right,
+				top: anchorRect.top,
+				bottom: anchorRect.bottom,
+				width: anchorRect.width,
+				parentWidth: window.innerWidth,
+				parentHeight: window.innerHeight,
+			};
+		} else {
+			return;
+		}
+	}
+
 	updatePosition = () => {
-		if (!this._anchor) {
+		const anchorRect = this.getAnchorProperties();
+
+		if (!anchorRect) {
 			return;
 		}
 
-		const anchorRect = this._anchor.getBoundingClientRect();
 		const { placement, align, hasArrow } = this.props;
 
 		let arrowOffset;
@@ -242,6 +288,7 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 			anchorRect.top,
 			anchorRect.bottom,
 			this._popoverSize.height,
+			anchorRect.parentHeight,
 			true,
 		)!;
 		const leftResult: THorizontalPosition = movePopoverHorizontally(
@@ -250,6 +297,7 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 			anchorRect.left,
 			anchorRect.right,
 			this._popoverSize.width,
+			anchorRect.parentWidth,
 			true,
 		)!;
 
@@ -303,8 +351,8 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 	};
 
 	handleScroll() {
-		const { onRequestClose, isOpened } = this.props;
-		if (onRequestClose && isOpened) {
+		const { onRequestClose, isOpened, disableCloseOnScroll } = this.props;
+		if (onRequestClose && isOpened && !disableCloseOnScroll) {
 			onRequestClose();
 		}
 	}
@@ -388,13 +436,21 @@ function movePopoverVertically(
 	anchorTop: number,
 	anchorBottom: number,
 	popoverHeight: number,
+	parentHeight: number,
 	checkBounds = false,
 ): TVerticalPosition | undefined {
 	switch (placement) {
 		case PopoverPlacement.Top: {
 			const top = anchorTop - popoverHeight;
 			if (checkBounds && top < 0) {
-				return movePopoverVertically(PopoverPlacement.Bottom, align, anchorTop, anchorBottom, popoverHeight);
+				return movePopoverVertically(
+					PopoverPlacement.Bottom,
+					align,
+					anchorTop,
+					anchorBottom,
+					popoverHeight,
+					parentHeight,
+				);
 			}
 			return {
 				top,
@@ -404,8 +460,15 @@ function movePopoverVertically(
 		}
 		case PopoverPlacement.Bottom: {
 			const top = anchorBottom;
-			if (checkBounds && top + popoverHeight > window.innerHeight) {
-				return movePopoverVertically(PopoverPlacement.Top, align, anchorTop, anchorBottom, popoverHeight);
+			if (checkBounds && top + popoverHeight > parentHeight) {
+				return movePopoverVertically(
+					PopoverPlacement.Top,
+					align,
+					anchorTop,
+					anchorBottom,
+					popoverHeight,
+					parentHeight,
+				);
 			}
 			return {
 				top,
@@ -418,21 +481,23 @@ function movePopoverVertically(
 	switch (align) {
 		case PopoverAlign.Top: {
 			const top = anchorTop;
-			if (checkBounds && top + popoverHeight > window.innerHeight) {
+			if (checkBounds && top + popoverHeight > parentHeight) {
 				const resultForMiddle = movePopoverVertically(
 					placement,
 					PopoverAlign.Middle,
 					anchorTop,
 					anchorBottom,
 					popoverHeight,
+					parentHeight,
 				);
-				if (resultForMiddle && resultForMiddle.top + popoverHeight > window.innerHeight) {
+				if (resultForMiddle && resultForMiddle.top + popoverHeight > parentHeight) {
 					return movePopoverVertically(
 						placement,
 						PopoverAlign.Bottom,
 						anchorTop,
 						anchorBottom,
 						popoverHeight,
+						parentHeight,
 					);
 				}
 				return resultForMiddle;
@@ -447,14 +512,22 @@ function movePopoverVertically(
 			const top = anchorTop + (anchorBottom - anchorTop) / 2 - popoverHeight / 2;
 			if (checkBounds) {
 				if (top < 0) {
-					return movePopoverVertically(placement, PopoverAlign.Top, anchorTop, anchorBottom, popoverHeight);
-				} else if (top + popoverHeight > window.innerHeight) {
+					return movePopoverVertically(
+						placement,
+						PopoverAlign.Top,
+						anchorTop,
+						anchorBottom,
+						popoverHeight,
+						parentHeight,
+					);
+				} else if (top + popoverHeight > parentHeight) {
 					return movePopoverVertically(
 						placement,
 						PopoverAlign.Bottom,
 						anchorTop,
 						anchorBottom,
 						popoverHeight,
+						parentHeight,
 					);
 				}
 			}
@@ -473,9 +546,17 @@ function movePopoverVertically(
 					anchorTop,
 					anchorBottom,
 					popoverHeight,
+					parentHeight,
 				);
 				if (resultForMiddle && resultForMiddle.top < 0) {
-					return movePopoverVertically(placement, PopoverAlign.Top, anchorTop, anchorBottom, popoverHeight);
+					return movePopoverVertically(
+						placement,
+						PopoverAlign.Top,
+						anchorTop,
+						anchorBottom,
+						popoverHeight,
+						parentHeight,
+					);
 				}
 				return resultForMiddle;
 			}
@@ -502,13 +583,21 @@ function movePopoverHorizontally(
 	anchorLeft: number,
 	anchorRight: number,
 	popoverWidth: number,
+	parentWidth: number,
 	checkBounds = false,
 ): THorizontalPosition | undefined {
 	switch (placement) {
 		case PopoverPlacement.Left: {
 			const left = anchorLeft - popoverWidth;
 			if (checkBounds && left < 0) {
-				return movePopoverHorizontally(PopoverPlacement.Right, align, anchorLeft, anchorRight, popoverWidth);
+				return movePopoverHorizontally(
+					PopoverPlacement.Right,
+					align,
+					anchorLeft,
+					anchorRight,
+					popoverWidth,
+					parentWidth,
+				);
 			}
 			return {
 				left,
@@ -518,8 +607,15 @@ function movePopoverHorizontally(
 		}
 		case PopoverPlacement.Right: {
 			const left = anchorRight;
-			if (checkBounds && left + popoverWidth > window.innerWidth) {
-				return movePopoverHorizontally(PopoverPlacement.Left, align, anchorLeft, anchorRight, popoverWidth);
+			if (checkBounds && left + popoverWidth > parentWidth) {
+				return movePopoverHorizontally(
+					PopoverPlacement.Left,
+					align,
+					anchorLeft,
+					anchorRight,
+					popoverWidth,
+					parentWidth,
+				);
 			}
 			return {
 				left,
@@ -532,21 +628,23 @@ function movePopoverHorizontally(
 	switch (align) {
 		case PopoverAlign.Left: {
 			const left = anchorLeft;
-			if (checkBounds && left + popoverWidth > window.innerWidth) {
+			if (checkBounds && left + popoverWidth > parentWidth) {
 				const resultForCenter = movePopoverHorizontally(
 					placement,
 					PopoverAlign.Center,
 					anchorLeft,
 					anchorRight,
 					popoverWidth,
+					parentWidth,
 				);
-				if (resultForCenter && resultForCenter.left + popoverWidth > window.innerWidth) {
+				if (resultForCenter && resultForCenter.left + popoverWidth > parentWidth) {
 					return movePopoverHorizontally(
 						placement,
 						PopoverAlign.Right,
 						anchorLeft,
 						anchorRight,
 						popoverWidth,
+						parentWidth,
 					);
 				}
 				return resultForCenter;
@@ -561,14 +659,22 @@ function movePopoverHorizontally(
 			const left = anchorLeft + (anchorRight - anchorLeft) / 2 - popoverWidth / 2;
 			if (checkBounds) {
 				if (left < 0) {
-					return movePopoverHorizontally(placement, PopoverAlign.Left, anchorLeft, anchorRight, popoverWidth);
-				} else if (left + popoverWidth > window.innerWidth) {
+					return movePopoverHorizontally(
+						placement,
+						PopoverAlign.Left,
+						anchorLeft,
+						anchorRight,
+						popoverWidth,
+						parentWidth,
+					);
+				} else if (left + popoverWidth > parentWidth) {
 					return movePopoverHorizontally(
 						placement,
 						PopoverAlign.Right,
 						anchorLeft,
 						anchorRight,
 						popoverWidth,
+						parentWidth,
 					);
 				}
 			}
@@ -587,9 +693,17 @@ function movePopoverHorizontally(
 					anchorLeft,
 					anchorRight,
 					popoverWidth,
+					parentWidth,
 				);
 				if (resultForCenter && resultForCenter.left < 0) {
-					return movePopoverHorizontally(placement, PopoverAlign.Left, anchorLeft, anchorRight, popoverWidth);
+					return movePopoverHorizontally(
+						placement,
+						PopoverAlign.Left,
+						anchorLeft,
+						anchorRight,
+						popoverWidth,
+						parentWidth,
+					);
 				}
 				return resultForCenter;
 			}
