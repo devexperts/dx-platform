@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.27.0](https://github.com/devex-web-frontend/dx-platform/compare/v0.26.0...v0.27.0) (2019-03-12)
+
+
+### Bug Fixes
+
+* **react-kit:** Popover. Correct position of popover in custom container ([#115](https://github.com/devex-web-frontend/dx-platform/issues/115)) ([0756796](https://github.com/devex-web-frontend/dx-platform/commit/0756796))
+
+
+### Features
+
+* **react-kit:** ability to define custom ui for popup ([#112](https://github.com/devex-web-frontend/dx-platform/issues/112)) ([375cd31](https://github.com/devex-web-frontend/dx-platform/commit/375cd31))
+
+
+### BREAKING CHANGES
+
+* **react-kit:** added PopupUI to popup props
+
+* feat(react-kit): ability to define custom ui for popup
+
+
+
+
+
+
 # [0.26.0](https://github.com/devex-web-frontend/dx-platform/compare/v0.25.0...v0.26.0) (2019-02-04)
 
 
