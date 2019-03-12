@@ -16,67 +16,18 @@ import { stateful } from '../Control/Control';
 
 const StatefulStepper = stateful()(NumericStepper);
 
-type DemoStepperState = {
-	value: number;
-	isDisabled: boolean;
-	isDisabledMinButton: boolean;
-	isDisabledMaxButton: boolean;
-};
-
-class DemoStepper extends React.Component {
-	private min = -10;
-	private max = 20;
-
-	state: DemoStepperState = {
-		value: 5,
-		isDisabled: false,
-		isDisabledMinButton: false,
-		isDisabledMaxButton: false,
-	};
-
-	render() {
-		const { value, isDisabledMaxButton, isDisabledMinButton, isDisabled } = this.state;
-		return (
-			<div>
-				<div>
-					<button onClick={this.onClick}>Toggle Full Disabled</button>
-				</div>
-				<NumericStepper
-					decrementIcon={<DecreaseIcon />}
-					isDisabled={isDisabled}
-					isDisabledMinButton={isDisabledMinButton}
-					isDisabledMaxButton={isDisabledMaxButton}
-					incrementIcon={<AddIcon />}
-					min={this.min}
-					max={this.max}
-					step={1}
-					clearIcon={<ClearIcon />}
-					onValueChange={this.onValueChange}
-					value={value}
-				/>
-			</div>
-		);
-	}
-
-	private onClick = () => {
-		this.setState({
-			isDisabled: !this.state.isDisabled,
-		});
-	};
-
-	private onValueChange = (value: number) => {
-		this.setState({
-			value,
-			isDisabledMinButton: value <= this.min,
-			isDisabledMaxButton: value >= this.max,
-		});
-	};
-}
-
 storiesOf('NumericStepper', module)
 	.add('default', () => (
 		<Demo>
-			<DemoStepper />
+			<StatefulStepper
+				decrementIcon={<DecreaseIcon />}
+				incrementIcon={<AddIcon />}
+				min={-10}
+				max={10}
+				step={1}
+				clearIcon={<ClearIcon />}
+				defaultValue={5}
+			/>
 		</Demo>
 	))
 	.add('disabled', () => (
