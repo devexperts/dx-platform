@@ -21,8 +21,8 @@ export type TPickedInputProps = Pick<
 
 export type TFullSteppableInputProps = TPickedInputProps & {
 	isDisabled?: TInputProps['isDisabled'];
-	isDisabledMinButton?: boolean;
-	isDisabledMaxButton?: boolean;
+	isIncrementButtonDisabled?: boolean;
+	isDecrementButtonDisabled?: boolean;
 	tabIndex?: number;
 	onIncrement?: Function;
 	onDecrement?: Function;
@@ -80,8 +80,8 @@ class RawSteppableInput extends React.Component<TFullSteppableInputProps, TStepp
 		} = this.props;
 
 		const { isFocused } = this.state;
-		const isDisabledMinButton = isDisabled || this.props.isDisabledMinButton;
-		const isDisabledMaxButton = isDisabled || this.props.isDisabledMaxButton;
+		const isIncrementButtonDisabled = isDisabled || this.props.isIncrementButtonDisabled;
+		const isDecrementButtonDisabled = isDisabled || this.props.isDecrementButtonDisabled;
 
 		return (
 			<Input
@@ -116,26 +116,26 @@ class RawSteppableInput extends React.Component<TFullSteppableInputProps, TStepp
 						)}
 					{onDecrement &&
 						decrementIcon && (
-							<Holdable onHold={onDecrement} isDisabled={isDisabledMinButton}>
+							<Holdable onHold={onDecrement} isDisabled={isDecrementButtonDisabled}>
 								<ButtonIcon
 									icon={decrementIcon}
 									theme={theme.ButtonIcon}
 									onClick={this.onDecrementClick}
 									onMouseDown={this.onButtonMouseDown}
-									isDisabled={isDisabledMinButton}
+									isDisabled={isDecrementButtonDisabled}
 									tabIndex={-1}
 								/>
 							</Holdable>
 						)}
 					{onIncrement &&
 						incrementIcon && (
-							<Holdable onHold={onIncrement} isDisabled={isDisabledMaxButton}>
+							<Holdable onHold={onIncrement} isDisabled={isIncrementButtonDisabled}>
 								<ButtonIcon
 									icon={incrementIcon}
 									theme={theme.ButtonIcon}
 									onClick={this.onIncrementClick}
 									onMouseDown={this.onButtonMouseDown}
-									isDisabled={isDisabledMaxButton}
+									isDisabled={isIncrementButtonDisabled}
 									tabIndex={-1}
 								/>
 							</Holdable>
