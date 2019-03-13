@@ -44,13 +44,11 @@ export class EntityStore<L = never, A = never> {
 
 	/**
 	 * Returns entity by a key.
-	 * If there is no data by a key it triggers "get" to receive data and put it in the cache.
+	 * If there is no data by a key it triggers "get" argument to receive data and put it in a cache.
 	 *
-	 * @param key
-	 * Key (name) of an entity you want to receive
+	 * @param key - Key (name) of an entity you want to receive.
 	 *
-	 * @param get
-	 * How to receive data if cache by key is empty. Typically it's an API call
+	 * @param get - Describes how to receive data if cache by key is empty. Typically it's an API call.
 	 *
 	 */
 	get(key: string, get: () => LiveData<L, A>): LiveData<L, A> {
@@ -87,16 +85,13 @@ export class EntityStore<L = never, A = never> {
 	}
 
 	/**
-	 * Triggers receiving all entities using "partialGetAll" and put them in cache
+	 * Triggers receiving all entities using "partialGetAll" argument and put them in a cache.
 	 *
-	 * @param pk
-	 * Describes how to get a key from an entity (required for "updateCache")
+	 * @param pk - Means "Primary Key". Describes how to get a key from an entity (required for "updateCache").
 	 *
-	 * @param partialGetAll
-	 * Describes how to get all values for current entity store
+	 * @param partialGetAll - Describes how to get all values for current entity store. Typically it's an API call.
 	 *
-	 * @param predicate
-	 * Predicate to filter "partialGetAll" result
+	 * @param predicate - Predicate to filter "partialGetAll" result. E.g. you want to filter invalid entities or you have a business case - use only data created before 01.01.2018.
 	 *
 	 */
 	getAll(
@@ -134,23 +129,15 @@ export class EntityStore<L = never, A = never> {
 	}
 
 	/**
-	 * Remove an entity from current entity store
+	 * Remove an entity from current entity store.
 	 *
-	 * @param key
-	 * Key of an entity you want to remove.
-	 * Using only in optimistic scenario, but required all the time
+	 * @param key - Key of an entity you want to remove. Using only in optimistic scenario, but required all the time.
 	 *
-	 * @param pk
-	 * Describes how to get a key from an entity (required for "updateCache")
+	 * @param pk - Means "Primary Key". Describes how to get a key from an entity (required for "updateCache").
 	 *
-	 * @param remove
-	 * Describes how to remove an entity. Typically it's an API call.
-	 * Should returns an array of existing entities.
-	 * Exception should be handled inside this stream.
+	 * @param remove - Describes how to remove an entity. Typically it's an API call. Should returns an array of existing entities. Exception should be handled inside this stream.
 	 *
-	 * @param optimistic
-	 * Is optimistic scenario?
-	 * If yes, entity will be removed from the cache before API call
+	 * @param optimistic - The flag - is optimistic scenario or not, true by default. If true, entity will be removed from a cache before an API call.
 	 *
 	 */
 	remove(
@@ -173,12 +160,9 @@ export class EntityStore<L = never, A = never> {
 	/**
 	 * Create an entity
 	 *
-	 * @param pk
-	 * Describes how to get a key from an entity (required for "updateCache")
+	 * @param pk - Means "Primary Key". Describes how to get a key from an entity (required for "updateCache").
 	 *
-	 * @param create
-	 * Describes how to create an entity.
-	 * Returns a stream with a created entity.
+	 * @param create - Describes how to create an entity. Returns a stream with a created entity.
 	 *
 	 */
 	create(pk: (value: A) => string, create: () => LiveData<L, A>): LiveData<L, A> {
@@ -194,12 +178,9 @@ export class EntityStore<L = never, A = never> {
 	/**
 	 * Update an entity
 	 *
-	 * @param key
-	 * key for an entity you want to update.
+	 * @param key - Key for an entity you want to update.
 	 *
-	 * @param update
-	 * Describes how to update an entity.
-	 * Returns a stream with updated entity.
+	 * @param update - Describes how to update an entity. Returns a stream with updated entity. Typically it's an API call.
 	 *
 	 */
 	update(key: string, update: () => LiveData<L, A>): LiveData<L, A> {
