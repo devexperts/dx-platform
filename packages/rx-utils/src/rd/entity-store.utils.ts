@@ -50,6 +50,7 @@ export class EntityStore<L = never, A = never> {
 	 *
 	 * @param get - Describes how to receive data if cache by key is empty. Typically it's an API call.
 	 *
+	 * @returns - Returns a LiveData stream with requested entity.
 	 */
 	get(key: string, get: () => LiveData<L, A>): LiveData<L, A> {
 		let sharedGetter: Observable<RemoteData<L, A>> | undefined = this.cachedStreams.get(key);
@@ -93,6 +94,7 @@ export class EntityStore<L = never, A = never> {
 	 *
 	 * @param predicate - Predicate to filter "partialGetAll" result. E.g. you want to filter invalid entities or you have a business case - use only data created before 01.01.2018.
 	 *
+	 * @returns - Returns a LiveData stream with requested entities.
 	 */
 	getAll(
 		pk: (value: A) => string,
@@ -139,6 +141,7 @@ export class EntityStore<L = never, A = never> {
 	 *
 	 * @param optimistic - The flag - is optimistic scenario or not, true by default. If true, entity will be removed from a cache before an API call.
 	 *
+	 * @returns - Returns a LiveData stream with existing entities.
 	 */
 	remove(
 		key: string,
@@ -164,6 +167,7 @@ export class EntityStore<L = never, A = never> {
 	 *
 	 * @param create - Describes how to create an entity. Returns a stream with a created entity.
 	 *
+	 * @returns - Returns a LiveData stream with created entity.
 	 */
 	create(pk: (value: A) => string, create: () => LiveData<L, A>): LiveData<L, A> {
 		return create().pipe(
@@ -182,6 +186,7 @@ export class EntityStore<L = never, A = never> {
 	 *
 	 * @param update - Describes how to update an entity. Returns a stream with updated entity. Typically it's an API call.
 	 *
+	 * @returns - Returns a LiveData stream with updated entity.
 	 */
 	update(key: string, update: () => LiveData<L, A>): LiveData<L, A> {
 		return update().pipe(
