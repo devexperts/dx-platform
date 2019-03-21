@@ -16,17 +16,31 @@ export type TRawLoadingIndicatonProps = {
 	theme: {
 		container?: string;
 		container_isVisible?: string;
+		container_isNotDisplay?: string;
 		LoadingIndicator?: TLoadingIndicatorProps['theme'];
 	};
+	hideTimer?: number;
+};
+
+export type TRawLoadingIndicatonState = {
+	isDisplay: boolean;
 };
 
 @PURE
-class RawLoadingIndicaton extends React.Component<TRawLoadingIndicatonProps> {
+class RawLoadingIndicaton extends React.Component<TRawLoadingIndicatonProps, TRawLoadingIndicatonState> {
+	state = {
+		isDisplay: true,
+	};
+	_isMounted?: boolean;
+	timer: any;
+
 	render() {
 		const { theme, isVisible, LoadingIndicator } = this.props;
+		const { isDisplay } = this.state;
 
 		const className = cn(theme.container, {
 			[theme.container_isVisible as string]: isVisible,
+			[theme.container_isNotDisplay as string]: !isDisplay,
 		});
 
 		return (
@@ -35,6 +49,46 @@ class RawLoadingIndicaton extends React.Component<TRawLoadingIndicatonProps> {
 			</div>
 		);
 	}
+
+	componentDidMount() {
+		const { isVisible, hideTimer } = this.props;
+
+		this._isMounted = true;
+		if (hideTimer) {
+			this.timeoutWorker(hideTimer, isVisible);
+		}
+	}
+
+	componentWillUnmount() {
+		this._isMounted = false;
+	}
+
+	timeoutWorker(hideTimer: number, isVisible?: boolean) {
+		if (!isVisible) {
+			this.timer = setTimeout(this.setDisplayNone, hideTimer);
+		} else {
+			clearTimeout(this.timer);
+			this.setState({
+				isDisplay: true,
+			});
+		}
+	}
+
+	componentWillReceiveProps(nextProps: TRawLoadingIndicatonProps) {
+		const { isVisible, hideTimer } = nextProps;
+
+		if (hideTimer) {
+			this.timeoutWorker(hideTimer, isVisible);
+		}
+	}
+
+	setDisplayNone = () => {
+		if (this._isMounted) {
+			this.setState({
+				isDisplay: false,
+			});
+		}
+	};
 }
 
 export type TLoadingIndicationProps = PartialKeys<TRawLoadingIndicatonProps, 'LoadingIndicator' | 'theme'>;
