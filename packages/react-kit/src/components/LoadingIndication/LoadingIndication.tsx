@@ -31,8 +31,7 @@ class RawLoadingIndicaton extends React.Component<TRawLoadingIndicatonProps, TRa
 	state = {
 		isDisplay: true,
 	};
-	_isMounted?: boolean;
-	timer: any;
+	timer?: number;
 
 	render() {
 		const { theme, isVisible, LoadingIndicator } = this.props;
@@ -53,19 +52,18 @@ class RawLoadingIndicaton extends React.Component<TRawLoadingIndicatonProps, TRa
 	componentDidMount() {
 		const { isVisible, hideTimer } = this.props;
 
-		this._isMounted = true;
 		if (hideTimer) {
 			this.timeoutWorker(hideTimer, isVisible);
 		}
 	}
 
 	componentWillUnmount() {
-		this._isMounted = false;
+		clearTimeout(this.timer);
 	}
 
 	timeoutWorker(hideTimer: number, isVisible?: boolean) {
 		if (!isVisible) {
-			this.timer = setTimeout(this.setDisplayNone, hideTimer);
+			this.timer = window.setTimeout(this.setDisplayNone, hideTimer);
 		} else {
 			clearTimeout(this.timer);
 			this.setState({
@@ -83,11 +81,9 @@ class RawLoadingIndicaton extends React.Component<TRawLoadingIndicatonProps, TRa
 	}
 
 	setDisplayNone = () => {
-		if (this._isMounted) {
-			this.setState({
-				isDisplay: false,
-			});
-		}
+		this.setState({
+			isDisplay: false,
+		});
 	};
 }
 
