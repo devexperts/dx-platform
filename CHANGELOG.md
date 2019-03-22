@@ -32,17 +32,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
-* **react-kit:** Timeinput. Added choosing optional seconds and day type. // PR review. Comments applied ([2e5c16d](https://github.com/devex-web-frontend/dx-platform/commit/2e5c16d))
-* **react-kit:** Timeinput. Added choosing optional seconds and day type. // PR review. Rewrite with Options ([b231d43](https://github.com/devex-web-frontend/dx-platform/commit/b231d43))
-* **react-kit:** Timeinput. Added choosing optional seconds and day type. // PR review. Rewrite with Options V2 ([3730550](https://github.com/devex-web-frontend/dx-platform/commit/3730550))
-* **react-kit:** Timeinput. Added choosing optional seconds and day type. // PR review. Rewrite with Options V3. Comments implemented ([75900c2](https://github.com/devex-web-frontend/dx-platform/commit/75900c2))
-* **react-kit:** Timeinput. Added choosing optional seconds and day type. // PR review. Rewrite with Options V4. Comments implemented ([5c24a32](https://github.com/devex-web-frontend/dx-platform/commit/5c24a32))
-* **react-kit:** Timeinput. Added choosing optional seconds and day type. // PR review. Rewrite with Options V5. Comments implemented ([3683284](https://github.com/devex-web-frontend/dx-platform/commit/3683284))
-* **react-kit:** Timeinput. Added choosing optional seconds and day type. // PR review. Rewrite with Options V6. Comments implemented ([762db6d](https://github.com/devex-web-frontend/dx-platform/commit/762db6d))
-* **react-kit:** Timeinput. Added choosing optional seconds and day type. // PR review. Time fields are taken out to constants ([922e2c5](https://github.com/devex-web-frontend/dx-platform/commit/922e2c5))
-
-
-
+* **react-kit:** Timeinput. Added choosing optional seconds and day type.
 
 
 
