@@ -23,6 +23,7 @@ storiesOf('NumericStepper', module)
 				decrementIcon={<DecreaseIcon />}
 				incrementIcon={<AddIcon />}
 				min={-10}
+				max={10}
 				step={1}
 				clearIcon={<ClearIcon />}
 				defaultValue={5}
