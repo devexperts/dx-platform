@@ -23,7 +23,7 @@ class LoadingIndicationPage extends React.Component {
 						fermentum sem. Vivamus pulvinar varius blandit. Sed nec purus posuere, molestie ante vitae,
 						aliquam sem. Donec mauris dui, venenatis eu metus vel, scelerisque malesuada sem. Ut interdum
 					</p>
-					<LoadingIndication isVisible={this.state.isVisible} />
+					<LoadingIndication isVisible={this.state.isVisible} hideTimer={2000} />
 				</section>
 				<Button onClick={this.onToggleClick}>Toggle</Button>
 			</Demo>
