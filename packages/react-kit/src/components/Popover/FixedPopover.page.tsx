@@ -9,6 +9,8 @@ import { stateful } from '../Control/Control';
 import { Selectbox } from '../Selectbox/Selectbox';
 import { MenuItem } from '../Menu/Menu';
 import * as cn from 'classnames';
+import { Checkbox } from '../Checkbox/Checkbox';
+import { CheckboxTickIcon } from '../../icons/checkbox-tick-icon';
 
 const Stateful = stateful()(Selectbox);
 const StatefulOpened = stateful('isOpened', 'onToggle', 'defaultIsOpened')(Stateful);
@@ -35,6 +37,7 @@ type TFixedPopoverPageState = Readonly<{
 	align: PopoverAlign;
 	verticalButtonPosition: VericalButtonPosition;
 	horizontalButtonPosition: HorizontalButtonPosition;
+	shouldAdjustPosition: boolean;
 }>;
 
 @PURE
@@ -48,10 +51,18 @@ export class FixedPopoverPage extends React.Component<{}, TFixedPopoverPageState
 		align: PopoverAlign.Left,
 		horizontalButtonPosition: HorizontalButtonPosition.Center,
 		verticalButtonPosition: VericalButtonPosition.Middle,
+		shouldAdjustPosition: true,
 	};
 
 	render() {
-		const { isOpened, placement, align, horizontalButtonPosition, verticalButtonPosition } = this.state;
+		const {
+			isOpened,
+			placement,
+			align,
+			horizontalButtonPosition,
+			verticalButtonPosition,
+			shouldAdjustPosition,
+		} = this.state;
 		const wrapperClassName = cn(css.wrapper, {
 			[css.wrapperLeft as string]: horizontalButtonPosition === HorizontalButtonPosition.Left,
 			[css.wrapperCenter as string]: horizontalButtonPosition === HorizontalButtonPosition.Center,
@@ -97,7 +108,7 @@ export class FixedPopoverPage extends React.Component<{}, TFixedPopoverPageState
 								</StatefulOpened>
 							)}
 						</div>
-						<div>
+						<div className={css.popoverControls}>
 							<label className={css.label}>Horizontal Button Position</label>
 							<StatefulOpened
 								defaultIsOpened={false}
@@ -117,6 +128,18 @@ export class FixedPopoverPage extends React.Component<{}, TFixedPopoverPageState
 								<MenuItem value={VericalButtonPosition.Bottom}>Bottom</MenuItem>
 							</StatefulOpened>
 						</div>
+						<div className={css.popoverControls}>
+							<label htmlFor="check1">
+								<Checkbox
+									checkMark={<CheckboxTickIcon />}
+									value={this.state.shouldAdjustPosition}
+									onValueChange={this.onChangeHandler}
+									isDisabled={false}
+									id="check1"
+								/>
+								Should Adjust Position
+							</label>
+						</div>
 					</div>
 					<Scrollable theme={scrollableTheme}>
 						<div ref={el => (this.block = el)}>
@@ -134,6 +157,7 @@ export class FixedPopoverPage extends React.Component<{}, TFixedPopoverPageState
 										onRequestClose={this.onPopoverRequestClose}
 										hasArrow={true}
 										placement={placement}
+										shouldAdjustPosition={shouldAdjustPosition}
 										align={align}>
 										<div>popover content</div>
 									</Popover>
@@ -193,6 +217,13 @@ export class FixedPopoverPage extends React.Component<{}, TFixedPopoverPageState
 	private onVerticalAlignSelect = (verticalButtonPosition: VericalButtonPosition) => {
 		this.setState({
 			verticalButtonPosition,
+		});
+	};
+
+	private onChangeHandler = (value?: boolean) => {
+		console.log(value);
+		this.setState({
+			shouldAdjustPosition: Boolean(value),
 		});
 	};
 }
