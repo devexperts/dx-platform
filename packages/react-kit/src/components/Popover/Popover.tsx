@@ -440,7 +440,7 @@ function movePopoverVertically(
 	anchorBottom: number,
 	popoverHeight: number,
 	parentHeight: number,
-	shouldAdjustPosition = false,
+	shouldAdjustPosition = true,
 	checkBounds = false,
 ): TVerticalPosition | undefined {
 	switch (placement) {
@@ -596,7 +596,7 @@ function movePopoverHorizontally(
 	anchorRight: number,
 	popoverWidth: number,
 	parentWidth: number,
-	shouldAdjustPosition = false,
+	shouldAdjustPosition = true,
 	checkBounds = false,
 ): THorizontalPosition | undefined {
 	switch (placement) {
