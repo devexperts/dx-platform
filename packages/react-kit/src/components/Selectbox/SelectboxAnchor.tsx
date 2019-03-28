@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { PURE } from '../../utils/pure';
 import { Button, TButtonProps, TFullButtonProps } from '../Button/Button';
-import { ComponentClass, ReactNode } from 'react';
+import { ComponentClass, ReactNode, ReactText } from 'react';
 import { Omit } from 'typelevel-ts';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import * as classnames from 'classnames';
@@ -16,7 +16,7 @@ export type TFullSelectboxAnchorProps = Omit<TButtonProps, 'theme'> & {
 	};
 	isOpened?: boolean;
 	caretIcon?: ReactNode;
-	value?: string | number;
+	value?: ReactText | ReactText[];
 	valueText?: ReactNode;
 };
 
