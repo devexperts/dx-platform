@@ -282,24 +282,25 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 		let arrowOffset;
 		let finalPlacement;
 		let finalAlign;
-		const topResult: TVerticalPosition = movePopoverVertically(
+		const topResult: TVerticalPosition = movePopoverVertically({
 			placement,
 			align,
-			anchorRect.top,
-			anchorRect.bottom,
-			this._popoverSize.height,
-			anchorRect.parentHeight,
-			true,
-		)!;
-		const leftResult: THorizontalPosition = movePopoverHorizontally(
+			anchorTop: anchorRect.top,
+			anchorBottom: anchorRect.bottom,
+			popoverHeight: this._popoverSize.height,
+			parentHeight: anchorRect.parentHeight,
+			checkBounds: true,
+		})!;
+
+		const leftResult: THorizontalPosition = movePopoverHorizontally({
 			placement,
 			align,
-			anchorRect.left,
-			anchorRect.right,
-			this._popoverSize.width,
-			anchorRect.parentWidth,
-			true,
-		)!;
+			anchorLeft: anchorRect.left,
+			anchorRight: anchorRect.right,
+			popoverWidth: this._popoverSize.width,
+			parentWidth: anchorRect.parentWidth,
+			checkBounds: true,
+		})!;
 
 		//additional
 		if (placement === PopoverPlacement.Top || placement === PopoverPlacement.Bottom) {
@@ -430,27 +431,55 @@ type TVerticalPosition = {
 	align: PopoverAlign;
 };
 
-function movePopoverVertically(
-	placement: PopoverPlacement,
-	align: PopoverAlign,
-	anchorTop: number,
-	anchorBottom: number,
-	popoverHeight: number,
-	parentHeight: number,
+type TVerticalMoveProps = {
+	placement: PopoverPlacement;
+	align: PopoverAlign;
+	anchorTop: number;
+	anchorBottom: number;
+	popoverHeight: number;
+	parentHeight: number;
+	previousPlacement?: PopoverPlacement;
+	checkBounds?: boolean;
+};
+
+const movePopoverVertically: (props: TVerticalMoveProps) => TVerticalPosition | undefined = ({
+	placement,
+	align,
+	anchorTop,
+	anchorBottom,
+	popoverHeight,
+	parentHeight,
+	previousPlacement,
 	checkBounds = false,
-): TVerticalPosition | undefined {
+}) => {
 	switch (placement) {
 		case PopoverPlacement.Top: {
 			const top = anchorTop - popoverHeight;
+
 			if (checkBounds && top < 0) {
-				return movePopoverVertically(
-					PopoverPlacement.Bottom,
-					align,
-					anchorTop,
-					anchorBottom,
-					popoverHeight,
-					parentHeight,
-				);
+				switch (previousPlacement) {
+					case PopoverPlacement.Bottom:
+						return movePopoverVertically({
+							placement: PopoverPlacement.Bottom,
+							align,
+							anchorTop,
+							anchorBottom,
+							popoverHeight,
+							parentHeight,
+							previousPlacement: placement,
+						});
+					default:
+						return movePopoverVertically({
+							placement: PopoverPlacement.Bottom,
+							align,
+							anchorTop,
+							anchorBottom,
+							popoverHeight,
+							parentHeight,
+							previousPlacement: placement,
+							checkBounds: true,
+						});
+				}
 			}
 			return {
 				top,
@@ -461,14 +490,29 @@ function movePopoverVertically(
 		case PopoverPlacement.Bottom: {
 			const top = anchorBottom;
 			if (checkBounds && top + popoverHeight > parentHeight) {
-				return movePopoverVertically(
-					PopoverPlacement.Top,
-					align,
-					anchorTop,
-					anchorBottom,
-					popoverHeight,
-					parentHeight,
-				);
+				switch (previousPlacement) {
+					case PopoverPlacement.Top:
+						return movePopoverVertically({
+							placement: PopoverPlacement.Top,
+							align,
+							anchorTop,
+							anchorBottom,
+							popoverHeight,
+							parentHeight,
+							previousPlacement: placement,
+						});
+					default:
+						return movePopoverVertically({
+							placement: PopoverPlacement.Top,
+							align,
+							anchorTop,
+							anchorBottom,
+							popoverHeight,
+							parentHeight,
+							previousPlacement: placement,
+							checkBounds: true,
+						});
+				}
 			}
 			return {
 				top,
@@ -482,23 +526,23 @@ function movePopoverVertically(
 		case PopoverAlign.Top: {
 			const top = anchorTop;
 			if (checkBounds && top + popoverHeight > parentHeight) {
-				const resultForMiddle = movePopoverVertically(
+				const resultForMiddle = movePopoverVertically({
 					placement,
-					PopoverAlign.Middle,
+					align: PopoverAlign.Middle,
 					anchorTop,
 					anchorBottom,
 					popoverHeight,
 					parentHeight,
-				);
+				});
 				if (resultForMiddle && resultForMiddle.top + popoverHeight > parentHeight) {
-					return movePopoverVertically(
+					return movePopoverVertically({
 						placement,
-						PopoverAlign.Bottom,
+						align: PopoverAlign.Bottom,
 						anchorTop,
 						anchorBottom,
 						popoverHeight,
 						parentHeight,
-					);
+					});
 				}
 				return resultForMiddle;
 			}
@@ -512,23 +556,23 @@ function movePopoverVertically(
 			const top = anchorTop + (anchorBottom - anchorTop) / 2 - popoverHeight / 2;
 			if (checkBounds) {
 				if (top < 0) {
-					return movePopoverVertically(
+					return movePopoverVertically({
 						placement,
-						PopoverAlign.Top,
+						align: PopoverAlign.Top,
 						anchorTop,
 						anchorBottom,
 						popoverHeight,
 						parentHeight,
-					);
+					});
 				} else if (top + popoverHeight > parentHeight) {
-					return movePopoverVertically(
+					return movePopoverVertically({
 						placement,
-						PopoverAlign.Bottom,
+						align: PopoverAlign.Bottom,
 						anchorTop,
 						anchorBottom,
 						popoverHeight,
 						parentHeight,
-					);
+					});
 				}
 			}
 			return {
@@ -540,23 +584,23 @@ function movePopoverVertically(
 		case PopoverAlign.Bottom: {
 			const top = anchorBottom - popoverHeight;
 			if (checkBounds && top < 0) {
-				const resultForMiddle = movePopoverVertically(
+				const resultForMiddle = movePopoverVertically({
 					placement,
-					PopoverAlign.Middle,
+					align: PopoverAlign.Middle,
 					anchorTop,
 					anchorBottom,
 					popoverHeight,
 					parentHeight,
-				);
+				});
 				if (resultForMiddle && resultForMiddle.top < 0) {
-					return movePopoverVertically(
+					return movePopoverVertically({
 						placement,
-						PopoverAlign.Top,
+						align: PopoverAlign.Top,
 						anchorTop,
 						anchorBottom,
 						popoverHeight,
 						parentHeight,
-					);
+					});
 				}
 				return resultForMiddle;
 			}
@@ -569,7 +613,18 @@ function movePopoverVertically(
 	}
 
 	return undefined;
-}
+};
+
+type THorizontalMoveProps = {
+	placement: PopoverPlacement;
+	align: PopoverAlign;
+	anchorLeft: number;
+	anchorRight: number;
+	popoverWidth: number;
+	parentWidth: number;
+	checkBounds?: Boolean;
+	previousPlacement?: PopoverPlacement;
+};
 
 type THorizontalPosition = {
 	left: number;
@@ -577,27 +632,43 @@ type THorizontalPosition = {
 	align: PopoverAlign;
 };
 
-function movePopoverHorizontally(
-	placement: PopoverPlacement,
-	align: PopoverAlign,
-	anchorLeft: number,
-	anchorRight: number,
-	popoverWidth: number,
-	parentWidth: number,
+const movePopoverHorizontally: (props: THorizontalMoveProps) => THorizontalPosition | undefined = ({
+	placement,
+	align,
+	anchorLeft,
+	anchorRight,
+	popoverWidth,
+	parentWidth,
 	checkBounds = false,
-): THorizontalPosition | undefined {
+	previousPlacement,
+}) => {
 	switch (placement) {
 		case PopoverPlacement.Left: {
 			const left = anchorLeft - popoverWidth;
 			if (checkBounds && left < 0) {
-				return movePopoverHorizontally(
-					PopoverPlacement.Right,
-					align,
-					anchorLeft,
-					anchorRight,
-					popoverWidth,
-					parentWidth,
-				);
+				switch (previousPlacement) {
+					case PopoverPlacement.Right:
+						return movePopoverHorizontally({
+							placement: PopoverPlacement.Right,
+							align,
+							anchorLeft,
+							anchorRight,
+							popoverWidth,
+							parentWidth,
+							previousPlacement: placement,
+						});
+					default:
+						return movePopoverHorizontally({
+							placement: PopoverPlacement.Right,
+							align,
+							anchorLeft,
+							anchorRight,
+							popoverWidth,
+							parentWidth,
+							checkBounds: true,
+							previousPlacement: placement,
+						});
+				}
 			}
 			return {
 				left,
@@ -608,14 +679,29 @@ function movePopoverHorizontally(
 		case PopoverPlacement.Right: {
 			const left = anchorRight;
 			if (checkBounds && left + popoverWidth > parentWidth) {
-				return movePopoverHorizontally(
-					PopoverPlacement.Left,
-					align,
-					anchorLeft,
-					anchorRight,
-					popoverWidth,
-					parentWidth,
-				);
+				switch (previousPlacement) {
+					case PopoverPlacement.Left:
+						return movePopoverHorizontally({
+							placement: PopoverPlacement.Left,
+							align,
+							anchorLeft,
+							anchorRight,
+							popoverWidth,
+							parentWidth,
+							previousPlacement: placement,
+						});
+					default:
+						return movePopoverHorizontally({
+							placement: PopoverPlacement.Left,
+							align,
+							anchorLeft,
+							anchorRight,
+							popoverWidth,
+							parentWidth,
+							previousPlacement: placement,
+							checkBounds: true,
+						});
+				}
 			}
 			return {
 				left,
@@ -629,23 +715,23 @@ function movePopoverHorizontally(
 		case PopoverAlign.Left: {
 			const left = anchorLeft;
 			if (checkBounds && left + popoverWidth > parentWidth) {
-				const resultForCenter = movePopoverHorizontally(
+				const resultForCenter = movePopoverHorizontally({
 					placement,
-					PopoverAlign.Center,
+					align: PopoverAlign.Center,
 					anchorLeft,
 					anchorRight,
 					popoverWidth,
 					parentWidth,
-				);
+				});
 				if (resultForCenter && resultForCenter.left + popoverWidth > parentWidth) {
-					return movePopoverHorizontally(
+					return movePopoverHorizontally({
 						placement,
-						PopoverAlign.Right,
+						align: PopoverAlign.Right,
 						anchorLeft,
 						anchorRight,
 						popoverWidth,
 						parentWidth,
-					);
+					});
 				}
 				return resultForCenter;
 			}
@@ -659,23 +745,23 @@ function movePopoverHorizontally(
 			const left = anchorLeft + (anchorRight - anchorLeft) / 2 - popoverWidth / 2;
 			if (checkBounds) {
 				if (left < 0) {
-					return movePopoverHorizontally(
+					return movePopoverHorizontally({
 						placement,
-						PopoverAlign.Left,
+						align: PopoverAlign.Left,
 						anchorLeft,
 						anchorRight,
 						popoverWidth,
 						parentWidth,
-					);
+					});
 				} else if (left + popoverWidth > parentWidth) {
-					return movePopoverHorizontally(
+					return movePopoverHorizontally({
 						placement,
-						PopoverAlign.Right,
+						align: PopoverAlign.Right,
 						anchorLeft,
 						anchorRight,
 						popoverWidth,
 						parentWidth,
-					);
+					});
 				}
 			}
 			return {
@@ -687,23 +773,23 @@ function movePopoverHorizontally(
 		case PopoverAlign.Right: {
 			const left = anchorRight - popoverWidth;
 			if (checkBounds && left < 0) {
-				const resultForCenter = movePopoverHorizontally(
+				const resultForCenter = movePopoverHorizontally({
 					placement,
-					PopoverAlign.Center,
+					align: PopoverAlign.Center,
 					anchorLeft,
 					anchorRight,
 					popoverWidth,
 					parentWidth,
-				);
+				});
 				if (resultForCenter && resultForCenter.left < 0) {
-					return movePopoverHorizontally(
+					return movePopoverHorizontally({
 						placement,
-						PopoverAlign.Left,
+						align: PopoverAlign.Left,
 						anchorLeft,
 						anchorRight,
 						popoverWidth,
 						parentWidth,
-					);
+					});
 				}
 				return resultForCenter;
 			}
@@ -716,7 +802,7 @@ function movePopoverHorizontally(
 	}
 
 	return undefined;
-}
+};
 
 function getPlacementModifier(placement: PopoverPlacement): string {
 	switch (placement) {
