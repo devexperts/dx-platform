@@ -7,6 +7,11 @@ import { animationFrame } from 'rxjs/internal/scheduler/animationFrame';
 const hoistNonReactStatics = require('hoist-non-react-statics');
 
 /**
+ * Stream of props that should be passed to the wrapped component. Each emitted item should be
+ * an object containing a subset of component's props type. For example, in order to update the
+ * `time` and `formattedTime` props, the stream should emit `{time: 1234000000, formattedTime: '11:12:01'}`,
+ * or emit separately `{time: 1234000000}` and `{formattedTime: '11:12:01'}`
+ * 
  * @deprecated
  */
 export type WithRXSelectorResultPropsOnly<P> = Observable<Partial<P>>;
@@ -14,7 +19,17 @@ export type WithRXSelectorResultPropsOnly<P> = Observable<Partial<P>>;
  * @deprecated
  */
 export type WithRXSelectorResultWithEffects<P> = {
+	/**
+	 * Stream of props that should be passed to the wrapped component. Each emitted item should be
+	 * an object containing a subset of component's props type. For example, in order to update the
+	 * `time` and `formattedTime` props, the stream should emit `{time: 1234000000, formattedTime: '11:12:01'}`,
+	 * or emit separately `{time: 1234000000}` and `{formattedTime: '11:12:01'}`
+	 */
 	props$: Observable<Partial<P>>;
+	/**
+	 * Stream of so-called effects - the streams that are not displayed in the UI but trigger some
+	 * side-effects, such as sending requests
+	 */
 	effects$: Observable<void>;
 };
 
@@ -27,11 +42,33 @@ export type ComponentDecorator<P> = (Target: ComponentType<P>) => ComponentClass
  */
 export type WithRXSelectorResult<P> = WithRXSelectorResultPropsOnly<P> | WithRXSelectorResultWithEffects<P>;
 /**
+ * Function that maps the stream of input props into the stream of props that will be applied to the 
+ * wrapped component. The returned value may optionally declare the `effects$` - the streams that will
+ * be subscribed on but not passed to the component props.
+ * 
  * @deprecated
  */
 export type WithRXSelector<P> = (props$: Observable<Readonly<P>>) => WithRXSelectorResult<P>;
 
 /**
+ * Higher order component that allows to pass the values emitted by RxJS streams as props to the target component.
+ * 
+ * ```ts
+ * const CounterComponent = ({time}) => <div>Current time is {time}</div>;
+ * const selector = props$ => {
+ *     return Observable.interval()
+ *         .map(() => Date.now())
+ *         .withLatestFrom(props$.map(props => props.format))	// access the input prop "format"
+ *         .map(([timestamp, fmt]) => format(timestamp, fmt))
+ *         .map(time => ({time}))    // wrap the value in an object like {time: "10:58:01"}
+ *                                   // which can be mixed into the CounterComponent props
+ * }
+ * const Counter = withRX(selector)(CounterComponent);
+ * 
+ * // render:
+ * const elem = <Counter format="HH:mm:ss" />;
+ * ```
+ * 
  * @deprecated
  */
 export function withRX<P extends object = never>(select: WithRXSelector<P>): ComponentDecorator<P> {
