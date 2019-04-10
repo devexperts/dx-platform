@@ -442,6 +442,13 @@ type TVerticalMoveProps = {
 	checkBounds?: boolean;
 };
 
+const wrapperVerticallyMove: (
+	props: PartialKeys<TVerticalMoveProps, 'placement'>,
+) => (placement: PopoverPlacement, checkBounds?: boolean) => TVerticalPosition | undefined = props => (
+	placement,
+	checkBounds,
+) => movePopoverVertically({ ...props, placement, checkBounds });
+
 function movePopoverVertically({
 	placement,
 	align,
@@ -457,41 +464,23 @@ function movePopoverVertically({
 			const top = anchorTop - popoverHeight;
 
 			if (checkBounds && top < 0) {
-				switch (previousPlacement) {
-					case PopoverPlacement.Bottom:
-						return movePopoverVertically({
-							placement: PopoverPlacement.Bottom,
-							align,
-							anchorTop,
-							anchorBottom,
-							popoverHeight,
-							parentHeight,
-							previousPlacement: placement,
-						});
-					case PopoverPlacement.Top:
-						return movePopoverVertically({
-							placement: PopoverPlacement.Top,
-							align,
-							anchorTop,
-							anchorBottom,
-							popoverHeight,
-							parentHeight,
-							previousPlacement: placement,
-						});
-					case PopoverPlacement.Left:
-					case PopoverPlacement.Right:
-						return undefined;
-				}
-				return movePopoverVertically({
-					placement: PopoverPlacement.Bottom,
+				const callback = wrapperVerticallyMove({
 					align,
 					anchorTop,
 					anchorBottom,
 					popoverHeight,
 					parentHeight,
 					previousPlacement: placement,
-					checkBounds: true,
 				});
+				switch (previousPlacement) {
+					case PopoverPlacement.Bottom:
+					case PopoverPlacement.Top:
+						return callback(previousPlacement);
+					case PopoverPlacement.Left:
+					case PopoverPlacement.Right:
+						return undefined;
+				}
+				return callback(PopoverPlacement.Bottom, true);
 			}
 			return {
 				top,
@@ -502,41 +491,23 @@ function movePopoverVertically({
 		case PopoverPlacement.Bottom: {
 			const top = anchorBottom;
 			if (checkBounds && top + popoverHeight > parentHeight) {
-				switch (previousPlacement) {
-					case PopoverPlacement.Top:
-						return movePopoverVertically({
-							placement: PopoverPlacement.Top,
-							align,
-							anchorTop,
-							anchorBottom,
-							popoverHeight,
-							parentHeight,
-							previousPlacement: placement,
-						});
-					case PopoverPlacement.Bottom:
-						return movePopoverVertically({
-							placement: PopoverPlacement.Bottom,
-							align,
-							anchorTop,
-							anchorBottom,
-							popoverHeight,
-							parentHeight,
-							previousPlacement: placement,
-						});
-					case PopoverPlacement.Left:
-					case PopoverPlacement.Right:
-						return undefined;
-				}
-				return movePopoverVertically({
-					placement: PopoverPlacement.Top,
+				const callback = wrapperVerticallyMove({
 					align,
 					anchorTop,
 					anchorBottom,
 					popoverHeight,
 					parentHeight,
 					previousPlacement: placement,
-					checkBounds: true,
 				});
+				switch (previousPlacement) {
+					case PopoverPlacement.Top:
+					case PopoverPlacement.Bottom:
+						return callback(previousPlacement);
+					case PopoverPlacement.Left:
+					case PopoverPlacement.Right:
+						return undefined;
+				}
+				return callback(PopoverPlacement.Top, true);
 			}
 			return {
 				top,
@@ -656,6 +627,13 @@ type THorizontalPosition = {
 	align: PopoverAlign;
 };
 
+const wrapperHorizontallyMove: (
+	props: PartialKeys<THorizontalMoveProps, 'placement'>,
+) => (placement: PopoverPlacement, checkBounds?: boolean) => THorizontalPosition | undefined = props => (
+	placement,
+	checkBounds,
+) => movePopoverHorizontally({ ...props, placement, checkBounds });
+
 function movePopoverHorizontally({
 	placement,
 	align,
@@ -670,41 +648,23 @@ function movePopoverHorizontally({
 		case PopoverPlacement.Left: {
 			const left = anchorLeft - popoverWidth;
 			if (checkBounds && left < 0) {
-				switch (previousPlacement) {
-					case PopoverPlacement.Right:
-						return movePopoverHorizontally({
-							placement: PopoverPlacement.Right,
-							align,
-							anchorLeft,
-							anchorRight,
-							popoverWidth,
-							parentWidth,
-							previousPlacement: placement,
-						});
-					case PopoverPlacement.Left:
-						return movePopoverHorizontally({
-							placement: PopoverPlacement.Left,
-							align,
-							anchorLeft,
-							anchorRight,
-							popoverWidth,
-							parentWidth,
-							previousPlacement: placement,
-						});
-					case PopoverPlacement.Top:
-					case PopoverPlacement.Bottom:
-						return undefined;
-				}
-				return movePopoverHorizontally({
-					placement: PopoverPlacement.Right,
+				const callback = wrapperHorizontallyMove({
 					align,
 					anchorLeft,
 					anchorRight,
 					popoverWidth,
 					parentWidth,
-					checkBounds: true,
 					previousPlacement: placement,
 				});
+				switch (previousPlacement) {
+					case PopoverPlacement.Right:
+					case PopoverPlacement.Left:
+						return callback(previousPlacement);
+					case PopoverPlacement.Top:
+					case PopoverPlacement.Bottom:
+						return undefined;
+				}
+				return callback(PopoverPlacement.Right, true);
 			}
 			return {
 				left,
@@ -715,41 +675,23 @@ function movePopoverHorizontally({
 		case PopoverPlacement.Right: {
 			const left = anchorRight;
 			if (checkBounds && left + popoverWidth > parentWidth) {
-				switch (previousPlacement) {
-					case PopoverPlacement.Left:
-						return movePopoverHorizontally({
-							placement: PopoverPlacement.Left,
-							align,
-							anchorLeft,
-							anchorRight,
-							popoverWidth,
-							parentWidth,
-							previousPlacement: placement,
-						});
-					case PopoverPlacement.Right:
-						return movePopoverHorizontally({
-							placement: PopoverPlacement.Right,
-							align,
-							anchorLeft,
-							anchorRight,
-							popoverWidth,
-							parentWidth,
-							previousPlacement: placement,
-						});
-					case PopoverPlacement.Top:
-					case PopoverPlacement.Bottom:
-						return undefined;
-				}
-				return movePopoverHorizontally({
-					placement: PopoverPlacement.Left,
+				const callback = wrapperHorizontallyMove({
 					align,
 					anchorLeft,
 					anchorRight,
 					popoverWidth,
 					parentWidth,
 					previousPlacement: placement,
-					checkBounds: true,
 				});
+				switch (previousPlacement) {
+					case PopoverPlacement.Left:
+					case PopoverPlacement.Right:
+						return callback(previousPlacement);
+					case PopoverPlacement.Top:
+					case PopoverPlacement.Bottom:
+						return undefined;
+				}
+				return callback(PopoverPlacement.Left, true);
 			}
 			return {
 				left,
