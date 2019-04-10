@@ -119,7 +119,7 @@ class RawInput extends React.Component<TFullInputProps, TInputState> {
 			<div
 				className={className}
 				id={id}
-				onClick={onClick}
+				onClick={e => !isDisabled && onClick && onClick(e)}
 				onMouseDown={onMouseDown}
 				onMouseUp={onMouseUp}
 				onMouseEnter={onMouseEnter}

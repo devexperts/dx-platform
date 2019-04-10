@@ -92,7 +92,7 @@ class RawSteppableInput extends React.Component<TFullSteppableInputProps, TStepp
 				onFocus={this.onFocus}
 				onBlur={this.onBlur}
 				onKeyDown={this.onKeyDown}
-				onClick={e => !isDisabled && onClick && onClick(e)}
+				onClick={onClick}
 				onMouseEnter={onMouseEnter}
 				onMouseLeave={onMouseLeave}
 				onWheel={this.onWheel}
