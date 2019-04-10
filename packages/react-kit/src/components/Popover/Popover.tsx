@@ -443,11 +443,9 @@ type TVerticalMoveProps = {
 };
 
 const wrapperVerticallyMove: (
-	props: PartialKeys<TVerticalMoveProps, 'placement'>,
-) => (placement: PopoverPlacement, checkBounds?: boolean) => TVerticalPosition | undefined = props => (
-	placement,
-	checkBounds,
-) => movePopoverVertically({ ...props, placement, checkBounds });
+	defaultProps: TVerticalMoveProps,
+) => (props: Partial<TVerticalMoveProps>) => TVerticalPosition | undefined = defaultProps => props =>
+	movePopoverVertically({ ...defaultProps, ...props });
 
 function movePopoverVertically({
 	placement,
@@ -465,6 +463,7 @@ function movePopoverVertically({
 
 			if (checkBounds && top < 0) {
 				const callback = wrapperVerticallyMove({
+					placement: PopoverPlacement.Bottom,
 					align,
 					anchorTop,
 					anchorBottom,
@@ -475,12 +474,12 @@ function movePopoverVertically({
 				switch (previousPlacement) {
 					case PopoverPlacement.Bottom:
 					case PopoverPlacement.Top:
-						return callback(previousPlacement);
+						return callback({ placement: previousPlacement });
 					case PopoverPlacement.Left:
 					case PopoverPlacement.Right:
 						return undefined;
 				}
-				return callback(PopoverPlacement.Bottom, true);
+				return callback({ checkBounds: true });
 			}
 			return {
 				top,
@@ -492,6 +491,7 @@ function movePopoverVertically({
 			const top = anchorBottom;
 			if (checkBounds && top + popoverHeight > parentHeight) {
 				const callback = wrapperVerticallyMove({
+					placement: PopoverPlacement.Top,
 					align,
 					anchorTop,
 					anchorBottom,
@@ -502,12 +502,12 @@ function movePopoverVertically({
 				switch (previousPlacement) {
 					case PopoverPlacement.Top:
 					case PopoverPlacement.Bottom:
-						return callback(previousPlacement);
+						return callback({ placement: previousPlacement });
 					case PopoverPlacement.Left:
 					case PopoverPlacement.Right:
 						return undefined;
 				}
-				return callback(PopoverPlacement.Top, true);
+				return callback({ checkBounds: true });
 			}
 			return {
 				top,
@@ -628,11 +628,9 @@ type THorizontalPosition = {
 };
 
 const wrapperHorizontallyMove: (
-	props: PartialKeys<THorizontalMoveProps, 'placement'>,
-) => (placement: PopoverPlacement, checkBounds?: boolean) => THorizontalPosition | undefined = props => (
-	placement,
-	checkBounds,
-) => movePopoverHorizontally({ ...props, placement, checkBounds });
+	defaultProps: THorizontalMoveProps,
+) => (props: Partial<THorizontalMoveProps>) => THorizontalPosition | undefined = defaultProps => props =>
+	movePopoverHorizontally({ ...defaultProps, ...props });
 
 function movePopoverHorizontally({
 	placement,
@@ -649,6 +647,7 @@ function movePopoverHorizontally({
 			const left = anchorLeft - popoverWidth;
 			if (checkBounds && left < 0) {
 				const callback = wrapperHorizontallyMove({
+					placement: PopoverPlacement.Right,
 					align,
 					anchorLeft,
 					anchorRight,
@@ -659,12 +658,12 @@ function movePopoverHorizontally({
 				switch (previousPlacement) {
 					case PopoverPlacement.Right:
 					case PopoverPlacement.Left:
-						return callback(previousPlacement);
+						return callback({ placement: previousPlacement });
 					case PopoverPlacement.Top:
 					case PopoverPlacement.Bottom:
 						return undefined;
 				}
-				return callback(PopoverPlacement.Right, true);
+				return callback({ checkBounds: true });
 			}
 			return {
 				left,
@@ -676,6 +675,7 @@ function movePopoverHorizontally({
 			const left = anchorRight;
 			if (checkBounds && left + popoverWidth > parentWidth) {
 				const callback = wrapperHorizontallyMove({
+					placement: PopoverPlacement.Left,
 					align,
 					anchorLeft,
 					anchorRight,
@@ -686,12 +686,12 @@ function movePopoverHorizontally({
 				switch (previousPlacement) {
 					case PopoverPlacement.Left:
 					case PopoverPlacement.Right:
-						return callback(previousPlacement);
+						return callback({ placement: previousPlacement });
 					case PopoverPlacement.Top:
 					case PopoverPlacement.Bottom:
 						return undefined;
 				}
-				return callback(PopoverPlacement.Left, true);
+				return callback({ checkBounds: true });
 			}
 			return {
 				left,
