@@ -1,13 +1,14 @@
 import * as React from 'react';
-import Demo from '../demo/Demo';
-import { PURE } from '../../utils/pure';
-import { Button } from '../Button/Button';
-import { Popover, PopoverPlacement, PopoverAlign } from './Popover';
-import { Scrollable } from '../Scrollable/Scrollable';
-import * as css from './Popover.page.styl';
-import { stateful } from '../Control/Control';
-import { Selectbox } from '../Selectbox/Selectbox';
-import { MenuItem } from '../Menu/Menu';
+import Demo from '../../demo/Demo';
+import { PURE } from '../../../utils/pure';
+import { Button } from '../../Button/Button';
+import { Popover } from '../Popover';
+import { PopoverPlacement, PopoverAlign } from '../Popover.model';
+import { Scrollable } from '../../Scrollable/Scrollable';
+import * as css from './theme/Popover.page.styl';
+import { stateful } from '../../Control/Control';
+import { Selectbox } from '../../Selectbox/Selectbox';
+import { MenuItem } from '../../Menu/Menu';
 import * as cn from 'classnames';
 
 const Stateful = stateful()(Selectbox);

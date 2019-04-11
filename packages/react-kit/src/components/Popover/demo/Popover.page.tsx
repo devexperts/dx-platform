@@ -1,15 +1,16 @@
 import * as React from 'react';
-import Demo from '../demo/Demo';
-import { Button } from '../Button/Button';
-import { Popover, PopoverPlacement, PopoverAlign } from './Popover';
-import { Selectbox } from '../Selectbox/Selectbox';
-import { MenuItem } from '../Menu/Menu';
-import { PURE } from '../../utils/pure';
+import Demo from '../../demo/Demo';
+import { Button } from '../../Button/Button';
+import { Popover } from '../Popover';
+import { PopoverPlacement, PopoverAlign } from '../Popover.model';
+import { Selectbox } from '../../Selectbox/Selectbox';
+import { MenuItem } from '../../Menu/Menu';
+import { PURE } from '../../../utils/pure';
 import { storiesOf } from '@devexperts/tools/dist/utils/storybook';
-import { stateful } from '../Control/Control';
+import { stateful } from '../../Control/Control';
 
-import * as css from './Popover.page.styl';
-import { Scrollable } from '../Scrollable/Scrollable';
+import * as css from './theme/Popover.page.styl';
+import { Scrollable } from '../../Scrollable/Scrollable';
 import { InputWithPopoverPage } from './InputWithPopover.page';
 import { FixedPopoverPage } from './FixedPopover.page';
 
