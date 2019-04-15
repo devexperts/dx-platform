@@ -81,7 +81,7 @@ describe('Popover.model', () => {
 			).toEqual(result);
 		});
 
-		it('should try open upward and will open downward', () => {
+		it('should open downward if there is not enough space on top to open upwards', () => {
 			const anchorBottom = 20;
 			const top = anchorBottom;
 			const result: TVerticalPosition = {
@@ -102,7 +102,7 @@ describe('Popover.model', () => {
 			).toEqual(result);
 		});
 
-		it('should try open downward and will open upward', () => {
+		it('should open upward if there is not enough space on bottom to open downwards', () => {
 			const anchorTop = 95;
 			const popoverHeight = 20;
 			const top = anchorTop - popoverHeight;
@@ -124,7 +124,7 @@ describe('Popover.model', () => {
 			).toEqual(result);
 		});
 
-		it('should try open upward, downward and will open upward', () => {
+		it('should open upward if there is not enough space on top and bottom', () => {
 			const anchorTop = 4;
 			const popoverHeight = 20;
 			const top = anchorTop - popoverHeight;
@@ -146,7 +146,7 @@ describe('Popover.model', () => {
 			).toEqual(result);
 		});
 
-		it('should try open downward, upward and will open downward', () => {
+		it('should open downward if there is not enough space on bottom and top', () => {
 			const anchorBottom = 6;
 			const top = anchorBottom;
 			const result: TVerticalPosition = {
@@ -193,7 +193,7 @@ describe('Popover.model', () => {
 		});
 	});
 
-	describe('move popover horizontally', () => {
+	describe('Move popover horizontally', () => {
 		it('should open leftward', () => {
 			const anchorLeft = 50;
 			const popoverWidth = 20;
@@ -237,7 +237,7 @@ describe('Popover.model', () => {
 			).toEqual(result);
 		});
 
-		it('should try open leftward and will open rightward', () => {
+		it('should open rightward if there is not enough space on left to open leftwards', () => {
 			const anchorRight = 10;
 			const left = anchorRight;
 			const result: THorizontalPosition = {
@@ -258,7 +258,7 @@ describe('Popover.model', () => {
 			).toEqual(result);
 		});
 
-		it('should try open rightward and will open leftward', () => {
+		it('should open leftward if there is not enough space on right to open rightwards', () => {
 			const anchorLeft = 100;
 			const popoverWidth = 20;
 			const left = anchorLeft - popoverWidth;
@@ -280,7 +280,7 @@ describe('Popover.model', () => {
 			).toEqual(result);
 		});
 
-		it('should try open leftward, rightward and will open leftward', () => {
+		it('should open leftward if there is not enough space on left and right', () => {
 			const anchorLeft = 4;
 			const popoverWidth = 20;
 			const left = anchorLeft - popoverWidth;
@@ -302,7 +302,7 @@ describe('Popover.model', () => {
 			).toEqual(result);
 		});
 
-		it('should try open rightward, leftward and will open rightward', () => {
+		it('should open rightward if there is not enough space on right and left', () => {
 			const anchorRight = 6;
 			const left = anchorRight;
 			const result: THorizontalPosition = {
