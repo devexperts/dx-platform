@@ -1,8 +1,9 @@
 import * as React from 'react';
-import { Input } from '../input/Input';
-import { Popover, PopoverPlacement, PopoverAlign } from './Popover';
-import { stateful } from '../Control/Control';
-import Demo from '../demo/Demo';
+import { Input } from '../../input/Input';
+import { Popover } from '../Popover';
+import { PopoverPlacement, PopoverAlign } from '../Popover.model';
+import { stateful } from '../../Control/Control';
+import Demo from '../../demo/Demo';
 
 const StatefulInput = stateful()(Input);
 

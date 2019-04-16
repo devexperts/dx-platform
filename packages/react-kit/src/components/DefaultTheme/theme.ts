@@ -11,7 +11,7 @@ import { CHECKBOX } from '../Checkbox/Checkbox';
 import * as checkboxTheme from '../Checkbox/Checkbox.demo.styl';
 
 import { POPOVER } from '../Popover/Popover';
-import * as popoverTheme from '../Popover/Popover.demo.styl';
+import * as popoverTheme from '../Popover/demo/theme/Popover.demo.styl';
 
 import { LIST } from '../List/List';
 import * as listTheme from '../List/List.demo.styl';
