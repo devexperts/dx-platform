@@ -24,6 +24,7 @@ import {
 	movePopoverHorizontally,
 	getPlacementModifier,
 } from './Popover.model';
+export {PopoverPlacement, PopoverAlign} from './Popover.model';
 
 type TSize = {
 	width: number;
