@@ -7,7 +7,8 @@ import { Link } from '../Link/Link';
 
 import { PURE } from '../../utils/pure';
 
-import { storiesOf, action } from '@devexperts/tools/dist/utils/storybook';
+import { storiesOf } from '@storybook/react';
+import { action } from '@storybook/addon-actions';
 
 @PURE
 class ToggleButtonsPage extends Component {

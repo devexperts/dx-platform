@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { storiesOf } from '@devexperts/tools/dist/utils/storybook';
+import { storiesOf } from '@storybook/react';
 import { Scrollable } from './Scrollable';
 import Demo from '../demo/Demo';
 import * as css from './Scrollable.page.styl';

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { storiesOf } from '@devexperts/tools/dist/utils/storybook';
+import { storiesOf } from '@storybook/react';
 import Demo from '../demo/Demo';
 import { LoadingIndicator } from './LoadingIndicator';
 

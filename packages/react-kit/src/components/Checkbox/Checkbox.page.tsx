@@ -5,7 +5,8 @@ import Demo from '../demo/Demo';
 import { CheckboxTickIcon } from '../../icons/checkbox-tick-icon';
 
 import { Checkbox } from './Checkbox';
-import { storiesOf, knobs } from '@devexperts/tools/dist/utils/storybook';
+import { storiesOf } from '@storybook/react';
+import { boolean } from '@storybook/addon-knobs';
 
 import * as css from './Checkbox.page.styl';
 
@@ -56,6 +57,6 @@ class CheckboxPage extends React.Component<{ isDisabled?: boolean }, { isChecked
 
 storiesOf('Checkbox', module)
 	.add('default', () => {
-		return <CheckboxPage isDisabled={knobs.boolean('isDisabled', false)} />;
+		return <CheckboxPage isDisabled={boolean('isDisabled', false)} />;
 	})
 	.add('disabled', () => <CheckboxPage isDisabled={true} />);
