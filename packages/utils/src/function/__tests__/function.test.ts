@@ -1,7 +1,10 @@
 import debounce from '../debounce';
 import throttle from '../throttle';
-import memoize, { MEMOIZE_CLEAR_FUNCTION } from '../memoize';
+import memoize, { MEMOIZE_CLEAR_FUNCTION as _MEMOIZE_CLEAR_FUNCTION } from '../memoize';
 import { disposable } from '../disposable';
+
+// symbols are not allowed as indexers in TS, had to cast to string. https://github.com/Microsoft/TypeScript/issues/24587#issuecomment-394022722
+const MEMOIZE_CLEAR_FUNCTION = (_MEMOIZE_CLEAR_FUNCTION as unknown) as string;
 
 describe('function', () => {
 	describe('debounce', () => {

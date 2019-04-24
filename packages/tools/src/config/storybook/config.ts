@@ -1,18 +1,17 @@
-import { configure, addDecorator } from '@storybook/react';
-import { setOptions } from '@storybook/addon-options';
+import { configure, addDecorator, addParameters } from '@storybook/react';
 import { withKnobs } from '@storybook/addon-knobs';
 
-setOptions({
+addParameters({
 	name: 'Storybook',
-	goFullScreen: false,
+	isFullscreen: false,
 	showStoriesPanel: true,
 	showAddonsPanel: true,
 	showSearchBox: false,
-	addonPanelInRight: true,
+	panelPosition: 'right',
 	sortStoriesByKind: false,
 	hierarchySeparator: /\./,
 	hierarchyRootSeparator: /\|/,
-} as any);
+});
 
 addDecorator(withKnobs);
 

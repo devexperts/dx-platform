@@ -1,8 +1,6 @@
 import * as webpack from 'webpack';
 import * as ENV from '../env';
 
-// tslint:disable-next-line
-const genDefaultConfig = require('@storybook/react/dist/server/config/defaults/webpack.config.js');
 import {
 	babelLoader,
 	tsLoader,
@@ -20,10 +18,8 @@ import {
 import { createForkTSCheckerPlugin } from '../webpack/plugins';
 import { Configuration } from 'webpack';
 
-// Export a function. Accept the base config as the only param.
-module.exports = (storybookBaseConfig, configType): Configuration => {
-	const config = genDefaultConfig(storybookBaseConfig, configType);
-
+module.exports = async ({ config }: { config: Configuration }): Promise<Configuration> => {
+	config.plugins = config.plugins || [];
 	return {
 		entry: config.entry,
 		output: config.output,
@@ -52,7 +48,7 @@ module.exports = (storybookBaseConfig, configType): Configuration => {
 			],
 		},
 		plugins: [
-			...(config.plugins as any[]),
+			...config.plugins,
 			createForkTSCheckerPlugin(),
 			new webpack.DefinePlugin({
 				SRC_PATH: JSON.stringify(ENV.SRC_PATH),
@@ -65,5 +61,6 @@ module.exports = (storybookBaseConfig, configType): Configuration => {
 		resolveLoader: {
 			modules: [ENV.TOOLS_NODE_MODULES_PATH],
 		},
+		mode: 'development',
 	};
 };
