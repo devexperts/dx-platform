@@ -78,7 +78,7 @@ describe('react', () => {
 				}),
 			).toBeFalsy(); //but base shouldComponentUpdate returns false
 		});
-		it('should check props.theme object for equality when using with react-css-themr', () => {
+		it('should check props.theme object for equality when using with theme', () => {
 			const css2 = {
 				//different objects with same structure
 				test: 'test',

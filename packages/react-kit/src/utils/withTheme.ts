@@ -58,10 +58,6 @@ export const withTheme = (name: string | symbol, defaultTheme: TTheme = {}) => {
 
 			static contextTypes = {
 				[THEME_CONTEXT_KEY.toString()]: PropTypes.object.isRequired,
-				//legacy react-css-themr context for backward compatibility
-				themr: PropTypes.shape({
-					theme: PropTypes.object.isRequired,
-				}),
 			};
 
 			render() {
