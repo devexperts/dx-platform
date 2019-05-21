@@ -61,8 +61,6 @@ export const withTheme = (name: string | symbol, defaultTheme: TTheme = {}) => {
 			};
 
 			render() {
-				const themr = this.context.themr && this.context.themr.theme && this.context.themr.theme[name];
-
 				/* BROKEN TYPES HERE
 				* the next 4 lines may be replaced by `const { withRef, theme, ...rest }= this.props;`
 				* but TS cannot get `rest` type from generic `this.props` type
@@ -78,7 +76,7 @@ export const withTheme = (name: string | symbol, defaultTheme: TTheme = {}) => {
 				const props = {
 					...rest,
 					ref: withRef,
-					theme: mergeThemes(config.theme, themr, this.context[THEME_CONTEXT_KEY.toString()][name], (theme ||
+					theme: mergeThemes(config.theme, this.context[THEME_CONTEXT_KEY.toString()][name], (theme ||
 						{}) as TTheme),
 				};
 				return React.createElement(Target as any, props);
