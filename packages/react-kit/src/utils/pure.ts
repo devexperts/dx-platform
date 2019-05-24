@@ -28,7 +28,7 @@ export function PURE<T extends Function>(target: T): T {
 		const shouldUpdateByOriginal =
 			!oldShouldComponentUpdate || oldShouldComponentUpdate.call(this, newProps, newState);
 
-		//check props.theme which can be set by react-css-themr
+		//check props.theme
 		const shouldCheckTheme = !!newProps['theme'];
 
 		//check shallow equality
