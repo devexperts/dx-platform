@@ -1,6 +1,6 @@
 {
   "name": "@devexperts/rx-utils",
-  "version": "0.28.3",
+  "version": "0.29.0",
   "description": "utilits for rxjs",
   "keywords": [
     "rxjs",
@@ -27,7 +27,7 @@
     "watch": "dx-tools build-lib src dist -w"
   },
   "dependencies": {
-    "@devexperts/utils": "^0.28.3",
+    "@devexperts/utils": "^0.29.0",
     "@types/query-string": "^5.1.0",
     "query-string": "^6.1.0",
     "querystring": "^0.2.0",
@@ -35,7 +35,7 @@
   },
   "devDependencies": {
     "@devexperts/remote-data-ts": "^0.2.0",
-    "@devexperts/tools": "^0.28.3",
+    "@devexperts/tools": "^0.29.0",
     "@types/jest": "^21.1.8",
     "@types/sinon": "^5.0.1",
     "fp-ts": "^1.11.3",

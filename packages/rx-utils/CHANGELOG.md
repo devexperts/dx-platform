@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.29.0](https://github.com/devex-web-frontend/dx-platform/compare/v0.28.3...v0.29.0) (2019-05-25)
+
+**Note:** Version bump only for package @devexperts/rx-utils
+
+
+
+
+
+
 ## [0.28.3](https://github.com/devex-web-frontend/dx-platform/compare/v0.28.2...v0.28.3) (2019-04-22)
 
 **Note:** Version bump only for package @devexperts/rx-utils

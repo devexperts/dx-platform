@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.29.0](https://github.com/devex-web-frontend/dx-platform/compare/v0.28.3...v0.29.0) (2019-05-25)
+
+
+### Code Refactoring
+
+* **react-kit:** remove react-css-themr from deps ([#131](https://github.com/devex-web-frontend/dx-platform/issues/131)) ([41f0d86](https://github.com/devex-web-frontend/dx-platform/commit/41f0d86))
+
+
+### maintain
+
+* update babel@7, webpack@4 and storybook@5 ([#126](https://github.com/devex-web-frontend/dx-platform/issues/126)) ([4cd1cd5](https://github.com/devex-web-frontend/dx-platform/commit/4cd1cd5))
+
+
+### BREAKING CHANGES
+
+* **react-kit:** @CSS component decorator has been removed
+* `utils/sotrybook.ts` is removed from `@devexperts/tools` package. Use direct import from `@storybook/*` instead
+
+
+
+
+
+
 ## [0.28.3](https://github.com/devex-web-frontend/dx-platform/compare/v0.28.2...v0.28.3) (2019-04-22)
 
 **Note:** Version bump only for package @devexperts/platform
