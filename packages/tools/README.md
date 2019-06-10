@@ -12,7 +12,7 @@ Commands are located under `src/scripts` directory. Some of available commands:
 dx-tools build-lib <src-path> <dist-path> [-w|--watch] [-f|--failOnError]
 ```
 Builds projects using following rules:
-* __Typescript__ - transpile `*.ts|*.tsx` files, produce `*.js|*.jsx` & `*.d.ts` files, run typechecking service in background
+* __Typescript__ - transpile `*.ts|*.tsx` files, produce `*.js|*.jsx` & `*.d.ts` files, run type checking service in background
 * __Stylus__ - copy to _dist-path_ __as-is__. Compilation of stylus files is not included.
 * __svg & other types of files__ - copy as-is.
 
