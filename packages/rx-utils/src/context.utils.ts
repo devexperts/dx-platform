@@ -170,7 +170,9 @@ export interface CombineContext {
 	): Context<EA & EB & EC & ED & EE & EG & EH & EI & EJ & EK & EL, R>;
 }
 export type ProjectMany<A, R> = (...args: A[]) => R;
-export const combineContext: CombineContext = <E, A, R>(...args: Array<Context<E, A> | ProjectMany<A, R | Sink<R>>>) => {
+export const combineContext: CombineContext = <E, A, R>(
+	...args: Array<Context<E, A> | ProjectMany<A, R | Sink<R>>>
+) => {
 	const fas: Context<E, A>[] = args.slice(0, args.length - 1) as any; //typesafe
 	const project: ProjectMany<A, R | Sink<R>> = args[args.length - 1] as any; //typesafe
 	const sequenced: Context<E, A[]> = sequenceContext(fas);
