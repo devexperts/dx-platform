@@ -25,7 +25,7 @@ describe('Context', () => {
 			const effect$ = of(undefined).pipe(tap(cb));
 			const fa = context.of(1);
 			const fb = context.of(2);
-			const result = combineContext(fa, fb, (a, b) => new Sink(a + b, effect$)).run({});
+			const result = combineContext(fa, fb)((a, b) => new Sink(a + b, effect$)).run({});
 			expect(result.value).toBe(3);
 			result.sink$.subscribe();
 			expect(cb).toBeCalled();
@@ -33,7 +33,7 @@ describe('Context', () => {
 		it('should support plain values returns from project', () => {
 			const fa = context.of(1);
 			const fb = context.of(2);
-			const result = combineContext(fa, fb, (a, b) => a + b).run({});
+			const result = combineContext(fa, fb)((a, b) => a + b).run({});
 			expect(result.value).toBe(3);
 		});
 	});

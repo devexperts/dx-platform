@@ -68,37 +68,30 @@ export type ContextEnvType<C extends Context<any, any>> = C extends Context<infe
 export type ContextValueType<C extends Context<any, any>> = C extends Context<infer E, infer A> ? A : never;
 
 export interface CombineContext {
-	<E, A, R>(a: Context<E, A>, project: (a: A) => R | Sink<R>): Context<E, R>;
-	<EA, A, EB, B, R>(a: Context<EA, A>, b: Context<EB, B>, project: (a: A, b: B) => R | Sink<R>): Context<EA & EB, R>;
-	<EA, A, EB, B, EC, C, R>(
-		a: Context<EA, A>,
-		b: Context<EB, B>,
-		C: Context<EC, C>,
+	<E, A, R>(a: Context<E, A>): (project: (a: A) => R | Sink<R>) => Context<E, R>;
+	<EA, A, EB, B, R>(a: Context<EA, A>, b: Context<EB, B>): (
+		project: (a: A, b: B) => R | Sink<R>,
+	) => Context<EA & EB, R>;
+	<EA, A, EB, B, EC, C, R>(a: Context<EA, A>, b: Context<EB, B>, C: Context<EC, C>): (
 		project: (a: A, b: B, c: C) => R | Sink<R>,
-	): Context<EA & EB & EC, R>;
-	<EA, A, EB, B, EC, C, ED, D, R>(
-		a: Context<EA, A>,
-		b: Context<EB, B>,
-		c: Context<EC, C>,
-		d: Context<ED, D>,
+	) => Context<EA & EB & EC, R>;
+	<EA, A, EB, B, EC, C, ED, D, R>(a: Context<EA, A>, b: Context<EB, B>, c: Context<EC, C>, d: Context<ED, D>): (
 		project: (a: A, b: B, c: C, d: D) => R | Sink<R>,
-	): Context<EA & EB & EC & ED, R>;
+	) => Context<EA & EB & EC & ED, R>;
 	<EA, A, EB, B, EC, C, ED, D, EE, E, R>(
 		a: Context<EA, A>,
 		b: Context<EB, B>,
 		c: Context<EC, C>,
 		d: Context<ED, D>,
 		e: Context<EE, E>,
-		project: (a: A, b: B, c: C, d: D, e: E) => R | Sink<R>,
-	): Context<EA & EB & EC & ED & EE, R>;
+	): (project: (a: A, b: B, c: C, d: D, e: E) => R | Sink<R>) => Context<EA & EB & EC & ED & EE, R>;
 	<EA, A, EB, B, EC, C, ED, D, EE, E, R>(
 		a: Context<EA, A>,
 		b: Context<EB, B>,
 		c: Context<EC, C>,
 		d: Context<ED, D>,
 		e: Context<EE, E>,
-		project: (a: A, b: B, c: C, d: D, e: E) => R | Sink<R>,
-	): Context<EA & EB & EC & ED & EE, R>;
+	): (project: (a: A, b: B, c: C, d: D, e: E) => R | Sink<R>) => Context<EA & EB & EC & ED & EE, R>;
 	<EA, A, EB, B, EC, C, ED, D, EE, E, EG, G, R>(
 		a: Context<EA, A>,
 		b: Context<EB, B>,
@@ -106,8 +99,7 @@ export interface CombineContext {
 		d: Context<ED, D>,
 		e: Context<EE, E>,
 		g: Context<EG, G>,
-		project: (a: A, b: B, c: C, d: D, e: E, g: G) => R | Sink<R>,
-	): Context<EA & EB & EC & ED & EE & EG, R>;
+	): (project: (a: A, b: B, c: C, d: D, e: E, g: G) => R | Sink<R>) => Context<EA & EB & EC & ED & EE & EG, R>;
 	<EA, A, EB, B, EC, C, ED, D, EE, E, EG, G, EH, H, R>(
 		a: Context<EA, A>,
 		b: Context<EB, B>,
@@ -116,8 +108,9 @@ export interface CombineContext {
 		e: Context<EE, E>,
 		g: Context<EG, G>,
 		h: Context<EH, H>,
+	): (
 		project: (a: A, b: B, c: C, d: D, e: E, g: G, h: H) => R | Sink<R>,
-	): Context<EA & EB & EC & ED & EE & EG & EH, R>;
+	) => Context<EA & EB & EC & ED & EE & EG & EH, R>;
 	<EA, A, EB, B, EC, C, ED, D, EE, E, EG, G, EH, H, EI, I, R>(
 		a: Context<EA, A>,
 		b: Context<EB, B>,
@@ -127,8 +120,9 @@ export interface CombineContext {
 		g: Context<EG, G>,
 		h: Context<EH, H>,
 		i: Context<EI, I>,
+	): (
 		project: (a: A, b: B, c: C, d: D, e: E, g: G, h: H, i: I) => R | Sink<R>,
-	): Context<EA & EB & EC & ED & EE & EG & EH & EI, R>;
+	) => Context<EA & EB & EC & ED & EE & EG & EH & EI, R>;
 	<EA, A, EB, B, EC, C, ED, D, EE, E, EG, G, EH, H, EI, I, EJ, J, R>(
 		a: Context<EA, A>,
 		b: Context<EB, B>,
@@ -139,8 +133,9 @@ export interface CombineContext {
 		h: Context<EH, H>,
 		i: Context<EI, I>,
 		j: Context<EJ, J>,
+	): (
 		project: (a: A, b: B, c: C, d: D, e: E, g: G, h: H, i: I, j: J) => R | Sink<R>,
-	): Context<EA & EB & EC & ED & EE & EG & EH & EI & EJ, R>;
+	) => Context<EA & EB & EC & ED & EE & EG & EH & EI & EJ, R>;
 	<EA, A, EB, B, EC, C, ED, D, EE, E, EG, G, EH, H, EI, I, EJ, J, EK, K, R>(
 		a: Context<EA, A>,
 		b: Context<EB, B>,
@@ -152,8 +147,9 @@ export interface CombineContext {
 		i: Context<EI, I>,
 		j: Context<EJ, J>,
 		k: Context<EK, K>,
+	): (
 		project: (a: A, b: B, c: C, d: D, e: E, g: G, h: H, i: I, j: J, k: K) => R | Sink<R>,
-	): Context<EA & EB & EC & ED & EE & EG & EH & EI & EJ & EK, R>;
+	) => Context<EA & EB & EC & ED & EE & EG & EH & EI & EJ & EK, R>;
 	<EA, A, EB, B, EC, C, ED, D, EE, E, EG, G, EH, H, EI, I, EJ, J, EK, K, EL, L, R>(
 		a: Context<EA, A>,
 		b: Context<EB, B>,
@@ -166,15 +162,14 @@ export interface CombineContext {
 		j: Context<EJ, J>,
 		k: Context<EK, K>,
 		l: Context<EL, L>,
+	): (
 		project: (a: A, b: B, c: C, d: D, e: E, g: G, h: H, i: I, j: J, k: K, l: L) => R | Sink<R>,
-	): Context<EA & EB & EC & ED & EE & EG & EH & EI & EJ & EK & EL, R>;
+	) => Context<EA & EB & EC & ED & EE & EG & EH & EI & EJ & EK & EL, R>;
 }
-export type ProjectMany<A, R> = (...args: A[]) => R;
-export const combineContext: CombineContext = <E, A, R>(
-	...args: Array<Context<E, A> | ProjectMany<A, R | Sink<R>>>
+
+export const combineContext: CombineContext = <E, A, R>(...fas: Array<Context<E, A>>) => (
+	project: (...args: A[]) => R | Sink<R>,
 ) => {
-	const fas: Context<E, A>[] = args.slice(0, args.length - 1) as any; //typesafe
-	const project: ProjectMany<A, R | Sink<R>> = args[args.length - 1] as any; //typesafe
 	const sequenced: Context<E, A[]> = sequenceContext(fas);
 	return sequenced.chain(
 		as =>
