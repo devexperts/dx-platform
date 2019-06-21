@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { action, storiesOf } from '@devexperts/tools/dist/utils/storybook';
+import { storiesOf } from '@storybook/react';
+import { action } from '@storybook/addon-actions';
 import { AddIcon } from '../../icons/add-icon';
 import { CalendarIcon } from '../../icons/calendar-icon';
 import { DecreaseIcon } from '../../icons/decrease-icon';

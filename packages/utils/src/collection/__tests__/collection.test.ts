@@ -135,7 +135,7 @@ describe('Collection', () => {
 			}),
 		);
 
-		function check<T>(collection: Collection<T>) {
+		function check(collection: Collection<number>) {
 			expect(collection.add.bind(null, 1)).toThrow();
 			expect(collection.remove.bind(null, 1)).toThrow();
 			expect(collection.clear.bind(null)).toThrow();

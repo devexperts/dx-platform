@@ -3,6 +3,72 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.29.0](https://github.com/devex-web-frontend/dx-platform/compare/v0.28.3...v0.29.0) (2019-05-25)
+
+
+### Code Refactoring
+
+* **react-kit:** remove react-css-themr from deps ([#131](https://github.com/devex-web-frontend/dx-platform/issues/131)) ([41f0d86](https://github.com/devex-web-frontend/dx-platform/commit/41f0d86))
+
+
+### maintain
+
+* update babel@7, webpack@4 and storybook@5 ([#126](https://github.com/devex-web-frontend/dx-platform/issues/126)) ([4cd1cd5](https://github.com/devex-web-frontend/dx-platform/commit/4cd1cd5))
+
+
+### BREAKING CHANGES
+
+* **react-kit:** @CSS component decorator has been removed
+* `utils/sotrybook.ts` is removed from `@devexperts/tools` package. Use direct import from `@storybook/*` instead
+
+
+
+
+
+
+## [0.28.3](https://github.com/devex-web-frontend/dx-platform/compare/v0.28.2...v0.28.3) (2019-04-22)
+
+**Note:** Version bump only for package @devexperts/react-kit
+
+
+
+
+
+## [0.28.2](https://github.com/devex-web-frontend/dx-platform/compare/v0.28.1...v0.28.2) (2019-04-16)
+
+
+### Bug Fixes
+
+* **react-kit:** Popover. If doesn't fit into container (with any placement), placement should be as set ([#122](https://github.com/devex-web-frontend/dx-platform/issues/122)) ([109b434](https://github.com/devex-web-frontend/dx-platform/commit/109b434))
+
+
+
+
+
+## [0.28.1](https://github.com/devex-web-frontend/dx-platform/compare/v0.28.0...v0.28.1) (2019-04-11)
+
+
+### Bug Fixes
+
+* **react-kit:** Input. Prevent to open DateInput popup on click if DateInput is disabled ([#124](https://github.com/devex-web-frontend/dx-platform/issues/124)) ([1818860](https://github.com/devex-web-frontend/dx-platform/commit/1818860))
+
+
+
+
+
+
+# [0.28.0](https://github.com/devex-web-frontend/dx-platform/compare/v0.27.0...v0.28.0) (2019-03-22)
+
+
+### Features
+
+* **react-kit:** LoadingIndication. Add timer for disable loader node in DOM ([#119](https://github.com/devex-web-frontend/dx-platform/issues/119)) ([c23a8ae](https://github.com/devex-web-frontend/dx-platform/commit/c23a8ae))
+* **react-kit:** the ability to disable the min and max buttons separately ([#116](https://github.com/devex-web-frontend/dx-platform/issues/116)) ([dbf39b7](https://github.com/devex-web-frontend/dx-platform/commit/dbf39b7))
+
+
+
+
+
 # [0.27.0](https://github.com/devex-web-frontend/dx-platform/compare/v0.26.0...v0.27.0) (2019-03-12)
 
 

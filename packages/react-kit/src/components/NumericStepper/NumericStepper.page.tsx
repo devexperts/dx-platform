@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { storiesOf } from '@devexperts/tools/dist/utils/storybook';
+import { storiesOf } from '@storybook/react';
 import { Demo } from '../demo/Demo';
 import { NumericStepper } from './NumericStepper';
 import { AddIcon } from '../../icons/add-icon';
@@ -23,6 +23,7 @@ storiesOf('NumericStepper', module)
 				decrementIcon={<DecreaseIcon />}
 				incrementIcon={<AddIcon />}
 				min={-10}
+				max={10}
 				step={1}
 				clearIcon={<ClearIcon />}
 				defaultValue={5}
