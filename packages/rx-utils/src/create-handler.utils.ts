@@ -19,13 +19,12 @@ export type THandler<A> = {
  *     return {
  *         defaultProps: {
  *             userName: '',
- *             onUserNameChange: () => {}
+ *             // 'handle' can be passed as a callback to the input's onChange event
+ *             onUserNameChange: onValueChange.handle,
  *         },
  *         props: {
  *             // using the 'value$' part to pass the observable value into the component props
  *             userName: userName.value$,
- *             // 'handle' can be passed as a callback to the input's onChange event
- *             onUserNameChange: Observable.of(onValueChange.handle)
  *         }
  *     };
  * }
