@@ -8,10 +8,10 @@ export type THandler<A> = {
 /**
  * Returns an object consisting of an observable `value` and a `handle` function that
  * allows to send emissions to this observable.
- * 
+ *
  * This function helps to implement the 'controlled component' React pattern using RxJS
  * streams. For example, a simple container might look like this:
- * 
+ *
  * ```ts
  * // WithRX selector
  * const propsSelector = () => {
@@ -28,11 +28,11 @@ export type THandler<A> = {
  *         }
  *     };
  * }
- * 
+ *
  * // Component
  * const RawGreetingForm = ({userName, onUserNameChange}) =>
  *     <input type="text" value={userName} onChange={onUserNameChange} />;
- * 
+ *
  * // Wrapping the component into withRX
  * const GreetingForm = withRX(RawGreetingForm)(propsSelector);
  * ```
