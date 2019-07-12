@@ -13,6 +13,8 @@ import { stateful } from '../Control/Control';
 
 import * as selectoxPageCss from './Selectbox.page.styl';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
+import { ReactNode, ReactText } from 'react';
+
 const wideSelectboxTheme = {
 	container__anchor: selectoxPageCss.container__anchor,
 };
@@ -177,7 +179,7 @@ type MultiplePageState = {
 };
 
 type MultiplePageProps = {
-	multipleFormatter?: (value: any) => any;
+	multipleFormatter?: (value: ReactText[]) => ReactNode;
 };
 
 @PURE
