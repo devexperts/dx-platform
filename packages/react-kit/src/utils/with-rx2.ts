@@ -1,8 +1,8 @@
 import { ComponentClass, ComponentType, createElement, PureComponent } from 'react';
 import { BehaviorSubject, merge, Observable, SchedulerLike, Subscription } from 'rxjs';
 import { map, observeOn } from 'rxjs/operators';
-import { animationFrame } from 'rxjs/internal/scheduler/animationFrame';
 import { Omit } from 'typelevel-ts';
+import { identity } from 'fp-ts/lib/function';
 
 // tslint:disable-next-line
 const hoistNonReactStatics = require('hoist-non-react-statics');
@@ -27,8 +27,6 @@ export const withRX = <P extends object>(Target: ComponentType<P>) => <D extends
 	selector: (props$: Observable<Readonly<P>>) => WithRXSelectorResult<P, D>,
 	options: WithRXOptions = {},
 ): ComponentClass<Omit<P, keyof D> & Partial<D>> => {
-	const scheduler = options.scheduler || animationFrame;
-
 	class WithRX extends PureComponent<P, Partial<P>> {
 		static displayName = `WithRX(${Target.displayName || Target.name})`;
 
@@ -44,11 +42,13 @@ export const withRX = <P extends object>(Target: ComponentType<P>) => <D extends
 					props[key].pipe(map((value: unknown) => ({ [key]: value }))),
 				);
 				this.inputSubscription = merge(...inputs)
-					.pipe(observeOn(scheduler))
+					.pipe(options.scheduler ? observeOn(options.scheduler) : identity)
 					.subscribe(this.setState.bind(this));
 			}
 			if (effects$) {
-				this.effectsSubscription = effects$.pipe(observeOn(scheduler)).subscribe();
+				this.effectsSubscription = effects$
+					.pipe(options.scheduler ? observeOn(options.scheduler) : identity)
+					.subscribe();
 			}
 		}
 
