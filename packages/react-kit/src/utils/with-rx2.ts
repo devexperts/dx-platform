@@ -2,7 +2,6 @@ import { ComponentClass, ComponentType, createElement, PureComponent } from 'rea
 import { BehaviorSubject, merge, Observable, SchedulerLike, Subscription } from 'rxjs';
 import { map, observeOn } from 'rxjs/operators';
 import { Omit } from 'typelevel-ts';
-import { identity } from 'fp-ts/lib/function';
 
 // tslint:disable-next-line
 const hoistNonReactStatics = require('hoist-non-react-statics');
@@ -41,14 +40,12 @@ export const withRX = <P extends object>(Target: ComponentType<P>) => <D extends
 				const inputs = Object.keys(props).map(key =>
 					props[key].pipe(map((value: unknown) => ({ [key]: value }))),
 				);
-				this.inputSubscription = merge(...inputs)
-					.pipe(options.scheduler ? observeOn(options.scheduler) : identity)
-					.subscribe(this.setState.bind(this));
+				const merged = merge(...inputs);
+				const result = options.scheduler ? observeOn(options.scheduler)(merged) : merged;
+				this.inputSubscription = result.subscribe(this.setState.bind(this));
 			}
 			if (effects$) {
-				this.effectsSubscription = effects$
-					.pipe(options.scheduler ? observeOn(options.scheduler) : identity)
-					.subscribe();
+				this.effectsSubscription = effects$.subscribe();
 			}
 		}
 
