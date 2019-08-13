@@ -1,7 +1,6 @@
 import { ComponentClass, ComponentType, createElement, PureComponent } from 'react';
 import { BehaviorSubject, merge, Observable, SchedulerLike, Subscription } from 'rxjs';
 import { map, observeOn } from 'rxjs/operators';
-import { animationFrame } from 'rxjs/internal/scheduler/animationFrame';
 import { Omit } from 'typelevel-ts';
 
 // tslint:disable-next-line
@@ -27,8 +26,6 @@ export const withRX = <P extends object>(Target: ComponentType<P>) => <D extends
 	selector: (props$: Observable<Readonly<P>>) => WithRXSelectorResult<P, D>,
 	options: WithRXOptions = {},
 ): ComponentClass<Omit<P, keyof D> & Partial<D>> => {
-	const scheduler = options.scheduler || animationFrame;
-
 	class WithRX extends PureComponent<P, Partial<P>> {
 		static displayName = `WithRX(${Target.displayName || Target.name})`;
 
@@ -43,12 +40,12 @@ export const withRX = <P extends object>(Target: ComponentType<P>) => <D extends
 				const inputs = Object.keys(props).map(key =>
 					props[key].pipe(map((value: unknown) => ({ [key]: value }))),
 				);
-				this.inputSubscription = merge(...inputs)
-					.pipe(observeOn(scheduler))
-					.subscribe(this.setState.bind(this));
+				const merged = merge(...inputs);
+				const result = options.scheduler ? observeOn(options.scheduler)(merged) : merged;
+				this.inputSubscription = result.subscribe(this.setState.bind(this));
 			}
 			if (effects$) {
-				this.effectsSubscription = effects$.pipe(observeOn(scheduler)).subscribe();
+				this.effectsSubscription = effects$.subscribe();
 			}
 		}
 
