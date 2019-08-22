@@ -47,6 +47,7 @@ export type TDateInputOwnProps = TSteppableInputProps &
 		onBlur?: () => void;
 		onMouseEnter?: () => void;
 		onMouseLeave?: () => void;
+		onEnter?: () => void;
 		target?: Element;
 		Calendar?: ComponentClass<TCalendarProps> | React.SFC<TCalendarProps>;
 	};
@@ -369,6 +370,7 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 	private onKeyDown = (e: React.KeyboardEvent<HTMLElement>) => {
 		const {
 			value: { day, month, year },
+			onEnter,
 		} = this.props;
 		const { activeSection } = this.state;
 		switch (e.keyCode) {
@@ -402,6 +404,11 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 					}
 				}
 				this.selectNextSection();
+				break;
+			}
+			case KeyCode.Enter: {
+				e.preventDefault();
+				onEnter && onEnter();
 				break;
 			}
 			case KeyCode.Delete: //fallthrough
