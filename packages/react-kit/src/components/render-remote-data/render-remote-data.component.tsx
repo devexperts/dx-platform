@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { ComponentType, Fragment, Component } from 'react';
-import { RemoteData } from '@devexperts/remote-data-ts';
+import { isFailure, isPending, isSuccess, RemoteData } from '@devexperts/remote-data-ts';
 import { isNotNullable } from '@devexperts/utils/dist/object';
 
 export type TDataStateErrorMainProps<L> = {
@@ -26,9 +26,9 @@ export class RenderRemoteData<L, A> extends Component<TRenderRemoteDataProps<L, 
 		const { data } = this.props;
 		return (
 			<Fragment>
-				{data.isPending() && this.renderPending()}
-				{data.isSuccess() && this.renderSuccess(data.value)}
-				{data.isFailure() && this.renderFailure(data.error)}
+				{isPending(data) && this.renderPending()}
+				{isSuccess(data) && this.renderSuccess(data.value)}
+				{isFailure(data) && this.renderFailure(data.error)}
 			</Fragment>
 		);
 	}
