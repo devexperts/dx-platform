@@ -37,11 +37,11 @@ export const withRX = <P extends object>(Target: ComponentType<P>) => <D extends
 		componentDidMount() {
 			const { props, effects$ } = this.selected;
 			if (props) {
-				const inputs = Object.keys(props).map(key =>
-					props[key].pipe(map((value: unknown) => ({ [key]: value }))),
+				const inputs: Observable<Partial<P>>[] = Object.keys(props).map(key =>
+					props[key].pipe(map(value => ({ [key]: value }))),
 				);
 				const merged = merge(...inputs);
-				const result = options.scheduler ? observeOn(options.scheduler)(merged) : merged;
+				const result = options.scheduler ? merged.pipe(observeOn(options.scheduler)) : merged;
 				this.inputSubscription = result.subscribe(this.setState.bind(this));
 			}
 			if (effects$) {
