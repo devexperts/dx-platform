@@ -1,7 +1,7 @@
 import { decrementMonth, decrementMonthOption, incrementMonth, incrementMonthOption } from '../DateInput.model';
-import { some, none, option } from 'fp-ts/lib/Option';
+import { some, none, option, map, chain } from 'fp-ts/lib/Option';
 import { array } from 'fp-ts/lib/Array';
-import { sequence } from 'fp-ts/lib/Traversable';
+import { pipe } from 'fp-ts/lib/pipeable';
 
 describe('date input', () => {
 	describe('decrement month', () => {
@@ -13,12 +13,12 @@ describe('date input', () => {
 			expect(newMonths).toEqual(expextedMonths);
 		});
 		it('should decrement month or return default value (works with option)', () => {
-			const newMonths = sequence(option, array)(months.map(month => decrementMonthOption(some(month))));
-			newMonths.map(value => expect(value).toEqual(expextedMonths));
+			const newMonths = array.sequence(option)(months.map(month => decrementMonthOption(some(month))));
+			pipe(newMonths, map(value => expect(value).toEqual(expextedMonths)));
 
 			const defaultOptionMonth = some(11);
 			const noneMonth = decrementMonthOption(none);
-			noneMonth.chain(noneMonth => defaultOptionMonth.map(month => expect(noneMonth).toBe(month)));
+			pipe(noneMonth, chain(noneMonth => pipe(defaultOptionMonth, map(month => expect(noneMonth).toBe(month)))));
 		});
 	});
 	describe('increment month', () => {
@@ -30,12 +30,12 @@ describe('date input', () => {
 			expect(newMonths).toEqual(expextedMonths);
 		});
 		it('should increment month or return default value (works with option)', () => {
-			const newMonths = sequence(option, array)(months.map(month => incrementMonthOption(some(month))));
-			newMonths.map(value => expect(value).toEqual(expextedMonths));
+			const newMonths = array.sequence(option)(months.map(month => incrementMonthOption(some(month))));
+			pipe(newMonths, map(value => expect(value).toEqual(expextedMonths)));
 
 			const defaultOptionMonth = some(0);
 			const noneMonth = incrementMonthOption(none);
-			noneMonth.chain(noneMonth => defaultOptionMonth.map(month => expect(noneMonth).toBe(month)));
+			pipe(noneMonth, chain(noneMonth => pipe(defaultOptionMonth, map(month => expect(noneMonth).toBe(month)))));
 		});
 	});
 });
