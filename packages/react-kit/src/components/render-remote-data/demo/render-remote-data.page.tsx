@@ -26,7 +26,7 @@ storiesOf('RenderRemoteData', module).add('default', () => (
 			<RenderRemoteData success={renderSuccess} data={success('success')} />
 		</Demo>
 		<Demo>
-			<RenderRemoteData success={renderSuccess} data={failure<Error, string>(new Error('some test error'))} />
+			<RenderRemoteData success={renderSuccess} data={failure(new Error('some test error'))} />
 		</Demo>
 		<Demo>
 			<RenderRemoteData success={renderSuccess} data={success('')} noData={data => !data} />
