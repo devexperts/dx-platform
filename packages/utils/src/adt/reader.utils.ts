@@ -8,9 +8,9 @@ import {
 import { defer, MonadReader } from '../typeclasses/monad-reader/monad-reader.utils';
 
 const productLeft = <EA, A, EB, B>(fa: Reader<EA, A>, fb: Reader<EB, B>): Reader<EA & EB, [A, B]> =>
-	asks(e => tuple(fa.run(e), fb.run(e)));
+	asks(e => tuple(fa(e), fb(e)));
 
-const runReader = <E, A>(fa: Reader<E, A>, e: E): A => fa.run(e);
+const runReader = <E, A>(fa: Reader<E, A>, e: E): A => fa(e);
 
 export const reader: typeof fptsreader & ProductLeft<URI> & MonadReader<URI> = {
 	...fptsreader,

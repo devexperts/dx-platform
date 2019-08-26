@@ -1,4 +1,4 @@
-import { asks } from 'fp-ts/lib/Reader';
+import { ask, asks } from 'fp-ts/lib/Reader';
 import { combineReader, deferReader } from '../reader.utils';
 
 type TFirst = {
@@ -18,7 +18,7 @@ describe('Reader utils', () => {
 			const combined = combineReader(first, second, (a, b) => 1 + 2);
 
 			expect(
-				combined.run({
+				combined({
 					foo: 2,
 					bar: 'bar',
 				}),
@@ -37,7 +37,7 @@ describe('Reader utils', () => {
 				expect(fn).toHaveBeenCalledWith('bar');
 			});
 
-			combined.run({
+			combined({
 				foo: 2,
 				bar: 'bar',
 			});
@@ -47,11 +47,11 @@ describe('Reader utils', () => {
 	describe('deferReader', () => {
 		it('should defer part of the context', () => {
 			type E = TFirst & TSecond;
-			const result = deferReader(asks((e: E) => 0), 'foo');
-			const withBar = result.run({
+			const result = deferReader(ask<E>(), 'foo');
+			const withBar = result({
 				bar: '123',
 			});
-			const resolved = withBar.run({
+			const resolved = withBar({
 				foo: 123,
 			});
 			expect(resolved).toBe(0);

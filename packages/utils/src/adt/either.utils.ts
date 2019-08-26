@@ -1,4 +1,4 @@
-import { Either, either as fptseither, right, URI } from 'fp-ts/lib/Either';
+import { Either, either as fptseither, isRight, right, URI } from 'fp-ts/lib/Either';
 import { tuple } from 'fp-ts/lib/function';
 import {
 	CoproductLeft,
@@ -8,9 +8,9 @@ import { sequenceT } from 'fp-ts/lib/Apply';
 import { array } from 'fp-ts/lib/Array';
 
 const coproductLeft = <LA, A, LB, B>(fa: Either<LA, A>, fb: Either<LB, B>): Either<LA | LB, [A, B]> => {
-	if (fa.isRight()) {
-		if (fb.isRight()) {
-			return right(tuple(fa.value, fb.value));
+	if (isRight(fa)) {
+		if (isRight(fb)) {
+			return right(tuple(fa.right, fb.right));
 		}
 		return fb as any;
 	}
