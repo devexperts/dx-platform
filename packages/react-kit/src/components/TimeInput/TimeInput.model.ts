@@ -1,5 +1,7 @@
-import { getSetoid, Option, some } from 'fp-ts/lib/Option';
-import { getRecordSetoid, Setoid, setoidNumber, strictEqual } from 'fp-ts/lib/Setoid';
+import { getEq, Option, some, map, alt, getOrElse } from 'fp-ts/lib/Option';
+import { getStructEq, Eq, eqNumber } from 'fp-ts/lib/Eq';
+import { eqUnknown } from '@devexperts/utils/dist/typeclasses/eq/eq.utils';
+import { pipe } from 'fp-ts/lib/pipeable';
 
 export type TTimeInputValue = {
 	hours: Option<number>;
@@ -25,21 +27,20 @@ export const MAX_VALID_HOURS_FOR_24H_FORMAT = 23;
 export const MAX_VALID_HOURS_FOR_12H_FORMAT = 12;
 export const EMPTY_SECTION = '--';
 
-const setoidStrict = { equals: strictEqual };
-const setoidPeriodType: Setoid<PeriodType> = setoidStrict;
+const eqPeriodType: Eq<PeriodType> = eqUnknown;
 
-const setoidOptionNumber = getSetoid(setoidNumber);
-const setoidOptionPeriodType = getSetoid(setoidPeriodType);
+const eqOptionNumber = getEq(eqNumber);
+const eqOptionPeriodType = getEq(eqPeriodType);
 
-const timeSetoid = getRecordSetoid<TTimeInputValue>({
-	hours: setoidOptionNumber,
-	minutes: setoidOptionNumber,
-	seconds: setoidOptionNumber,
-	periodType: setoidOptionPeriodType,
+const eqTimeInputValue = getStructEq<TTimeInputValue>({
+	hours: eqOptionNumber,
+	minutes: eqOptionNumber,
+	seconds: eqOptionNumber,
+	periodType: eqOptionPeriodType,
 });
 
 export const isTimesDifferent = (x: TTimeInputValue, y: TTimeInputValue): boolean => {
-	return !timeSetoid.equals(x, y);
+	return !eqTimeInputValue.equals(x, y);
 };
 
 export const formatNumericValue = (value: number): string => {
@@ -62,12 +63,14 @@ export const formatTimePeriod = (periodType: PeriodType): string => {
  * Values can be zeros (start from 0). Max is included value.
  */
 export function add(a: Option<number>, b: number, max: number): Option<number> {
-	return a
-		.map(a => {
+	return pipe(
+		a,
+		map(a => {
 			const rawResult = (a + b) % (max + 1);
 			return rawResult < 0 ? rawResult + max + 1 : rawResult;
-		})
-		.alt(some(b < 0 ? max : 0));
+		}),
+		alt(() => some(b < 0 ? max : 0)),
+	);
 }
 
 export function isDefined<A>(value?: A): value is A {
@@ -120,7 +123,7 @@ export function findActiveSectionOnKeyRight(
 }
 
 export function togglePeriodType(periodType: Option<PeriodType>): Option<PeriodType> {
-	const periodTypeNormalized = periodType.getOrElse(PeriodType.AM);
+	const periodTypeNormalized = getOrElse(() => PeriodType.AM)(periodType);
 	switch (periodTypeNormalized) {
 		case PeriodType.AM:
 			return some(PeriodType.PM);
@@ -129,6 +132,4 @@ export function togglePeriodType(periodType: Option<PeriodType>): Option<PeriodT
 	}
 }
 
-export const renderSection = (time: Option<string>): string => {
-	return time.getOrElse(EMPTY_SECTION);
-};
+export const renderSection: (time: Option<string>) => string = getOrElse(() => EMPTY_SECTION);
