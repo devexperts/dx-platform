@@ -44,11 +44,11 @@ export class ApiClient {
 		};
 
 		return ajax(xhr).pipe(
-			map(response => success<AjaxError, Response>(response.response)),
+			map(response => success(response.response)),
 			catchError(response => {
 				this.errorSubj$.next(response);
 
-				return of(failure<AjaxError, Response>(response));
+				return of(failure(response));
 			}),
 			startWith(pending),
 		);

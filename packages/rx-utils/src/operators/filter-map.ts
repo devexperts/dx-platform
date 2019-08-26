@@ -1,5 +1,5 @@
 import { Observable, Operator, OperatorFunction, Subscriber } from 'rxjs';
-import { Option } from 'fp-ts/lib/Option';
+import { isSome, Option } from 'fp-ts/lib/Option';
 
 class FilterMapSubscriber<T, R> extends Subscriber<T> {
 	count: number = 0;
@@ -21,7 +21,7 @@ class FilterMapSubscriber<T, R> extends Subscriber<T> {
 			return;
 		}
 
-		if (result && result.isSome()) {
+		if (result && isSome(result)) {
 			this.destination.next && this.destination.next(result.value);
 		}
 	};
