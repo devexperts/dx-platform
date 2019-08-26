@@ -12,7 +12,7 @@ import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { PURE } from '../../utils/pure';
 import { Popover, TPopoverProps } from '../Popover/Popover';
 import { withDefaults } from '../../utils/with-defaults';
-import { Option, none, some } from 'fp-ts/lib/Option';
+import { Option, none, some, isSome, map, toNullable, alt, chain } from 'fp-ts/lib/Option';
 import {
 	TDateInputState,
 	ActiveSection,
@@ -24,8 +24,10 @@ import {
 	decrementMonthOption,
 	incrementMonthOption,
 	TDateInputValue,
+	inc,
 } from './DateInput.model';
 import { ReactRef } from '../../utils/typings';
+import { pipe } from 'fp-ts/lib/pipeable';
 
 export const DATE_INPUT = Symbol('DateInput') as symbol;
 
@@ -102,10 +104,10 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 		const yearClassName = this.getSectionClassName(ActiveSection.Year);
 
 		// check if "X" clear button should be visible - at least one part of date should be set
-		const onClear = day.isSome() || month.isSome() || year.isSome() ? this.onClear : undefined;
+		const onClear = isSome(day) || isSome(month) || isSome(year) ? this.onClear : undefined;
 
 		const innerClassName = classnames(theme.inner, {
-			[theme.inner_isFilled as string]: day.isSome() && month.isSome() && year.isSome(),
+			[theme.inner_isFilled as string]: isSome(day) && isSome(month) && isSome(year),
 		});
 
 		return (
@@ -180,7 +182,8 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 			value: { month },
 		} = this.props;
 		const monthClassName = this.getSectionClassName(ActiveSection.Month);
-		const monthValue = month.map(value => value + 1);
+		const monthValue = map(inc)(month);
+
 		return (
 			<span className={monthClassName} onMouseDown={this.onMonthMouseDown}>
 				{format(monthValue, ActiveSection.Month)}
@@ -207,7 +210,7 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 
 		const calendar = (
 			<Calendar
-				value={date.toNullable()}
+				value={toNullable(date)}
 				min={min}
 				max={max}
 				onMouseDown={this.onCalendarMouseDown}
@@ -246,7 +249,7 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 		switch (activeSection) {
 			case ActiveSection.Day: {
 				//day starts from 1 here and cannot be zero
-				const newDay = day.map(value => (value + 1) % 32 || 1).orElse(() => some(1));
+				const newDay = pipe(day, map(value => (value + 1) % 32 || 1), alt(() => some(1)));
 				this.onValueChange(newDay, month, year);
 				break;
 			}
@@ -257,15 +260,17 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 				break;
 			}
 			case ActiveSection.Year: {
-				const newYear = year
-					.chain(value => {
+				const newYear = pipe(
+					year,
+					chain(value => {
 						if (value !== 9999) {
 							return some(value + 1);
 						} else {
 							return none;
 						}
-					})
-					.orElse(() => some(new Date().getFullYear()));
+					}),
+					alt(() => some(new Date().getFullYear())),
+				);
 				this.onValueChange(day, month, newYear);
 				break;
 			}
@@ -281,7 +286,7 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 		switch (activeSection) {
 			case ActiveSection.Day: {
 				//day starts from 1 and cannot be zero
-				const newDay = day.map(value => (value - 1) % 32 || 31).orElse(() => some(31));
+				const newDay = pipe(day, map(value => (value - 1) % 32 || 31), alt(() => some(31)));
 				this.onValueChange(newDay, month, year);
 				break;
 			}
@@ -292,15 +297,17 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 				break;
 			}
 			case ActiveSection.Year: {
-				const newYear = year
-					.chain(value => {
+				const newYear = pipe(
+					year,
+					chain(value => {
 						if (value !== 0) {
 							return some(value - 1);
 						} else {
 							return none;
 						}
-					})
-					.orElse(() => some(new Date().getFullYear()));
+					}),
+					alt(() => some(new Date().getFullYear())),
+				);
 				this.onValueChange(day, month, newYear);
 				break;
 			}
@@ -591,16 +598,19 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 		switch (this.state.activeSection) {
 			case ActiveSection.Day: {
 				if (this.secondInput) {
-					const newDay = day.map(value => {
-						const dayValue = Number(`${value}${digit}`);
-						if (value < 3) {
-							return dayValue;
-						} else if (value === 3) {
-							return Math.min(dayValue, 31);
-						} else {
-							return digit;
-						}
-					});
+					const newDay = pipe(
+						day,
+						map(value => {
+							const dayValue = Number(`${value}${digit}`);
+							if (value < 3) {
+								return dayValue;
+							} else if (value === 3) {
+								return Math.min(dayValue, 31);
+							} else {
+								return digit;
+							}
+						}),
+					);
 					this.onValueChange(newDay, month, year);
 					this.selectNextSection();
 					this.secondInput = false;
@@ -617,17 +627,20 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 			}
 			case ActiveSection.Month: {
 				if (this.secondInput) {
-					const newMonth = month.map(value => {
-						const correctedMonth = value + 1;
-						const monthValue = Number(`${correctedMonth}${digit}`) - 1;
-						if (correctedMonth < 1) {
-							return monthValue;
-						} else if (correctedMonth === 1) {
-							return Math.min(monthValue, 11);
-						} else {
-							return digit;
-						}
-					});
+					const newMonth = pipe(
+						month,
+						map(value => {
+							const correctedMonth = value + 1;
+							const monthValue = Number(`${correctedMonth}${digit}`) - 1;
+							if (correctedMonth < 1) {
+								return monthValue;
+							} else if (correctedMonth === 1) {
+								return Math.min(monthValue, 11);
+							} else {
+								return digit;
+							}
+						}),
+					);
 					this.onValueChange(day, newMonth, year);
 					this.selectNextSection();
 					this.secondInput = false;
@@ -644,13 +657,16 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 			}
 			case ActiveSection.Year: {
 				if (this.secondInput) {
-					const newYear = year.map(value => {
-						if (value < 1000) {
-							return Number(`${value}${digit}`);
-						} else {
-							return Number(`${value}${digit}`.substr(1));
-						}
-					});
+					const newYear = pipe(
+						year,
+						map(value => {
+							if (value < 1000) {
+								return Number(`${value}${digit}`);
+							} else {
+								return Number(`${value}${digit}`.substr(1));
+							}
+						}),
+					);
 					this.onValueChange(day, month, newYear);
 				} else {
 					this.onValueChange(day, month, some(digit));
