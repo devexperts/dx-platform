@@ -1,10 +1,6 @@
-import { Function1 } from 'fp-ts/lib/function';
-import { Observable } from 'rxjs';
-import { RemoteData } from '@devexperts/remote-data-ts';
+import { OperatorFunction } from 'rxjs';
+import { RemoteData, map as mapRemoteData } from '@devexperts/remote-data-ts';
 import { map } from 'rxjs/operators';
 
-export function mapRD<L, A, B>(f: Function1<A, B>) {
-	return function mapRDOperatorFunction(source: Observable<RemoteData<L, A>>): Observable<RemoteData<L, B>> {
-		return map((data: RemoteData<L, A>) => data.map(f))(source);
-	};
-}
+export const mapRD = <L, A, B>(f: (a: A) => B): OperatorFunction<RemoteData<L, A>, RemoteData<L, B>> =>
+	map(mapRemoteData(f));

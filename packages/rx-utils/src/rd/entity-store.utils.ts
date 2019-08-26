@@ -1,9 +1,8 @@
 import { ObservableMap } from '../observable-map.utils';
 import { Observable, ReplaySubject, of } from 'rxjs';
 import { RemoteData, remoteData, isSuccess, success } from '@devexperts/remote-data-ts';
-import { sequence } from 'fp-ts/lib/Traversable';
 import { array } from 'fp-ts/lib/Array';
-import { constant, Predicate } from 'fp-ts/lib/function';
+import { Predicate } from 'fp-ts/lib/function';
 import { isNotNullable } from '@devexperts/utils/dist/object/object';
 import { LiveData } from './live-data.utils';
 import { filter, map, distinctUntilChanged, shareReplay, switchMap, tap, multicast, refCount } from 'rxjs/operators';
@@ -34,8 +33,8 @@ export class EntityStore<L = never, A = never> {
 	private isLoadingAll = false;
 	private _getAllValues$ = this.cache.values$.pipe(
 		filter(() => !this.isLoadingAll && this.hasLoadedAll),
-		map(data => data.filter(item => item.isSuccess())),
-		map(sequence(remoteData, array)),
+		map(data => data.filter(item => isSuccess(item))),
+		map(array.sequence(remoteData)),
 		distinctUntilChanged(),
 		shareReplay(1),
 	);
@@ -107,10 +106,7 @@ export class EntityStore<L = never, A = never> {
 				this.hasLoadedAll = true;
 				this.updateCache(values, pk);
 			}),
-			switchMap(data => {
-				const data$ = constant(of(data));
-				return data.foldL(data$, data$, data$, () => this._getAllValues$);
-			}),
+			switchMap(data => (isSuccess(data) ? this._getAllValues$ : of(data))),
 			distinctUntilChanged(),
 			mapRD(entities => {
 				if (typeof predicate === 'undefined') {
@@ -191,7 +187,7 @@ export class EntityStore<L = never, A = never> {
 	update(key: string, update: () => LiveData<L, A>): LiveData<L, A> {
 		return update().pipe(
 			tap(value => {
-				if (value.isSuccess()) {
+				if (isSuccess(value)) {
 					this.cache.set(key, value);
 				}
 			}),

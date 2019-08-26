@@ -8,7 +8,7 @@ export const URI = 'Sink';
 export type URI = typeof URI;
 
 declare module 'fp-ts/lib/HKT' {
-	interface URI2HKT<A> {
+	interface URItoKind<A> {
 		Sink: Sink<A>;
 	}
 }

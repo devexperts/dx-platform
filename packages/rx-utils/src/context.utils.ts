@@ -1,5 +1,5 @@
 import { sink, Sink } from './sink.utils';
-import { getReaderT } from 'fp-ts/lib/ReaderT';
+import { getReaderM } from 'fp-ts/lib/ReaderT';
 import { Monad2 } from 'fp-ts/lib/Monad';
 import { array } from 'fp-ts/lib/Array';
 import { identity } from 'fp-ts/lib/function';
@@ -10,12 +10,12 @@ import { Omit } from 'typelevel-ts';
 export const URI = 'Context';
 export type URI = typeof URI;
 declare module 'fp-ts/lib/HKT' {
-	interface URI2HKT2<L, A> {
-		Context: Context<L, A>;
+	interface URItoKind2<E, A> {
+		Context: Context<E, A>;
 	}
 }
 
-const readerTSink = getReaderT(sink);
+const readerTSink = getReaderM(sink);
 
 export class Context<E, A> {
 	readonly _URI!: URI;
@@ -25,7 +25,7 @@ export class Context<E, A> {
 	constructor(readonly run: (e: E) => Sink<A>) {}
 
 	map<B>(f: (a: A) => B): Context<E, B> {
-		return new Context(readerTSink.map(f, this.run));
+		return new Context(readerTSink.map(this.run, f));
 	}
 
 	ap<B>(fab: Context<E, (a: A) => B>): Context<E, B> {
@@ -33,7 +33,7 @@ export class Context<E, A> {
 	}
 
 	chain<B>(f: (a: A) => Context<E, B>): Context<E, B> {
-		return new Context(readerTSink.chain(a => e => f(a).run(e), this.run));
+		return new Context(readerTSink.chain(this.run, (a: A) => (e: E) => f(a).run(e)));
 	}
 }
 
@@ -62,7 +62,7 @@ export const deferContext = <E extends object, A, K extends keyof E>(
 export const sequenceContext = array.sequence(context);
 export const sequenceTContext = sequenceT(context);
 
-export const fromReader = <E, A>(r: Reader<E, A>): Context<E, A> => new Context(e => new Sink(r.run(e)));
+export const fromReader = <E, A>(r: Reader<E, A>): Context<E, A> => new Context(e => new Sink(r(e)));
 
 export type ContextEnvType<C extends Context<any, any>> = C extends Context<infer E, infer A> ? E : never;
 export type ContextValueType<C extends Context<any, any>> = C extends Context<infer E, infer A> ? A : never;

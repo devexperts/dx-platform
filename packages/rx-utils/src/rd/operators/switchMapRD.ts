@@ -1,16 +1,8 @@
-import { Function1 } from 'fp-ts/lib/function';
-import { Observable, of } from 'rxjs';
-import { RemoteData } from '@devexperts/remote-data-ts';
+import { Observable, of, OperatorFunction } from 'rxjs';
+import { isSuccess, RemoteData } from '@devexperts/remote-data-ts';
 import { switchMap } from 'rxjs/operators';
 
-export function switchMapRD<L, A, B>(f: Function1<A, Observable<RemoteData<L, B>>>) {
-	return function switchMapRDOperatorFunction(source: Observable<RemoteData<L, A>>): Observable<RemoteData<L, B>> {
-		return switchMap((data: RemoteData<L, A>) => {
-			if (data.isSuccess()) {
-				return f(data.value);
-			} else {
-				return of(data as any);
-			}
-		})(source);
-	};
-}
+export const switchMapRD = <L, A, B>(
+	f: (a: A) => Observable<RemoteData<L, B>>,
+): OperatorFunction<RemoteData<L, A>, RemoteData<L, B>> =>
+	switchMap(data => (isSuccess(data) ? f(data.value) : of(data)));
