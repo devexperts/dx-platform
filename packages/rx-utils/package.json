@@ -34,17 +34,17 @@
     "tslib": "^1.10.0"
   },
   "devDependencies": {
-    "@devexperts/remote-data-ts": "^0.2.0",
+    "@devexperts/remote-data-ts": "^2.0.0",
     "@devexperts/tools": "^0.29.1",
     "@types/jest": "^21.1.8",
     "@types/sinon": "^5.0.1",
-    "fp-ts": "^1.11.3",
+    "fp-ts": "^2.0.5",
     "rxjs": "^6.2.1",
     "sinon": "^5.1.0"
   },
   "peerDependencies": {
-    "@devexperts/remote-data-ts": "^0.2.0",
-    "fp-ts": "^1.11.3",
+    "@devexperts/remote-data-ts": "^2.0.0",
+    "fp-ts": "^2.0.5",
     "rxjs": "^6.2.1"
   },
   "publishConfig": {

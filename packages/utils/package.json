@@ -27,13 +27,13 @@
   "homepage": "https://github.com/devex-web-frontend/dx-platform#readme",
   "dependencies": {
     "tslib": "^1.10.0",
-    "typelevel-ts": "^0.3.1"
+    "typelevel-ts": "^0.3.5"
   },
   "peerDependencies": {
-    "fp-ts": "^1.11.3"
+    "fp-ts": "^2.0.5"
   },
   "devDependencies": {
     "@devexperts/tools": "^0.29.1",
-    "fp-ts": "^1.11.3"
+    "fp-ts": "^2.0.5"
   }
 }
