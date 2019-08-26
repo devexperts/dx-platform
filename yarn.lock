@@ -920,19 +920,14 @@
     lodash "^4.17.11"
     to-fast-properties "^2.0.0"
 
-"@devexperts/remote-data-ts@^0.2.0":
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/@devexperts/remote-data-ts/-/remote-data-ts-0.2.0.tgz#b39850fae22c0dafbdedc5efba9608e128a6f036"
-  integrity sha512-CbVJaI0tDuLVnZzgug3RmQGfnn7Cwv71FVJp1MoE6ldSJ+8mSscXdL+81mwPdNMivJ905fX3otEXJyia4xsbXQ==
-
-"@devexperts/remote-data-ts@^0.6.0":
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/@devexperts/remote-data-ts/-/remote-data-ts-0.6.0.tgz#79442cebdf5b79a2ab1277fb721f4952af8099e8"
-  integrity sha512-SQmKfaCdNUsmHGNMMdcVFEDlspYWATN56IPFqUWPH/2VTWixNrAvHPPld9eU4Kh+PGYB3jmEcFlWS78juPyMig==
+"@devexperts/remote-data-ts@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@devexperts/remote-data-ts/-/remote-data-ts-2.0.0.tgz#cc571569ab80b3511936537a8044df6aa3c8dc75"
+  integrity sha512-NkzOkU17NEqusIVBGK3eKyYHUCFdsCj52F/DBsXuW41DOTLy9vx0+J+JDG/9ILbm3bpM84eEw3HzsBypW4NCjA==
   dependencies:
-    fp-ts "^1.18.0"
-    io-ts "^1.8.6"
-    io-ts-types "^0.4.7"
+    fp-ts "^2.0.0"
+    io-ts "^2.0.0"
+    io-ts-types "^0.5.0"
     tslib "^1.9.3"
 
 "@emotion/babel-utils@^0.6.4":
@@ -6074,15 +6069,10 @@ forwarded@~0.1.2:
   resolved "https://registry.yarnpkg.com/forwarded/-/forwarded-0.1.2.tgz#98c23dab1175657b8c0573e8ceccd91b0ff18c84"
   integrity sha1-mMI9qxF1ZXuMBXPozszZGw/xjIQ=
 
-fp-ts@^1.0.0, fp-ts@^1.18.0:
-  version "1.19.5"
-  resolved "https://registry.yarnpkg.com/fp-ts/-/fp-ts-1.19.5.tgz#3da865e585dfa1fdfd51785417357ac50afc520a"
-  integrity sha512-wDNqTimnzs8QqpldiId9OavWK2NptormjXnRJTQecNjzwfyp6P/8s/zG8e4h3ja3oqkKaY72UlTjQYt/1yXf9A==
-
-fp-ts@^1.11.3:
-  version "1.12.0"
-  resolved "https://registry.yarnpkg.com/fp-ts/-/fp-ts-1.12.0.tgz#d333310e4ac104cdcb6bea47908e381bb09978e7"
-  integrity sha512-fWwnAgVlTsV26Ruo9nx+fxNHIm6l1puE1VJ/C0XJ3nRQJJJIgRHYw6sigB3MuNFZL1o4fpGlhwFhcbxHK0RsOA==
+fp-ts@^2.0.0, fp-ts@^2.0.5:
+  version "2.0.5"
+  resolved "https://registry.yarnpkg.com/fp-ts/-/fp-ts-2.0.5.tgz#9560d8a6a4f53cbda9f9b31ed8d1458e41939e07"
+  integrity sha512-opI5r+rVlpZE7Rhk0YtqsrmxGkbIw0dRNqGca8FEAMMnjomXotG+R9QkLQg20onx7R8qhepAn4CCOP8usma/Xw==
 
 fragment-cache@^0.2.1:
   version "0.2.1"
@@ -7105,17 +7095,15 @@ invert-kv@^2.0.0:
   resolved "https://registry.yarnpkg.com/invert-kv/-/invert-kv-2.0.0.tgz#7393f5afa59ec9ff5f67a27620d11c226e3eec02"
   integrity sha512-wPVv/y/QQ/Uiirj/vh3oP+1Ww+AWehmi1g5fFWGPF6IpCBCDVrhgHRMvrLfdYcwDh3QJbGXDW4JAuzxElLSqKA==
 
-io-ts-types@^0.4.7:
-  version "0.4.7"
-  resolved "https://registry.yarnpkg.com/io-ts-types/-/io-ts-types-0.4.7.tgz#f6280da7432d6dae593d8ff064837f51bd4b96ba"
-  integrity sha512-VZ34RWV2ymbtboB0Ki6NPMiyhogGfRzHpyJrpez3auUMacTtX8b1UhW/ct+/zBYgXnE2txaeXowdQPt6BXY0wg==
+io-ts-types@^0.5.0:
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/io-ts-types/-/io-ts-types-0.5.0.tgz#f69be9131362c31bbc6b5044f1d95892604f8f23"
+  integrity sha512-+v88rlA76FmlQQcTImFq5iigoPA3OKO+BIdrpsfXlhWUdiVvOnDDiLKCsiIAW9eRj+OJgG31Sctebr77bqKhzw==
 
-io-ts@^1.8.6:
-  version "1.10.4"
-  resolved "https://registry.yarnpkg.com/io-ts/-/io-ts-1.10.4.tgz#cd5401b138de88e4f920adbcb7026e2d1967e6e2"
-  integrity sha512-b23PteSnYXSONJ6JQXRAlvJhuw8KOtkqa87W4wDtvMrud/DTJd5X+NpOOI+O/zZwVq6v0VLAaJ+1EDViKEuN9g==
-  dependencies:
-    fp-ts "^1.0.0"
+io-ts@^2.0.0:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/io-ts/-/io-ts-2.0.1.tgz#1261c12f915c2f48d16393a36966636b48a45aa1"
+  integrity sha512-RezD+WcCfW4VkMkEcQWL/Nmy/nqsWTvTYg7oUmTGzglvSSV2P9h2z1PVeREPFf0GWNzruYleAt1XCMQZSg1xxQ==
 
 ip-regex@^2.1.0:
   version "2.1.0"
@@ -12349,10 +12337,10 @@ typedarray@^0.0.6:
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
 
-typelevel-ts@^0.3.1:
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/typelevel-ts/-/typelevel-ts-0.3.1.tgz#05aec16b3437d6b04a073c9036f9f5ae24ec359d"
-  integrity sha512-PMRNsR0YkNHLLiRKsjyyn44FzDLkKb7aUWx3e0ZZOaZgFiAr9pAUNmQIqBqdJEWcbT7WemI90/9qzq96hdtR6A==
+typelevel-ts@^0.3.5:
+  version "0.3.5"
+  resolved "https://registry.yarnpkg.com/typelevel-ts/-/typelevel-ts-0.3.5.tgz#9f242c193fa6c5489d2342c642ab8912a065af9d"
+  integrity sha512-VZKF0ak5RNgrPkpI2uJJL0WBqNcj67+hzYzD6SwoxzrgvgjP24gskqniXd62UY5rrJCxd3q/iChtxKcHC6fRvA==
 
 typescript@^3.5.3:
   version "3.5.3"
