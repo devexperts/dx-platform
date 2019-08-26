@@ -48,7 +48,12 @@ export type TFullScrollableProps = {
 	shouldOverlayContent?: boolean;
 };
 
-export class RawScrollable extends React.Component<TFullScrollableProps> {
+export type ScrollableState = {
+	container?: HTMLDivElement | null;
+	scrollable?: HTMLDivElement | null;
+};
+
+export class RawScrollable extends React.Component<TFullScrollableProps, ScrollableState> {
 	static childContextTypes: any = CONTEXT_TYPES;
 
 	_withHorizontalScrollbar = false;
@@ -59,7 +64,7 @@ export class RawScrollable extends React.Component<TFullScrollableProps> {
 	_horizontalScrollbar!: HTMLDivElement | null;
 	_verticalScrollbar!: HTMLDivElement | null;
 
-	readonly state = {
+	readonly state: ScrollableState = {
 		container: void 0, //eslint-disable-line no-void
 		scrollable: void 0, //eslint-disable-line no-void
 	};
