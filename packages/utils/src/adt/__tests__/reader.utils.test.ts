@@ -1,4 +1,4 @@
-import { ask, asks } from 'fp-ts/lib/Reader';
+import { asks } from 'fp-ts/lib/Reader';
 import { combineReader, deferReader } from '../reader.utils';
 
 type TFirst = {
@@ -47,7 +47,8 @@ describe('Reader utils', () => {
 	describe('deferReader', () => {
 		it('should defer part of the context', () => {
 			type E = TFirst & TSecond;
-			const result = deferReader(ask<E>(), 'foo');
+			const r = asks((e: E) => 0);
+			const result = deferReader(r, 'foo');
 			const withBar = result({
 				bar: '123',
 			});
