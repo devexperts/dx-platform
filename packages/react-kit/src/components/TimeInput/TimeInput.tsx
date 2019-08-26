@@ -7,7 +7,7 @@ import { withTheme } from '../../utils/withTheme';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { SteppableInput, TSteppableInputProps } from '../SteppableInput/SteppableInput';
 import { withDefaults } from '../../utils/with-defaults';
-import { none, Option, some } from 'fp-ts/lib/Option';
+import { none, Option, some, isSome, map, toNullable } from 'fp-ts/lib/Option';
 import {
 	add,
 	findActiveSectionOnKeyLeft,
@@ -25,6 +25,7 @@ import {
 	Section,
 	TTimeInputValue,
 } from './TimeInput.model';
+import { pipe } from 'fp-ts/lib/pipeable';
 
 export const TIME_INPUT = Symbol('TimeInput') as symbol;
 
@@ -62,7 +63,7 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState>
 		const { hours, minutes, seconds, periodType } = value;
 		const { withSeconds, withPeriodType } = this.props;
 
-		const onClear = hours.isSome() || minutes.isSome() ? this.onClear : undefined;
+		const onClear = isSome(hours) || isSome(minutes) ? this.onClear : undefined;
 		return (
 			<SteppableInput
 				isDisabled={isDisabled}
@@ -79,11 +80,11 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState>
 				onIncrement={this.onIncrement}>
 				<div className={theme.inner}>
 					<span className={this.getSectionClassName(Section.Hours)} onMouseDown={this.onHoursMouseDown}>
-						{renderSection(hours.map(hours => formatNumericValue(hours)))}
+						{renderSection(pipe(hours, map(formatNumericValue)))}
 					</span>
 					<span className={theme.separator}>:</span>
 					<span className={this.getSectionClassName(Section.Minutes)} onMouseDown={this.onMinutesMouseDown}>
-						{renderSection(minutes.map(minutes => formatNumericValue(minutes)))}
+						{renderSection(pipe(minutes, map(formatNumericValue)))}
 					</span>
 					{withSeconds && (
 						<Fragment>
@@ -91,7 +92,7 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState>
 							<span
 								className={this.getSectionClassName(Section.Seconds)}
 								onMouseDown={this.onSecondsMouseDown}>
-								{renderSection(seconds.map(seconds => formatNumericValue(seconds)))}
+								{renderSection(pipe(seconds, map(formatNumericValue)))}
 							</span>
 						</Fragment>
 					)}
@@ -101,7 +102,7 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState>
 							<span
 								className={this.getSectionClassName(Section.PeriodType)}
 								onMouseDown={this.onPeriodTypeMouseDown}>
-								{renderSection(periodType.map(periodType => formatTimePeriod(periodType)))}
+								{renderSection(pipe(periodType, map(formatTimePeriod)))}
 							</span>
 						</Fragment>
 					)}
@@ -266,7 +267,7 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState>
 
 		switch (activeSection) {
 			case Section.Hours: {
-				if (this.secondInput && hours.isSome()) {
+				if (this.secondInput && isSome(hours)) {
 					let newHours;
 					if (!withPeriodType) {
 						if (hours.value < 2) {
@@ -315,14 +316,14 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState>
 				if (!withSeconds) {
 					let newMinutes;
 					if (this.secondInput) {
-						newMinutes = minutes.isSome() ? Number(`${minutes.value % 10}${digit}`) : digit;
+						newMinutes = isSome(minutes) ? Number(`${minutes.value % 10}${digit}`) : digit;
 					} else {
 						newMinutes = digit;
 						this.secondInput = true;
 					}
 					this.updateTime(hours, some(newMinutes), seconds, periodType);
 				} else {
-					if (this.secondInput && minutes.isSome()) {
+					if (this.secondInput && isSome(minutes)) {
 						const newMinutes = Number(`${minutes.value}${digit}`);
 						this.updateTime(hours, some(newMinutes), seconds, periodType);
 						if (withSeconds) {
@@ -360,7 +361,7 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState>
 			case Section.Seconds: {
 				let newSeconds;
 				if (this.secondInput) {
-					newSeconds = seconds.isSome() ? Number(`${seconds.value % 10}${digit}`) : digit;
+					newSeconds = isSome(seconds) ? Number(`${seconds.value % 10}${digit}`) : digit;
 				} else {
 					newSeconds = digit;
 					this.secondInput = true;
@@ -433,11 +434,11 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState>
 	private correctTimeAndUpdate() {
 		const { minutes, hours, seconds, periodType } = this.props.value;
 
-		const isMinutesInvalid = minutes.map(min => min > MAX_VALID_MINS_AND_SEC);
-		const isSecondsInvalid = seconds.map(sec => sec > MAX_VALID_MINS_AND_SEC);
-		if (isMinutesInvalid.toNullable() || isSecondsInvalid.toNullable()) {
-			const correctedMinutes = isMinutesInvalid.toNullable() ? some(MAX_VALID_MINS_AND_SEC) : minutes;
-			const correctedSeconds = isSecondsInvalid.toNullable() ? some(MAX_VALID_MINS_AND_SEC) : seconds;
+		const isMinutesInvalid = pipe(minutes, map(min => min > MAX_VALID_MINS_AND_SEC));
+		const isSecondsInvalid = pipe(seconds, map(sec => sec > MAX_VALID_MINS_AND_SEC));
+		if (toNullable(isMinutesInvalid) || toNullable(isSecondsInvalid)) {
+			const correctedMinutes = toNullable(isMinutesInvalid) ? some(MAX_VALID_MINS_AND_SEC) : minutes;
+			const correctedSeconds = toNullable(isSecondsInvalid) ? some(MAX_VALID_MINS_AND_SEC) : seconds;
 			this.updateTime(hours, correctedMinutes, correctedSeconds, periodType);
 		}
 	}
