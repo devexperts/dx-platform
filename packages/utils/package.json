@@ -34,6 +34,8 @@
   },
   "devDependencies": {
     "@devexperts/tools": "^0.29.1",
-    "fp-ts": "^2.0.5"
+    "fast-check": "^1.16.2",
+    "fp-ts": "^2.0.5",
+    "fp-ts-laws": "^0.2.0"
   }
 }
