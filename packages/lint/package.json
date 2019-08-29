@@ -14,7 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/devex-web-frontend/dx-platform.git"
+    "url": "git+https://github.com/devexperts/dx-platform.git"
   },
   "publishConfig": {
     "access": "public"
@@ -22,9 +22,9 @@
   "author": "devexperts",
   "license": "MPL-2.0",
   "bugs": {
-    "url": "https://github.com/devex-web-frontend/dx-platform/issues"
+    "url": "https://github.com/devexperts/dx-platform/issues"
   },
-  "homepage": "https://github.com/devex-web-frontend/dx-platform#readme",
+  "homepage": "https://github.com/devexperts/dx-platform#readme",
   "dependencies": {
     "@types/node": "^8.10.19",
     "tslint-config-prettier": "^1.18.0",

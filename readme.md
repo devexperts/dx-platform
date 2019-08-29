@@ -1,4 +1,4 @@
-[![build status](https://img.shields.io/travis/devex-web-frontend/dx-platform/master.svg?style=flat-square)](https://travis-ci.org/devex-web-frontend/dx-platform)
+[![build status](https://img.shields.io/travis/devexperts/dx-platform/master.svg?style=flat-square)](https://travis-ci.org/devexperts/dx-platform)
 
 # dx-platform
 
