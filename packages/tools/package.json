@@ -13,10 +13,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/devex-web-frontend/dx-platform.git"
+    "url": "git+https://github.com/devexperts/dx-platform.git"
   },
   "bugs": {
-    "url": "https://github.com/devex-web-frontend/dx-platform/issues"
+    "url": "https://github.com/devexperts/dx-platform/issues"
   },
   "bin": {
     "dx-tools": "./bin/dx-tools.js"

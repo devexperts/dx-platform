@@ -10,14 +10,14 @@
   "main": "dist",
   "module": "dist",
   "bugs": {
-    "url": "https://github.com/devex-web-frontend/dx-platform/issues"
+    "url": "https://github.com/devexperts/dx-platform/issues"
   },
   "license": "MPL-2.0",
-  "homepage": "https://github.com/devex-web-frontend/dx-platform#readme",
+  "homepage": "https://github.com/devexperts/dx-platform#readme",
   "author": "devexperts",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/devex-web-frontend/dx-platform.git"
+    "url": "git+https://github.com/devexperts/dx-platform.git"
   },
   "scripts": {
     "test": "dx-tools build-lib src dist --failOnError",
