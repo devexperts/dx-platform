@@ -6331,6 +6331,14 @@ extsprintf@^1.2.0:
   resolved "https://registry.yarnpkg.com/extsprintf/-/extsprintf-1.4.0.tgz#e2689f8f356fad62cca65a3a91c5df5f9551692f"
   integrity sha1-4mifjzVvrWLMplo6kcXfX5VRaS8=
 
+fast-check@^1.16.0, fast-check@^1.16.2:
+  version "1.16.2"
+  resolved "https://registry.yarnpkg.com/fast-check/-/fast-check-1.16.2.tgz#d03caf987b209d138dd4fd2513be652de94e4e05"
+  integrity sha512-sT5p65leD2R+R0C623d1aQFSQhaVve2UkVCJU+MB0VEPZITWrVJ7h+TDPPjiK16tFvrxdc80dWPaMPoadD3Rpw==
+  dependencies:
+    pure-rand "^1.6.2"
+    tslib "^1.9.3"
+
 fast-deep-equal@^1.0.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/fast-deep-equal/-/fast-deep-equal-1.1.0.tgz#c053477817c86b51daa853c81e059b733d023614"
@@ -6635,6 +6643,13 @@ forwarded@~0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/forwarded/-/forwarded-0.1.2.tgz#98c23dab1175657b8c0573e8ceccd91b0ff18c84"
   integrity sha1-mMI9qxF1ZXuMBXPozszZGw/xjIQ=
+
+fp-ts-laws@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/fp-ts-laws/-/fp-ts-laws-0.2.0.tgz#cbc11444f918956c36baadc8982fbdf7a5cea11b"
+  integrity sha512-yPJ+0Z+TldXRAb1pNvzGBudwgBgIDZj/xiQuH+K8DYmXUV9mAtPLpzfwVR1WSnI7XDlPNHwTID1dEAqH9Wvr0Q==
+  dependencies:
+    fast-check "^1.16.0"
 
 fp-ts@^2.0.0, fp-ts@^2.0.5:
   version "2.0.5"
@@ -11171,6 +11186,11 @@ punycode@^2.1.0, punycode@^2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/punycode/-/punycode-2.1.1.tgz#b58b010ac40c22c5657616c8d2c2c02c7bf479ec"
   integrity sha512-XRsRjdf+j5ml+y/6GKHPZbrF/8p2Yga0JPtdqTIY2Xe5ohJPD9saDJJLPvp9+NSBprVvevdXZybnj2cv8OEd0A==
+
+pure-rand@^1.6.2:
+  version "1.6.2"
+  resolved "https://registry.yarnpkg.com/pure-rand/-/pure-rand-1.6.2.tgz#90b3ae78efe36f7e6e27bfffedf934f77382e6e6"
+  integrity sha512-HNwHOH63m7kCxe0kWEe5jSLwJiL2N83RUUN8POniFuZS+OsbFcMWlvXgxIU2nwKy2zYG2bQan40WBNK4biYPRg==
 
 q@^1.1.2, q@^1.5.1:
   version "1.5.1"
