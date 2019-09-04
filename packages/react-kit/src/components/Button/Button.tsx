@@ -22,7 +22,7 @@ export type TFullButtonProps = {
 	isLoading?: boolean;
 	isPrimary?: boolean;
 	style?: {};
-	type?: string;
+	type?: 'submit' | 'reset' | 'button';
 	onMouseLeave?: EventHandler<MouseEvent<HTMLButtonElement>>;
 	onMouseDown?: EventHandler<MouseEvent<HTMLButtonElement>>;
 	onMouseUp?: EventHandler<MouseEvent<HTMLButtonElement>>;
@@ -49,7 +49,7 @@ export type TFullButtonProps = {
 
 @PURE
 class RawButton extends React.Component<TFullButtonProps> {
-	static defaultProps = {
+	static defaultProps: Partial<TFullButtonProps> = {
 		type: 'button',
 	};
 
