@@ -80,11 +80,21 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState>
 				onIncrement={this.onIncrement}>
 				<div className={theme.inner}>
 					<span className={this.getSectionClassName(Section.Hours)} onMouseDown={this.onHoursMouseDown}>
-						{renderSection(pipe(hours, map(formatNumericValue)))}
+						{renderSection(
+							pipe(
+								hours,
+								map(formatNumericValue),
+							),
+						)}
 					</span>
 					<span className={theme.separator}>:</span>
 					<span className={this.getSectionClassName(Section.Minutes)} onMouseDown={this.onMinutesMouseDown}>
-						{renderSection(pipe(minutes, map(formatNumericValue)))}
+						{renderSection(
+							pipe(
+								minutes,
+								map(formatNumericValue),
+							),
+						)}
 					</span>
 					{withSeconds && (
 						<Fragment>
@@ -92,7 +102,12 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState>
 							<span
 								className={this.getSectionClassName(Section.Seconds)}
 								onMouseDown={this.onSecondsMouseDown}>
-								{renderSection(pipe(seconds, map(formatNumericValue)))}
+								{renderSection(
+									pipe(
+										seconds,
+										map(formatNumericValue),
+									),
+								)}
 							</span>
 						</Fragment>
 					)}
@@ -102,7 +117,12 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState>
 							<span
 								className={this.getSectionClassName(Section.PeriodType)}
 								onMouseDown={this.onPeriodTypeMouseDown}>
-								{renderSection(pipe(periodType, map(formatTimePeriod)))}
+								{renderSection(
+									pipe(
+										periodType,
+										map(formatTimePeriod),
+									),
+								)}
 							</span>
 						</Fragment>
 					)}
@@ -434,8 +454,14 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState>
 	private correctTimeAndUpdate() {
 		const { minutes, hours, seconds, periodType } = this.props.value;
 
-		const isMinutesInvalid = pipe(minutes, map(min => min > MAX_VALID_MINS_AND_SEC));
-		const isSecondsInvalid = pipe(seconds, map(sec => sec > MAX_VALID_MINS_AND_SEC));
+		const isMinutesInvalid = pipe(
+			minutes,
+			map(min => min > MAX_VALID_MINS_AND_SEC),
+		);
+		const isSecondsInvalid = pipe(
+			seconds,
+			map(sec => sec > MAX_VALID_MINS_AND_SEC),
+		);
 		if (toNullable(isMinutesInvalid) || toNullable(isSecondsInvalid)) {
 			const correctedMinutes = toNullable(isMinutesInvalid) ? some(MAX_VALID_MINS_AND_SEC) : minutes;
 			const correctedSeconds = toNullable(isSecondsInvalid) ? some(MAX_VALID_MINS_AND_SEC) : seconds;

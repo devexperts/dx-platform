@@ -22,8 +22,7 @@ console.log('sdrs=>', SRC_PATH);
 const req = require.context(SRC_PATH, true, /\.page\.tsx$/);
 
 configure(function() {
-	req
-		.keys()
+	req.keys()
 		.sort(function(a, b) {
 			return a.toLowerCase().localeCompare(b.toLowerCase());
 		})
