@@ -20,14 +20,15 @@ import getScrollbarSize from '../Scrollbar/Scrollbar.util';
 import { withTheme } from '../../utils/withTheme';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { withDefaults } from '../../utils/with-defaults';
+import { Children, cloneElement, Component, ComponentClass, MouseEventHandler, ReactElement } from 'react';
 
 export const SCROLLABLE = Symbol('Scrollable') as symbol;
 
 export type TFullScrollableProps = {
-	children: React.ReactNode;
-	ResizeDetector: React.ComponentClass<TResizeDetectorProps>;
-	HorizontalScrollbar: React.ComponentClass<THorizontalScrollbarProps>;
-	VerticalScrollbar: React.ComponentClass<TVerticalScrollbarProps>;
+	children: ReactElement;
+	ResizeDetector: ComponentClass<TResizeDetectorProps>;
+	HorizontalScrollbar: ComponentClass<THorizontalScrollbarProps>;
+	VerticalScrollbar: ComponentClass<TVerticalScrollbarProps>;
 	theme: {
 		scrollable?: string;
 		withHorizontalScrollbar?: string;
@@ -53,7 +54,7 @@ export type ScrollableState = {
 	scrollable?: HTMLDivElement | null;
 };
 
-export class RawScrollable extends React.Component<TFullScrollableProps, ScrollableState> {
+export class RawScrollable extends Component<TFullScrollableProps, ScrollableState> {
 	static childContextTypes: any = CONTEXT_TYPES;
 
 	_withHorizontalScrollbar = false;
@@ -95,8 +96,8 @@ export class RawScrollable extends React.Component<TFullScrollableProps, Scrolla
 		this._emitter = new ScrollableInternalEmitter();
 	}
 
-	onScroll = (event: React.MouseEvent<HTMLDivElement>) => {
-		const { scrollLeft, scrollTop } = event.target as any;
+	onScroll: MouseEventHandler<HTMLDivElement> = event => {
+		const { scrollLeft, scrollTop } = event.target as HTMLDivElement;
 		const { onScroll } = this.props;
 		onScroll && onScroll(scrollLeft, scrollTop);
 	};
@@ -120,7 +121,7 @@ export class RawScrollable extends React.Component<TFullScrollableProps, Scrolla
 	render() {
 		const { theme, ResizeDetector, VerticalScrollbar, HorizontalScrollbar, shouldOverlayContent } = this.props;
 
-		const children = React.Children.only(this.props.children);
+		const children = Children.only(this.props.children);
 
 		const { container } = this.state;
 
@@ -131,7 +132,7 @@ export class RawScrollable extends React.Component<TFullScrollableProps, Scrolla
 				[theme.withVerticalScrollbar as string]: this._withVerticalScrollbar,
 				[theme.overlayContent as string]: shouldOverlayContent,
 			},
-			children.props.className || '',
+			(children && children.props && children.props.className) || '',
 		);
 
 		const containerClassName = classnames(theme.scrollbar, {
@@ -150,7 +151,7 @@ export class RawScrollable extends React.Component<TFullScrollableProps, Scrolla
 				<div className={theme.wrapper}>
 					<div className={theme.container} ref={el => (this._container = el)}>
 						<div className={theme.content}>
-							{React.cloneElement(children, {
+							{cloneElement(children, {
 								className: null,
 							})}
 							<ResizeDetector {...resizeDetectorProps} />
@@ -193,7 +194,7 @@ export type TScrollableProps = PartialKeys<
 	TFullScrollableProps,
 	'theme' | 'ResizeDetector' | 'VerticalScrollbar' | 'HorizontalScrollbar'
 >;
-export const Scrollable: React.ComponentClass<TScrollableProps> = withTheme(SCROLLABLE)(
+export const Scrollable: ComponentClass<TScrollableProps> = withTheme(SCROLLABLE)(
 	withDefaults<TFullScrollableProps, 'ResizeDetector' | 'VerticalScrollbar' | 'HorizontalScrollbar'>({
 		ResizeDetector: BaseResizeDetector,
 		VerticalScrollbar: BaseVerticalScrollbar,
