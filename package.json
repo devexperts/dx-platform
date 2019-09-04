@@ -1,6 +1,7 @@
 {
   "name": "@devexperts/platform",
   "scripts": {
+    "commitlint": "commitlint",
     "start": "lerna run --parallel watch",
     "start:storybook": "cd packages/react-kit && yarn start",
     "test": "yarn tslint && yarn jest",
@@ -21,7 +22,9 @@
     "publish:major": "yarn lerna publish major --force-publish=*"
   },
   "private": true,
-  "workspaces": ["packages/*"],
+  "workspaces": [
+    "packages/*"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/devexperts/dx-platform.git"
@@ -63,11 +66,20 @@
   "author": "devexperts",
   "license": "MPL-2.0",
   "devDependencies": {
+    "@commitlint/cli": "^8.1.0",
+    "@commitlint/config-conventional": "^8.1.0",
+    "@commitlint/travis-cli": "^8.1.0",
     "@types/jest": "^24.0.11",
+    "husky": "^3.0.5",
     "jest": "^24.7.1",
     "lerna": "^3.10.5",
-    "tslint": "^5.19.0",
     "prettier": "1.12.1",
-    "ts-jest": "^24.0.2"
+    "ts-jest": "^24.0.2",
+    "tslint": "^5.19.0"
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
   }
 }
