@@ -188,15 +188,12 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 					onClick={stopPropagation}
 					className={popoverClassName}>
 					<div className={theme.content}>
-						{isMeasured &&
-							finalPlacement &&
-							finalAlign &&
-							hasArrow && (
-								<div
-									className={theme.arrow}
-									style={getArrowStyle(finalPlacement, finalAlign, arrowOffset)}
-								/>
-							)}
+						{isMeasured && finalPlacement && finalAlign && hasArrow && (
+							<div
+								className={theme.arrow}
+								style={getArrowStyle(finalPlacement, finalAlign, arrowOffset)}
+							/>
+						)}
 						{this.props.children}
 					</div>
 				</div>

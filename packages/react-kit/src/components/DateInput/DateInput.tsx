@@ -139,18 +139,17 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 						{format(year, ActiveSection.Year)}
 					</span>
 				</div>
-				{Calendar &&
-					calendarIcon && (
-						<ButtonIcon
-							isFlat={true}
-							ref={(el: any) => (this.calendarButtonRef = el)}
-							isDisabled={isDisabled}
-							tabIndex={-1}
-							icon={calendarIcon}
-							onMouseDown={this.onCalendarButtonMouseDown}
-							theme={theme.CalendarButtonIcon}
-						/>
-					)}
+				{Calendar && calendarIcon && (
+					<ButtonIcon
+						isFlat={true}
+						ref={(el: any) => (this.calendarButtonRef = el)}
+						isDisabled={isDisabled}
+						tabIndex={-1}
+						icon={calendarIcon}
+						onMouseDown={this.onCalendarButtonMouseDown}
+						theme={theme.CalendarButtonIcon}
+					/>
+				)}
 				{this.renderCalendar()}
 			</SteppableInput>
 		);
@@ -249,7 +248,11 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 		switch (activeSection) {
 			case ActiveSection.Day: {
 				//day starts from 1 here and cannot be zero
-				const newDay = pipe(day, map(value => (value + 1) % 32 || 1), alt(() => some(1)));
+				const newDay = pipe(
+					day,
+					map(value => (value + 1) % 32 || 1),
+					alt(() => some(1)),
+				);
 				this.onValueChange(newDay, month, year);
 				break;
 			}
@@ -286,7 +289,11 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 		switch (activeSection) {
 			case ActiveSection.Day: {
 				//day starts from 1 and cannot be zero
-				const newDay = pipe(day, map(value => (value - 1) % 32 || 31), alt(() => some(31)));
+				const newDay = pipe(
+					day,
+					map(value => (value - 1) % 32 || 31),
+					alt(() => some(31)),
+				);
 				this.onValueChange(newDay, month, year);
 				break;
 			}

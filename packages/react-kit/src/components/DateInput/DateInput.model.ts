@@ -21,7 +21,13 @@ export const isDatesDifferent = (x: TDateInputValue, y: TDateInputValue): boolea
 export const buildDate = (day: number) => (month: number) => (year: number) => new Date(year, month, day);
 export const buildDateOption = (day: Option<number>) => (month: Option<number>) => (
 	year: Option<number>,
-): Option<Date> => pipe(day, map(buildDate), ap(month), ap(year));
+): Option<Date> =>
+	pipe(
+		day,
+		map(buildDate),
+		ap(month),
+		ap(year),
+	);
 
 export enum DateFormatType {
 	MDY,
@@ -95,7 +101,11 @@ export function decrementMonth(month: number): number {
 }
 
 export function decrementMonthOption(month: Option<number>): Option<number> {
-	return pipe(month, map(decrementMonth), alt(constant(some(11))));
+	return pipe(
+		month,
+		map(decrementMonth),
+		alt(constant(some(11))),
+	);
 }
 
 export function incrementMonth(month: number): number {
@@ -106,7 +116,11 @@ export function incrementMonth(month: number): number {
 }
 
 export function incrementMonthOption(month: Option<number>): Option<number> {
-	return pipe(month, map(incrementMonth), alt(constant(some(0))));
+	return pipe(
+		month,
+		map(incrementMonth),
+		alt(constant(some(0))),
+	);
 }
 
 export const inc = (value: number): number => value + 1;

@@ -14,11 +14,22 @@ describe('date input', () => {
 		});
 		it('should decrement month or return default value (works with option)', () => {
 			const newMonths = array.sequence(option)(months.map(month => decrementMonthOption(some(month))));
-			pipe(newMonths, map(value => expect(value).toEqual(expextedMonths)));
+			pipe(
+				newMonths,
+				map(value => expect(value).toEqual(expextedMonths)),
+			);
 
 			const defaultOptionMonth = some(11);
 			const noneMonth = decrementMonthOption(none);
-			pipe(noneMonth, chain(noneMonth => pipe(defaultOptionMonth, map(month => expect(noneMonth).toBe(month)))));
+			pipe(
+				noneMonth,
+				chain(noneMonth =>
+					pipe(
+						defaultOptionMonth,
+						map(month => expect(noneMonth).toBe(month)),
+					),
+				),
+			);
 		});
 	});
 	describe('increment month', () => {
@@ -31,11 +42,22 @@ describe('date input', () => {
 		});
 		it('should increment month or return default value (works with option)', () => {
 			const newMonths = array.sequence(option)(months.map(month => incrementMonthOption(some(month))));
-			pipe(newMonths, map(value => expect(value).toEqual(expextedMonths)));
+			pipe(
+				newMonths,
+				map(value => expect(value).toEqual(expextedMonths)),
+			);
 
 			const defaultOptionMonth = some(0);
 			const noneMonth = incrementMonthOption(none);
-			pipe(noneMonth, chain(noneMonth => pipe(defaultOptionMonth, map(month => expect(noneMonth).toBe(month)))));
+			pipe(
+				noneMonth,
+				chain(noneMonth =>
+					pipe(
+						defaultOptionMonth,
+						map(month => expect(noneMonth).toBe(month)),
+					),
+				),
+			);
 		});
 	});
 });
