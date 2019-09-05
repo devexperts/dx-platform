@@ -1,5 +1,5 @@
 import Emitter from '@devexperts/utils/dist/emitter/Emitter';
-import * as PropTypes from 'prop-types';
+import { constNull } from 'fp-ts/lib/function';
 
 export const EVENT_SCROLABLE = {
 	RESIZE: 'EVENT_SCROLABLE:RESIZE',
@@ -15,9 +15,6 @@ export class ScrollableInternalEmitter extends Emitter {
 
 export const SCROLLABLE_CONTEXT_EMITTER = '__SCROLLABLE__CONTEXT_EMITTER__';
 export const CONTEXT_TYPES = {
-	[SCROLLABLE_CONTEXT_EMITTER.toString()]: PropTypes.instanceOf(ScrollableInternalEmitter).isRequired,
-	size: PropTypes.shape({
-		width: PropTypes.number,
-		height: PropTypes.number,
-	}),
+	[SCROLLABLE_CONTEXT_EMITTER.toString()]: constNull,
+	size: constNull,
 };

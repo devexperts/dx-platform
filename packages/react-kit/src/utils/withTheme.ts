@@ -1,12 +1,7 @@
 import * as React from 'react';
-
-// import {
-//     Children, createElement, ComponentClass, Component, Ref,
-//     ComponentType
-// } from 'react';
-import * as PropTypes from 'prop-types';
 import { Omit } from 'typelevel-ts';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
+import { constNull } from 'fp-ts/lib/function';
 
 const THEME_CONTEXT_KEY = '@@dx-util/withTheme-context-key'; //should be serializable
 const THEME_CONFIG_KEY = '@@dx-util/withTheme-config-key';
@@ -57,7 +52,7 @@ export const withTheme = (name: string | symbol, defaultTheme: TTheme = {}) => {
 			static displayName = `Themed(${Target.displayName || Target.name})`;
 
 			static contextTypes = {
-				[THEME_CONTEXT_KEY.toString()]: PropTypes.object.isRequired,
+				[THEME_CONTEXT_KEY.toString()]: constNull,
 			};
 
 			render() {
@@ -189,7 +184,7 @@ export type TThemeProviderProps = {
 
 export class ThemeProvider extends React.Component<TThemeProviderProps> {
 	static childContextTypes = {
-		[THEME_CONTEXT_KEY.toString()]: PropTypes.object,
+		[THEME_CONTEXT_KEY.toString()]: constNull,
 	};
 
 	render() {
