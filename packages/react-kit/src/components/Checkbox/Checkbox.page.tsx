@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { PURE } from '../../utils/pure';
 import * as classnames from 'classnames';
-import Demo from '../demo/Demo';
+import { Demo } from '../demo/Demo';
 import { CheckboxTickIcon } from '../../icons/checkbox-tick-icon';
 
 import { Checkbox } from './Checkbox';

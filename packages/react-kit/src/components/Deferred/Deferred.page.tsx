@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { PureComponent } from 'react';
 import { storiesOf } from '@storybook/react';
-import Demo from '../demo/Demo';
+import { Demo } from '../demo/Demo';
 import { Deferred } from './Deferred';
 
 type TDeferredPageState = {

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import { Autocomplete } from './Autocomplete';
 import { PURE } from '../../utils/pure';
-import Demo from '../demo/Demo';
+import { Demo } from '../demo/Demo';
 import * as css from './Autocomplete.page.styl';
 const data: string[] = Array.from(new Array(20).keys()).map(v => `${v}`);
 const filter = (value: string) => (item: string, index: number) => item.indexOf(value) !== -1;

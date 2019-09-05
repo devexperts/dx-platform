@@ -3,7 +3,7 @@ import { getRenderRemoteData } from '../get-render-remote-data';
 import * as React from 'react';
 import { Fragment, SFC } from 'react';
 import { failure, pending, success } from '@devexperts/remote-data-ts';
-import Demo from '../../demo/Demo';
+import { Demo } from '../../demo/Demo';
 
 const DataStatePending = () => <div>pending</div>;
 const DataStateFailure: SFC<{ error: Error }> = props => <div>error: {props.error.message}</div>;

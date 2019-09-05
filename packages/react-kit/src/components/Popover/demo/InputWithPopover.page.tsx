@@ -3,7 +3,7 @@ import { Input } from '../../input/Input';
 import { Popover } from '../Popover';
 import { PopoverPlacement, PopoverAlign } from '../Popover.model';
 import { stateful } from '../../Control/Control';
-import Demo from '../../demo/Demo';
+import { Demo } from '../../demo/Demo';
 
 const StatefulInput = stateful()(Input);
 

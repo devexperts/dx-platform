@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Demo from '../../demo/Demo';
+import { Demo } from '../../demo/Demo';
 import { PURE } from '../../../utils/pure';
 import { Button } from '../../Button/Button';
 import { Popover } from '../Popover';

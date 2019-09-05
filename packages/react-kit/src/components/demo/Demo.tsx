@@ -32,5 +32,4 @@ const Demo: React.SFC<Partial<TFullDemoComponentProps>> = props => (
 	</DefaultTheme>
 );
 
-export default Demo;
 export { Demo };

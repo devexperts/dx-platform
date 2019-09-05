@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Component } from 'react';
-import Demo from '../demo/Demo';
+import { Demo } from '../demo/Demo';
 import { ToggleButtons } from './ToggleButtons';
 import { Button } from '../Button/Button';
 import { Link } from '../Link/Link';

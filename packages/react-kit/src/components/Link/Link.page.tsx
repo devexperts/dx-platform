@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { storiesOf } from '@storybook/react';
-import Demo from '../demo/Demo';
+import { Demo } from '../demo/Demo';
 import { Link } from './Link';
 
 storiesOf('Link', module).add('default', () => (

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { storiesOf } from '@storybook/react';
-import Demo from '../demo/Demo';
+import { Demo } from '../demo/Demo';
 import { Button } from '../Button/Button';
 import { Selectbox, TFullSelectboxProps } from './Selectbox';
 import { SelectboxAnchor, TFullSelectboxAnchorProps } from './SelectboxAnchor';

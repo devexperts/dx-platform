@@ -1,4 +1,4 @@
-import Demo from '../demo/Demo';
+import { Demo } from '../demo/Demo';
 import { Button } from './Button';
 import * as React from 'react';
 import { storiesOf } from '@storybook/react';

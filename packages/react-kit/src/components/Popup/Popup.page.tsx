@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Popup } from './Popup';
 import { storiesOf } from '@storybook/react';
 import { PURE } from '../../utils/pure';
-import Demo from '../demo/Demo';
+import { Demo } from '../demo/Demo';
 import { Button } from '../Button/Button';
 import { Selectbox } from '../Selectbox/Selectbox';
 import { stateful } from '../Control/Control';

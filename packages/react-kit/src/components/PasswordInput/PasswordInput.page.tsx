@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Demo from '../demo/Demo';
+import { Demo } from '../demo/Demo';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { PasswordInput } from './PasswordInput';

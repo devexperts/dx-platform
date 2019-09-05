@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Demo from '../../demo/Demo';
+import { Demo } from '../../demo/Demo';
 import { Button } from '../../Button/Button';
 import { Popover } from '../Popover';
 import { PopoverPlacement, PopoverAlign } from '../Popover.model';

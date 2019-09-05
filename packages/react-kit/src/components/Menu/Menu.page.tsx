@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { storiesOf } from '@storybook/react';
-import Demo from '../demo/Demo';
+import { Demo } from '../demo/Demo';
 import { Menu, MenuItem, MenuItemGroup } from './Menu';
 
 import * as css from './Menu.page.styl';

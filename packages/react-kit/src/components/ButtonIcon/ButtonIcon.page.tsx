@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import { ButtonIcon } from './ButtonIcon';
-import Demo from '../demo/Demo';
+import { Demo } from '../demo/Demo';
 import { ListItemTickIcon } from '../../icons/list-item-tick-icon';
 import * as css from './ButtonIcon.page.styl';
 

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { storiesOf } from '@storybook/react';
-import Demo from '../demo/Demo';
+import { Demo } from '../demo/Demo';
 import { PURE } from '../../utils/pure';
 
 import { Grid, GridHead as Head, GridBody as Body, GridRow as Row, GridCell as Cell, GridCellAlignment } from './Grid';
