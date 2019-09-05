@@ -1,6 +1,6 @@
 {
   "name": "@devexperts/lint",
-  "version": "1.0.0-alpha.0",
+  "version": "1.0.0-alpha.1",
   "description": "",
   "main": "dist",
   "module": "dist",
@@ -36,7 +36,7 @@
     "typescript": "^3.2.2"
   },
   "devDependencies": {
-    "@devexperts/tools": "^1.0.0-alpha.0",
+    "@devexperts/tools": "^1.0.0-alpha.1",
     "tslint": "^5.19.0",
     "typescript": "^3.5.3"
   }

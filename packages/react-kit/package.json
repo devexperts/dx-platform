@@ -1,6 +1,6 @@
 {
   "name": "@devexperts/react-kit",
-  "version": "1.0.0-alpha.0",
+  "version": "1.0.0-alpha.1",
   "description": "",
   "main": "dist",
   "module": "dist",
@@ -27,7 +27,7 @@
   "homepage": "https://github.com/devexperts/dx-platform#readme",
   "dependencies": {
     "@devexperts/remote-data-ts": "^2.0.0",
-    "@devexperts/utils": "^1.0.0-alpha.0",
+    "@devexperts/utils": "^1.0.0-alpha.1",
     "@types/classnames": ">=2.2.3",
     "@types/node": ">=8.5.2",
     "classnames": "^2.2.5",
@@ -45,7 +45,7 @@
     "react-dom": "^16.9.0"
   },
   "devDependencies": {
-    "@devexperts/tools": "^1.0.0-alpha.0",
+    "@devexperts/tools": "^1.0.0-alpha.1",
     "@storybook/addon-actions": "^5.1.11",
     "@storybook/addon-info": "^5.1.11",
     "@storybook/addon-knobs": "^5.1.11",

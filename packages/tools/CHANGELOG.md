@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.1](https://github.com/devexperts/dx-platform/compare/v1.0.0-alpha.0...v1.0.0-alpha.1) (2019-09-05)
+
+
+### Build System
+
+* **react-kit,tools:** update react and storybook ([ecf5070](https://github.com/devexperts/dx-platform/commit/ecf5070))
+
+
+### BREAKING CHANGES
+
+* **react-kit,tools:** Peer dependencies were updated:
+  - "@types/react": "^16.9.2",
+  - "@types/react-dom": "^16.9.0",
+  - "react": "^16.9.0",
+  - "react-dom": "^16.9.0"
+ 
+ 
+ 
+
+
+
+
+
 # [1.0.0-alpha.0](https://github.com/devexperts/dx-platform/compare/v0.29.1...v1.0.0-alpha.0) (2019-09-04)
 
 
