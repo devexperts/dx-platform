@@ -11,8 +11,8 @@ program
 	.action(function(options) {
 		const [node, bin] = program.rawArgs;
 		process.argv = [node, bin, '--config', options.config];
-		// tslint:disable-next-line
-		require('webpack/bin/webpack.js');
+		// eslint-disable-next-line @typescript-eslint/no-require-imports
+		require('webpack/bin/webpack.js'); // tslint:disable-line no-require-imports
 	});
 
 program.parse(process.argv);

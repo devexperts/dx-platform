@@ -3,8 +3,8 @@ import { BehaviorSubject, isObservable, Observable, Subscription } from 'rxjs';
 import { observeOn } from 'rxjs/operators';
 import { animationFrame } from 'rxjs/internal/scheduler/animationFrame';
 
-// tslint:disable-next-line
-const hoistNonReactStatics = require('hoist-non-react-statics');
+// eslint-disable-next-line @typescript-eslint/no-require-imports, @typescript-eslint/no-var-requires
+const hoistNonReactStatics = require('hoist-non-react-statics'); // tslint:disable-line no-require-imports no-var-requires
 
 /**
  * @deprecated

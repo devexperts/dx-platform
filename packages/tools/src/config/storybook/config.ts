@@ -15,6 +15,7 @@ addParameters({
 
 addDecorator(withKnobs);
 
+// eslint-disable-next-line no-var
 declare var SRC_PATH: string;
 
 console.log('sdrs=>', SRC_PATH);

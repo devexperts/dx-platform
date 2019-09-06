@@ -3,8 +3,8 @@ import { BehaviorSubject, merge, Observable, SchedulerLike, Subscription } from 
 import { map, observeOn } from 'rxjs/operators';
 import { Omit } from 'typelevel-ts';
 
-// tslint:disable-next-line
-const hoistNonReactStatics = require('hoist-non-react-statics');
+// eslint-disable-next-line @typescript-eslint/no-require-imports, @typescript-eslint/no-var-requires
+const hoistNonReactStatics = require('hoist-non-react-statics'); // tslint:disable-line no-require-imports no-var-requires
 
 export type Observify<P extends object> = { readonly [K in keyof P]: Observable<P[K]> };
 

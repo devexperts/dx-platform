@@ -6,6 +6,7 @@ declare module 'react-dev-utils/WebpackDevServerUtils' {
 		localUrlForBrowser: string;
 	};
 
+	// eslint-disable-next-line @typescript-eslint/no-require-imports
 	import webpack = require('webpack');
 
 	export function choosePort(host: string, defaultPort: number): Promise<number>;
