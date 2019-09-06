@@ -4,7 +4,7 @@
     "commitlint": "commitlint",
     "start": "lerna run --parallel watch",
     "start:storybook": "cd packages/react-kit && yarn start",
-    "test": "yarn tslint && yarn jest",
+    "test": "yarn eslint && yarn jest",
     "lerna": "lerna",
     "lerna:bootstrap": "yarn lerna -- bootstrap",
     "lerna:update": "yarn lerna -- clean && yarn lerna -- bootstrap",
@@ -19,7 +19,10 @@
     "tslint": "tslint -c tslint.json --project tsconfig.json './packages/*/src/**/*.ts' './packages/*/src/**/*.tsx'",
     "publish:patch": "yarn lerna publish patch --force-publish=*",
     "publish:minor": "yarn lerna publish minor --force-publish=*",
-    "publish:major": "yarn lerna publish major --force-publish=*"
+    "publish:major": "yarn lerna publish major --force-publish=*",
+    "eslint": "eslint ./packages/*/src/**/*.{ts,tsx}",
+    "eslint:fix": "eslint --fix ./packages/*/src/**/*.{ts,tsx}",
+    "eslint:config": "eslint --print-config ./packages/*/src/**/*.{ts,tsx}"
   },
   "private": true,
   "workspaces": [
@@ -70,6 +73,7 @@
     "@commitlint/config-conventional": "^8.1.0",
     "@commitlint/travis-cli": "^8.1.0",
     "@types/jest": "^24.0.11",
+    "eslint": "^6.3.0",
     "husky": "^3.0.5",
     "jest": "^24.7.1",
     "lerna": "^3.10.5",
