@@ -9,13 +9,16 @@ export const TOOLS_ROOT = path.join(__dirname, '../../');
 export const ROOT = process.cwd();
 
 if (fs.existsSync(path.resolve(ROOT, '.dx-tools'))) {
+	// eslint-disable-next-line @typescript-eslint/no-require-imports
 	OVERRIDES = require(path.resolve(ROOT, '.dx-tools'));
 }
 
 export const NODE_MODULES_PATH = path.resolve(ROOT, 'node_modules');
 export const TOOLS_NODE_MODULES_PATH = path.resolve(TOOLS_ROOT, 'node_modules');
 
+// eslint-disable-next-line @typescript-eslint/no-require-imports, @typescript-eslint/no-var-requires
 export const PKG = require(path.join(ROOT, 'package.json'));
+// eslint-disable-next-line @typescript-eslint/no-require-imports, @typescript-eslint/no-var-requires
 export const TOOLS_PKG = require(path.join(TOOLS_ROOT, 'package.json'));
 
 export const SRC_PATH = OVERRIDES.SRC_PATH || path.resolve(ROOT, 'src');
