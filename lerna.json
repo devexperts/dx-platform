@@ -9,7 +9,7 @@
   ],
   "npmClient": "yarn",
   "useWorkspaces": true,
-  "version": "0.29.1",
+  "version": "1.0.0-alpha.1",
   "command": {
     "init": {
       "exact": true

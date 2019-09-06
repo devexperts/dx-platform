@@ -7,4 +7,5 @@ install:
   - yarn lerna run prepare
 
 script:
+  - yarn commitlint-travis
   - yarn test

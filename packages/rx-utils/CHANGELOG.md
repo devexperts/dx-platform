@@ -3,6 +3,40 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.1](https://github.com/devexperts/dx-platform/compare/v1.0.0-alpha.0...v1.0.0-alpha.1) (2019-09-05)
+
+**Note:** Version bump only for package @devexperts/rx-utils
+
+
+
+
+
+# [1.0.0-alpha.0](https://github.com/devexperts/dx-platform/compare/v0.29.1...v1.0.0-alpha.0) (2019-09-04)
+
+
+### Build System
+
+* update dependencies ([f59da99](https://github.com/devexperts/dx-platform/commit/f59da99))
+
+
+### BREAKING CHANGES
+
+* update dependencies:
+  - @devexperts/remote-data-ts@^2.0.0
+  - fp-ts@^2.0.5
+  - ts-loader@^6.0.4
+  - tslib@^1.10.0
+  - tslint@^5.19.0
+  - tslint-config-prettier@^1.18.0"
+  - tslint-plugin-prettier@^2.0.1"
+  - tsutils@^3.17.1
+  - typelevel-ts@^0.3.5
+  - typescript@^3.5.3
+
+
+
+
+
 ## [0.29.1](https://github.com/devex-web-frontend/dx-platform/compare/v0.29.0...v0.29.1) (2019-07-03)
 
 **Note:** Version bump only for package @devexperts/rx-utils

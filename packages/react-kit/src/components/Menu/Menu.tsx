@@ -145,6 +145,7 @@ class RawMenuItemGroup extends React.Component<TFullMenuItemGroupProps, TMenuIte
 			<ListItemGroup onClick={this.onClick} {...this.props} header={header} isCollapsed={this.state.isCollapsed}>
 				<Pure check={children}>
 					{() =>
+						React.isValidElement(children) &&
 						React.cloneElement(React.Children.only(children), {
 							onItemSelect: this.props.onSelect,
 						})

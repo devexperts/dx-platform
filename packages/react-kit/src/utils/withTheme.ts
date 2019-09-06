@@ -1,12 +1,7 @@
 import * as React from 'react';
-
-// import {
-//     Children, createElement, ComponentClass, Component, Ref,
-//     ComponentType
-// } from 'react';
-import * as PropTypes from 'prop-types';
 import { Omit } from 'typelevel-ts';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
+import { constNull } from 'fp-ts/lib/function';
 
 const THEME_CONTEXT_KEY = '@@dx-util/withTheme-context-key'; //should be serializable
 const THEME_CONFIG_KEY = '@@dx-util/withTheme-config-key';
@@ -57,17 +52,17 @@ export const withTheme = (name: string | symbol, defaultTheme: TTheme = {}) => {
 			static displayName = `Themed(${Target.displayName || Target.name})`;
 
 			static contextTypes = {
-				[THEME_CONTEXT_KEY.toString()]: PropTypes.object.isRequired,
+				[THEME_CONTEXT_KEY.toString()]: constNull,
 			};
 
 			render() {
 				/* BROKEN TYPES HERE
-				* the next 4 lines may be replaced by `const { withRef, theme, ...rest }= this.props;`
-				* but TS cannot get `rest` type from generic `this.props` type
-				* details:
-				* issue https://github.com/Microsoft/TypeScript/issues/10727
-				* PR https://github.com/Microsoft/TypeScript/pull/13288
-				*/
+				 * the next 4 lines may be replaced by `const { withRef, theme, ...rest }= this.props;`
+				 * but TS cannot get `rest` type from generic `this.props` type
+				 * details:
+				 * issue https://github.com/Microsoft/TypeScript/issues/10727
+				 * PR https://github.com/Microsoft/TypeScript/pull/13288
+				 */
 				const { withRef, theme } = this.props;
 				const rest: any = Object.assign({}, this.props);
 				delete rest.withRef;
@@ -189,7 +184,7 @@ export type TThemeProviderProps = {
 
 export class ThemeProvider extends React.Component<TThemeProviderProps> {
 	static childContextTypes = {
-		[THEME_CONTEXT_KEY.toString()]: PropTypes.object,
+		[THEME_CONTEXT_KEY.toString()]: constNull,
 	};
 
 	render() {

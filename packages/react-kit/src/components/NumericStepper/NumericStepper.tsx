@@ -159,7 +159,12 @@ class RawNumericStepper extends React.Component<TNumericStepperFullProps, TNumer
 		}
 		if (this.state.isFocused) {
 			const { onValueChange } = this.props;
-			const newValue = this.parseValue(pipe(fromNullable(value), getOrElse(() => '')));
+			const newValue = this.parseValue(
+				pipe(
+					fromNullable(value),
+					getOrElse(() => ''),
+				),
+			);
 
 			this.setState({
 				displayedValue: this.formatValue(newValue),

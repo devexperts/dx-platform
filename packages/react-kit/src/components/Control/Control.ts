@@ -1,15 +1,7 @@
 import * as React from 'react';
-import { Requireable, ComponentClass } from 'react';
-import * as PropTypes from 'prop-types';
+import { ComponentClass } from 'react';
 import { Omit } from 'typelevel-ts';
 import SFC = React.SFC;
-
-export function createControlProps<TValue>(valueType: Requireable<TValue>) {
-	return {
-		value: valueType,
-		onChange: PropTypes.func,
-	};
-}
 
 export enum KeyCode {
 	Escape = 27,

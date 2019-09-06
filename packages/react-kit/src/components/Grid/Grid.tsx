@@ -1,5 +1,4 @@
 import * as React from 'react';
-import * as PropTypes from 'prop-types';
 import * as ReactDOM from 'react-dom';
 import prefix from '@devexperts/utils/dist/dom/prefix';
 import { PURE } from '../../utils/pure';
@@ -27,6 +26,7 @@ import * as classnames from 'classnames';
 import { Omit } from 'typelevel-ts';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { withTheme } from '../../utils/withTheme';
+import { constNull } from 'fp-ts/lib/function';
 
 export const GRID = Symbol('Grid') as symbol;
 
@@ -47,7 +47,7 @@ class GridInternalEmitter extends Emitter {
 
 const GRID_CONTEXT_EMITTER = '__GRID_CONTEXT_EMITTER__';
 const CONTEXT_TYPES = {
-	[GRID_CONTEXT_EMITTER]: PropTypes.instanceOf(GridInternalEmitter).isRequired,
+	[GRID_CONTEXT_EMITTER]: constNull,
 };
 
 export type TFullGridProps = Omit<TFullTableProps, 'theme'> & {

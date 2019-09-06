@@ -3,6 +3,70 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.1](https://github.com/devexperts/dx-platform/compare/v1.0.0-alpha.0...v1.0.0-alpha.1) (2019-09-05)
+
+
+### Build System
+
+* **react-kit,tools:** update react and storybook ([ecf5070](https://github.com/devexperts/dx-platform/commit/ecf5070))
+
+
+### Code Refactoring
+
+* **react-kit:** drop `prop-types` ([96ced98](https://github.com/devexperts/dx-platform/commit/96ced98))
+* **react-kit:** support new react typings ([743c0ea](https://github.com/devexperts/dx-platform/commit/743c0ea))
+
+
+### BREAKING CHANGES
+
+* **react-kit:** replaced `prop-types` validators with `constNull`s
+* **react-kit:** - narrowed `Button`'s `type` prop
+- narrows `Scrollable`'s `children` prop
+* **react-kit,tools:** Peer dependencies were updated:
+  - "@types/react": "^16.9.2",
+  - "@types/react-dom": "^16.9.0",
+  - "react": "^16.9.0",
+  - "react-dom": "^16.9.0"
+ 
+ 
+ 
+
+
+
+
+
+# [1.0.0-alpha.0](https://github.com/devexperts/dx-platform/compare/v0.29.1...v1.0.0-alpha.0) (2019-09-04)
+
+
+### Build System
+
+* update dependencies ([f59da99](https://github.com/devexperts/dx-platform/commit/f59da99))
+
+
+### Code Refactoring
+
+* **utils:** fp-ts@^2.0.5 ([10fdf18](https://github.com/devexperts/dx-platform/commit/10fdf18))
+
+
+### BREAKING CHANGES
+
+* **utils:** renamed Setoid to Eq
+* update dependencies:
+  - @devexperts/remote-data-ts@^2.0.0
+  - fp-ts@^2.0.5
+  - ts-loader@^6.0.4
+  - tslib@^1.10.0
+  - tslint@^5.19.0
+  - tslint-config-prettier@^1.18.0"
+  - tslint-plugin-prettier@^2.0.1"
+  - tsutils@^3.17.1
+  - typelevel-ts@^0.3.5
+  - typescript@^3.5.3
+
+
+
+
+
 ## [0.29.1](https://github.com/devex-web-frontend/dx-platform/compare/v0.29.0...v0.29.1) (2019-07-03)
 
 **Note:** Version bump only for package @devexperts/platform

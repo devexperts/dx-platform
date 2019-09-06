@@ -63,13 +63,12 @@ class PopupPage extends React.Component {
 						onChange={this.onCloseOnClickAwayChange}
 					/>
 				</label>
-				{!isModal &&
-					shouldCloseOnClickAway && (
-						<label className={css.label}>
-							When isModal === false && shouldCloseOnClickAway === true popup will close on click inside
-							inner selectbox, because there is no backdrop and selectbox is rendered to body
-						</label>
-					)}
+				{!isModal && shouldCloseOnClickAway && (
+					<label className={css.label}>
+						When isModal === false && shouldCloseOnClickAway === true popup will close on click inside inner
+						selectbox, because there is no backdrop and selectbox is rendered to body
+					</label>
+				)}
 				<Button isPrimary={true} onClick={this.onToggleClick}>
 					{isOpened ? 'Close' : 'Open'}
 					<Popup
