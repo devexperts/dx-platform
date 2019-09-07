@@ -16,7 +16,6 @@
     "jest": "jest",
     "prettier": "prettier --list-different \"./packages/**/src/**/*.{ts,tsx}\"",
     "prettier:fix": "prettier --write \"./packages/**/src/**/*.{ts,tsx}\"",
-    "tslint": "tslint -c tslint.json --project tsconfig.json './packages/*/src/**/*.ts' './packages/*/src/**/*.tsx'",
     "publish:patch": "yarn lerna publish patch --force-publish=*",
     "publish:minor": "yarn lerna publish minor --force-publish=*",
     "publish:major": "yarn lerna publish major --force-publish=*",
@@ -78,8 +77,7 @@
     "jest": "^24.7.1",
     "lerna": "^3.10.5",
     "prettier": "^1.18.2",
-    "ts-jest": "^24.0.2",
-    "tslint": "^5.19.0"
+    "ts-jest": "^24.0.2"
   },
   "husky": {
     "hooks": {

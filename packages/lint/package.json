@@ -6,8 +6,8 @@
   "module": "dist",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "dx-tools build-lib src dist --failOnError",
-    "clean": "dx-tools clean dist",
+    "build": "dx-tools build-lib src dist --failOnError | exit 0",
+    "clean": "dx-tools clean dist | exit 0",
     "prepare": "yarn clean && yarn build",
     "start": "yarn watch",
     "watch": "dx-tools build-lib src dist -w"
@@ -32,17 +32,14 @@
     "eslint-config-prettier": "^6.1.0",
     "eslint-plugin-jsdoc": "^15.8.3",
     "eslint-plugin-prettier": "^3.1.0",
-    "tslint-config-prettier": "^1.18.0",
-    "tslint-plugin-prettier": "^2.0.1",
     "tsutils": "^3.17.1"
   },
   "peerDependencies": {
-    "tslint": "^5.10.0",
     "typescript": "^3.2.2"
   },
   "devDependencies": {
     "@devexperts/tools": "^1.0.0-alpha.1",
-    "tslint": "^5.19.0",
+    "eslint": "^6.3.0",
     "typescript": "^3.5.3"
   }
 }
