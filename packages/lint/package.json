@@ -5,12 +5,7 @@
   "main": "dist",
   "module": "dist",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "dx-tools build-lib src dist --failOnError | exit 0",
-    "clean": "dx-tools clean dist | exit 0",
-    "prepare": "yarn clean && yarn build",
-    "start": "yarn watch",
-    "watch": "dx-tools build-lib src dist -w"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
