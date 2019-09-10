@@ -9,3 +9,8 @@ install:
 script:
   - yarn commitlint-travis
   - yarn test
+
+after_success:
+  - test $TRAVIS_BRANCH = "master" &&
+    yarn storybook:publish
+  
