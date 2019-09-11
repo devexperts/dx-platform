@@ -1,5 +1,0 @@
-{
-  "extends": [
-    "./packages/lint/tslint.json"
-  ]
-}

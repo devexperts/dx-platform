@@ -61,12 +61,14 @@ export function shallowEqual(objA: any, objB: any): boolean {
 	}
 
 	// Test for A's keys different from B.
-	//tslint:disable-next-line
+	// tslint:disable prefer-for-of
+	// eslint-disable-next-line @typescript-eslint/prefer-for-of
 	for (let i = 0; i < keysA.length; i++) {
 		if (!hasOwnProperty.call(objB, keysA[i]) || !is(objA[keysA[i]], objB[keysA[i]])) {
 			return false;
 		}
 	}
+	// tslint:enable prefer-for-of
 
 	return true;
 }

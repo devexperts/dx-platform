@@ -22,8 +22,8 @@ program
 			process.argv.push('--port', port.toString());
 			process.argv.push('--host', options.host.toString());
 
-			// tslint:disable-next-line
-			require('@storybook/react/dist/server');
+			// eslint-disable-next-line @typescript-eslint/no-require-imports
+			require('@storybook/react/dist/server'); // tslint:disable-line no-require-imports
 		});
 	});
 

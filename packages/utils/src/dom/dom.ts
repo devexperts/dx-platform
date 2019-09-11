@@ -78,6 +78,7 @@ export const contains: (context: Node, node: Node) => boolean = !canUseDOM()
 			if (context.contains) {
 				return context.contains(node);
 			} else if (context.compareDocumentPosition) {
+				//eslint-disable-next-line no-bitwise
 				return context === node || !!(context.compareDocumentPosition(node) & 16); //tslint:disable-line no-bitwise
 			} else {
 				return fallback(context, node);

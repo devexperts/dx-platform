@@ -5,12 +5,7 @@
   "main": "dist",
   "module": "dist",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "dx-tools build-lib src dist --failOnError",
-    "clean": "dx-tools clean dist",
-    "prepare": "yarn clean && yarn build",
-    "start": "yarn watch",
-    "watch": "dx-tools build-lib src dist -w"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
@@ -27,17 +22,19 @@
   "homepage": "https://github.com/devexperts/dx-platform#readme",
   "dependencies": {
     "@types/node": "^8.10.19",
-    "tslint-config-prettier": "^1.18.0",
-    "tslint-plugin-prettier": "^2.0.1",
+    "@typescript-eslint/eslint-plugin": "^2.0.0",
+    "@typescript-eslint/parser": "^2.0.0",
+    "eslint-config-prettier": "^6.1.0",
+    "eslint-plugin-jsdoc": "^15.8.3",
+    "eslint-plugin-prettier": "^3.1.0",
     "tsutils": "^3.17.1"
   },
   "peerDependencies": {
-    "tslint": "^5.10.0",
     "typescript": "^3.2.2"
   },
   "devDependencies": {
     "@devexperts/tools": "^1.0.0-alpha.1",
-    "tslint": "^5.19.0",
+    "eslint": "^6.3.0",
     "typescript": "^3.5.3"
   }
 }
