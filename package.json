@@ -4,6 +4,7 @@
     "commitlint": "commitlint",
     "start": "lerna run --parallel watch",
     "start:storybook": "cd packages/react-kit && yarn start",
+    "storybook:publish": "cd packages/react-kit && yarn storybook:publish",
     "test": "yarn eslint && yarn jest",
     "lerna": "lerna",
     "lerna:bootstrap": "yarn lerna -- bootstrap",
