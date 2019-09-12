@@ -37,10 +37,10 @@
     "@devexperts/remote-data-ts": "^2.0.0",
     "@devexperts/tools": "^1.0.0-alpha.1",
     "@types/jest": "^21.1.8",
-    "@types/sinon": "^5.0.1",
+    "@types/sinon": "^7.0.13",
     "fp-ts": "^2.0.5",
     "rxjs": "^6.2.1",
-    "sinon": "^5.1.0"
+    "sinon": "^7.4.2"
   },
   "peerDependencies": {
     "@devexperts/remote-data-ts": "^2.0.0",
