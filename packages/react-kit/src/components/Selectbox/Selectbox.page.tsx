@@ -113,8 +113,8 @@ class SelectboxPage extends React.Component<{}, TPageState> {
 						theme={wideSelectboxTheme}
 						selectedIcon={<ListItemTickIcon />}
 						caretIcon={<SmallDropDownArrowIcon />}>
-						<MenuItem value="superman">Superman</MenuItem>
 						<MenuItem value="batman">Batman</MenuItem>
+						<MenuItem value="superman">Superman</MenuItem>
 						<MenuItem value="flash">Flash</MenuItem>
 					</Stateful>
 				</section>
