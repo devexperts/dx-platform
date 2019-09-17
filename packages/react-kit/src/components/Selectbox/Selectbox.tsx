@@ -5,17 +5,19 @@ import { Menu, TFullMenuProps, TMenuItemProps, TMenuProps } from '../Menu/Menu';
 import { PURE } from '../../utils/pure';
 import * as classnames from 'classnames';
 import { withTheme } from '../../utils/withTheme';
-import { Component, ComponentClass, ComponentType, ReactElement, ReactNode, ReactText } from 'react';
+import { Component, ComponentClass, ComponentType, ReactChild, ReactElement, ReactNode, ReactText } from 'react';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { TControlProps } from '../Control/Control';
 import { NativeResizeDetector } from '../ResizeDetector/ResizeDetector';
 import { findDOMNode } from 'react-dom';
 import { raf } from '@devexperts/utils/dist/function/raf';
 import { withDefaults } from '../../utils/with-defaults';
-
 export const SELECTBOX = Symbol('Selectbox') as symbol;
 
-export type TFullSelectboxProps = TControlProps<ReactText | undefined> &
+export type SelectboxValue = ReactText | ReactText[] | undefined;
+type SelectboxChildren = ReactElement<TMenuItemProps>[] | ReactElement<TMenuItemProps>;
+
+export type TFullSelectboxProps = TControlProps<SelectboxValue> &
 	TControlProps<boolean | undefined, 'isOpened', 'onToggle'> & {
 		theme: {
 			container_isOpened?: string;
@@ -35,7 +37,8 @@ export type TFullSelectboxProps = TControlProps<ReactText | undefined> &
 			container__anchor__caret?: string;
 			container__anchor__caret_isReversed?: string;
 		};
-		children: ReactElement<TMenuItemProps>[] | ReactElement<TMenuItemProps>;
+		multipleFormatter?: (value: ReactText[]) => ReactNode;
+		children: SelectboxChildren;
 		isDisabled?: boolean;
 		isLoading?: boolean;
 		placeholder?: string;
@@ -52,20 +55,32 @@ type TSelectboxState = {
 	width?: number;
 };
 
+const getValues = (value?: SelectboxValue) => {
+	if (typeof value === 'undefined') {
+		return [];
+	}
+	return Array.isArray(value) ? value : [value];
+};
+
+const getValuesFromChildren = (children: SelectboxChildren) => {
+	return React.Children.toArray(children).map(
+		child => React.isValidElement<TMenuItemProps>(child) && child.props.value,
+	);
+};
+
 @PURE
 class RawSelectbox extends React.Component<TFullSelectboxProps, TSelectboxState> {
 	static propTypes: any = {
 		value(props: TFullSelectboxProps) {
 			const type = typeof props.value;
-			if (type !== 'undefined') {
-				if (type !== 'string' && type !== 'number') {
-					throw new Error('Value should be a string or a number');
+			if (typeof props.value !== 'undefined') {
+				const isArray = Array.isArray(props.value);
+				if (type !== 'string' && type !== 'number' && !isArray) {
+					throw new Error('Value should be a string or a number or a array of string|number');
 				} else {
-					if (
-						!React.Children.toArray(props.children).find(
-							child => React.isValidElement<TMenuItemProps>(child) && child.props.value === props.value,
-						)
-					) {
+					const values = getValues(props.value);
+					const allAvailableValues = getValuesFromChildren(props.children);
+					if (values.length && !values.filter(value => allAvailableValues.indexOf(value) !== -1).length) {
 						throw new Error('Value should be in passed children');
 					}
 				}
@@ -131,6 +146,7 @@ class RawSelectbox extends React.Component<TFullSelectboxProps, TSelectboxState>
 			Menu,
 			placeholder,
 			children,
+			multipleFormatter,
 			caretIcon,
 			theme,
 			value,
@@ -169,10 +185,23 @@ class RawSelectbox extends React.Component<TFullSelectboxProps, TSelectboxState>
 		};
 
 		let valueText: ReactNode = placeholder;
-		if (typeof value !== 'undefined') {
-			const valueChild = React.Children.toArray(children).find(
-				child => React.isValidElement<TMenuItemProps>(child) && child.props.value === value,
-			) as ReactElement<TMenuItemProps>;
+
+		if (Array.isArray(value) && value.length) {
+			const predicate = (child: ReactChild): child is ReactElement<TMenuItemProps> =>
+				React.isValidElement<TMenuItemProps>(child) && value.indexOf(child.props.value) !== -1;
+
+			const result = React.Children.toArray(children)
+				.filter(predicate)
+				.reduce((acc: ReactNode[], valueChild) => {
+					return [...acc, valueChild.props.text || valueChild.props.children];
+				}, []);
+
+			valueText = multipleFormatter ? multipleFormatter(value) : result;
+		} else if (typeof value !== 'undefined') {
+			const predicate = (child: ReactChild): child is ReactElement<TMenuItemProps> =>
+				React.isValidElement<TMenuItemProps>(child) && child.props.value === value;
+
+			const valueChild = React.Children.toArray(children).find(predicate);
 			//existance is checked in prop types
 			if (valueChild) {
 				valueText = valueChild.props.text || valueChild.props.children;
@@ -185,6 +214,8 @@ class RawSelectbox extends React.Component<TFullSelectboxProps, TSelectboxState>
 				width: this.state.width,
 			};
 		}
+
+		const values = getValues(value);
 
 		return (
 			<Anchor
@@ -205,20 +236,20 @@ class RawSelectbox extends React.Component<TFullSelectboxProps, TSelectboxState>
 					onRequestClose={this.onPopoverRequestClose}
 					anchor={this.anchor}>
 					<Menu onItemSelect={this.onItemSelect} theme={menuTheme}>
-						{React.Children.map(children, this.wrapItem) as any}
+						{React.Children.map(children, this.wrapItem(values)) as any}
 					</Menu>
 				</Popover>
 			</Anchor>
 		);
 	}
 
-	wrapItem = (child: ReactElement<TMenuItemProps> | ReactText) => {
+	wrapItem = (values: ReactText[]) => (child: ReactElement<TMenuItemProps> | ReactText) => {
 		if (!React.isValidElement<TMenuItemProps>(child)) {
 			return child;
 		}
 		const { theme, selectedIcon } = this.props;
 		const { value } = child.props;
-		const isActive = typeof value !== 'undefined' && value === this.props.value;
+		const isActive = values.indexOf(value) !== -1;
 
 		const props: TMenuItemProps = Object.assign({}, child.props, {
 			isActive,
@@ -242,11 +273,25 @@ class RawSelectbox extends React.Component<TFullSelectboxProps, TSelectboxState>
 	};
 
 	onItemSelect = (value: ReactText | undefined) => {
-		const { onToggle } = this.props;
-		this.props.onValueChange && this.props.onValueChange(value);
+		const { onToggle, value: prevValue, onValueChange } = this.props;
+		if (!Array.isArray(prevValue)) {
+			onValueChange(value);
+		} else {
+			const values = getValues(prevValue);
+			if (typeof value !== 'undefined') {
+				const index = values.indexOf(value);
+				if (index !== -1) {
+					const newValue = [...values.slice(0, index), ...values.slice(index + 1)];
+					onValueChange(newValue);
+				} else {
+					const newValue = [...values, value];
+					onValueChange(newValue);
+				}
+			}
+		}
 		this.focusOnAnchor();
 
-		if (onToggle) {
+		if (onToggle && !Array.isArray(prevValue)) {
 			onToggle(false);
 		}
 	};

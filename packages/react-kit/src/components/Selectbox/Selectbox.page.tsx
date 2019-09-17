@@ -2,7 +2,7 @@ import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import Demo from '../demo/Demo';
 import { Button } from '../Button/Button';
-import { Selectbox, TFullSelectboxProps } from './Selectbox';
+import { Selectbox, SelectboxValue, TFullSelectboxProps } from './Selectbox';
 import { SelectboxAnchor, TFullSelectboxAnchorProps } from './SelectboxAnchor';
 import { MenuItem } from '../Menu/Menu';
 import { PURE } from '../../utils/pure';
@@ -13,6 +13,8 @@ import { stateful } from '../Control/Control';
 
 import * as selectoxPageCss from './Selectbox.page.styl';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
+import { ReactNode, ReactText } from 'react';
+
 const wideSelectboxTheme = {
 	container__anchor: selectoxPageCss.container__anchor,
 };
@@ -111,8 +113,8 @@ class SelectboxPage extends React.Component<{}, TPageState> {
 						theme={wideSelectboxTheme}
 						selectedIcon={<ListItemTickIcon />}
 						caretIcon={<SmallDropDownArrowIcon />}>
-						<MenuItem value="superman">Superman</MenuItem>
 						<MenuItem value="batman">Batman</MenuItem>
+						<MenuItem value="superman">Superman</MenuItem>
 						<MenuItem value="flash">Flash</MenuItem>
 					</Stateful>
 				</section>
@@ -171,4 +173,64 @@ class SelectboxPage extends React.Component<{}, TPageState> {
 	};
 }
 
-storiesOf('Selectbox', module).add('default', () => <SelectboxPage />);
+type MultiplePageState = {
+	value?: SelectboxValue;
+	isOpened?: boolean;
+};
+
+type MultiplePageProps = {
+	multipleFormatter?: (value: ReactText[]) => ReactNode;
+};
+
+@PURE
+class SelectboMultiplePage extends React.Component<MultiplePageProps, MultiplePageState> {
+	state = {
+		isOpened: false,
+	};
+
+	render() {
+		const { multipleFormatter } = this.props;
+		return (
+			<Demo>
+				<Stateful
+					defaultValue={['superman', 'batman']}
+					placeholder="Choose your hero"
+					multipleFormatter={multipleFormatter}
+					isOpened={this.state.isOpened}
+					onToggle={this.onToggle}
+					selectedIcon={<ListItemTickIcon />}
+					onValueChange={this.onValueChange}
+					caretIcon={<SmallDropDownArrowIcon />}>
+					<MenuItem value="superman">Superman</MenuItem>
+					<MenuItem value="batman">Batman</MenuItem>
+					<MenuItem value="flash">Flash</MenuItem>
+				</Stateful>
+			</Demo>
+		);
+	}
+
+	onValueChange = (value: SelectboxValue) => {
+		this.setState({
+			value,
+		});
+	};
+
+	onToggle = (isOpened?: boolean) => {
+		this.setState({
+			isOpened,
+		});
+	};
+}
+
+storiesOf('Selectbox', module)
+	.add('default', () => <SelectboxPage />)
+	.add('multiple', () => (
+		<Demo>
+			<SelectboMultiplePage />
+		</Demo>
+	))
+	.add('multiple formatter', () => (
+		<Demo>
+			<SelectboMultiplePage multipleFormatter={value => `Selected ${value.length} item`} />
+		</Demo>
+	));
