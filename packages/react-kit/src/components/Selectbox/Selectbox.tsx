@@ -5,7 +5,7 @@ import { Menu, TFullMenuProps, TMenuItemProps, TMenuProps } from '../Menu/Menu';
 import { PURE } from '../../utils/pure';
 import * as classnames from 'classnames';
 import { withTheme } from '../../utils/withTheme';
-import { Component, ComponentClass, ComponentType, ReactChild, ReactElement, ReactNode, ReactText } from 'react';
+import { Component, ComponentClass, ComponentType, ReactElement, ReactNode, ReactText } from 'react';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { TControlProps } from '../Control/Control';
 import { NativeResizeDetector } from '../ResizeDetector/ResizeDetector';
@@ -187,7 +187,7 @@ class RawSelectbox extends React.Component<TFullSelectboxProps, TSelectboxState>
 		let valueText: ReactNode = placeholder;
 
 		if (Array.isArray(value) && value.length) {
-			const predicate = (child: ReactChild): child is ReactElement<TMenuItemProps> =>
+			const predicate = (child: ReactNode): child is ReactElement<TMenuItemProps> =>
 				React.isValidElement<TMenuItemProps>(child) && value.indexOf(child.props.value) !== -1;
 
 			const result = React.Children.toArray(children)
@@ -198,7 +198,7 @@ class RawSelectbox extends React.Component<TFullSelectboxProps, TSelectboxState>
 
 			valueText = multipleFormatter ? multipleFormatter(value) : result;
 		} else if (typeof value !== 'undefined') {
-			const predicate = (child: ReactChild): child is ReactElement<TMenuItemProps> =>
+			const predicate = (child: ReactNode): child is ReactElement<TMenuItemProps> =>
 				React.isValidElement<TMenuItemProps>(child) && child.props.value === value;
 
 			const valueChild = React.Children.toArray(children).find(predicate);
