@@ -1,9 +1,13 @@
 {
-  "extends": "../../node_modules/@devexperts/tools/settings/tsconfig.json",
-  "include": [
-    "src/**/*"
-  ],
-  "exclude": [
-    "**/__tests__/*"
-  ]
+  "compilerOptions": {
+    "strict": true,
+    "outDir": "dist",
+    "declaration": true,
+    "sourceMap": true,
+    "target": "es2015",
+    "noEmitOnError": true,
+    "moduleResolution": "node",
+    "module": "commonjs",
+    "suppressImplicitAnyIndexErrors": true
+  }
 }

@@ -5,12 +5,11 @@
   "main": "dist",
   "module": "dist",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "dx-tools build-lib src dist --failOnError",
-    "clean": "dx-tools clean dist",
+    "build": "tsc -p ./tsconfig.build.json",
+    "clean": "rm -rf ./dist",
     "prepare": "yarn clean && yarn build",
     "start": "yarn watch",
-    "watch": "dx-tools build-lib src dist -w"
+    "watch": "yarn build --watch --incremental"
   },
   "repository": {
     "type": "git",
@@ -33,7 +32,6 @@
     "fp-ts": "^2.0.5"
   },
   "devDependencies": {
-    "@devexperts/tools": "^1.0.0-alpha.1",
     "fp-ts": "^2.0.5"
   }
 }
