@@ -1,20 +1,3 @@
 {
-  "extends": "./packages/tools/settings/tsconfig.json",
-  "compilerOptions": {
-    "strict": true,
-    "lib": [
-      "es2016",
-      "dom",
-      "es2017.object",
-      "es2015.symbol",
-      "es2015.symbol.wellknown"
-    ]
-  },
-  "include": [
-    "packages/*/typings/**/*",
-    "packages/*/src/**/*"
-  ],
-  "exclude": [
-    "packages/**/node_modules/@devexperts/**/*"
-  ]
+  "extends": "./packages/tools/settings/tsconfig.json"
 }
