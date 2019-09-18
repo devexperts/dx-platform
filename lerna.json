@@ -5,7 +5,8 @@
     "packages/lint",
     "packages/utils",
     "packages/react-kit",
-    "packages/rx-utils"
+    "packages/rx-utils",
+    "packages/ui-kit"
   ],
   "npmClient": "yarn",
   "useWorkspaces": true,

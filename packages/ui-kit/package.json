@@ -1,11 +1,11 @@
 {
-  "name": "@devexperts/react-kit",
+  "name": "@devexperts/ui-kit",
   "version": "1.0.0-alpha.1",
   "description": "",
   "main": "dist",
   "module": "dist",
   "scripts": {
-    "test": "dx-tools build-lib src dist --failOnError && jest",
+    "test": "dx-tools build-lib src dist --failOnError",
     "build": "dx-tools build-lib src dist --failOnError",
     "clean": "dx-tools clean dist",
     "prepare": "yarn clean && yarn build",
@@ -28,46 +28,29 @@
     "url": "https://github.com/devexperts/dx-platform/issues"
   },
   "homepage": "https://github.com/devexperts/dx-platform#readme",
-  "dependencies": {
-    "@devexperts/remote-data-ts": "^2.0.0",
-    "@devexperts/utils": "^1.0.0-alpha.1",
-    "@types/classnames": ">=2.2.3",
-    "@types/node": ">=8.5.2",
-    "classnames": "^2.2.5",
-    "date-fns": "^1.29.0",
-    "element-resize-detector": "^1.1.12",
-    "hoist-non-react-statics": "^2.5.0",
-    "rxjs": "^6.2.2",
-    "tslib": "^1.10.0",
-    "typelevel-ts": "^0.3.5"
-  },
+  "dependencies": {},
   "peerDependencies": {
     "@types/react": "^16.9.2",
     "@types/react-dom": "^16.9.0",
+    "@types/styled-components": "^4.1.19",
     "react": "^16.9.0",
-    "react-dom": "^16.9.0"
+    "react-dom": "^16.9.0",
+    "styled-components": "^4.3.2"
   },
   "devDependencies": {
     "@devexperts/tools": "^1.0.0-alpha.1",
     "@storybook/addon-actions": "~5.1.11",
     "@storybook/addon-info": "~5.1.11",
     "@storybook/addon-knobs": "~5.1.11",
-    "@storybook/storybook-deployer": "^2.8.1",
     "@storybook/react": "~5.1.11",
-    "@types/enzyme": "^3.10.3",
-    "@types/enzyme-adapter-react-16": "^1.0.5",
+    "@storybook/storybook-deployer": "^2.8.1",
     "@types/jest": "^24.0.18",
     "@types/react": "^16.9.2",
     "@types/react-dom": "^16.9.0",
-    "@types/storybook__addon-actions": "~3.4.3",
-    "@types/storybook__addon-info": "~4.1.2",
-    "@types/storybook__addon-knobs": "~5.0.4",
-    "@types/storybook__react": "^4.0.2",
-    "enzyme": "^3.10.0",
-    "enzyme-adapter-react-16": "^1.14.0",
-    "jsdom": "^15.1.1",
-    "jsdom-global": "^3.0.2",
+    "@types/styled-components": "^4.1.19",
+    "@types/storybook__react": "~4.0.2",
     "react": "^16.9.0",
-    "react-dom": "^16.9.0"
+    "react-dom": "^16.9.0",
+    "styled-components": "^4.3.2"
   }
 }
