@@ -5,6 +5,7 @@
   "main": "dist",
   "module": "dist",
   "scripts": {
+    "test": "tsc --noEmit",
     "build": "tsc -p ./tsconfig.build.json",
     "clean": "rm -rf ./dist",
     "prepare": "yarn clean && yarn build",
