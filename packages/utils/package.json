@@ -6,7 +6,7 @@
   "module": "dist",
   "scripts": {
     "test": "tsc --noEmit",
-    "build": "tsc -p ./tsconfig.build.json",
+    "build": "tsc -p ./tsconfig.build.json --outDir ./dist",
     "clean": "rm -rf ./dist",
     "prepare": "yarn clean && yarn build",
     "start": "yarn watch",
