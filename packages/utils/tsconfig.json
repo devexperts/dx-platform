@@ -1,20 +1,7 @@
 {
-  "compilerOptions": {
-    "strict": true,
-    "declaration": true,
-    "sourceMap": true,
-    "target": "es5",
-    "noEmitOnError": true,
-    "moduleResolution": "node",
-    "module": "commonjs",
-    "suppressImplicitAnyIndexErrors": true,
-    "experimentalDecorators": true,
-    "lib": [
-      "es2016",
-      "dom"
-    ],
-    "forceConsistentCasingInFileNames": true,
-    "importHelpers": true,
-    "pretty": true
-  }
+  "extends": "../../tsconfig.json",
+  "lib": [
+    "es2016",
+    "dom"
+  ]
 }

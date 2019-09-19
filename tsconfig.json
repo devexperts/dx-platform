@@ -1,3 +1,16 @@
 {
-  "extends": "./packages/tools/settings/tsconfig.json"
+  "compilerOptions": {
+    "strict": true,
+    "declaration": true,
+    "sourceMap": true,
+    "target": "es5",
+    "noEmitOnError": true,
+    "moduleResolution": "node",
+    "module": "commonjs",
+    "suppressImplicitAnyIndexErrors": true,
+    "experimentalDecorators": true,
+    "forceConsistentCasingInFileNames": true,
+    "importHelpers": true,
+    "pretty": true
+  }
 }
