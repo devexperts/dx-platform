@@ -13,6 +13,9 @@
     "lib": [
       "es2016",
       "dom"
-    ]
+    ],
+    "forceConsistentCasingInFileNames": true,
+    "importHelpers": true,
+    "pretty": true
   }
 }
