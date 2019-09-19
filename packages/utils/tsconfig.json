@@ -4,10 +4,15 @@
     "outDir": "dist",
     "declaration": true,
     "sourceMap": true,
-    "target": "es2015",
+    "target": "es5",
     "noEmitOnError": true,
     "moduleResolution": "node",
     "module": "commonjs",
-    "suppressImplicitAnyIndexErrors": true
+    "suppressImplicitAnyIndexErrors": true,
+    "experimentalDecorators": true,
+    "lib": [
+      "es2016",
+      "dom"
+    ]
   }
 }
