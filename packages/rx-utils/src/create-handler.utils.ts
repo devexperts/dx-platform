@@ -10,6 +10,6 @@ export const createHandler = <A = void>(): THandler<A> => {
 	const value = new Subject<A>();
 	return {
 		value$: value.asObservable(),
-		handle: value.next as THandle<A>,
+		handle: value.next.bind(value) as THandle<A>,
 	};
 };
