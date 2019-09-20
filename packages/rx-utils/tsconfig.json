@@ -1,5 +1,5 @@
 {
-  "extends": "../../node_modules/@devexperts/tools/settings/tsconfig.json",
+  "extends": "../../tsconfig.json",
   "compilerOptions": {
     "strict": true,
     "lib": [
@@ -9,12 +9,5 @@
       "es2015.symbol",
       "es2015.symbol.wellknown"
     ]
-  },
-  "include": [
-    "typings/**/*",
-    "src/**/*"
-  ],
-  "exclude": [
-    "**/__tests__/*"
-  ]
+  }
 }

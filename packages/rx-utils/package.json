@@ -20,11 +20,11 @@
     "url": "git+https://github.com/devexperts/dx-platform.git"
   },
   "scripts": {
-    "test": "dx-tools build-lib src dist --failOnError",
-    "build": "dx-tools build-lib src dist --failOnError",
-    "clean": "dx-tools clean dist",
+    "test": "tsc --noEmit",
+    "build": "tsc -p ./tsconfig.build.json --outDir ./dist",
+    "clean": "rm -rf ./dist",
     "prepare": "yarn clean && yarn build",
-    "watch": "dx-tools build-lib src dist -w"
+    "watch": "yarn build --watch --incremental"
   },
   "dependencies": {
     "@devexperts/utils": "^1.0.0-alpha.1",
