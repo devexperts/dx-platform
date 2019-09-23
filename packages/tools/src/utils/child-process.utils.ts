@@ -3,6 +3,7 @@
 import * as chalk from 'chalk';
 import * as execa from 'execa';
 import * as logTransformer from 'strong-log-transformer';
+import { ExecaChildProcess } from 'execa';
 
 // bookkeeping for spawned processes
 let children = 0;
@@ -47,8 +48,8 @@ function spawnStreaming(command: string, prefix: string, args?: any, opts?: any)
 		process.stderr.setMaxListeners(children);
 	}
 
-	spawned.stdout.pipe(prefixedStdout).pipe(process.stdout);
-	spawned.stderr.pipe(prefixedStderr).pipe(process.stderr);
+	spawned.stdout && spawned.stdout.pipe(prefixedStdout).pipe(process.stdout);
+	spawned.stderr && spawned.stderr.pipe(prefixedStderr).pipe(process.stderr);
 
 	return spawned;
 }
@@ -58,7 +59,7 @@ function getChildProcessCount() {
 }
 
 // eslint-disable-next-line no-underscore-dangle
-function _spawn(command, args, opts) {
+function _spawn(command, args, opts): ExecaChildProcess {
 	children += 1;
 
 	const child = execa(command, args, opts);

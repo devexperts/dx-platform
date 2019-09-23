@@ -21,20 +21,14 @@
   },
   "homepage": "https://github.com/devexperts/dx-platform#readme",
   "dependencies": {
-    "@types/node": "^8.10.19",
     "@typescript-eslint/eslint-plugin": "^2.0.0",
     "@typescript-eslint/parser": "^2.0.0",
     "eslint-config-prettier": "^6.1.0",
     "eslint-plugin-jsdoc": "^15.8.3",
-    "eslint-plugin-prettier": "^3.1.0",
-    "tsutils": "^3.17.1"
-  },
-  "peerDependencies": {
-    "typescript": "^3.2.2"
+    "eslint-plugin-prettier": "^3.1.0"
   },
   "devDependencies": {
     "@devexperts/tools": "^1.0.0-alpha.1",
-    "eslint": "^6.3.0",
-    "typescript": "^3.5.3"
+    "eslint": "^6.3.0"
   }
 }

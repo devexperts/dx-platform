@@ -5,7 +5,7 @@
     "start": "lerna run --parallel watch",
     "start:storybook": "cd packages/react-kit && yarn start",
     "storybook:publish": "cd packages/react-kit && yarn storybook:publish",
-    "test": "yarn eslint && yarn jest",
+    "test": "yarn eslint",
     "lerna": "lerna",
     "lerna:bootstrap": "yarn lerna -- bootstrap",
     "lerna:update": "yarn lerna -- clean && yarn lerna -- bootstrap",
@@ -35,50 +35,16 @@
   "bugs": {
     "url": "https://github.com/devexperts/dx-platform/issues"
   },
-  "jest": {
-    "transform": {
-      "^.+\\.tsx?$": "ts-jest"
-    },
-    "modulePathIgnorePatterns": [
-      "<rootDir>/packages/utils/dist/",
-      "<rootDir>/packages/react-kit/dist/",
-      "<rootDir>/packages/rx-utils/dist/"
-    ],
-    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.tsx?$",
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js",
-      "jsx",
-      "json",
-      "node"
-    ],
-    "timers": "fake",
-    "globals": {
-      "ts-jest": {
-        "tsConfig": "./tsconfig.json"
-      }
-    },
-    "setupFiles": [
-      "<rootDir>/packages/react-kit/config/jest-setup.ts"
-    ],
-    "testPathIgnorePatterns": [
-      "/node_modules/"
-    ]
-  },
   "author": "devexperts",
   "license": "MPL-2.0",
   "devDependencies": {
     "@commitlint/cli": "^8.1.0",
     "@commitlint/config-conventional": "^8.1.0",
     "@commitlint/travis-cli": "^8.1.0",
-    "@types/jest": "^24.0.11",
     "eslint": "^6.3.0",
     "husky": "^3.0.5",
-    "jest": "^24.7.1",
     "lerna": "^3.10.5",
-    "prettier": "^1.18.2",
-    "ts-jest": "^24.0.2"
+    "prettier": "^1.18.2"
   },
   "husky": {
     "hooks": {

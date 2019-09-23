@@ -5,7 +5,7 @@
   "main": "dist",
   "module": "dist",
   "scripts": {
-    "test": "tsc --noEmit",
+    "test": "tsc --noEmit && jest",
     "build": "tsc -p ./tsconfig.build.json --outDir ./dist",
     "clean": "rm -rf ./dist",
     "prepare": "yarn clean && yarn build",
@@ -33,6 +33,10 @@
     "fp-ts": "^2.0.5"
   },
   "devDependencies": {
-    "fp-ts": "^2.0.5"
+    "@types/jest": "^24.0.18",
+    "fp-ts": "^2.0.5",
+    "jest": "^24.9.0",
+    "ts-jest": "^24.1.0",
+    "typescript": "^3.6.3"
   }
 }
