@@ -15,9 +15,8 @@
       "dom",
       "es6",
       "scripthost",
-      "es2015.symbol",
-      "es2017.object",
-      "es2016.array.include"
+      "es2016",
+      "es2017.object"
     ]
   },
   "include": [
