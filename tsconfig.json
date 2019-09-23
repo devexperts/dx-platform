@@ -8,7 +8,6 @@
     "moduleResolution": "node",
     "module": "commonjs",
     "suppressImplicitAnyIndexErrors": true,
-    "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
     "importHelpers": true,
     "pretty": true
