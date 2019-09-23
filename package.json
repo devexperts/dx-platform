@@ -5,7 +5,7 @@
     "start": "lerna run --parallel watch",
     "start:storybook": "cd packages/react-kit && yarn start",
     "storybook:publish": "cd packages/react-kit && yarn storybook:publish",
-    "test": "yarn eslint",
+    "test": "yarn eslint && yarn lerna run --parallel test",
     "lerna": "lerna",
     "lerna:bootstrap": "yarn lerna -- bootstrap",
     "lerna:update": "yarn lerna -- clean && yarn lerna -- bootstrap",
