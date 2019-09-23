@@ -20,7 +20,7 @@
     "url": "git+https://github.com/devexperts/dx-platform.git"
   },
   "scripts": {
-    "test": "tsc --noEmit",
+    "test": "tsc --noEmit && jest",
     "build": "tsc -p ./tsconfig.build.json --outDir ./dist",
     "clean": "rm -rf ./dist",
     "prepare": "yarn clean && yarn build",
@@ -36,11 +36,9 @@
   "devDependencies": {
     "@devexperts/remote-data-ts": "^2.0.0",
     "@types/jest": "^24.0.18",
-    "@types/sinon": "^7.0.13",
     "fp-ts": "^2.0.5",
     "jest": "^24.9.0",
     "rxjs": "^6.2.1",
-    "sinon": "^7.4.2",
     "ts-jest": "^24.1.0",
     "typescript": "^3.6.3"
   },
