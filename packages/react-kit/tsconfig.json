@@ -1,20 +1,11 @@
 {
-  "extends": "../../node_modules/@devexperts/tools/settings/tsconfig.json",
+  "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "strict": true,
-    "lib": [
-      "es2016",
-      "dom",
-      "es2017.object",
-      "es2015.symbol",
-      "es2015.symbol.wellknown"
-    ]
+    "experimentalDecorators": true,
+    "jsx": "react"
   },
-  "include": [
-    "typings/**/*",
-    "src/**/*"
-  ],
   "exclude": [
-    "**/__tests__/*"
+    "**/__tests__/*",
+    "dist"
   ]
 }
