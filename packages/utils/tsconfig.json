@@ -1,6 +1,7 @@
 {
   "extends": "../../tsconfig.json",
   "lib": [
+    "es2015",
     "es2016",
     "dom"
   ]
