@@ -5,8 +5,9 @@
 		"sourceType": "module",
 		"ecmaFeatures": {
 			"jsx": true
-		}
-	},
+		},
+    "createDefaultProgram": true
+  },
 	"env": {
 		"browser": true,
 		"es6": true,
