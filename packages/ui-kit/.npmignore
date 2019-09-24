@@ -1,4 +1,4 @@
 node_modules
 src
 tsconfig.json
-.yarnclean
+dist/tsconfig.build.tsbuildinfo

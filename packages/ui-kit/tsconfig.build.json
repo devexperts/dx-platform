@@ -1,7 +1,12 @@
 {
   "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "esModuleInterop": true
+  },
   "exclude": [
     "**/__tests__",
-    "dist"
+    "dist",
+    "**/*.stories.tsx",
+    "src/demo/demo.tsx"
   ]
 }

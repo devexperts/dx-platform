@@ -5,15 +5,12 @@
   "main": "dist",
   "module": "dist",
   "scripts": {
-    "test": "dx-tools build-lib src dist --failOnError",
-    "build": "dx-tools build-lib src dist --failOnError",
-    "clean": "dx-tools clean dist",
+    "test": "tsc --noEmit",
+    "build": "tsc -p ./tsconfig.build.json --outDir ./dist",
+    "clean": "rm -rf ./dist",
     "prepare": "yarn clean && yarn build",
-    "start": "dx-tools storybook",
-    "watch": "dx-tools build-lib src dist -w",
-    "storybook:build": "build-storybook -o .out -c ../../node_modules/@devexperts/tools/dist/config/storybook",
-    "storybook:deploy": "storybook-to-ghpages --ci --existing-output-dir=.out --host-token-env-variable=GITHUB_TOKEN",
-    "storybook:publish": "yarn storybook:build && yarn storybook:deploy"
+    "watch": "yarn build --watch --incremental",
+    "start": "start-storybook"
   },
   "repository": {
     "type": "git",
@@ -33,24 +30,29 @@
     "@types/react": "^16.9.2",
     "@types/react-dom": "^16.9.0",
     "@types/styled-components": "^4.1.19",
+    "fp-ts": "^2.0.5",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "styled-components": "^4.3.2"
   },
   "devDependencies": {
-    "@devexperts/tools": "^1.0.0-alpha.1",
-    "@storybook/addon-actions": "~5.1.11",
-    "@storybook/addon-info": "~5.1.11",
-    "@storybook/addon-knobs": "~5.1.11",
-    "@storybook/react": "~5.1.11",
-    "@storybook/storybook-deployer": "^2.8.1",
+    "@babel/core": "^7.6.2",
+    "@storybook/addon-actions": "^5.3.0-alpha.2",
+    "@storybook/addon-docs": "^5.3.0-alpha.2",
+    "@storybook/addon-knobs": "^5.3.0-alpha.2",
+    "@storybook/preset-typescript": "^1.1.0",
+    "@storybook/react": "^5.3.0-alpha.2",
     "@types/jest": "^24.0.18",
     "@types/react": "^16.9.2",
     "@types/react-dom": "^16.9.0",
+    "@types/storybook__addon-knobs": "^5.0.4",
     "@types/styled-components": "^4.1.19",
-    "@types/storybook__react": "~4.0.2",
+    "babel-loader": "^8.0.6",
+    "fp-ts": "^2.0.5",
     "react": "^16.9.0",
+    "react-docgen-typescript-loader": "^3.2.1",
     "react-dom": "^16.9.0",
-    "styled-components": "^4.3.2"
+    "styled-components": "^4.3.2",
+    "ts-loader": "^6.1.2"
   }
 }
