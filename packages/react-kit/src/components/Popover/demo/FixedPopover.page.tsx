@@ -9,7 +9,7 @@ import * as css from './theme/Popover.page.styl';
 import { stateful } from '../../Control/Control';
 import { Selectbox } from '../../Selectbox/Selectbox';
 import { MenuItem } from '../../Menu/Menu';
-import * as cn from 'classnames';
+import classnames from 'classnames';
 
 const Stateful = stateful()(Selectbox);
 const StatefulOpened = stateful('isOpened', 'onToggle', 'defaultIsOpened')(Stateful);
@@ -53,7 +53,7 @@ export class FixedPopoverPage extends React.Component<{}, TFixedPopoverPageState
 
 	render() {
 		const { isOpened, placement, align, horizontalButtonPosition, verticalButtonPosition } = this.state;
-		const wrapperClassName = cn(css.wrapper, {
+		const wrapperClassName = classnames(css.wrapper, {
 			[css.wrapperLeft as string]: horizontalButtonPosition === HorizontalButtonPosition.Left,
 			[css.wrapperCenter as string]: horizontalButtonPosition === HorizontalButtonPosition.Center,
 			[css.wrapperRight as string]: horizontalButtonPosition === HorizontalButtonPosition.Right,

@@ -1,5 +1,6 @@
-import * as webpack from 'webpack';
+// import * as webpack from 'webpack';
 import * as ENV from '../config/env';
+import webpack from 'webpack';
 
 /**
  * Runs webpack compiler as a promise

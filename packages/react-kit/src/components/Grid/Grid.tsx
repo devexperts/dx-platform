@@ -22,7 +22,7 @@ import {
 } from '../Table/Table';
 import Emitter from '@devexperts/utils/dist/emitter/Emitter';
 import { Scrollable } from '../Scrollable/Scrollable';
-import * as classnames from 'classnames';
+import classnames from 'classnames';
 import { Omit } from 'typelevel-ts';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { withTheme } from '../../utils/withTheme';

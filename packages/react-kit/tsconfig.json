@@ -2,7 +2,11 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "experimentalDecorators": true,
-    "jsx": "react"
+    "jsx": "react",
+    "lib": [
+      "es2015",
+      "dom"
+    ]
   },
   "exclude": [
     "**/__tests__/*",

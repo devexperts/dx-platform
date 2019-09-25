@@ -10,6 +10,10 @@
     "suppressImplicitAnyIndexErrors": true,
     "forceConsistentCasingInFileNames": true,
     "importHelpers": true,
-    "pretty": true
+    "pretty": true,
+
+    // https://www.typescriptlang.org/docs/handbook/release-notes/typescript-2-7.html#support-for-import-d-from-cjs-from-commonjs-modules-with---esmoduleinterop
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true
   }
 }

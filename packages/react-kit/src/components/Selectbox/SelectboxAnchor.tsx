@@ -4,7 +4,7 @@ import { Button, TButtonProps, TFullButtonProps } from '../Button/Button';
 import { ComponentClass, ReactNode, ReactText } from 'react';
 import { Omit } from 'typelevel-ts';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
-import * as classnames from 'classnames';
+import classnames from 'classnames';
 
 export type TFullSelectboxAnchorProps = Omit<TButtonProps, 'theme'> & {
 	theme: TFullButtonProps['theme'] & {

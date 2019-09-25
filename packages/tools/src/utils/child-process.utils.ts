@@ -1,9 +1,8 @@
 // copy-paste from "lerna"
 
-import * as chalk from 'chalk';
-import * as execa from 'execa';
-import * as logTransformer from 'strong-log-transformer';
-import { ExecaChildProcess } from 'execa';
+import chalk from 'chalk';
+import execa, { ExecaChildProcess } from 'execa';
+import strongLogTransformer from 'strong-log-transformer';
 
 // bookkeeping for spawned processes
 let children = 0;
@@ -39,8 +38,8 @@ function spawnStreaming(command: string, prefix: string, args?: any, opts?: any)
 	const color = chalk[colorName];
 	const spawned = _spawn(command, args, options);
 
-	const prefixedStdout = logTransformer({ tag: `${color.bold(prefix)}:` });
-	const prefixedStderr = logTransformer({ tag: `${color(prefix)}:`, mergeMultiline: true });
+	const prefixedStdout = strongLogTransformer({ tag: `${color.bold(prefix)}:` });
+	const prefixedStderr = strongLogTransformer({ tag: `${color(prefix)}:`, mergeMultiline: true });
 
 	// Avoid "Possible EventEmitter memory leak detected" warning due to piped stdio
 	if (children > process.stdout.listenerCount('close')) {

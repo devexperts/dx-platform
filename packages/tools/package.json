@@ -6,9 +6,9 @@
   "module": "dist",
   "scripts": {
     "test": "tsc --noEmit",
-    "build": "tsc --noEmitOnError",
+    "build": "tsc -p ./tsconfig.build.json",
     "clean": "rimraf ./dist",
-    "watch": "tsc -w --noEmitOnError",
+    "watch": "yarn build --watch",
     "prepare": "yarn clean && yarn build"
   },
   "repository": {
@@ -49,8 +49,10 @@
     "@storybook/addon-actions": "^5.3.0-alpha.2",
     "@storybook/addon-knobs": "~5.3.0-alpha.2",
     "@storybook/react": "~5.3.0-alpha.2",
+    "@types/autoprefixer": "^9.6.1",
     "@types/html-webpack-plugin": "^3.2.0",
     "@types/node": ">=8.0.57",
+    "@types/rimraf": "^2.0.2",
     "@types/strong-log-transformer": "^1.0.0",
     "@types/webpack": "^4.4.3",
     "@types/webpack-env": "^1.14.0",

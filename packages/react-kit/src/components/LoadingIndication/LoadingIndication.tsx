@@ -5,7 +5,7 @@ import { ComponentClass, ComponentType } from 'react';
 import { withTheme } from '../../utils/withTheme';
 import { LoadingIndicator, TLoadingIndicatorProps } from '../LoadingIndicator/LoadingIndicator';
 import { PURE } from '../../utils/pure';
-import * as cn from 'classnames';
+import classnames from 'classnames';
 import { withDefaults } from '../../utils/with-defaults';
 
 export const LOADING_INDICATION = Symbol('LoadingIndicaton') as symbol;
@@ -37,7 +37,7 @@ class RawLoadingIndicaton extends React.Component<TRawLoadingIndicatonProps, TRa
 		const { theme, isVisible, LoadingIndicator } = this.props;
 		const { isDisplay } = this.state;
 
-		const className = cn(theme.container, {
+		const className = classnames(theme.container, {
 			[theme.container_isVisible as string]: isVisible,
 			[theme.container_isNotDisplay as string]: !isDisplay,
 		});

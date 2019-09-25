@@ -1,8 +1,8 @@
 import * as path from 'path';
 import { ROOT } from '../config/env';
-import * as rimraf from 'rimraf';
 import { getProgramForScript } from '../utils/program';
 import { Scripts } from './constants';
+import rimraf from 'rimraf';
 
 const program = getProgramForScript(Scripts.CLEAN);
 
