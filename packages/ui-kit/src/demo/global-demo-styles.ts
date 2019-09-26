@@ -1,8 +1,6 @@
-import { FC, Fragment } from 'react';
-import * as React from 'react';
 import { createGlobalStyle } from 'styled-components';
 
-const GlobalDemoStyles = createGlobalStyle`
+export const GlobalDemoStyles = createGlobalStyle`
 	html, body, div, span, applet, object, iframe,
 	h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 	a, abbr, acronym, address, big, cite, code,
@@ -61,7 +59,7 @@ const GlobalDemoStyles = createGlobalStyle`
 		-webkit-tap-highlight-color: transparent;
 	}
 
-	@import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
+	@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap');
 
 	body {
 	  	line-height: normal;
@@ -69,16 +67,10 @@ const GlobalDemoStyles = createGlobalStyle`
 		font-size: 14px;
 		font-weight: 400;
 		background-color: #1f1f1f;
+		color: #ffffff;
 	}
      
     button, input, textarea {
     	font: inherit;
     }
 `;
-
-export const Demo: FC = props => (
-	<Fragment>
-		<GlobalDemoStyles />
-		{props.children}
-	</Fragment>
-);

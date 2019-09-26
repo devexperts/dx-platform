@@ -2642,7 +2642,7 @@
   dependencies:
     core-js "^3.0.1"
 
-"@storybook/components@5.3.0-alpha.2":
+"@storybook/components@5.3.0-alpha.2", "@storybook/components@^5.3.0-alpha.2":
   version "5.3.0-alpha.2"
   resolved "https://registry.yarnpkg.com/@storybook/components/-/components-5.3.0-alpha.2.tgz#985eeb03e9750d0ce62ad1d23dbd4e89206985f1"
   integrity sha512-Thg6Jpy3lWRP0EM0zVzAas5v32/T0rsmKG0iAbwVkkD42Xiq4jxzK5uIrHf5F680/2Al9QiLyUQ3QVld+XIx6Q==
@@ -2803,6 +2803,19 @@
     memoizerific "^1.11.3"
     qs "^6.6.0"
 
+"@storybook/router@^5.3.0-alpha.3":
+  version "5.3.0-alpha.3"
+  resolved "https://registry.yarnpkg.com/@storybook/router/-/router-5.3.0-alpha.3.tgz#6fbd27ef37682dba0ebb4911393cad5a3fc70667"
+  integrity sha512-lS3jsn03NhqLZeY7Kqtu82QhD8/pwNjX3HZzCS6oSDhcQYyLtJtj5hps/PmiI2FgOqjEjRh/Hq0ZjdU9U8AXmw==
+  dependencies:
+    "@reach/router" "^1.2.1"
+    "@types/reach__router" "^1.2.3"
+    core-js "^3.0.1"
+    global "^4.3.2"
+    lodash "^4.17.11"
+    memoizerific "^1.11.3"
+    qs "^6.6.0"
+
 "@storybook/source-loader@5.3.0-alpha.2":
   version "5.3.0-alpha.2"
   resolved "https://registry.yarnpkg.com/@storybook/source-loader/-/source-loader-5.3.0-alpha.2.tgz#c80ecd84699c46a6f9645de2f57af0b85a916205"
@@ -2829,7 +2842,7 @@
     shelljs "^0.8.1"
     yargs "^11.0.0"
 
-"@storybook/theming@5.3.0-alpha.2":
+"@storybook/theming@5.3.0-alpha.2", "@storybook/theming@^5.3.0-alpha.2":
   version "5.3.0-alpha.2"
   resolved "https://registry.yarnpkg.com/@storybook/theming/-/theming-5.3.0-alpha.2.tgz#56741f8c58d75d341d356ffb7644e6cff5f1c26d"
   integrity sha512-X0XpeAQ3gRCHtoD5aSfBfcX7oAGi3kR1ycZjArkeU7mgchr0TTAgE+/P3sA3H9m7ebP/a6S8iMmOeRgv/Z9RBQ==
@@ -9255,7 +9268,12 @@ io-ts-types@^0.5.0:
   resolved "https://registry.yarnpkg.com/io-ts-types/-/io-ts-types-0.5.0.tgz#f69be9131362c31bbc6b5044f1d95892604f8f23"
   integrity sha512-+v88rlA76FmlQQcTImFq5iigoPA3OKO+BIdrpsfXlhWUdiVvOnDDiLKCsiIAW9eRj+OJgG31Sctebr77bqKhzw==
 
-io-ts@^2.0.0:
+io-ts-types@^0.5.1:
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/io-ts-types/-/io-ts-types-0.5.1.tgz#55bedec94e3cce1413d60c014918091d0dffbbce"
+  integrity sha512-wdlK7Gn9gBaI3BT44mpwU+Y54J3GTT5R3dkM7CYZoaPMKWDwp/jYZ1Bj8/RRfcwP2ElJjuGre06avjkHLvgl7w==
+
+io-ts@^2.0.0, io-ts@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/io-ts/-/io-ts-2.0.1.tgz#1261c12f915c2f48d16393a36966636b48a45aa1"
   integrity sha512-RezD+WcCfW4VkMkEcQWL/Nmy/nqsWTvTYg7oUmTGzglvSSV2P9h2z1PVeREPFf0GWNzruYleAt1XCMQZSg1xxQ==

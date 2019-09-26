@@ -3,13 +3,14 @@ import styled from 'styled-components';
 import { ButtonHTMLAttributes } from 'react';
 import { getTransition } from '../../../utils/style';
 
-export type ButtonType = 'primary' | 'secondary' | 'tertiary' | 'buy' | 'sell';
-
 export interface ButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'type' | 'disabled'> {
-	type: ButtonType;
+	type: 'primary' | 'secondary' | 'tertiary' | 'buy' | 'sell';
 	isDisabled?: boolean;
 }
 
+/**
+ * Main elements that call the user to action. At the moment, the project uses the “Primary-Button” and “Secondary-Button”.
+ */
 export const Button = styled((props: ButtonProps) => {
 	const { type, isDisabled, ...rest } = props;
 	return <button disabled={isDisabled} {...rest} />;
@@ -133,3 +134,7 @@ function getTypeStyle(props: ButtonProps): string {
 		}
 	}
 }
+
+Button.defaultProps = {
+	type: 'secondary',
+};
