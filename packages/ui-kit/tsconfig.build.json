@@ -4,6 +4,7 @@
     "**/__tests__",
     "dist",
     "**/*.stories.tsx",
-    "src/demo/demo.tsx"
+    "src/demo",
+    ".storybook"
   ]
 }
