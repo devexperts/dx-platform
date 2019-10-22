@@ -1,8 +1,10 @@
 import { createHandler } from '../create-handler.utils';
 import { Endomorphism, Lazy } from 'fp-ts/lib/function';
-import { constVoid } from 'fp-ts/es6/function';
+import { constVoid } from 'fp-ts/lib/function';
 
-type Effect<A> = (a: A) => void;
+interface VoidThunk<A> {
+	(a: A): void;
+}
 
 describe('create-handler.utils.ts', function() {
 	describe('createHandler', function() {
@@ -26,16 +28,16 @@ describe('create-handler.utils.ts', function() {
 			bf2(undefined);
 
 			const c = createHandler<string>();
-			const cf3: Effect<string> = c.handle;
+			const cf3: VoidThunk<string> = c.handle;
 			cf3('');
 
 			const d = createHandler<boolean>();
-			const df1: Effect<boolean> = d.handle;
+			const df1: VoidThunk<boolean> = d.handle;
 			df1(true);
 
 			const e = createHandler<'a' | 'b'>();
 			e.handle('a');
-			const ef1: Effect<'a' | 'b'> = e.handle;
+			const ef1: VoidThunk<'a' | 'b'> = e.handle;
 			ef1('b');
 		});
 	});
