@@ -1,6 +1,9 @@
 import { Observable, Subject } from 'rxjs';
 
-export type THandle<A> = A extends void ? ((a?: void) => void) : ((a: A) => void);
+export interface THandle<A> {
+	(): void;
+	(a: A): void;
+}
 export type THandler<A> = {
 	readonly value$: Observable<A>;
 	readonly handle: THandle<A>;
