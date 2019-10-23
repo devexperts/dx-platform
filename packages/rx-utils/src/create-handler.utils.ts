@@ -1,18 +1,23 @@
 import { Observable, Subject } from 'rxjs';
 
-export interface THandle<A> {
-	(): void;
-	(a: A): void;
+interface HandlerVoid {
+	readonly value$: Observable<void>;
+	readonly handle: () => void;
 }
-export type THandler<A> = {
+interface HandlerValue<A> {
 	readonly value$: Observable<A>;
-	readonly handle: THandle<A>;
-};
+	readonly handle: (a: A) => void;
+}
+interface CreateHandler {
+	(): HandlerVoid;
+	<A extends void>(): HandlerVoid;
+	<A>(): HandlerValue<A>;
+}
 
-export const createHandler = <A = void>(): THandler<A> => {
+export const createHandler: CreateHandler = <A>() => {
 	const value = new Subject<A>();
 	return {
 		value$: value.asObservable(),
-		handle: value.next.bind(value) as THandle<A>,
+		handle: value.next.bind(value),
 	};
 };
