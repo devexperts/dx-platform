@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.4](https://github.com/devexperts/dx-platform/compare/v1.0.0-alpha.3...v1.0.0-alpha.4) (2019-10-25)
+
+
+### Bug Fixes
+
+* **rx-utils:** createHandler union types fix ([5aa6989](https://github.com/devexperts/dx-platform/commit/5aa6989))
+* **rx-utils:** fix createHandler signature ([#185](https://github.com/devexperts/dx-platform/issues/185)) ([9a04801](https://github.com/devexperts/dx-platform/commit/9a04801))
+
+
+### BREAKING CHANGES
+
+* **rx-utils:** remove THandle and THandler types
+
+
+
+
+
 # [1.0.0-alpha.3](https://github.com/devexperts/dx-platform/compare/v1.0.0-alpha.2...v1.0.0-alpha.3) (2019-10-22)
 
 
