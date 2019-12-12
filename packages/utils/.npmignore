@@ -4,3 +4,5 @@ src
 tsconfig.json
 dist/tsconfig.build.tsbuildinfo
 jest.config.js
+.eslintrc.json
+.eslintignore

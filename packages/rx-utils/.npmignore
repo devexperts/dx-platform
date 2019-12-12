@@ -3,3 +3,5 @@ src
 .gitignore
 tsconfig.json
 dist/tsconfig.build.tsbuildinfo
+.eslintrc.json
+.eslintignore

@@ -20,6 +20,8 @@
     "url": "git+https://github.com/devexperts/dx-platform.git"
   },
   "scripts": {
+    "lint": "eslint ./**/*.{ts,js}",
+    "lint:fix": "yarn lint --fix",
     "test": "tsc --noEmit && jest",
     "build": "tsc -p ./tsconfig.build.json --outDir ./dist",
     "clean": "rm -rf ./dist",

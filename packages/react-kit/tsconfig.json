@@ -5,8 +5,8 @@
     "jsx": "react"
   },
   "include": [
-    "typings/**/*",
-    "src/**/*"
+    "typings",
+    "src"
   ],
   "exclude": [
     "**/__tests__/*",
