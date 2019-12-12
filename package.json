@@ -15,14 +15,14 @@
     "build:tools": "cd packages/tools && yarn build",
     "build": "yarn build:tools && yarn build:kit",
     "jest": "jest",
-    "prettier": "prettier --list-different \"./packages/**/src/**/*.{ts,tsx}\"",
+    "prettier": "prettier --list-different \"./packages/**/src/**/*.{ts,tsx,js}\"",
     "prettier:fix": "prettier --write \"./packages/**/src/**/*.{ts,tsx}\"",
     "publish:patch": "yarn lerna publish patch --force-publish=*",
     "publish:minor": "yarn lerna publish minor --force-publish=*",
     "publish:major": "yarn lerna publish major --force-publish=*",
-    "eslint": "eslint ./packages/*/src/**/*.{ts,tsx}",
-    "eslint:fix": "eslint --fix ./packages/*/src/**/*.{ts,tsx}",
-    "eslint:config": "eslint --print-config ./packages/*/src/**/*.{ts,tsx}"
+    "eslint": "eslint ./packages/**/*.{ts,tsx,js}",
+    "eslint:fix": "eslint --fix ./packages/*/src/**/*.{ts,tsx,js}",
+    "eslint:config": "eslint --print-config ./packages/*/src/**/*.{ts,tsx,js}"
   },
   "private": true,
   "workspaces": [

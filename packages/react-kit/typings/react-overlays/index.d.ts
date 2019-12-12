@@ -1,7 +1,7 @@
 declare namespace ReactOverlays {
 	export namespace Portal {
 		export type TPortalProps = JSX.IntrinsicAttributes & {
-			container?: React.ReactNode | (() => React.ReactNode)
+			container?: React.ReactNode | (() => React.ReactNode);
 		};
 	}
 }
