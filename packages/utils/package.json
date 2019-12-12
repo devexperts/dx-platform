@@ -5,7 +5,7 @@
   "main": "dist",
   "module": "dist",
   "scripts": {
-    "lint": "eslint ./**/*.{ts,js}",
+    "lint": "eslint ./**/*.ts",
     "lint:fix": "yarn lint --fix",
     "test": "yarn lint && tsc --noEmit && jest",
     "build": "tsc -p ./tsconfig.build.json --outDir ./dist",
