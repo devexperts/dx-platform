@@ -6,62 +6,7 @@ export const MEMOIZE_CLEAR_FUNCTION = Symbol('MEMOIZE_CLEAR_FUNCTION') as symbol
 /**
  * Memoizes function for passed arguments
  */
-export function memoize<A>(
-	this: any,
-	fn: () => A,
-): {
-	(): A;
-	[key: string]: () => A;
-};
-export function memoize<A, B>(
-	this: any,
-	fn: (a: A) => B,
-): {
-	(a: A): B;
-	[key: string]: (a: A) => B;
-};
-export function memoize<A, B, C>(
-	this: any,
-	fn: (a: A, b: B) => C,
-): {
-	(a: A, b: B): C;
-	[key: string]: (a: A, b: B) => C;
-};
-export function memoize<A, B, C, D>(
-	this: any,
-	fn: (a: A, b: B, c: C) => D,
-): {
-	(a: A, b: B, c: C): D;
-	[key: string]: (a: A, b: B, c: C) => D;
-};
-export function memoize<A, B, C, D, E>(
-	this: any,
-	fn: (a: A, b: B, c: C, d: D) => E,
-): {
-	(a: A, b: B, c: C, d: D): E;
-	[key: string]: (a: A, b: B, c: C, d: D) => E;
-};
-export function memoize<A, B, C, D, E, F>(
-	this: any,
-	fn: (a: A, b: B, c: C, d: D, e: E) => F,
-): {
-	(a: A, b: B, c: C, d: D, e: E): F;
-	[key: string]: (a: A, b: B, c: C, d: D, e: E) => F;
-};
-export function memoize<A, B, C, D, E, F, G>(
-	this: any,
-	fn: (a: A, b: B, c: C, d: D, e: E, f: F) => G,
-): {
-	(a: A, b: B, c: C, d: D, e: E, f: F): G;
-	[key: string]: (a: A, b: B, c: C, d: D, e: E, f: F) => G;
-};
-export function memoize<A, B, C, D, E, F, G, H>(
-	this: any,
-	fn: (a: A, b: B, c: C, d: D, e: E, f: F, g: G) => H,
-): {
-	(a: A, b: B, c: C, d: D, e: E, f: F, g: G): H;
-	[key: string]: (a: A, b: B, c: C, d: D, e: E, f: F, g: G) => H;
-} {
+export function memoize<F extends Function>(this: any, fn: F): F {
 	const storage = {};
 	const result = function(this: any) {
 		const args = Array.prototype.slice.call(arguments);
@@ -96,4 +41,32 @@ function serialize(args: any[]): string {
 		throw Error('Arguments to memoized function can only be strings or numbers');
 	}
 	return JSON.stringify(args);
+}
+
+export function memoOnce<Args extends unknown[], R>(f: (...args: Args) => R): (...args: Args) => R {
+	let hasValue = false;
+	let cachedR: R;
+	let cachedArgs: Args = [] as any;
+	const update = (args: Args): void => {
+		cachedR = f(...args);
+		hasValue = true;
+		cachedArgs = args;
+	};
+	return (...args: Args): R => {
+		const length = args.length;
+		if (hasValue && length === 0) {
+			return cachedR;
+		}
+		if (!hasValue || cachedArgs.length !== length) {
+			update(args);
+			return cachedR;
+		}
+		for (let i = 0; i < length; i++) {
+			if (cachedArgs[i] !== args[i]) {
+				update(args);
+				return cachedR;
+			}
+		}
+		return cachedR;
+	};
 }
