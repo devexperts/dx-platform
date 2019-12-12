@@ -8,7 +8,7 @@ import {
 	THorizontalPosition,
 	movePopoverHorizontally,
 } from '../Popover.model';
-import { PartialKeys } from '@devexperts/utils/dist/object';
+import { PartialKeys } from '@devexperts/utils/dist/object/object';
 
 const createMoveVertically: (
 	defaultProps: PartialKeys<TVerticalMoveProps, 'placement'>,

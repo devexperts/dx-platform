@@ -1,7 +1,6 @@
 import debounce from '../debounce';
 import throttle from '../throttle';
 import memoize, { MEMOIZE_CLEAR_FUNCTION as _MEMOIZE_CLEAR_FUNCTION } from '../memoize';
-import { disposable } from '../disposable';
 
 // symbols are not allowed as indexers in TS, had to cast to string. https://github.com/Microsoft/TypeScript/issues/24587#issuecomment-394022722
 const MEMOIZE_CLEAR_FUNCTION = (_MEMOIZE_CLEAR_FUNCTION as unknown) as string;
@@ -74,33 +73,6 @@ describe('function', () => {
 			fn(1, 2);
 			fn(1, 2);
 			expect(callback.mock.calls.length).toBe(2);
-		});
-	});
-
-	describe('disposable', () => {
-		it('should decorate class', () => {
-			//
-			class Foo {}
-
-			const DecoratedFoo = disposable(Foo);
-
-			expect(DecoratedFoo.prototype['_using']).toBeDefined();
-			expect(DecoratedFoo.prototype['dispose']).toBeDefined();
-		});
-		it('should implement disposing', () => {
-			const callback = jest.fn();
-
-			class Foo {
-				constructor() {
-					this['_using']([callback]);
-				}
-			}
-
-			const DecoratedFoo = disposable(Foo);
-
-			const foo = new DecoratedFoo();
-			foo['dispose']();
-			expect(callback).toBeCalled();
 		});
 	});
 });

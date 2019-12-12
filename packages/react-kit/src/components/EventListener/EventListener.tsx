@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { PURE } from '../../utils/pure';
-import { shallowEqual } from '@devexperts/utils/dist/object';
+import { shallowEqual } from '@devexperts/utils/dist/object/fb';
 import { ReactPortal, ReactNode } from 'react';
 
 type Handlers = {

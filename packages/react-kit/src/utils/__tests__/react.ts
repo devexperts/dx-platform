@@ -1,4 +1,4 @@
-import { shouldComponentUpdate, PURE, DISPOSABLE } from '../react';
+import { shouldComponentUpdate, PURE } from '../react';
 
 describe('react', () => {
 	describe('shouldComponentUpdate', () => {
@@ -161,52 +161,6 @@ describe('react', () => {
 					theme: css3,
 				}),
 			).toBeTruthy();
-		});
-	});
-
-	describe('DISPOSABLE', () => {
-		it('should decorate', () => {
-			//
-			@DISPOSABLE
-			class Foo {}
-
-			const foo = new Foo();
-			expect(foo['dispose']).toBeDefined();
-			expect(Foo.prototype['componentWillUnmount']).toBeDefined();
-		});
-		it('should dispose on componentWillUnmount', () => {
-			const callback = jest.fn();
-
-			@DISPOSABLE
-			class Component {
-				constructor() {
-					this['_using']([callback]);
-				}
-			}
-
-			const c = new Component();
-			c['componentWillUnmount']();
-			expect(callback).toBeCalled();
-		});
-		it('should dispose with custom componentWillUnmount', () => {
-			const callback = jest.fn();
-			const componentWillUnmount = jest.fn();
-
-			@DISPOSABLE
-			class Component {
-				constructor() {
-					this['_using']([callback]);
-				}
-
-				componentWillUnmount() {
-					componentWillUnmount();
-				}
-			}
-
-			const c = new Component();
-			c.componentWillUnmount();
-			expect(callback).toBeCalled();
-			expect(componentWillUnmount).toBeCalled();
 		});
 	});
 });

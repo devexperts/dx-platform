@@ -1,4 +1,5 @@
-import { is, deepEqual, mapKeys } from '../index';
+import { deepEqual, mapKeys } from '../object';
+import { is } from '../fb';
 
 describe('object', () => {
 	describe('mapKeys', () => {
