@@ -2,3 +2,5 @@ node_modules
 src
 .gitignore
 tsconfig.json
+.eslintignore
+.eslintrc.json

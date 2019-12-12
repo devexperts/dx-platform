@@ -5,6 +5,8 @@
   "main": "dist",
   "module": "dist",
   "scripts": {
+    "lint": "eslint ./src/**/*.{ts,tsx} ./typings/**/*.ts",
+    "lint:fix": "yarn lint --fix",
     "test": "dx-tools build-lib src dist --failOnError && jest",
     "build": "dx-tools build-lib src dist --failOnError",
     "clean": "dx-tools clean dist",

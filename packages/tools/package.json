@@ -5,6 +5,8 @@
   "main": "dist",
   "module": "dist",
   "scripts": {
+    "lint": "eslint ./**/*.ts",
+    "lint:fix": "yarn lint --fix",
     "test": "tsc --noEmit",
     "build": "tsc --noEmitOnError",
     "clean": "rimraf ./dist",
