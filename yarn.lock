@@ -8816,7 +8816,12 @@ io-ts-types@^0.5.0:
   resolved "https://registry.yarnpkg.com/io-ts-types/-/io-ts-types-0.5.0.tgz#f69be9131362c31bbc6b5044f1d95892604f8f23"
   integrity sha512-+v88rlA76FmlQQcTImFq5iigoPA3OKO+BIdrpsfXlhWUdiVvOnDDiLKCsiIAW9eRj+OJgG31Sctebr77bqKhzw==
 
-io-ts@^2.0.0:
+io-ts-types@^0.5.3:
+  version "0.5.3"
+  resolved "https://registry.yarnpkg.com/io-ts-types/-/io-ts-types-0.5.3.tgz#c9421e051cc380fb73f8a5d099ba85655aa98728"
+  integrity sha512-n49taXKrh60QTmbfPEQGuuHAawansXCrcqGDv+KmZkj0Xnf4ulR1jlSNXmHPVqJ74owLO4u1XMv1EVBmAFPSYw==
+
+io-ts@^2.0.0, io-ts@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/io-ts/-/io-ts-2.0.1.tgz#1261c12f915c2f48d16393a36966636b48a45aa1"
   integrity sha512-RezD+WcCfW4VkMkEcQWL/Nmy/nqsWTvTYg7oUmTGzglvSSV2P9h2z1PVeREPFf0GWNzruYleAt1XCMQZSg1xxQ==
