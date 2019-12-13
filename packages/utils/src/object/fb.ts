@@ -44,7 +44,7 @@ export function is(x: any, y: any): boolean {
  * @param {*} objB
  * @returns {boolean}
  */
-export function shallowEqual(objA: any, objB: any): boolean {
+export function shallowEqual(objA: unknown, objB: unknown): boolean {
 	if (is(objA, objB)) {
 		return true;
 	}
