@@ -1,6 +1,7 @@
 import debounce from '../debounce';
 import throttle from '../throttle';
 import memoize, { MEMOIZE_CLEAR_FUNCTION as _MEMOIZE_CLEAR_FUNCTION, memoOnce } from '../memoize';
+import { eqUnknown } from '../../typeclasses/eq/eq.utils';
 
 // symbols are not allowed as indexers in TS, had to cast to string. https://github.com/Microsoft/TypeScript/issues/24587#issuecomment-394022722
 const MEMOIZE_CLEAR_FUNCTION = (_MEMOIZE_CLEAR_FUNCTION as unknown) as string;
@@ -79,7 +80,8 @@ describe('function', () => {
 	describe('memoOnce', () => {
 		it("should memoize once passed function for it's arguments", () => {
 			const callback = jest.fn();
-			const fn = memoOnce(function(a: number, b: number) {
+			const m = memoOnce(eqUnknown);
+			const fn = m(function(a: number, b: number) {
 				callback();
 				return a + b;
 			});

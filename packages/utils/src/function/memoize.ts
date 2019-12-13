@@ -1,6 +1,8 @@
 /**
  * @type {Symbol}
  */
+import { Eq } from 'fp-ts/lib/Eq';
+
 export const MEMOIZE_CLEAR_FUNCTION = Symbol('MEMOIZE_CLEAR_FUNCTION') as symbol;
 
 /**
@@ -43,7 +45,7 @@ function serialize(args: any[]): string {
 	return JSON.stringify(args);
 }
 
-export function memoOnce<Args extends unknown[], R>(f: (...args: Args) => R): (...args: Args) => R {
+export const memoOnce = <A>(E: Eq<A>) => <Args extends A[], R>(f: (...args: Args) => R): ((...args: Args) => R) => {
 	let hasValue = false;
 	let cachedR: R;
 	let cachedArgs: Args = [] as any;
@@ -62,11 +64,11 @@ export function memoOnce<Args extends unknown[], R>(f: (...args: Args) => R): (.
 			return cachedR;
 		}
 		for (let i = 0; i < length; i++) {
-			if (cachedArgs[i] !== args[i]) {
+			if (!E.equals(cachedArgs[i], args[i])) {
 				update(args);
 				return cachedR;
 			}
 		}
 		return cachedR;
 	};
-}
+};
