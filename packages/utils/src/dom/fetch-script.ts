@@ -136,8 +136,6 @@ export function fetchScript<O, A>(
 				const script = document.createElement('script');
 				script.async = true;
 				script.src = src;
-				script.async = true;
-				script.src = src;
 				script.onload = () => {
 					observer.next(A.of(undefined));
 					observer.end();
