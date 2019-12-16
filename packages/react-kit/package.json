@@ -67,6 +67,7 @@
     "@types/storybook__react": "^4.0.2",
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.14.0",
+    "eslint": "^6.7.2",
     "jsdom": "^15.1.1",
     "jsdom-global": "^3.0.2",
     "react": "^16.9.0",
