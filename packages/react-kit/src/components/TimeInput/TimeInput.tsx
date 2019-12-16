@@ -80,21 +80,11 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState>
 				onIncrement={this.onIncrement}>
 				<div className={theme.inner}>
 					<span className={this.getSectionClassName(Section.Hours)} onMouseDown={this.onHoursMouseDown}>
-						{renderSection(
-							pipe(
-								hours,
-								map(formatNumericValue),
-							),
-						)}
+						{renderSection(pipe(hours, map(formatNumericValue)))}
 					</span>
 					<span className={theme.separator}>:</span>
 					<span className={this.getSectionClassName(Section.Minutes)} onMouseDown={this.onMinutesMouseDown}>
-						{renderSection(
-							pipe(
-								minutes,
-								map(formatNumericValue),
-							),
-						)}
+						{renderSection(pipe(minutes, map(formatNumericValue)))}
 					</span>
 					{withSeconds && (
 						<Fragment>
@@ -102,12 +92,7 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState>
 							<span
 								className={this.getSectionClassName(Section.Seconds)}
 								onMouseDown={this.onSecondsMouseDown}>
-								{renderSection(
-									pipe(
-										seconds,
-										map(formatNumericValue),
-									),
-								)}
+								{renderSection(pipe(seconds, map(formatNumericValue)))}
 							</span>
 						</Fragment>
 					)}
@@ -117,12 +102,7 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState>
 							<span
 								className={this.getSectionClassName(Section.PeriodType)}
 								onMouseDown={this.onPeriodTypeMouseDown}>
-								{renderSection(
-									pipe(
-										periodType,
-										map(formatTimePeriod),
-									),
-								)}
+								{renderSection(pipe(periodType, map(formatTimePeriod)))}
 							</span>
 						</Fragment>
 					)}

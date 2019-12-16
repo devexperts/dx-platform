@@ -71,8 +71,11 @@ export const withTheme = (name: string | symbol, defaultTheme: TTheme = {}) => {
 				const props = {
 					...rest,
 					ref: withRef,
-					theme: mergeThemes(config.theme, this.context[THEME_CONTEXT_KEY.toString()][name], (theme ||
-						{}) as TTheme),
+					theme: mergeThemes(
+						config.theme,
+						this.context[THEME_CONTEXT_KEY.toString()][name],
+						(theme || {}) as TTheme,
+					),
 				};
 				return React.createElement(Target as any, props);
 			}

@@ -159,7 +159,10 @@ describe('ObservableMap', () => {
 			const expected = {
 				0: [],
 				1: [[values[1].key, values[1].value]],
-				2: [[values[1].key, values[1].value], [values[2].key, values[2].value]],
+				2: [
+					[values[1].key, values[1].value],
+					[values[2].key, values[2].value],
+				],
 			};
 			scheduler
 				.createHotObservable<Entity>(scheme.src, values)
@@ -190,7 +193,10 @@ describe('ObservableMap', () => {
 			const expected = {
 				0: [],
 				1: [[values[1].key, values[1].value]],
-				2: [[values[1].key, values[1].value], [values[2].key, values[2].value]],
+				2: [
+					[values[1].key, values[1].value],
+					[values[2].key, values[2].value],
+				],
 			};
 			scheduler
 				.createHotObservable<Entity>(scheme.src, values)
