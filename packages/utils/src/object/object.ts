@@ -6,13 +6,10 @@ import { is, hasOwnProperty } from './fb';
  * Generates new object with keys mapped with template
  */
 export function mapKeys<T extends {}>(object: T, template: (key: string) => string): T {
-	return Object.keys(object).reduce<T>(
-		(acc, key) => {
-			acc[template(key)] = object[key];
-			return acc;
-		},
-		{} as T,
-	);
+	return Object.keys(object).reduce<T>((acc, key) => {
+		acc[template(key)] = object[key];
+		return acc;
+	}, {} as T);
 }
 
 /**
