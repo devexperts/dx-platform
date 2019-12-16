@@ -3,13 +3,5 @@
   "compilerOptions": {
     "experimentalDecorators": true,
     "jsx": "react"
-  },
-  "include": [
-    "typings",
-    "src"
-  ],
-  "exclude": [
-    "**/__tests__/*",
-    "dist"
-  ]
+  }
 }
