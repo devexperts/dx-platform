@@ -1,0 +1,133 @@
+.container {
+	background-color: inherit;
+}
+
+.toolbar {
+	display: flex;
+	align-items: center;
+}
+
+
+.toolbarControl {
+	margin-right: 10px;
+}
+
+.label {
+	display: inline-flex;
+	user-select: none;
+}
+
+.checkbox {
+	margin-right: 5px;
+}
+
+.draggableItems {
+	display: flex;
+	width: 100%;
+	user-select: none;
+}
+
+.draggableItem {
+	display: block;
+	flex: 1;
+	text-align: center;
+	padding: 20px;
+	cursor: pointer;
+	&:hover {
+		background: grey;
+	}
+}
+
+.layoutContainer {
+	height: 400px;
+	background-color: inherit;
+	border: 2px solid #00ff17;
+}
+
+.icon {
+	fill: $drop-area-border-deny-color;
+	width: 72px;
+	height: 72px;
+}
+
+.placeholder__hint {
+	color: black;
+	font-size: 35px;
+	font-weight: 500;
+	text-align: center;
+	margin-top: 15px;
+
+	small {
+		display: block;
+		font-size: 20px;
+		margin-top: 10px;
+	}
+}
+
+.layout {
+
+	&__item {
+		user-select: none;
+	}
+
+	&__placeholder {
+		display: flex;
+		text-align: center;
+		flex-grow: 1;
+		z-index: 50;
+		align-items: center;
+		flex-direction: column;
+		justify-content: center;
+		border: 3px dashed rgba(255, 0, 118, 0.35);
+		background-color: rgba(255, 0, 118, 0.35);
+
+		&_fits {
+			border: 3px dashed rgba(0, 128, 0, 0.35);
+			background-color: rgba(0, 128, 0, 0.35);
+		}
+
+		&_maximized {
+			border: 3px dashed red;
+			background-color: rgba(#fff, .5);
+		}
+	}
+}
+
+.item {
+	width: 100%;
+	height: 100%;
+
+	&__dragHandler {
+		box-sizing: border-box;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		background: grey;
+		padding: 10px;
+		cursor: pointer;
+		&:hover {
+			background: lightblue;
+		}
+	}
+
+
+	&__remove {
+		margin-left: 10px;
+	}
+}
+
+.resizeHandler {
+	background-color: #ffffff;
+}
+
+.toolbarAddItem {
+	padding: 5px;
+	border: 1px #c2c2c2 solid;
+
+	select,
+	label,
+	input {
+		margin-right: 10px;
+		width: 59px;
+	}
+}
