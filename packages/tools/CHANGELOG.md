@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.5](https://github.com/devexperts/dx-platform/compare/v1.0.0-alpha.4...v1.0.0-alpha.5) (2019-12-17)
+
+
+### Features
+
+* **tools:** support -p/--project arg to specify custom tsconfig.json ([27221fd](https://github.com/devexperts/dx-platform/commit/27221fdf8354073e3e9c3ee6d49b82ad62b8591f))
+
+
+
+
+
 # [1.0.0-alpha.4](https://github.com/devexperts/dx-platform/compare/v1.0.0-alpha.3...v1.0.0-alpha.4) (2019-10-25)
 
 **Note:** Version bump only for package @devexperts/tools

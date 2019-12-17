@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.5](https://github.com/devexperts/dx-platform/compare/v1.0.0-alpha.4...v1.0.0-alpha.5) (2019-12-17)
+
+
+### Bug Fixes
+
+* **react-kit:** fix eslint/tsc tsconfig.json conflict ([ee16e54](https://github.com/devexperts/dx-platform/commit/ee16e549e0bb7553a1a8552650f8e498afafb685))
+
+
+### Code Refactoring
+
+* **utils, react-kit:** cleanup ([70e1e3b](https://github.com/devexperts/dx-platform/commit/70e1e3bbd0c7d6d6b283466d7a56e834f5141de9))
+
+
+### Features
+
+* **react-kit:** layout ([34061dc](https://github.com/devexperts/dx-platform/commit/34061dcf8310745de47a1338a203539d63d0d321))
+* **react-kit, utils:** useObservable hook and WithObservable HOC ([2885463](https://github.com/devexperts/dx-platform/commit/28854637503baa9bbe5cba595a46a472d4c2773d))
+
+
+### BREAKING CHANGES
+
+* **utils, react-kit:** removed bem, collection, dom/index, flux, function/function, function/disposable, function/identity, object/index, session, string/index modules
+* **utils, react-kit:** removed react-kit/utils/disposable
+
+
+
+
+
 # [1.0.0-alpha.4](https://github.com/devexperts/dx-platform/compare/v1.0.0-alpha.3...v1.0.0-alpha.4) (2019-10-25)
 
 **Note:** Version bump only for package @devexperts/react-kit

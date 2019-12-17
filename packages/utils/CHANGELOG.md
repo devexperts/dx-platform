@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.5](https://github.com/devexperts/dx-platform/compare/v1.0.0-alpha.4...v1.0.0-alpha.5) (2019-12-17)
+
+
+### Code Refactoring
+
+* **utils, react-kit:** cleanup ([70e1e3b](https://github.com/devexperts/dx-platform/commit/70e1e3bbd0c7d6d6b283466d7a56e834f5141de9))
+
+
+### Features
+
+* fetchScript ([1b6bbe2](https://github.com/devexperts/dx-platform/commit/1b6bbe29cc8abb4d9fcdd16506df0de41374ca19)), closes [#171](https://github.com/devexperts/dx-platform/issues/171)
+* io-ts utils ([b3677e7](https://github.com/devexperts/dx-platform/commit/b3677e758d059d00ed8fd638ecea00a1a2902d9c))
+* memoOnce ([48c3ec1](https://github.com/devexperts/dx-platform/commit/48c3ec1874576e33e487c09c0d6a387dbe959efe))
+* support Eq in memoOnce ([8a9050e](https://github.com/devexperts/dx-platform/commit/8a9050e34a5622d06c7e990b743df5852568b286))
+* **react-kit, utils:** useObservable hook and WithObservable HOC ([2885463](https://github.com/devexperts/dx-platform/commit/28854637503baa9bbe5cba595a46a472d4c2773d))
+* **utils:** add LocalStorageClient ([9a3b891](https://github.com/devexperts/dx-platform/commit/9a3b89133f90bd85e01a3fc01470125e05d52921))
+
+
+### BREAKING CHANGES
+
+* **utils, react-kit:** removed bem, collection, dom/index, flux, function/function, function/disposable, function/identity, object/index, session, string/index modules
+* **utils, react-kit:** removed react-kit/utils/disposable
+
+
+
+
+
 # [1.0.0-alpha.4](https://github.com/devexperts/dx-platform/compare/v1.0.0-alpha.3...v1.0.0-alpha.4) (2019-10-25)
 
 **Note:** Version bump only for package @devexperts/utils
