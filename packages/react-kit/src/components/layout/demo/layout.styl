@@ -1,0 +1,144 @@
+//@require '~config';
+
+// main
+$drop-area-border-deny-color = rgba(230, 20, 37, 1);
+
+.container {
+	height: 100%;
+	width: 100%;
+	box-sizing: border-box;
+	overflow: hidden;
+	position: relative;
+	background-color: inherit;
+}
+
+.item {
+	position: absolute;
+	top: 0;
+	left: 0;
+	box-sizing: border-box;
+	height: 100%;
+	width: 100%;
+	overflow: hidden;
+
+	&_nested {
+		height: 100%;
+		width: 100%;
+		background-color: inherit;
+	}
+
+	&_horizontal {
+		& > .resizeHandler:not(.resizeHandler_disabled) {
+			cursor: ew-resize;
+		}
+
+		& > .resizeHandler {
+			cursor: ew-resize;
+			height: 100%;
+
+			&_disabled {
+				cursor: default;
+			}
+		}
+	}
+
+	&_vertical {
+		& > .resizeHandler:not(.resizeHandler_disabled) {
+			cursor: ns-resize;
+		}
+
+		& > .resizeHandler {
+			width: 100%;
+			cursor: ns-resize;
+
+			&_disabled {
+				cursor: default;
+			}
+		}
+	}
+}
+
+.resizeHandler {
+	position: absolute;
+	top: 0;
+	left: 0;
+	background-color: inherit;
+	transition: background 220ms ease-out;
+
+	&:not(.resizeHandler_disabled) {
+		&:hover,
+		&:active {
+			background-color: $resize-line-color;
+			transition: background 220ms ease-in;
+		}
+	}
+}
+
+.placeholder {
+	position: absolute;
+	z-index: 102;
+	border: 1px dashed $drop-area-border-deny-color;
+	background-color: $drop-area-background-deny-color;
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	justify-content: center;
+
+	&_fits {
+		border: 1px dashed $drop-area-border-color;
+		background-color: $drop-area-highlight-color;
+	}
+
+	&_maximized {
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		text-align: center;
+		background-color: $drop-area-chart-maximized-highlight-color;
+		border: 1px dashed $drop-area-chart-maximized-border-color;
+
+		@supports (-webkit-backdrop-filter: blur(25px)) or (backdrop-filter: blur(25px)) {
+			& {
+				backdrop-filter: blur(25px);
+				background-color: transparent;
+			}
+		}
+	}
+
+	&_top {
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 50%;
+	}
+	&_bottom {
+		top: 50%;
+		left: 0;
+		right: 0;
+		bottom: 0;
+	}
+	&_left {
+		top: 0;
+		right: 50%;
+		left: 0;
+		bottom: 0;
+	}
+	&_right {
+		top: 0;
+		left: 50%;
+		right: 0;
+		bottom: 0;
+	}
+	&_full {
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 0;
+	}
+}
+
+.fixedContainer {
+	background-color: inherit;
+}
+

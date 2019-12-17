@@ -3,7 +3,6 @@ declare module '*.svg' {
 	export = name;
 }
 
-declare module '*.styl' {
-	const theme: any;
-	export = theme;
-}
+declare module '*.styl';
+
+declare module '*.css';
