@@ -9,7 +9,7 @@ dx-tools <command>
 Commands are located under `src/scripts` directory. Some of available commands:
 #### build-lib
 ```
-dx-tools build-lib <src-path> <dist-path> [-w|--watch] [-f|--failOnError]
+dx-tools build-lib <src-path> <dist-path> [-w|--watch] [-f|--failOnError] [-p|--project <relative path to custom tsconfig.json>]
 ```
 Builds projects using following rules:
 * __Typescript__ - transpile `*.ts|*.tsx` files, produce `*.js|*.jsx` & `*.d.ts` files, run type checking service in background
@@ -19,6 +19,7 @@ Builds projects using following rules:
 Flags:
 * `--watch` - run in watch mode
 * `--failOnError` - if set, build process will return error code `1` in case of any Typescript compilation errors. Used for CI.
+* `--project <relative path to custom tsconfig.json>` - if set, build process will be using specified typescript configuration file.
 #### storybook
 ```
 dx-tools storybook -c <config-path> [-p|--port <port>] [-h|--host <hostname>]
