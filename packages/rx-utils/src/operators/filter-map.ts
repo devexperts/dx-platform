@@ -35,6 +35,9 @@ class FilterMapOperator<T, R> implements Operator<T, R> {
 	}
 }
 
+/**
+ * @deprecated Use `Filterable#filterMap`
+ */
 export function filterMap<T, R>(
 	filterMap: (value: T, index: number) => Option<R>,
 	thisArg?: any,

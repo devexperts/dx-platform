@@ -13,6 +13,9 @@ declare module 'fp-ts/lib/HKT' {
 	}
 }
 
+/**
+ * @deprecated Use `MonadObservable` from `@devexperts/utils` to track effects
+ */
 export class Sink<A> {
 	readonly _A!: A;
 	readonly _URI!: typeof URI;
@@ -33,10 +36,16 @@ export class Sink<A> {
 	}
 }
 
+/**
+ * @deprecated
+ */
 export const getSemigroup = <A>(S: Semigroup<A>): Semigroup<Sink<A>> => ({
 	concat: (x, y) => new Sink(S.concat(x.value, y.value), merge(x.sink$, y.sink$)),
 });
 
+/**
+ * @deprecated
+ */
 export const getMonoid = <A>(M: Monoid<A>): Monoid<Sink<A>> => ({
 	...getSemigroup(M),
 	empty: new Sink(M.empty, EMPTY),
@@ -47,6 +56,9 @@ const map = <A, B>(fa: Sink<A>, f: (a: A) => B): Sink<B> => fa.map(f);
 const ap = <A, B>(fab: Sink<(a: A) => B>, fa: Sink<A>): Sink<B> => fa.ap(fab);
 const chain = <A, B>(fa: Sink<A>, f: (a: A) => Sink<B>): Sink<B> => fa.chain(f);
 
+/**
+ * @deprecated
+ */
 export const sink: Monad1<URI> = {
 	URI,
 	of,
@@ -55,4 +67,7 @@ export const sink: Monad1<URI> = {
 	chain,
 };
 
+/**
+ * @deprecated
+ */
 export const sequenceTSink = sequenceT(sink);

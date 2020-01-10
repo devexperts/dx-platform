@@ -19,6 +19,9 @@ type ObservableMapEntity<V> = UninitializedEntity<V> | InitializedEntity<V>;
 type InitializedEntry<K, V> = [K, InitializedEntity<V>];
 type ObservableMapEntry<K, V> = [K, ObservableMapEntity<V>];
 
+/**
+ * @deprecated Use some purely functional reactive structure, for example `Observable<Map<K, V>>`
+ */
 export class ObservableMap<K, V> {
 	private cache = new Map<K, ObservableMapEntity<V>>();
 	private allSubject$ = new BehaviorSubject<void>(undefined);
