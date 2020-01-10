@@ -11,6 +11,9 @@ export enum RequestMethod {
 	Delete = 'DELETE',
 }
 
+/**
+ * @deprecated
+ */
 export class ApiClient {
 	static create(baseHref: string, extraHeaders?: object) {
 		return new ApiClient(baseHref, extraHeaders);

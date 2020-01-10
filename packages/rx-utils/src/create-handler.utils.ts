@@ -14,6 +14,9 @@ interface CreateHandler {
 	<A>(): HandlerValue<A>;
 }
 
+/**
+ * @deprecated Use `MonadObservable#createAdapter` from `@devexperts/utils`
+ */
 export const createHandler: CreateHandler = <A>() => {
 	const value = new Subject<A>();
 	return {
