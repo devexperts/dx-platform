@@ -12,7 +12,7 @@
     "clean": "dx-tools clean dist",
     "prepare": "yarn clean && yarn build",
     "start": "dx-tools storybook",
-    "watch": "dx-tools build-lib src dist -w",
+    "watch": "dx-tools build-lib src dist -w --project tsconfig.build.json",
     "storybook:build": "build-storybook -o .out -c ../../node_modules/@devexperts/tools/dist/config/storybook",
     "storybook:deploy": "storybook-to-ghpages --ci --existing-output-dir=.out --host-token-env-variable=GITHUB_TOKEN",
     "storybook:publish": "yarn storybook:build && yarn storybook:deploy"
