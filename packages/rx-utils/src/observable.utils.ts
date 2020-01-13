@@ -1,12 +1,12 @@
 import { observable as rxjs, URI } from 'fp-ts-rxjs/lib/Observable';
 import { MonadObservable1 } from '@devexperts/utils/dist/typeclasses/monad-observable/monad-observable';
 import { Observable, Subject } from 'rxjs';
-import { pipe } from 'fp-ts/lib/pipeable';
+import { pipe, pipeable } from 'fp-ts/lib/pipeable';
 import { share } from 'rxjs/operators';
 import { fromPromise } from 'rxjs/internal-compatibility';
 import { task } from 'fp-ts/lib/Task';
 
-export const observable: typeof rxjs & MonadObservable1<URI> = {
+export const instanceObservable: typeof rxjs & MonadObservable1<URI> = {
 	...rxjs,
 	createAdapter: <A>() => {
 		const s = new Subject<A>();
@@ -44,4 +44,11 @@ export const observable: typeof rxjs & MonadObservable1<URI> = {
 				observer.end();
 			},
 		}),
+};
+
+const zero: () => Observable<never> = instanceObservable.zero;
+export const observable = {
+	...instanceObservable,
+	...pipeable(instanceObservable),
+	zero,
 };
