@@ -7820,6 +7820,11 @@ forwarded@~0.1.2:
   resolved "https://registry.yarnpkg.com/forwarded/-/forwarded-0.1.2.tgz#98c23dab1175657b8c0573e8ceccd91b0ff18c84"
   integrity sha1-mMI9qxF1ZXuMBXPozszZGw/xjIQ=
 
+fp-ts-rxjs@^0.6.4:
+  version "0.6.4"
+  resolved "https://registry.yarnpkg.com/fp-ts-rxjs/-/fp-ts-rxjs-0.6.4.tgz#3654a38ba7646ffa29101b78a2ce0f47fa758e16"
+  integrity sha512-q0NviftJAqNcUJYHpTaROe2rivDiOmeSCEZYc0bXxeerZwPCJquvjhXNQkR7qcAyKv+T52QXzbcsNZitdobxww==
+
 fp-ts@^2.0.0, fp-ts@^2.0.5:
   version "2.0.5"
   resolved "https://registry.yarnpkg.com/fp-ts/-/fp-ts-2.0.5.tgz#9560d8a6a4f53cbda9f9b31ed8d1458e41939e07"
