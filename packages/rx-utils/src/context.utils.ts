@@ -17,6 +17,9 @@ declare module 'fp-ts/lib/HKT' {
 
 const readerTSink = getReaderM(sink);
 
+/**
+ * @deprecated Use `Context` from `context2.utils.ts`
+ */
 export class Context<E, A> {
 	readonly _URI!: URI;
 	readonly _L!: E;
@@ -43,9 +46,18 @@ const map = <L, A, B>(fa: Context<L, A>, f: (a: A) => B): Context<L, B> => fa.ma
 const ap = <E, A, B>(fab: Context<E, (a: A) => B>, fa: Context<E, A>): Context<E, B> => fa.ap(fab);
 const chain = <E, A, B>(fa: Context<E, A>, f: (a: A) => Context<E, B>): Context<E, B> => fa.chain(f);
 
+/**
+ * @deprecated Use `Context` from `context2.utils.ts`
+ */
 export const asks = <E, A>(f: (e: E) => A): Context<E, A> => new Context(e => new Sink(f(e)));
+/**
+ * @deprecated Use `Context` from `context2.utils.ts`
+ */
 export const ask = <E>(): Context<E, E> => asks(identity);
 
+/**
+ * @deprecated Use `Context` from `context2.utils.ts`
+ */
 export const context: Monad2<URI> = {
 	URI,
 	of,
@@ -54,19 +66,37 @@ export const context: Monad2<URI> = {
 	chain,
 };
 
+/**
+ * @deprecated
+ */
 export const deferContext = <E extends object, A, K extends keyof E>(
 	fa: Context<E, A>,
 	...keys: K[]
 ): Context<Omit<E, K>, Context<Pick<E, K>, A>> =>
 	new Context(outerE => new Sink(new Context(innerE => fa.run(Object.assign({}, outerE, innerE) as E))));
+/**
+ * @deprecated Use `Context` from `context2.utils.ts`
+ */
 export const sequenceContext = array.sequence(context);
+/**
+ * @deprecated Use `Context` from `context2.utils.ts`
+ */
 export const sequenceTContext = sequenceT(context);
-
+/**
+ * @deprecated Use `Context` from `context2.utils.ts`
+ */
 export const fromReader = <E, A>(r: Reader<E, A>): Context<E, A> => new Context(e => new Sink(r(e)));
-
+/**
+ * @deprecated Use `Context` from `context2.utils.ts`
+ */
 export type ContextEnvType<C extends Context<any, any>> = C extends Context<infer E, infer A> ? E : never;
+/**
+ * @deprecated Use `Context` from `context2.utils.ts`
+ */
 export type ContextValueType<C extends Context<any, any>> = C extends Context<infer E, infer A> ? A : never;
-
+/**
+ * @deprecated Use `Context` from `context2.utils.ts`
+ */
 export interface CombineContext {
 	<E, A, R>(a: Context<E, A>, project: (a: A) => R | Sink<R>): Context<E, R>;
 	<EA, A, EB, B, R>(a: Context<EA, A>, b: Context<EB, B>, project: (a: A, b: B) => R | Sink<R>): Context<EA & EB, R>;
@@ -169,7 +199,13 @@ export interface CombineContext {
 		project: (a: A, b: B, c: C, d: D, e: E, g: G, h: H, i: I, j: J, k: K, l: L) => R | Sink<R>,
 	): Context<EA & EB & EC & ED & EE & EG & EH & EI & EJ & EK & EL, R>;
 }
+/**
+ * @deprecated Use `Context` from `context2.utils.ts`
+ */
 export type ProjectMany<A, R> = (...args: A[]) => R;
+/**
+ * @deprecated Use `Context` from `context2.utils.ts`
+ */
 export const combineContext: CombineContext = <E, A, R>(
 	...args: Array<Context<E, A> | ProjectMany<A, R | Sink<R>>>
 ) => {
