@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.7](https://github.com/devexperts/dx-platform/compare/v1.0.0-alpha.6...v1.0.0-alpha.7) (2020-01-14)
+
+
+### Bug Fixes
+
+* **rx-utils, react-kit:** fix imports from 'src' ([256e72b](https://github.com/devexperts/dx-platform/commit/256e72b350b160bed644a46b8e772262ea03af00))
+
+
+
+
+
 # [1.0.0-alpha.6](https://github.com/devexperts/dx-platform/compare/v1.0.0-alpha.5...v1.0.0-alpha.6) (2020-01-14)
 
 
