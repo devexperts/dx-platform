@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.6](https://github.com/devexperts/dx-platform/compare/v1.0.0-alpha.5...v1.0.0-alpha.6) (2020-01-14)
+
+
+### Features
+
+* **rx-utils:** add LiveData instance ([fff3bf2](https://github.com/devexperts/dx-platform/commit/fff3bf2d1631e52ae72e6ca9f2f15e664b171160))
+* **rx-utils:** added new Context, rxjs observable, more deprecations ([75dd9d1](https://github.com/devexperts/dx-platform/commit/75dd9d1ed1e2c1443aace637e69c6c18070d969f))
+
+
+
+
+
 # [1.0.0-alpha.5](https://github.com/devexperts/dx-platform/compare/v1.0.0-alpha.4...v1.0.0-alpha.5) (2019-12-17)
 
 **Note:** Version bump only for package @devexperts/rx-utils
