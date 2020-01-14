@@ -8,11 +8,11 @@ import {
 	ProductLeft,
 	ProductMap,
 	ProjectMany,
-} from '@devexperts/utils/src/typeclasses/product-left-coproduct-left/product-left-coproduct-left.utils';
-import { deferReader } from '@devexperts/utils/src/adt/reader.utils';
+} from '@devexperts/utils/dist/typeclasses/product-left-coproduct-left/product-left-coproduct-left.utils';
+import { deferReader } from '@devexperts/utils/dist/adt/reader.utils';
 import { pipe, pipeable } from 'fp-ts/lib/pipeable';
-import { memoOnce } from '@devexperts/utils/src/function/memoize';
-import { eqShallow } from '@devexperts/utils/src/typeclasses/eq/eq.utils';
+import { memoOnce } from '@devexperts/utils/dist/function/memoize';
+import { eqShallow } from '@devexperts/utils/dist/typeclasses/eq/eq.utils';
 import { NonEmptyArray } from 'fp-ts/lib/NonEmptyArray';
 import { array } from 'fp-ts/lib/Array';
 import { URI as URIObservable } from 'fp-ts-rxjs/lib/Observable';

@@ -5,7 +5,7 @@ import {
 	MonadObservable2,
 	Observer,
 	Subscription,
-} from '@devexperts/utils/src/typeclasses/monad-observable/monad-observable';
+} from '@devexperts/utils/dist/typeclasses/monad-observable/monad-observable';
 import { ComponentClass, ComponentType, createElement, PureComponent } from 'react';
 import { constVoid } from 'fp-ts/lib/function';
 import { array } from 'fp-ts/lib/Array';

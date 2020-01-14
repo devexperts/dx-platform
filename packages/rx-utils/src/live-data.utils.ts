@@ -5,7 +5,7 @@ import { MonadThrow2 } from 'fp-ts/lib/MonadThrow';
 import {
 	CoproductLeft,
 	coproductMapLeft,
-} from '@devexperts/utils/src/typeclasses/product-left-coproduct-left/product-left-coproduct-left.utils';
+} from '@devexperts/utils/dist/typeclasses/product-left-coproduct-left/product-left-coproduct-left.utils';
 import { getApplicativeComposition } from 'fp-ts/lib/Applicative';
 import { instanceObservable, observable } from './observable.utils';
 import { pipeable } from 'fp-ts/lib/pipeable';

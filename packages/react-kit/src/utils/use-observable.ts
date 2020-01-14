@@ -4,7 +4,7 @@ import {
 	MonadObservable2,
 	MonadObservable2C,
 	MonadObservable3,
-} from '@devexperts/utils/src/typeclasses/monad-observable/monad-observable';
+} from '@devexperts/utils/dist/typeclasses/monad-observable/monad-observable';
 import { HKT, URIS, Kind, URIS2, Kind2, URIS3, Kind3 } from 'fp-ts/lib/HKT';
 import { useEffect, useState } from 'react';
 import { constVoid } from 'fp-ts/lib/function';
