@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.8](https://github.com/devexperts/dx-platform/compare/v1.0.0-alpha.7...v1.0.0-alpha.8) (2020-01-15)
+
+
+### Features
+
+* **rx-utils:** add sink2, update context2 ([f853ed2](https://github.com/devexperts/dx-platform/commit/f853ed211a310c8b8b09128c9467fe6ad8a16292))
+
+
+
+
+
 # [1.0.0-alpha.7](https://github.com/devexperts/dx-platform/compare/v1.0.0-alpha.6...v1.0.0-alpha.7) (2020-01-14)
 
 
