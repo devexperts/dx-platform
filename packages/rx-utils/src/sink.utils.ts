@@ -4,7 +4,13 @@ import { sequenceT } from 'fp-ts/lib/Apply';
 import { Monoid } from 'fp-ts/lib/Monoid';
 import { Semigroup } from 'fp-ts/lib/Semigroup';
 
+/**
+ * @deprecated Use `Sink` from `sink2.utils.ts`
+ */
 export const URI = 'Sink';
+/**
+ * @deprecated Use `Sink` from `sink2.utils.ts`
+ */
 export type URI = typeof URI;
 
 declare module 'fp-ts/lib/HKT' {
@@ -14,7 +20,7 @@ declare module 'fp-ts/lib/HKT' {
 }
 
 /**
- * @deprecated Use `MonadObservable` from `@devexperts/utils` to track effects
+ * @deprecated Use `Sink` from `sink2.utils.ts`
  */
 export class Sink<A> {
 	readonly _A!: A;
@@ -37,14 +43,14 @@ export class Sink<A> {
 }
 
 /**
- * @deprecated
+ * @deprecated use `sink.getSemigroup` from `sink2.utils.ts`
  */
 export const getSemigroup = <A>(S: Semigroup<A>): Semigroup<Sink<A>> => ({
 	concat: (x, y) => new Sink(S.concat(x.value, y.value), merge(x.sink$, y.sink$)),
 });
 
 /**
- * @deprecated
+ * @deprecated use `sink.getMonoid` from `sink2.utils.ts`
  */
 export const getMonoid = <A>(M: Monoid<A>): Monoid<Sink<A>> => ({
 	...getSemigroup(M),
@@ -57,7 +63,7 @@ const ap = <A, B>(fab: Sink<(a: A) => B>, fa: Sink<A>): Sink<B> => fa.ap(fab);
 const chain = <A, B>(fa: Sink<A>, f: (a: A) => Sink<B>): Sink<B> => fa.chain(f);
 
 /**
- * @deprecated
+ * @deprecated Use `instanceSink` from `sink2.utils.ts`
  */
 export const sink: Monad1<URI> = {
 	URI,
@@ -68,6 +74,6 @@ export const sink: Monad1<URI> = {
 };
 
 /**
- * @deprecated
+ * @deprecated Use `sink.sequenceT` from `sink2.utils.ts`
  */
 export const sequenceTSink = sequenceT(sink);
