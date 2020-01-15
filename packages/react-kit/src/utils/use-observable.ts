@@ -24,7 +24,7 @@ export function useObservable<M>(M: MonadObservable<M>): <A>(fa: HKT<M, A>, init
 				next: setState,
 				end: constVoid,
 			});
-			return subscription.unsubscribe;
+			return () => subscription.unsubscribe();
 		}, [fa, setState]);
 		return state;
 	};
