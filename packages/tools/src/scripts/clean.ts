@@ -1,6 +1,6 @@
-import * as path from 'path';
+import path from 'path';
 import { ROOT } from '../config/env';
-import * as rimraf from 'rimraf';
+import rimraf from 'rimraf';
 import { getProgramForScript } from '../utils/program';
 import { Scripts } from './constants';
 

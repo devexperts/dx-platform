@@ -1,5 +1,5 @@
 import { Loader } from 'webpack';
-import * as autoprefixer from 'autoprefixer';
+import autoprefixer from 'autoprefixer';
 
 // JavaScript and Typescript compilation
 
