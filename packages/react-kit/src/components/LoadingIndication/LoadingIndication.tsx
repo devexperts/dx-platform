@@ -1,11 +1,11 @@
-import * as React from 'react';
+import React from 'react';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { ComponentClass, ComponentType } from 'react';
 
 import { withTheme } from '../../utils/withTheme';
 import { LoadingIndicator, TLoadingIndicatorProps } from '../LoadingIndicator/LoadingIndicator';
 import { PURE } from '../../utils/pure';
-import * as cn from 'classnames';
+import cn from 'classnames';
 import { withDefaults } from '../../utils/with-defaults';
 
 export const LOADING_INDICATION = Symbol('LoadingIndicaton') as symbol;

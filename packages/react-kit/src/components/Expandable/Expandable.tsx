@@ -1,5 +1,5 @@
-import * as React from 'react';
-import * as classnames from 'classnames';
+import React from 'react';
+import classnames from 'classnames';
 import { ExpandableHandler, TExpandableHandlerProps } from './ExpandableHandler';
 import { PURE } from '../../utils/pure';
 import { ComponentClass } from 'react';

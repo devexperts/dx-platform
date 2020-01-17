@@ -1,5 +1,5 @@
 import { PureComponent, SFC } from 'react';
-import * as React from 'react';
+import React from 'react';
 import { mount } from 'enzyme';
 import { withRX } from '../with-rx2';
 import { Subject } from 'rxjs';

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { Button, TButtonProps } from '../Button/Button';
 import { PURE } from '../../utils/pure';
 import { ComponentClass, ComponentType } from 'react';

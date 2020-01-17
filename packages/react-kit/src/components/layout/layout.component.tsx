@@ -1,6 +1,6 @@
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
-import * as classnames from 'classnames';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import classnames from 'classnames';
 import { deepEqual } from '@devexperts/utils/dist/object/object';
 import { DragSource, DropTarget } from 'react-dnd';
 import { NativeTypes } from 'react-dnd-html5-backend';

@@ -1,9 +1,9 @@
-import * as React from 'react';
+import React from 'react';
 import { withTheme } from '../../utils/withTheme';
 
 import { DefaultTheme } from '../DefaultTheme/DefaultTheme';
 
-import * as css from './Demo.styl';
+import css from './Demo.styl';
 
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
 

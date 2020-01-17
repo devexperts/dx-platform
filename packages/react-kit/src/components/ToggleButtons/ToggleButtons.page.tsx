@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { Component } from 'react';
 import Demo from '../demo/Demo';
 import { ToggleButtons } from './ToggleButtons';

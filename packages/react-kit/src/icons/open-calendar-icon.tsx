@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { IconWrapper } from '../components/icon-wrapper/icon-wrapper.component';
 
 export const OpenCalendarIcon: React.SFC = () => (

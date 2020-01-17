@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { PURE } from '../../utils/pure';
 import { ComponentClass, ReactElement } from 'react';
 import { withTheme } from '../../utils/withTheme';

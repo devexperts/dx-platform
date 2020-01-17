@@ -1,6 +1,6 @@
 import Demo from '../demo/Demo';
 import { Button } from './Button';
-import * as React from 'react';
+import React from 'react';
 import { storiesOf } from '@storybook/react';
 
 const demoStyle = {

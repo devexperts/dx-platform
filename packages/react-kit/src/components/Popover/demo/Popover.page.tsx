@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import Demo from '../../demo/Demo';
 import { Button } from '../../Button/Button';
 import { Popover } from '../Popover';
@@ -9,7 +9,7 @@ import { PURE } from '../../../utils/pure';
 import { storiesOf } from '@storybook/react';
 import { stateful } from '../../Control/Control';
 
-import * as css from './theme/Popover.page.styl';
+import css from './theme/Popover.page.styl';
 import { Scrollable } from '../../Scrollable/Scrollable';
 import { InputWithPopoverPage } from './InputWithPopover.page';
 import { FixedPopoverPage } from './FixedPopover.page';

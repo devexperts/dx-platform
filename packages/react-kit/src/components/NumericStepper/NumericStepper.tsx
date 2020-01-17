@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { SteppableInput, TSteppableInputProps } from '../SteppableInput/SteppableInput';
 import { KeyCode, TControlProps } from '../Control/Control';
 import { withTheme } from '../../utils/withTheme';

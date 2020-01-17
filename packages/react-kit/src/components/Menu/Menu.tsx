@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import {
 	List,
 	ListItem,
@@ -14,7 +14,7 @@ import { withTheme } from '../../utils/withTheme';
 import { Component, ComponentClass, ComponentType, ReactElement, ReactNode, ReactText } from 'react';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { PURE } from '../../utils/pure';
-import * as classnames from 'classnames';
+import classnames from 'classnames';
 import { Pure } from '../Pure/Pure';
 import { ReactChildren } from '../../utils/typings';
 import { withDefaults } from '../../utils/with-defaults';

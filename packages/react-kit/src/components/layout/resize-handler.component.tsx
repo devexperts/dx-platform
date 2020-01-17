@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import prefix from '@devexperts/utils/dist/dom/prefix';
 import { DraggableCore, DraggableEventHandler } from 'react-draggable';
 import { LAYOUT_THEME, LayoutOrientation } from './layout.constants';

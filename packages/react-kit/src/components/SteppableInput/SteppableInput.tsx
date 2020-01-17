@@ -1,7 +1,7 @@
-import * as React from 'react';
+import React from 'react';
 import { PURE } from '../../utils/pure';
 import { ComponentClass, ComponentType, ReactElement } from 'react';
-import * as ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom';
 import { withTheme } from '../../utils/withTheme';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { ButtonIcon, TButtonIconProps } from '../ButtonIcon/ButtonIcon';

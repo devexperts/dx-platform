@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import split from '@devexperts/utils/dist/string/split';
 import { PURE } from '../../utils/pure';
 import { withTheme } from '../../utils/withTheme';

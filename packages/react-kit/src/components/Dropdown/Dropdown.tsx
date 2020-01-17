@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { PURE } from '../../utils/pure';
 import { Component, ComponentClass, ComponentType, MouseEventHandler, ReactNode } from 'react';
 import { Popover, TPopoverProps } from '../Popover/Popover';

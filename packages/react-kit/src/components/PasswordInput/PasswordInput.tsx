@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { PURE } from '../../utils/pure';
 import { ButtonIcon, TButtonIconProps } from '../ButtonIcon/ButtonIcon';
 import { Input as BaseInput, TInputProps } from '../input/Input';

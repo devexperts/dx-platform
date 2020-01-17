@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { storiesOf } from '@storybook/react';
 import Demo from '../demo/Demo';
 import { Button } from '../Button/Button';
@@ -11,7 +11,7 @@ import { ListItemTickIcon } from '../../icons/list-item-tick-icon';
 import { SmallDropDownArrowIcon } from '../../icons/small-dropdown-arrow-icon';
 import { stateful } from '../Control/Control';
 
-import * as selectoxPageCss from './Selectbox.page.styl';
+import selectoxPageCss from './Selectbox.page.styl';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { ReactNode, ReactText } from 'react';
 

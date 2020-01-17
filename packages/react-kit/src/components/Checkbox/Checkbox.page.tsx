@@ -1,6 +1,6 @@
-import * as React from 'react';
+import React from 'react';
 import { PURE } from '../../utils/pure';
-import * as classnames from 'classnames';
+import classnames from 'classnames';
 import Demo from '../demo/Demo';
 import { CheckboxTickIcon } from '../../icons/checkbox-tick-icon';
 
@@ -8,7 +8,7 @@ import { Checkbox } from './Checkbox';
 import { storiesOf } from '@storybook/react';
 import { boolean } from '@storybook/addon-knobs';
 
-import * as css from './Checkbox.page.styl';
+import css from './Checkbox.page.styl';
 
 const darkDemoTheme = {
 	container: css.container,

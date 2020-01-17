@@ -1,5 +1,5 @@
-import * as React from 'react';
-import * as PropTypes from 'prop-types';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { Layout } from '../layout.component';
 import {
 	ItemSide,
@@ -14,12 +14,12 @@ import { uuid } from '@devexperts/utils/dist/string/string';
 import { prepareLayout, setDragData } from '../layout.utils';
 import { DNDContext } from '../dnd-context';
 
-import * as css from './layout.page.styl';
+import css from './layout.page.styl';
 import { reducer, insertNativeAt } from '../layout.redux';
 import { Button } from '../../Button/Button';
 import { Demo } from '../../demo/Demo';
-import * as layoutCss from './layout.styl';
-import * as scrollableCss from './scrollable.styl';
+import layoutCss from './layout.styl';
+import scrollableCss from './scrollable.styl';
 import { mergeThemes } from '../../../utils/withTheme';
 
 const theme = {

@@ -1,5 +1,5 @@
-import * as React from 'react';
-import * as theme from './placeholder.component.styl';
+import React from 'react';
+import theme from './placeholder.component.styl';
 
 type TPlaceholderProps = {
 	className: string;
