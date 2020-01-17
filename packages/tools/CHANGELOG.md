@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.10](https://github.com/devexperts/dx-platform/compare/v1.0.0-alpha.9...v1.0.0-alpha.10) (2020-01-17)
+
+
+### Bug Fixes
+
+* **tools:** update storybook packages ([48dc57c](https://github.com/devexperts/dx-platform/commit/48dc57cef69d909e4ef57dd79d6cd222c2f7ccc1))
+
+
+### chore
+
+* turn on esModuleInterop ([6b6f380](https://github.com/devexperts/dx-platform/commit/6b6f38005c8a2c20c1ec229ceb29eec8f2022ae6))
+
+
+### BREAKING CHANGES
+
+* esModuleInterop is turned on
+
+
+
+
+
 # [1.0.0-alpha.9](https://github.com/devexperts/dx-platform/compare/v1.0.0-alpha.8...v1.0.0-alpha.9) (2020-01-15)
 
 **Note:** Version bump only for package @devexperts/tools
