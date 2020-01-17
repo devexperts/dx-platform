@@ -1,8 +1,8 @@
 // copy-paste from "lerna"
 
-import * as chalk from 'chalk';
-import * as execa from 'execa';
-import * as logTransformer from 'strong-log-transformer';
+import chalk from 'chalk';
+import execa from 'execa';
+import logTransformer from 'strong-log-transformer';
 import { ExecaChildProcess } from 'execa';
 
 // bookkeeping for spawned processes

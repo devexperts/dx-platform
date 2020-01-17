@@ -1,4 +1,4 @@
-import * as path from 'path';
+import path from 'path';
 import { choosePort } from 'react-dev-utils/WebpackDevServerUtils';
 import { getProgramForScript } from '../utils/program';
 import { Scripts } from './constants';

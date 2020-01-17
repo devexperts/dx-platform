@@ -1,6 +1,6 @@
 import { spawnStreaming } from '../utils/child-process.utils';
 import { ExecaChildProcess } from 'execa';
-import * as path from 'path';
+import path from 'path';
 
 export const startSync: (src: string, dist: string, isWatch: boolean) => ExecaChildProcess = (src, dist, isWatch) => {
 	const srcFolder = path.relative(process.cwd(), src);

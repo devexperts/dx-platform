@@ -1,7 +1,7 @@
 import { getProgramForScript } from '../utils/program';
 import { Scripts } from './constants';
 import { ROOT } from '../config/env';
-import * as path from 'path';
+import path from 'path';
 
 import { startTransform } from '../tasks/ts-transform';
 import { startSync } from '../tasks/sync';

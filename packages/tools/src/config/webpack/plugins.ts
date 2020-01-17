@@ -1,7 +1,7 @@
 import { ROOT } from '../env';
-import * as ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
-import * as HtmlWebpackPlugin from 'html-webpack-plugin';
-import * as ExtractTextPlugin from 'extract-text-webpack-plugin';
+import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+import ExtractTextPlugin from 'extract-text-webpack-plugin';
 
 export const createHtmlPlugin = () =>
 	new HtmlWebpackPlugin({

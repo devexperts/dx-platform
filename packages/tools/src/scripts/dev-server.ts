@@ -1,7 +1,7 @@
-import * as path from 'path';
-import * as WebpackDevServer from 'webpack-dev-server';
+import path from 'path';
+import WebpackDevServer from 'webpack-dev-server';
 import { PKG, ROOT } from '../config/env';
-import * as webpack from 'webpack';
+import webpack from 'webpack';
 import devConfig from '../config/build/dev';
 
 import { getProgramForScript } from '../utils/program';

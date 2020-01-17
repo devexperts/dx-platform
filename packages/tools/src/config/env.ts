@@ -1,7 +1,7 @@
 /* tslint:disable:no-var-requires */
 
-import * as path from 'path';
-import * as fs from 'fs';
+import path from 'path';
+import fs from 'fs';
 let OVERRIDES: any = {};
 
 export const TOOLS_ROOT = path.join(__dirname, '../../');
