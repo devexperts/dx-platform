@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { ReactElement, EventHandler, MouseEvent, TouchEvent } from 'react';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { withDefaults } from '../../utils/with-defaults';

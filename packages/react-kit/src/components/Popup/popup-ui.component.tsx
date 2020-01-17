@@ -1,6 +1,6 @@
-import * as React from 'react';
+import React from 'react';
 import { PURE } from '../../utils/pure';
-import * as classnames from 'classnames';
+import classnames from 'classnames';
 import { Component, MouseEventHandler, ReactNode } from 'react';
 import { ReactRef } from '../../utils/typings';
 

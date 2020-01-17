@@ -1,10 +1,10 @@
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+import React from 'react';
+import ReactDOM from 'react-dom';
 import { ComponentClass } from 'react';
 import { createPortal } from 'react-dom';
 import { TSteppableInputProps, SteppableInput, checkParentsUpTo } from '../SteppableInput/SteppableInput';
 import { KeyCode, KEY_CODE_NUM_MAP, TControlProps } from '../Control/Control';
-import * as classnames from 'classnames';
+import classnames from 'classnames';
 import { withTheme } from '../../utils/withTheme';
 import { ButtonIcon, TButtonIconProps } from '../ButtonIcon/ButtonIcon';
 import ReactInstance = React.ReactInstance;

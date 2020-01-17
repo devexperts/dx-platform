@@ -1,8 +1,8 @@
-import * as React from 'react';
+import React from 'react';
 import { ComponentClass, Fragment } from 'react';
 import { PURE } from '../../utils/pure';
 import { KEY_CODE_LETR_MAP, KEY_CODE_NUM_MAP, KeyCode, TControlProps } from '../Control/Control';
-import * as classnames from 'classnames';
+import classnames from 'classnames';
 import { withTheme } from '../../utils/withTheme';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { SteppableInput, TSteppableInputProps } from '../SteppableInput/SteppableInput';

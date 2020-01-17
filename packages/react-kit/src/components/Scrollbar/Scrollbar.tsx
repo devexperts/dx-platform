@@ -1,6 +1,6 @@
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
-import * as classnames from 'classnames';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import classnames from 'classnames';
 import { Bar } from './Bar';
 
 import { CONTEXT_TYPES, EVENT_SCROLABLE, SCROLLABLE_CONTEXT_EMITTER } from '../Scrollable/Scrollable.const';

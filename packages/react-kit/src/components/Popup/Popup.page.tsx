@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { Popup } from './Popup';
 import { storiesOf } from '@storybook/react';
 import { PURE } from '../../utils/pure';
@@ -8,7 +8,7 @@ import { Selectbox } from '../Selectbox/Selectbox';
 import { stateful } from '../Control/Control';
 import { MenuItem } from '../Menu/Menu';
 
-import * as css from './Popup.page.styl';
+import css from './Popup.page.styl';
 
 const theme = {
 	container: css.container,

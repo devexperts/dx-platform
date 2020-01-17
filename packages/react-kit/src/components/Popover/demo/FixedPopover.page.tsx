@@ -1,15 +1,15 @@
-import * as React from 'react';
+import React from 'react';
 import Demo from '../../demo/Demo';
 import { PURE } from '../../../utils/pure';
 import { Button } from '../../Button/Button';
 import { Popover } from '../Popover';
 import { PopoverPlacement, PopoverAlign } from '../Popover.model';
 import { Scrollable } from '../../Scrollable/Scrollable';
-import * as css from './theme/Popover.page.styl';
+import css from './theme/Popover.page.styl';
 import { stateful } from '../../Control/Control';
 import { Selectbox } from '../../Selectbox/Selectbox';
 import { MenuItem } from '../../Menu/Menu';
-import * as cn from 'classnames';
+import cn from 'classnames';
 
 const Stateful = stateful()(Selectbox);
 const StatefulOpened = stateful('isOpened', 'onToggle', 'defaultIsOpened')(Stateful);

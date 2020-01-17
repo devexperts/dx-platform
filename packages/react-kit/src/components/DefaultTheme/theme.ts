@@ -1,77 +1,77 @@
 import { INPUT } from '../input/Input';
-import * as inputTheme from '../input/Input.demo.styl';
+import inputTheme from '../input/Input.demo.styl';
 
 import { BUTTON } from '../Button/Button';
-import * as buttonTheme from '../Button/Button.styl';
+import buttonTheme from '../Button/Button.styl';
 
 import { LOADING_INDICATOR } from '../LoadingIndicator/LoadingIndicator';
-import * as loadingIndicatorTheme from '../LoadingIndicator/LoadingIndicator.demo.styl';
+import loadingIndicatorTheme from '../LoadingIndicator/LoadingIndicator.demo.styl';
 
 import { CHECKBOX } from '../Checkbox/Checkbox';
-import * as checkboxTheme from '../Checkbox/Checkbox.demo.styl';
+import checkboxTheme from '../Checkbox/Checkbox.demo.styl';
 
 import { POPOVER } from '../Popover/Popover';
-import * as popoverTheme from '../Popover/demo/theme/Popover.demo.styl';
+import popoverTheme from '../Popover/demo/theme/Popover.demo.styl';
 
 import { LIST } from '../List/List';
-import * as listTheme from '../List/List.demo.styl';
+import listTheme from '../List/List.demo.styl';
 
 import { MENU } from '../Menu/Menu';
-import * as menuTheme from '../Menu/Menu.demo.styl';
+import menuTheme from '../Menu/Menu.demo.styl';
 
 import { SELECTBOX } from '../Selectbox/Selectbox';
-import * as selectBoxTheme from '../Selectbox/Selectbox.demo.styl';
+import selectBoxTheme from '../Selectbox/Selectbox.demo.styl';
 
 import { TABLE } from '../Table/Table';
-import * as tableTheme from '../Table/Table.demo.styl';
+import tableTheme from '../Table/Table.demo.styl';
 
 import { HORIZONTAL_SCROLLBAR } from '../Scrollbar/HorizontalScrollbar';
-import * as horScrollbar from '../Scrollbar/HorizontalScrollbar.demo.styl';
+import horScrollbar from '../Scrollbar/HorizontalScrollbar.demo.styl';
 
 import { VERTICAL_SCROLLBAR } from '../Scrollbar/VerticalScrollbar';
-import * as vertScrollbar from '../Scrollbar/VerricalScrollbar.demo.styl';
+import vertScrollbar from '../Scrollbar/VerricalScrollbar.demo.styl';
 
 import { SCROLLABLE } from '../Scrollable/Scrollable';
-import * as scrollableTheme from '../Scrollable/Scrollable.styl';
+import scrollableTheme from '../Scrollable/Scrollable.styl';
 
 import { GRID } from '../Grid/Grid';
-import * as gridTheme from '../Grid/Grid.styl';
+import gridTheme from '../Grid/Grid.styl';
 
 import { BUTTON_ICON } from '../ButtonIcon/ButtonIcon';
-import * as buttonIconTheme from '../ButtonIcon/ButtonIcon.styl';
+import buttonIconTheme from '../ButtonIcon/ButtonIcon.styl';
 
 import { PASSWORD_INPUT } from '../PasswordInput/PasswordInput';
-import * as passwordInputTheme from '../PasswordInput/PasswordInput.demo.styl';
+import passwordInputTheme from '../PasswordInput/PasswordInput.demo.styl';
 
 import { LINK } from '../Link/Link';
-import * as linkTheme from '../Link/Link.styl';
+import linkTheme from '../Link/Link.styl';
 
 import { TOGGLE_BUTTONS } from '../ToggleButtons/ToggleButtons';
-import * as toggleButtonsTheme from '../ToggleButtons/ToggleButtons.demo.styl';
+import toggleButtonsTheme from '../ToggleButtons/ToggleButtons.demo.styl';
 
 import { LOADING_INDICATION } from '../LoadingIndication/LoadingIndication';
-import * as loadingIndicationTheme from '../LoadingIndication/LoadingIndication.demo.styl';
+import loadingIndicationTheme from '../LoadingIndication/LoadingIndication.demo.styl';
 
 import { POPUP } from '../Popup/Popup';
-import * as popupTheme from '../Popup/Popup.demo.styl';
+import popupTheme from '../Popup/Popup.demo.styl';
 
 import { STEPPABLE_INPUT } from '../SteppableInput/SteppableInput';
-import * as steppableInput from '../SteppableInput/theme/SteppableInput.styl';
-import * as steppableInputInput from '../SteppableInput/theme/Input.styl';
-import * as steppableInputButtonIcon from '../SteppableInput/theme/ButtonIcon.demo.styl';
+import steppableInput from '../SteppableInput/theme/SteppableInput.styl';
+import steppableInputInput from '../SteppableInput/theme/Input.styl';
+import steppableInputButtonIcon from '../SteppableInput/theme/ButtonIcon.demo.styl';
 
 import { TIME_INPUT } from '../TimeInput/TimeInput';
-import * as timeInput from '../TimeInput/theme/TimeInput.styl';
+import timeInput from '../TimeInput/theme/TimeInput.styl';
 
 import { DATE_INPUT } from '../DateInput/DateInput';
-import * as dateInputTheme from '../DateInput/theme/DateInput.demo.styl';
-import * as dateInputButtonIconTheme from '../DateInput/theme/ButtonIcon.demo.styl';
+import dateInputTheme from '../DateInput/theme/DateInput.demo.styl';
+import dateInputButtonIconTheme from '../DateInput/theme/ButtonIcon.demo.styl';
 
 import { AUTOCOMPLETE } from '../Autocomplete/Autocomplete';
-import * as autocompleteTheme from '../Autocomplete/Autocomplete.styl';
+import autocompleteTheme from '../Autocomplete/Autocomplete.styl';
 
 import { EXPANDABLE } from '../Expandable/Expandable';
-import * as expandableTheme from '../Expandable/Expandable.demo.styl';
+import expandableTheme from '../Expandable/Expandable.demo.styl';
 
 export default {
 	[INPUT]: inputTheme,

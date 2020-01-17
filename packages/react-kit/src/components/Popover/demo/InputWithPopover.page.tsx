@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { Input } from '../../input/Input';
 import { Popover } from '../Popover';
 import { PopoverPlacement, PopoverAlign } from '../Popover.model';

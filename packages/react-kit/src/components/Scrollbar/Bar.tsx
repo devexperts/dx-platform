@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { PURE } from '../../utils/pure';
 import { EventListener, TEventListenerProps } from '../EventListener/EventListener';
 import { Omit } from 'typelevel-ts';

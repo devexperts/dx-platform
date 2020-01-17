@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { withTheme } from '../../utils/withTheme';
 import { ComponentClass, SFC } from 'react';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';

@@ -1,9 +1,9 @@
-import * as React from 'react';
+import React from 'react';
 import { SelectboxAnchor, TFullSelectboxAnchorProps, TSelectboxAnchorProps } from './SelectboxAnchor';
 import { Popover, TFullPopoverProps, TPopoverProps } from '../Popover/Popover';
 import { Menu, TFullMenuProps, TMenuItemProps, TMenuProps } from '../Menu/Menu';
 import { PURE } from '../../utils/pure';
-import * as classnames from 'classnames';
+import classnames from 'classnames';
 import { withTheme } from '../../utils/withTheme';
 import { Component, ComponentClass, ComponentType, ReactElement, ReactNode, ReactText } from 'react';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';

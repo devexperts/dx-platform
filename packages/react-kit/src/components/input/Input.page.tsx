@@ -1,12 +1,12 @@
-import * as React from 'react';
+import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { Demo } from '../demo/Demo';
 
 import { Input } from './Input';
 
-import * as css from './Input.page.styl';
-import * as demoCss from './Input.demo.styl';
+import css from './Input.page.styl';
+import demoCss from './Input.demo.styl';
 import { stateful } from '../Control/Control';
 
 const darkDemoTheme = {

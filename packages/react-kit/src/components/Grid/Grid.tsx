@@ -1,5 +1,5 @@
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+import React from 'react';
+import ReactDOM from 'react-dom';
 import prefix from '@devexperts/utils/dist/dom/prefix';
 import { PURE } from '../../utils/pure';
 import { Pure } from '../Pure/Pure';
@@ -22,7 +22,7 @@ import {
 } from '../Table/Table';
 import Emitter from '@devexperts/utils/dist/emitter/Emitter';
 import { Scrollable } from '../Scrollable/Scrollable';
-import * as classnames from 'classnames';
+import classnames from 'classnames';
 import { Omit } from 'typelevel-ts';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { withTheme } from '../../utils/withTheme';

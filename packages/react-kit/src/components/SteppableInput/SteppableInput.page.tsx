@@ -1,8 +1,8 @@
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+import React from 'react';
+import ReactDOM from 'react-dom';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
-import * as pageTheme from './theme/SteppableInput.page.styl';
+import pageTheme from './theme/SteppableInput.page.styl';
 import { AddIcon } from '../../icons/add-icon';
 import { DecreaseIcon } from '../../icons/decrease-icon';
 import { SmallCrossIcon as ClearIcon } from '../../icons/small-cross-icon';

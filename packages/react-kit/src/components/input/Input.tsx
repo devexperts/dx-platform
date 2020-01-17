@@ -1,6 +1,6 @@
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
-import * as classnames from 'classnames';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import classnames from 'classnames';
 import { PURE } from '../../utils/pure';
 import { TControlProps } from '../Control/Control';
 import {

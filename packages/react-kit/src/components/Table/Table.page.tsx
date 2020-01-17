@@ -1,8 +1,8 @@
-import * as React from 'react';
+import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { Table, TableCell as Cell, TableHead as THead, TableBody as TBody, TableRow as Tr } from './Table';
 import Demo from '../demo/Demo';
-import * as css from './Table.page.styl';
+import css from './Table.page.styl';
 
 const firstTheme = {
 	cell: css.cell_first,

@@ -1,6 +1,6 @@
 import { storiesOf } from '@storybook/react';
 import { getRenderRemoteData } from '../get-render-remote-data';
-import * as React from 'react';
+import React from 'react';
 import { Fragment, SFC } from 'react';
 import { failure, pending, success } from '@devexperts/remote-data-ts';
 import Demo from '../../demo/Demo';
