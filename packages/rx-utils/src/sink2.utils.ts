@@ -1,16 +1,16 @@
-import { EMPTY, merge, Observable } from 'rxjs';
+import { merge } from 'rxjs';
 import { Monad1 } from 'fp-ts/lib/Monad';
 import { pipeable } from 'fp-ts/lib/pipeable';
 import { sequenceT } from 'fp-ts/lib/Apply';
 import { array } from 'fp-ts/lib/Array';
 import { Semigroup } from 'fp-ts/lib/Semigroup';
 import { Monoid } from 'fp-ts/lib/Monoid';
+import { getSink, Sink1 } from '@devexperts/utils/dist/adt/sink.utils';
+import { instanceObservable } from './observable.utils';
 
-export interface Sink<A> {
-	readonly effects: Observable<unknown>;
-	readonly value: A;
-}
-export const newSink = <A>(value: A, effects: Observable<unknown>): Sink<A> => ({ value, effects });
+export interface Sink<A> extends Sink1<typeof instanceObservable.URI, A> {}
+const sinkObservable = getSink(instanceObservable);
+export const newSink = sinkObservable.newSink;
 
 export const URI = '@devexperts/rx-utils//Sink';
 export type URI = typeof URI;
@@ -22,13 +22,7 @@ declare module 'fp-ts/lib/HKT' {
 
 export const instanceSink: Monad1<URI> = {
 	URI,
-	map: (fa, f) => newSink(f(fa.value), fa.effects),
-	ap: (fab, fa) => newSink(fab.value(fa.value), merge(fab.effects, fa.effects)),
-	of: a => newSink(a, EMPTY),
-	chain: (fa, f) => {
-		const fb = f(fa.value);
-		return newSink(fb.value, merge(fa.effects, fb.effects));
-	},
+	...sinkObservable,
 };
 
 const getSemigroup = <A>(S: Semigroup<A>): Semigroup<Sink<A>> => ({
