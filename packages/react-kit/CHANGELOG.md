@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.11](https://github.com/devexperts/dx-platform/compare/v1.0.0-alpha.10...v1.0.0-alpha.11) (2020-01-23)
+
+**Note:** Version bump only for package @devexperts/react-kit
+
+
+
+
+
 # [1.0.0-alpha.10](https://github.com/devexperts/dx-platform/compare/v1.0.0-alpha.9...v1.0.0-alpha.10) (2020-01-17)
 
 

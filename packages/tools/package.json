@@ -1,6 +1,6 @@
 {
   "name": "@devexperts/tools",
-  "version": "1.0.0-alpha.10",
+  "version": "1.0.0-alpha.11",
   "description": "tool set for building FE projects",
   "main": "dist",
   "module": "dist",
