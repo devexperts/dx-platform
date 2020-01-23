@@ -1,5 +1,5 @@
 import { Observable, of, combineLatest } from 'rxjs';
-import { remoteData, RemoteData, fold as foldRD, failure } from '@devexperts/remote-data-ts';
+import { remoteData, RemoteData, failure, isSuccess } from '@devexperts/remote-data-ts';
 import { Option } from 'fp-ts/lib/Option';
 import { MonadThrow2 } from 'fp-ts/lib/MonadThrow';
 import {
@@ -7,7 +7,7 @@ import {
 	coproductMapLeft,
 } from '@devexperts/utils/dist/typeclasses/product-left-coproduct-left/product-left-coproduct-left.utils';
 import { getApplicativeComposition } from 'fp-ts/lib/Applicative';
-import { instanceObservable, observable } from './observable.utils';
+import { instanceObservable } from './observable.utils';
 import { pipeable } from 'fp-ts/lib/pipeable';
 import { sequenceT } from 'fp-ts/lib/Apply';
 import { array } from 'fp-ts/lib/Array';
@@ -29,7 +29,7 @@ const combineRD = <EA, A, EB, B>(fa: RemoteData<EA, A>, fb: RemoteData<EB, B>): 
 export const instanceLiveData: MonadThrow2<URI> & CoproductLeft<URI> = {
 	URI,
 	...getApplicativeComposition(instanceObservable, remoteData),
-	chain: (fa, f) => instanceObservable.chain(fa, foldRD(observable.zero, observable.zero, observable.zero, f)),
+	chain: (fa, f) => instanceObservable.chain(fa, a => (isSuccess(a) ? f(a.value) : of(a))),
 	throwError: e => of(failure(e)),
 	coproductLeft: <EA, A, EB, B>(fa: LiveData<EA, A>, fb: LiveData<EB, B>) =>
 		instanceObservable.map(combineLatest(fa, fb), ([a, b]) => combineRD(a, b)),
