@@ -51,7 +51,8 @@ export class EventListener extends React.Component<TEventListenerProps> {
 			const capture = key.endsWith(CAPTURE_MARKER);
 			const handler = handlers[key];
 			const eventName = getEventName(key, capture);
-			target.addEventListener(eventName, handler as any, capture);
+			const passive = !['touchcancel', 'touchend', 'touchmove', 'touchstart'].includes(eventName);
+			target.addEventListener(eventName, handler as any, { capture, passive });
 		});
 	}
 

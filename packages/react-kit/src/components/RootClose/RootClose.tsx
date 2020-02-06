@@ -61,7 +61,8 @@ export class RootClose extends Component<TRootCloseProps> {
 		this.preventMouseRootClose = domNode.contains(e.target as Node);
 	};
 
-	private handleTouchStart: TouchEventHandler<HTMLElement> = () => {
+	private handleTouchStart: TouchEventHandler<HTMLElement> = e => {
+		e.preventDefault();
 		if (!this.props.ignoreClick && !this.preventMouseRootClose && this.props.onRootClose) {
 			this.props.onRootClose();
 		}
