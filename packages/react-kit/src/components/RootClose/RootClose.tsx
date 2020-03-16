@@ -1,5 +1,11 @@
-import React from 'react';
-import { Component, KeyboardEventHandler, MouseEvent, MouseEventHandler, ReactElement, TouchEventHandler } from 'react';
+import React, {
+	Component,
+	KeyboardEventHandler,
+	MouseEvent,
+	MouseEventHandler,
+	ReactElement,
+	TouchEventHandler,
+} from 'react';
 import { EventListener } from '../EventListener/EventListener';
 import { findDOMNode } from 'react-dom';
 import { KeyCode } from '../Control/Control';
@@ -18,12 +24,15 @@ export type TRootCloseProps = {
 export class RootClose extends Component<TRootCloseProps> {
 	private preventMouseRootClose = false;
 	private ignoreMouseUp = true;
+	// @ts-ignore
+	private domNode: HTMLElement | null;
 
 	render() {
 		return (
 			<EventListener
 				target={document}
 				onMouseDown={this.onMouseDown}
+				onMouseUp={this.onMouseUp}
 				onClick={this.handleClick}
 				onClickCapture={this.handleClickCapture}
 				onTouchStart={this.handleTouchStart}
@@ -34,8 +43,19 @@ export class RootClose extends Component<TRootCloseProps> {
 		);
 	}
 
-	private onMouseDown = () => {
+	private onMouseDown: MouseEventHandler<HTMLElement> = e => {
 		this.ignoreMouseUp = false;
+		// @ts-ignore
+		this.domNode = e.target;
+	};
+
+	private onMouseUp: MouseEventHandler<HTMLElement> = e => {
+		const domNode = findDOMNode(this);
+		if (!domNode) {
+			return;
+		}
+		this.ignoreMouseUp = (!!this.domNode && !this.domNode.contains(e.target as Node)) || this.domNode === e.target;
+		this.domNode = null;
 	};
 
 	private handleClickCapture: MouseEventHandler<HTMLElement> = e => {
