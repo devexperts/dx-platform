@@ -1,6 +1,5 @@
 import * as React from 'react';
-// @ts-ignore
-import { RootClose } from '@devexperts/react-kit/dist/components/RootClose/RootClose';
+import { RootClose } from './RootClose';
 // @ts-ignore
 import { ResizableBox } from 'react-resizable';
 import Demo from '../demo/Demo';
