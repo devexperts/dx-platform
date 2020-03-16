@@ -36,6 +36,7 @@
     "@commitlint/cli": "^8.1.0",
     "@commitlint/config-conventional": "^8.1.0",
     "@commitlint/travis-cli": "^8.1.0",
+    "@devexperts/utils": "latest",
     "husky": "^3.0.5",
     "lerna": "^3.20.2",
     "npm-normalize-package-bin": "^1.0.1",
@@ -45,5 +46,8 @@
     "hooks": {
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
+  },
+  "dependencies": {
+    "react-resizable": "^1.10.1"
   }
 }

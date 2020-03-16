@@ -24,6 +24,8 @@ export type TRootCloseProps = {
 export class RootClose extends Component<TRootCloseProps> {
 	private preventMouseRootClose = false;
 	private ignoreMouseUp = true;
+	// @ts-ignore
+	private domNode: HTMLElement;
 
 	render() {
 		return (
@@ -41,8 +43,10 @@ export class RootClose extends Component<TRootCloseProps> {
 		);
 	}
 
-	private onMouseDown = () => {
+	private onMouseDown: MouseEventHandler<HTMLElement> = e => {
 		this.ignoreMouseUp = false;
+		// @ts-ignore
+		this.domNode = e.target;
 	};
 
 	private onMouseUp: MouseEventHandler<HTMLElement> = e => {
@@ -50,7 +54,7 @@ export class RootClose extends Component<TRootCloseProps> {
 		if (!domNode) {
 			return;
 		}
-		this.ignoreMouseUp = !domNode.contains(e.target as Node);
+		this.ignoreMouseUp = (!!this.domNode && !this.domNode.contains(e.target as Node)) || this.domNode === e.target;
 	};
 
 	private handleClickCapture: MouseEventHandler<HTMLElement> = e => {
