@@ -50,7 +50,7 @@ export class RootClose extends Component<TRootCloseProps> {
 		if (!domNode) {
 			return;
 		}
-		this.ignoreMouseUp = domNode.contains(e.target as Node);
+		this.ignoreMouseUp = !domNode.contains(e.target as Node);
 	};
 
 	private handleClickCapture: MouseEventHandler<HTMLElement> = e => {
