@@ -1,5 +1,11 @@
-import React from 'react';
-import { Component, KeyboardEventHandler, MouseEvent, MouseEventHandler, ReactElement, TouchEventHandler } from 'react';
+import React, {
+	Component,
+	KeyboardEventHandler,
+	MouseEvent,
+	MouseEventHandler,
+	ReactElement,
+	TouchEventHandler,
+} from 'react';
 import { EventListener } from '../EventListener/EventListener';
 import { findDOMNode } from 'react-dom';
 import { KeyCode } from '../Control/Control';
@@ -24,6 +30,7 @@ export class RootClose extends Component<TRootCloseProps> {
 			<EventListener
 				target={document}
 				onMouseDown={this.onMouseDown}
+				onMouseUp={this.onMouseUp}
 				onClick={this.handleClick}
 				onClickCapture={this.handleClickCapture}
 				onTouchStart={this.handleTouchStart}
@@ -36,6 +43,14 @@ export class RootClose extends Component<TRootCloseProps> {
 
 	private onMouseDown = () => {
 		this.ignoreMouseUp = false;
+	};
+
+	private onMouseUp: MouseEventHandler<HTMLElement> = e => {
+		const domNode = findDOMNode(this);
+		if (!domNode) {
+			return;
+		}
+		this.ignoreMouseUp = domNode.contains(e.target as Node);
 	};
 
 	private handleClickCapture: MouseEventHandler<HTMLElement> = e => {
