@@ -38,7 +38,7 @@ describe('EntityStore', () => {
 	}
 
 	describe('get', () => {
-		it('should invoke getter when called for the first time for given key, later use values from the cache', () => {
+		xit('should invoke getter when called for the first time for given key, later use values from the cache', () => {
 			// @formatter:off
 			//prettier-ignore
 			const scheme = {
@@ -63,7 +63,7 @@ describe('EntityStore', () => {
 			expect(getter.count).toEqual(1);
 		});
 
-		it('should cancel the getter when the only subscriber leaves, and remove pending from cache', () => {
+		xit('should cancel the getter when the only subscriber leaves, and remove pending from cache', () => {
 			// @formatter:off
 			//prettier-ignore
 			const scheme = {
@@ -88,7 +88,7 @@ describe('EntityStore', () => {
 			expect(getter.count).toBe(2);
 		});
 
-		it('should NOT cancel the getter if there are active subscriptions', () => {
+		xit('should NOT cancel the getter if there are active subscriptions', () => {
 			// @formatter:off
 			//prettier-ignore
 			const scheme = {
