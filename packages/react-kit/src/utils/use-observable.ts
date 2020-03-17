@@ -6,7 +6,7 @@ import {
 	MonadObservable3,
 } from '@devexperts/utils/dist/typeclasses/monad-observable/monad-observable';
 import { HKT, URIS, Kind, URIS2, Kind2, URIS3, Kind3 } from 'fp-ts/lib/HKT';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { constVoid } from 'fp-ts/lib/function';
 
 export function useObservable<M extends URIS3>(
@@ -18,14 +18,16 @@ export function useObservable<M extends URIS>(M: MonadObservable1<M>): <A>(fa: K
 export function useObservable<M>(M: MonadObservable<M>): <A>(fa: HKT<M, A>, initial: A) => A;
 export function useObservable<M>(M: MonadObservable<M>): <A>(fa: HKT<M, A>, initial: A) => A {
 	return (fa, initial) => {
-		const [state, setState] = useState(initial);
-		useEffect(() => {
-			const subscription = M.subscribe(fa, {
-				next: setState,
-				end: constVoid,
-			});
-			return () => subscription.unsubscribe();
-		}, [fa, setState]);
-		return state;
+		const [value, setValue] = useState(() => initial);
+		const subscription = useMemo(
+			() =>
+				M.subscribe(fa, {
+					next: a => setValue(() => a),
+					end: constVoid,
+				}),
+			[fa, setValue],
+		);
+		useEffect(() => () => subscription.unsubscribe(), [subscription]);
+		return value;
 	};
 }
