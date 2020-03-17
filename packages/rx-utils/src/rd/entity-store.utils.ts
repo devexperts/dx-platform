@@ -5,10 +5,11 @@ import { array } from 'fp-ts/lib/Array';
 import { Predicate } from 'fp-ts/lib/function';
 import { isNotNullable } from '@devexperts/utils/dist/object/object';
 import { LiveData } from './live-data.utils';
-import { filter, map, distinctUntilChanged, shareReplay, switchMap, tap, multicast, refCount } from 'rxjs/operators';
+import { filter, map, distinctUntilChanged, switchMap, tap, multicast, refCount } from 'rxjs/operators';
 import { tapRD } from './operators/tapRD';
 import { mapRD } from './operators/mapRD';
 import { switchMapRD } from './operators/switchMapRD';
+import { observable } from '../observable.utils';
 
 export class EntityStore<L = never, A = never> {
 	/**
@@ -36,7 +37,7 @@ export class EntityStore<L = never, A = never> {
 		map(data => data.filter(item => isSuccess(item))),
 		map(array.sequence(remoteData)),
 		distinctUntilChanged(),
-		shareReplay(1),
+		observable.hold,
 	);
 
 	readonly keys$ = this.cache.keys$;
@@ -122,7 +123,7 @@ export class EntityStore<L = never, A = never> {
 				});
 				return hasChanges ? filtered : entities;
 			}),
-			shareReplay(1),
+			observable.hold,
 		);
 	}
 
