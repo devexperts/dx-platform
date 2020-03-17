@@ -1,6 +1,7 @@
 import { BehaviorSubject, Observable } from 'rxjs';
 import { isNotNullable } from '@devexperts/utils/dist/object/object';
-import { distinctUntilChanged, filter, map, shareReplay } from 'rxjs/operators';
+import { distinctUntilChanged, filter, map } from 'rxjs/operators';
+import { observable } from './observable.utils';
 
 type UninitializedEntity<V> = {
 	hasValue: false;
@@ -37,14 +38,14 @@ export class ObservableMap<K, V> {
 			const values = Array.from(this.cache.values());
 			return values.filter(isInitialized).map(entity => entity.subject.getValue());
 		}),
-		shareReplay(1),
+		observable.hold,
 	);
 	readonly entries$: Observable<[K, V][]> = this.allSubject$.pipe(
 		map(() => {
 			const entries = Array.from(this.cache.entries()).filter(isEntryInitialized);
 			return entries.map<[K, V]>(entry => [entry[0], entry[1].subject.getValue()]);
 		}),
-		shareReplay(1),
+		observable.hold,
 	);
 
 	get size(): number {
