@@ -2,12 +2,13 @@ import { observable as rxjs, URI } from 'fp-ts-rxjs/lib/Observable';
 import { MonadObservable1 } from '@devexperts/utils/dist/typeclasses/monad-observable/monad-observable';
 import { Observable, Subject } from 'rxjs';
 import { pipe, pipeable } from 'fp-ts/lib/pipeable';
-import { share } from 'rxjs/operators';
+import { share, switchMap } from 'rxjs/operators';
 import { fromPromise } from 'rxjs/internal-compatibility';
 import { task } from 'fp-ts/lib/Task';
 
 export const instanceObservable: typeof rxjs & MonadObservable1<URI> = {
 	...rxjs,
+	chain: (fa, f) => pipe(fa, switchMap(f)),
 	createAdapter: <A>() => {
 		const s = new Subject<A>();
 		const next = (a: A) => s.next(a);
