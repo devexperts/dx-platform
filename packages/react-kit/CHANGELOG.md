@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.12](https://github.com/devexperts/dx-platform/compare/v1.0.0-alpha.11...v1.0.0-alpha.12) (2020-03-18)
+
+
+### Bug Fixes
+
+* **react-kit:** subscribe immediately in useObservable, allow functions ([8cab173](https://github.com/devexperts/dx-platform/commit/8cab1733c5392dc639cf6c79f15dba23a0d7940a))
+
+
+### Features
+
+* **react-kit:** add use-subscription hook ([220e112](https://github.com/devexperts/dx-platform/commit/220e1128fc24952126fa6f763df1a355144d3943))
+* **rx-utils, react-kit:** update rxjs, add observable.hold ([2cd0b91](https://github.com/devexperts/dx-platform/commit/2cd0b91ce201598f88e6502ea6d38dcf8045d1be))
+
+
+### BREAKING CHANGES
+
+* **rx-utils, react-kit:** shareReplay(1) is now replaced with hold which unsubscribes from source
+
+
+
+
+
 # [1.0.0-alpha.11](https://github.com/devexperts/dx-platform/compare/v1.0.0-alpha.10...v1.0.0-alpha.11) (2020-01-23)
 
 **Note:** Version bump only for package @devexperts/react-kit
