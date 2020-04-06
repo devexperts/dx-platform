@@ -1,6 +1,6 @@
 {
   "name": "@devexperts/rx-utils",
-  "version": "1.0.0-alpha.12",
+  "version": "1.0.0-alpha.13",
   "description": "utilits for rxjs",
   "keywords": [
     "rxjs",
@@ -29,7 +29,7 @@
     "watch": "yarn build --watch --incremental"
   },
   "dependencies": {
-    "@devexperts/utils": "^1.0.0-alpha.12",
+    "@devexperts/utils": "^1.0.0-alpha.13",
     "@types/query-string": "^5.1.0",
     "query-string": "^6.1.0",
     "querystring": "^0.2.0",

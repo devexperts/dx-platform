@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.13](https://github.com/devexperts/dx-platform/compare/v1.0.0-alpha.12...v1.0.0-alpha.13) (2020-04-06)
+
+
+### Features
+
+* **react-kit:** add abstract use-sink ([191076e](https://github.com/devexperts/dx-platform/commit/191076e3fc4f4eb4ff3ea77a5d66564b74b9470e))
+
+
+
+
+
 # [1.0.0-alpha.12](https://github.com/devexperts/dx-platform/compare/v1.0.0-alpha.11...v1.0.0-alpha.12) (2020-03-18)
 
 
