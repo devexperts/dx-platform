@@ -38,7 +38,7 @@ export class RootClose extends Component<TRootCloseProps> {
 		this.ignoreMouseUp = false;
 	};
 
-	private handleClickCapture: MouseEventHandler<HTMLElement> = e => {
+	private handleClickCapture: MouseEventHandler<HTMLElement> = (e) => {
 		const domNode = findDOMNode(this);
 		if (!domNode) {
 			return;
@@ -47,13 +47,13 @@ export class RootClose extends Component<TRootCloseProps> {
 			this.ignoreMouseUp || isModifiedEvent(e) || !isLeftClickEvent(e) || domNode.contains(e.target as Node);
 	};
 
-	private handleClick: MouseEventHandler<HTMLElement> = e => {
+	private handleClick: MouseEventHandler<HTMLElement> = (e) => {
 		if (!this.props.ignoreClick && !this.preventMouseRootClose && this.props.onRootClose) {
 			this.props.onRootClose();
 		}
 	};
 
-	private handleTouchStartCapture: TouchEventHandler<HTMLElement> = e => {
+	private handleTouchStartCapture: TouchEventHandler<HTMLElement> = (e) => {
 		const domNode = findDOMNode(this);
 		if (!domNode) {
 			return;
@@ -61,13 +61,14 @@ export class RootClose extends Component<TRootCloseProps> {
 		this.preventMouseRootClose = domNode.contains(e.target as Node);
 	};
 
-	private handleTouchStart: TouchEventHandler<HTMLElement> = () => {
+	private handleTouchStart: TouchEventHandler<HTMLElement> = (e) => {
 		if (!this.props.ignoreClick && !this.preventMouseRootClose && this.props.onRootClose) {
 			this.props.onRootClose();
+			e.preventDefault();
 		}
 	};
 
-	private handleKeyUp: KeyboardEventHandler<HTMLElement> = e => {
+	private handleKeyUp: KeyboardEventHandler<HTMLElement> = (e) => {
 		if (!this.props.ignoreKeyUp && e.keyCode === KeyCode.Escape && this.props.onRootClose) {
 			this.props.onRootClose();
 		}
