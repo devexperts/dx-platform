@@ -44,7 +44,7 @@ export class RootClose extends Component<TRootCloseProps> {
 			return;
 		}
 		this.preventMouseRootClose =
-			this.ignoreMouseUp || isModifiedEvente || !isLeftClickEvente || domNode.contains(e.target as Node);
+			this.ignoreMouseUp || isModifiedEvent(e) || !isLeftClickEvent(e) || domNode.contains(e.target as Node);
 	};
 
 	private handleClick: MouseEventHandler<HTMLElement> = e => {
