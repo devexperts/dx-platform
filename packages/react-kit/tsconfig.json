@@ -16,5 +16,17 @@
   ],
   "exclude": [
     "**/__tests__/*"
-  ]
+  ],
+  "typedocOptions": {
+    "mode": "file",
+    "ignoreCompilerErrors": "true",
+    "disableOutputCheck": "false",
+    "excludeNotExported": "true",
+    "excludePrivate": "true",
+    "excludeProtected": "true",
+    "hideGenerator": "true",
+    "theme": "default",
+    "out": "./docs",
+    "name": "docs"
+  }
 }

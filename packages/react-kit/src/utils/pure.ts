@@ -13,7 +13,8 @@ export function shouldComponentUpdate(props: {}, state: {}, newProps: {}, newSta
 }
 
 /**
- * Pure render recorator
+ * Pure render decorator. This decorator should be used instead of the React's `PureComponent`
+ * for pure components that are wrapped with `withTheme`.
  */
 export function PURE<T extends Function>(target: T): T {
 	//noinspection JSUnresolvedVariable
