@@ -47,7 +47,7 @@ export class EventListener extends React.Component<TEventListenerProps> {
 	private addListeners() {
 		const target = this.getTarget();
 		const handlers = this.getHandlers();
-		Object.keys(handlers).forEach((key) => {
+		Object.keys(handlers).forEach(key => {
 			const capture = key.endsWith(CAPTURE_MARKER);
 			const handler = handlers[key];
 			const eventName = getEventName(key, capture);
@@ -60,7 +60,7 @@ export class EventListener extends React.Component<TEventListenerProps> {
 	private removeListeners() {
 		const target = this.getTarget();
 		const handlers = this.getHandlers();
-		Object.keys(handlers).forEach((key) => {
+		Object.keys(handlers).forEach(key => {
 			const capture = key.endsWith(CAPTURE_MARKER);
 			const handler = handlers[key];
 			const eventName = getEventName(key, capture);
@@ -80,7 +80,7 @@ export class EventListener extends React.Component<TEventListenerProps> {
 		// noinspection JSUnusedLocalSymbols
 		const { target, children, ...props } = this.props;
 		const propKeys = Object.keys(props);
-		const eventKeys = propKeys.filter((key) => key.startsWith('on'));
+		const eventKeys = propKeys.filter(key => key.startsWith('on'));
 		const handlers = eventKeys.reduce((acc, key) => {
 			acc[key] = props[key];
 			return acc;
