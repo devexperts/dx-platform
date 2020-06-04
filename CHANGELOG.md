@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.14](https://github.com/devexperts/dx-platform/compare/v1.0.0-alpha.13...v1.0.0-alpha.14) (2020-06-04)
+
+
+### Bug Fixes
+
+* **react-kit:** fixes [#211](https://github.com/devexperts/dx-platform/issues/211) - touch events in popovers ([#225](https://github.com/devexperts/dx-platform/issues/225)) ([7b12042](https://github.com/devexperts/dx-platform/commit/7b120423aee3ceb2f46bf8dbd1ca1a44aba7a6c6))
+
+
+
+
+
 # [1.0.0-alpha.13](https://github.com/devexperts/dx-platform/compare/v1.0.0-alpha.12...v1.0.0-alpha.13) (2020-04-06)
 
 
