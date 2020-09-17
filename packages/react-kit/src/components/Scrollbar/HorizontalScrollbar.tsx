@@ -57,7 +57,8 @@ export class RawHorizontalScrollbar extends Scrollbar<TAdditionalHorizontalProps
 	}
 
 	componentWillReceiveProps(newProps: TFullHorizontalProps) {
-		if (this.props.scrollLeft !== newProps.scrollLeft) {
+		const { scrollLeft, container } = this.props;
+		if (scrollLeft !== newProps.scrollLeft && container.scrollWidth > container.clientWidth) {
 			if (newProps.scrollLeft) {
 				this._scrollTo(newProps.scrollLeft);
 			}
