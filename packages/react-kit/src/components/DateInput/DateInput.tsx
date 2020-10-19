@@ -137,18 +137,17 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 						{format(year, ActiveSection.Year)}
 					</span>
 				</div>
-				{Calendar &&
-					calendarIcon && (
-						<ButtonIcon
-							isFlat={true}
-							ref={(el: any) => (this.calendarButtonRef = el)}
-							isDisabled={isDisabled}
-							tabIndex={-1}
-							icon={calendarIcon}
-							onMouseDown={this.onCalendarButtonMouseDown}
-							theme={theme.CalendarButtonIcon}
-						/>
-					)}
+				{Calendar && calendarIcon && (
+					<ButtonIcon
+						isFlat={true}
+						ref={(el: any) => (this.calendarButtonRef = el)}
+						isDisabled={isDisabled}
+						tabIndex={-1}
+						icon={calendarIcon}
+						onMouseDown={this.onCalendarButtonMouseDown}
+						theme={theme.CalendarButtonIcon}
+					/>
+				)}
 				{this.renderCalendar()}
 			</SteppableInput>
 		);
