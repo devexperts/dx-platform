@@ -46,7 +46,7 @@ export class Bar extends React.Component<TBarProps, TBarState> {
 		};
 
 		return (
-			<EventListener {...(eventListenerProps as TEventListenerProps)}>
+			<EventListener {...eventListenerProps as TEventListenerProps}>
 				<div {...barProps} />
 			</EventListener>
 		);

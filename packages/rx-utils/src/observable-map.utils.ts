@@ -148,10 +148,7 @@ export class ObservableMap<K, V> {
 		}
 
 		const subject = new BehaviorSubject<V | undefined>(undefined);
-		const observable = subject.pipe(
-			filter(isNotNullable),
-			distinctUntilChanged(),
-		);
+		const observable = subject.pipe(filter(isNotNullable), distinctUntilChanged());
 		const entity: ObservableMapEntity<V> = {
 			hasValue: false,
 			subject,

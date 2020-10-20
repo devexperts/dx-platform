@@ -77,10 +77,7 @@ export class EntityStore<L = never, A = never> {
 					cacheSubscription.unsubscribe();
 					this.cachedStreams.delete(key);
 				};
-			}).pipe(
-				multicast(new ReplaySubject<RemoteData<L, A>>(1)),
-				refCount(),
-			);
+			}).pipe(multicast(new ReplaySubject<RemoteData<L, A>>(1)), refCount());
 
 			this.cachedStreams.set(key, sharedGetter);
 		}

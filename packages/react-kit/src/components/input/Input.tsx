@@ -129,7 +129,7 @@ class RawInput extends React.Component<TFullInputProps, TInputState> {
 				onWheel={onWheel}
 				tabIndex={!isCustom && (isFocused || isDisabled) ? -1 : tabIndex}
 				ref={this.getRef}
-				{...(isCustom && keyboardEvents)}>
+				{...isCustom && keyboardEvents}>
 				<input
 					className={theme.input}
 					ref={el => (this.input = el)}
@@ -144,7 +144,7 @@ class RawInput extends React.Component<TFullInputProps, TInputState> {
 					tabIndex={-1}
 					readOnly={isReadOnly}
 					disabled={isDisabled}
-					{...(!isCustom && keyboardEvents)}
+					{...!isCustom && keyboardEvents}
 				/>
 				{children}
 			</div>

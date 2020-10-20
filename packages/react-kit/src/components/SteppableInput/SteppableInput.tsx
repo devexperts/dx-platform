@@ -102,41 +102,44 @@ class RawSteppableInput extends React.Component<TFullSteppableInputProps, TStepp
 				innerRef={innerRef}>
 				<div className={theme.inner}>
 					{children}
-					{onClear && clearIcon && (
-						<ButtonIcon
-							icon={clearIcon}
-							isFlat={true}
-							theme={theme.ClearButtonIcon}
-							onClick={this.onClearClick}
-							onMouseDown={this.onButtonMouseDown}
-							isDisabled={isDisabled}
-							tabIndex={-1}
-						/>
-					)}
-					{onDecrement && decrementIcon && (
-						<Holdable onHold={onDecrement} isDisabled={isDecrementButtonDisabled}>
+					{onClear &&
+						clearIcon && (
 							<ButtonIcon
-								icon={decrementIcon}
-								theme={theme.ButtonIcon}
-								onClick={this.onDecrementClick}
+								icon={clearIcon}
+								isFlat={true}
+								theme={theme.ClearButtonIcon}
+								onClick={this.onClearClick}
 								onMouseDown={this.onButtonMouseDown}
-								isDisabled={isDecrementButtonDisabled}
+								isDisabled={isDisabled}
 								tabIndex={-1}
 							/>
-						</Holdable>
-					)}
-					{onIncrement && incrementIcon && (
-						<Holdable onHold={onIncrement} isDisabled={isIncrementButtonDisabled}>
-							<ButtonIcon
-								icon={incrementIcon}
-								theme={theme.ButtonIcon}
-								onClick={this.onIncrementClick}
-								onMouseDown={this.onButtonMouseDown}
-								isDisabled={isIncrementButtonDisabled}
-								tabIndex={-1}
-							/>
-						</Holdable>
-					)}
+						)}
+					{onDecrement &&
+						decrementIcon && (
+							<Holdable onHold={onDecrement} isDisabled={isDecrementButtonDisabled}>
+								<ButtonIcon
+									icon={decrementIcon}
+									theme={theme.ButtonIcon}
+									onClick={this.onDecrementClick}
+									onMouseDown={this.onButtonMouseDown}
+									isDisabled={isDecrementButtonDisabled}
+									tabIndex={-1}
+								/>
+							</Holdable>
+						)}
+					{onIncrement &&
+						incrementIcon && (
+							<Holdable onHold={onIncrement} isDisabled={isIncrementButtonDisabled}>
+								<ButtonIcon
+									icon={incrementIcon}
+									theme={theme.ButtonIcon}
+									onClick={this.onIncrementClick}
+									onMouseDown={this.onButtonMouseDown}
+									isDisabled={isIncrementButtonDisabled}
+									tabIndex={-1}
+								/>
+							</Holdable>
+						)}
 				</div>
 			</Input>
 		);

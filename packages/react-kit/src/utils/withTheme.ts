@@ -62,12 +62,12 @@ export const withTheme = (name: string | symbol, defaultTheme: TTheme = {}) => {
 
 			render() {
 				/* BROKEN TYPES HERE
-				 * the next 4 lines may be replaced by `const { withRef, theme, ...rest }= this.props;`
-				 * but TS cannot get `rest` type from generic `this.props` type
-				 * details:
-				 * issue https://github.com/Microsoft/TypeScript/issues/10727
-				 * PR https://github.com/Microsoft/TypeScript/pull/13288
-				 */
+				* the next 4 lines may be replaced by `const { withRef, theme, ...rest }= this.props;`
+				* but TS cannot get `rest` type from generic `this.props` type
+				* details:
+				* issue https://github.com/Microsoft/TypeScript/issues/10727
+				* PR https://github.com/Microsoft/TypeScript/pull/13288
+				*/
 				const { withRef, theme } = this.props;
 				const rest: any = Object.assign({}, this.props);
 				delete rest.withRef;
