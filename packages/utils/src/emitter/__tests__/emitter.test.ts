@@ -7,11 +7,11 @@ describe('Emitter', () => {
 
 	beforeEach(() => {
 		callback = jest.fn();
-		emitter = new (class extends Emitter {
+		emitter = new class extends Emitter {
 			fire() {
 				this._emit(event);
 			}
-		})();
+		}();
 	});
 
 	it('should fire event', () => {
