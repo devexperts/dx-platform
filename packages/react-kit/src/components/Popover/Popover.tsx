@@ -34,6 +34,7 @@ type TSize = {
 export const POPOVER = Symbol('Popover') as symbol;
 
 export type TFullPopoverProps = {
+	checkBounds?: boolean;
 	children: ReactNode;
 	isOpened?: boolean;
 	closeOnClickAway?: boolean;
@@ -271,7 +272,7 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 			return;
 		}
 
-		const { placement, align, hasArrow } = this.props;
+		const { placement, align, hasArrow, checkBounds = false } = this.props;
 
 		let arrowOffset;
 		let finalPlacement;
@@ -283,7 +284,7 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 			anchorBottom: anchorRect.bottom,
 			popoverHeight: this._popoverSize.height,
 			parentHeight: anchorRect.parentHeight,
-			checkBounds: true,
+			checkBounds,
 		})!;
 
 		const leftResult: THorizontalPosition = movePopoverHorizontally({
@@ -293,7 +294,7 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 			anchorRight: anchorRect.right,
 			popoverWidth: this._popoverSize.width,
 			parentWidth: anchorRect.parentWidth,
-			checkBounds: true,
+			checkBounds,
 		})!;
 
 		//additional

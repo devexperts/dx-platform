@@ -3,8 +3,7 @@
     "tslint-config-prettier"
   ],
   "rulesDirectory": [
-    "tslint-plugin-prettier",
-    "./dist"
+    "tslint-plugin-prettier"
   ],
   "rules": {
     "adjacent-overload-signatures": false,
