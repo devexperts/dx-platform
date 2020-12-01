@@ -49,7 +49,7 @@ export const withRX = <P extends object>(Target: ComponentType<P>) => <D extends
 			}
 		}
 
-		componentWillReceiveProps(props: P) {
+		UNSAFE_componentWillReceiveProps(props: P) {
 			this.props$.next(props);
 		}
 
