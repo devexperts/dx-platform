@@ -3,6 +3,39 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.14](https://github.com/devexperts/dx-platform/compare/v1.0.0-alpha.13...v1.0.0-alpha.14) (2020-06-04)
+
+**Note:** Version bump only for package @devexperts/utils
+
+
+
+
+
+# [1.0.0-alpha.13](https://github.com/devexperts/dx-platform/compare/v1.0.0-alpha.12...v1.0.0-alpha.13) (2020-04-06)
+
+
+### Features
+
+* **utils:** add abstract Sink ([83a01a0](https://github.com/devexperts/dx-platform/commit/83a01a0b56b4f193c4ec9733bb984fe7ea206ebb))
+* **utils, rx-utils:** abstract LiveData from Observable and RemoteData ([a76c8b4](https://github.com/devexperts/dx-platform/commit/a76c8b47e9ba18d2b7157d44c44b03544507bb02))
+
+
+### BREAKING CHANGES
+
+* **utils, rx-utils:** fixed type in rx-utils LiveData URI
+
+
+
+
+
+# [1.0.0-alpha.12](https://github.com/devexperts/dx-platform/compare/v1.0.0-alpha.11...v1.0.0-alpha.12) (2020-03-18)
+
+**Note:** Version bump only for package @devexperts/utils
+
+
+
+
+
 # [1.0.0-alpha.11](https://github.com/devexperts/dx-platform/compare/v1.0.0-alpha.10...v1.0.0-alpha.11) (2020-01-23)
 
 **Note:** Version bump only for package @devexperts/utils

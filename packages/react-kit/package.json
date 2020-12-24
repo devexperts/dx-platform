@@ -1,6 +1,6 @@
 {
   "name": "@devexperts/react-kit",
-  "version": "1.0.0-alpha.11",
+  "version": "1.0.0-alpha.14",
   "description": "",
   "main": "dist",
   "module": "dist",
@@ -32,7 +32,7 @@
   "homepage": "https://github.com/devexperts/dx-platform#readme",
   "dependencies": {
     "@devexperts/remote-data-ts": "^2.0.0",
-    "@devexperts/utils": "^1.0.0-alpha.11",
+    "@devexperts/utils": "^1.0.0-alpha.14",
     "@types/classnames": ">=2.2.3",
     "@types/node": ">=8.5.2",
     "@types/react-dnd": "2.0.32",
@@ -43,7 +43,7 @@
     "react-css-themr": "2.1.2",
     "react-dnd": "2.6.0",
     "react-dnd-html5-backend": "2.6.0",
-    "rxjs": "^6.2.2",
+    "rxjs": "^6.5.4",
     "tslib": "^1.10.0",
     "typelevel-ts": "^0.3.5"
   },
@@ -54,7 +54,7 @@
     "react-dom": "^16.9.0"
   },
   "devDependencies": {
-    "@devexperts/tools": "^1.0.0-alpha.11",
+    "@devexperts/tools": "^1.0.0-alpha.14",
     "@storybook/addon-actions": "^5.3.5",
     "@storybook/addon-info": "^5.3.5",
     "@storybook/addon-knobs": "^5.3.5",

@@ -3,6 +3,53 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.14](https://github.com/devexperts/dx-platform/compare/v1.0.0-alpha.13...v1.0.0-alpha.14) (2020-06-04)
+
+**Note:** Version bump only for package @devexperts/rx-utils
+
+
+
+
+
+# [1.0.0-alpha.13](https://github.com/devexperts/dx-platform/compare/v1.0.0-alpha.12...v1.0.0-alpha.13) (2020-04-06)
+
+
+### Features
+
+* **utils, rx-utils:** abstract LiveData from Observable and RemoteData ([a76c8b4](https://github.com/devexperts/dx-platform/commit/a76c8b47e9ba18d2b7157d44c44b03544507bb02))
+
+
+### BREAKING CHANGES
+
+* **utils, rx-utils:** fixed type in rx-utils LiveData URI
+
+
+
+
+
+# [1.0.0-alpha.12](https://github.com/devexperts/dx-platform/compare/v1.0.0-alpha.11...v1.0.0-alpha.12) (2020-03-18)
+
+
+### Bug Fixes
+
+* **rx-utils:** use switchMap instead of mergeMap in observable.chain ([ee26a76](https://github.com/devexperts/dx-platform/commit/ee26a7672c9c49c008af03459b5102b669e4650d))
+
+
+### Features
+
+* **rx-utils:** add Filterable instance to LiveData ([918be8a](https://github.com/devexperts/dx-platform/commit/918be8a578a6b3c73cfd0590c246b3d50cd9665d))
+* **rx-utils, react-kit:** update rxjs, add observable.hold ([2cd0b91](https://github.com/devexperts/dx-platform/commit/2cd0b91ce201598f88e6502ea6d38dcf8045d1be))
+
+
+### BREAKING CHANGES
+
+* **rx-utils, react-kit:** shareReplay(1) is now replaced with hold which unsubscribes from source
+* **rx-utils:** observable.chain now uses switchMap
+
+
+
+
+
 # [1.0.0-alpha.11](https://github.com/devexperts/dx-platform/compare/v1.0.0-alpha.10...v1.0.0-alpha.11) (2020-01-23)
 
 

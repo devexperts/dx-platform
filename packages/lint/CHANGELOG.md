@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.14](https://github.com/devexperts/dx-platform/compare/v1.0.0-alpha.13...v1.0.0-alpha.14) (2020-06-04)
+
+**Note:** Version bump only for package @devexperts/lint
+
+
+
+
+
+# [1.0.0-alpha.13](https://github.com/devexperts/dx-platform/compare/v1.0.0-alpha.12...v1.0.0-alpha.13) (2020-04-06)
+
+**Note:** Version bump only for package @devexperts/lint
+
+
+
+
+
+# [1.0.0-alpha.12](https://github.com/devexperts/dx-platform/compare/v1.0.0-alpha.11...v1.0.0-alpha.12) (2020-03-18)
+
+**Note:** Version bump only for package @devexperts/lint
+
+
+
+
+
 # [1.0.0-alpha.11](https://github.com/devexperts/dx-platform/compare/v1.0.0-alpha.10...v1.0.0-alpha.11) (2020-01-23)
 
 **Note:** Version bump only for package @devexperts/lint
