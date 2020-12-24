@@ -91,7 +91,6 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 			error,
 			clearIcon,
 			calendarIcon,
-			Calendar,
 			incrementIcon,
 			decrementIcon,
 			theme,
