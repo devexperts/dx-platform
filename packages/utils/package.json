@@ -9,7 +9,7 @@
     "lint:fix": "yarn lint --fix",
     "test": "yarn lint && tsc --noEmit && jest",
     "build": "tsc -p ./tsconfig.build.json --outDir ./dist",
-    "clean": "rm -rf ./dist",
+    "clean": "dx-tools clean dist",
     "prepare": "yarn clean && yarn build",
     "start": "yarn watch",
     "watch": "yarn build --watch --incremental"
@@ -28,6 +28,7 @@
   },
   "homepage": "https://github.com/devexperts/dx-platform#readme",
   "dependencies": {
+    "@devexperts/tools": "^1.0.0-alpha.14",
     "tslib": "^1.10.0",
     "typelevel-ts": "^0.3.5"
   },
