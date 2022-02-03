@@ -24,11 +24,12 @@
     "lint:fix": "yarn lint --fix",
     "test": "tsc --noEmit && jest",
     "build": "tsc -p ./tsconfig.build.json --outDir ./dist",
-    "clean": "rm -rf ./dist",
+    "clean": "dx-tools clean dist",
     "prepare": "yarn clean && yarn build",
     "watch": "yarn build --watch --incremental"
   },
   "dependencies": {
+    "@devexperts/tools": "^1.0.0-alpha.14",
     "@devexperts/utils": "^1.0.0-alpha.14",
     "@types/query-string": "^5.1.0",
     "query-string": "^6.1.0",
