@@ -18,6 +18,7 @@ export type TFullSelectboxAnchorProps = Omit<TButtonProps, 'theme'> & {
 	caretIcon?: ReactNode;
 	value?: ReactText | ReactText[];
 	valueText?: ReactNode;
+	testId?: string;
 };
 
 @PURE
@@ -33,6 +34,7 @@ class RawSelectboxAnchor extends React.Component<TFullSelectboxAnchorProps> {
 			caretIcon,
 			onClick,
 			isOpened,
+			testId,
 		} = this.props;
 
 		const buttonTheme = {
@@ -47,7 +49,8 @@ class RawSelectboxAnchor extends React.Component<TFullSelectboxAnchorProps> {
 				isDisabled={isDisabled}
 				isLoading={isLoading}
 				isPrimary={isPrimary}
-				theme={buttonTheme}>
+				theme={buttonTheme}
+				data-test-id={testId}>
 				<div className={theme.content}>
 					<div className={theme.text}>{valueText}</div>
 					<div className={theme.caret}>{caretIcon}</div>
