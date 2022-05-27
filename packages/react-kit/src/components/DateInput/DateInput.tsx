@@ -51,6 +51,7 @@ export type TDateInputOwnProps = TSteppableInputProps &
 		onMouseLeave?: () => void;
 		target?: Element;
 		Calendar?: ComponentClass<TCalendarProps> | React.SFC<TCalendarProps>;
+		defaultActiveSection?: ActiveSection;
 	};
 
 type TDateDefaultProps = {
@@ -156,11 +157,14 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 	}
 
 	private getSectionClassName = (activeSection: ActiveSection): string => {
-		const { theme, isDisabled } = this.props;
+		const { theme, isDisabled, defaultActiveSection } = this.props;
 		const { activeSection: selectedActiveSection } = this.state;
 
+		const activeSectionSelected = selectedActiveSection || selectedActiveSection === 0;
+
+		const selectedOrDefault = activeSectionSelected ? selectedActiveSection : defaultActiveSection;
 		return classnames(theme.section, {
-			[theme.section_isActive as string]: !isDisabled && selectedActiveSection === activeSection,
+			[theme.section_isActive as string]: !isDisabled && selectedOrDefault === activeSection,
 		});
 	};
 
