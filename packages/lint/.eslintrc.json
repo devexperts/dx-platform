@@ -57,7 +57,7 @@
 		"@typescript-eslint/type-annotation-spacing": "error",
 		"@typescript-eslint/unified-signatures": "error",
 		"jsdoc/check-alignment": "error",
-		"arrow-parens": ["error", "as-needed"],
+		"arrow-parens": ["error"],
 		"spaced-comment": "off",
 		"capitalized-comments": "off",
 		"comma-dangle": "off",
