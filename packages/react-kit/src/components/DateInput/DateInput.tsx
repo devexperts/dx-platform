@@ -92,7 +92,6 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 			error,
 			clearIcon,
 			calendarIcon,
-			Calendar,
 			incrementIcon,
 			decrementIcon,
 			theme,
@@ -140,7 +139,7 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 						{format(year, ActiveSection.Year)}
 					</span>
 				</div>
-				{Calendar && calendarIcon && (
+				{calendarIcon && (
 					<ButtonIcon
 						isFlat={true}
 						ref={(el: any) => (this.calendarButtonRef = el)}
