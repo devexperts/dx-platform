@@ -26,6 +26,13 @@ export function camelize(string: string, lower: boolean = true): string {
 	}
 }
 
+/**
+ * Pascalizes given string
+ */
+export function pascalize(string: string): string {
+	return string.slice(0, 1).toUpperCase() + string.slice(1).toLowerCase();
+}
+
 let uniqueIdCounter: number = 0;
 
 /**
