@@ -11,7 +11,7 @@ const iconTheme = {
 	container: theme.icon,
 };
 
-export const Placeholder: React.SFC<TPlaceholderProps> = props => {
+export const Placeholder: React.FC<TPlaceholderProps> = props => {
 	const { className, fits, isMaximized } = props;
 
 	return (

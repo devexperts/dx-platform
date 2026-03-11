@@ -18,6 +18,7 @@ export type TFullExpandableProps = TControlProps<boolean | undefined | null> & {
 		Handler?: TExpandableHandlerProps['theme'];
 		content?: string;
 	};
+	children?: React.ReactNode;
 	Handler: any;
 };
 

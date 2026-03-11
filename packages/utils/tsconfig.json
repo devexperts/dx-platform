@@ -2,6 +2,7 @@
   "extends": "../../tsconfig.shared.json",
   "compilerOptions": {
     "experimentalDecorators": true,
+    "types": ["jest"],
     "lib": [
       "es2016",
       "dom"

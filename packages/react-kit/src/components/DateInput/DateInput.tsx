@@ -50,14 +50,14 @@ export type TDateInputOwnProps = TSteppableInputProps &
 		onMouseEnter?: () => void;
 		onMouseLeave?: () => void;
 		target?: Element;
-		Calendar?: ComponentClass<TCalendarProps> | React.SFC<TCalendarProps>;
+		Calendar?: ComponentClass<TCalendarProps> | React.FC<TCalendarProps>;
 		defaultActiveSection?: ActiveSection;
 	};
 
 type TDateDefaultProps = {
-	SteppableInput: ComponentClass<TSteppableInputProps> | React.SFC<TSteppableInputProps>;
+	SteppableInput: ComponentClass<TSteppableInputProps> | React.FC<TSteppableInputProps>;
 	ButtonIcon: ComponentClass<TButtonIconProps>;
-	Popover: ComponentClass<TPopoverProps> | React.SFC<TPopoverProps>;
+	Popover: ComponentClass<TPopoverProps> | React.FC<TPopoverProps>;
 	dateFormatType: DateFormatType;
 	innerRef?: (instance: ReactRef) => void;
 };

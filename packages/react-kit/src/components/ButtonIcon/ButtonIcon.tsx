@@ -11,6 +11,7 @@ export const BUTTON_ICON = Symbol('ButtonIcon') as symbol;
 export type TFullButtonIconProps = TButtonProps & {
 	Button: ComponentType<TButtonProps>;
 	icon: React.ReactNode;
+	children?: React.ReactNode;
 	theme: {
 		icon?: string;
 	} & TButtonProps['theme'];

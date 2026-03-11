@@ -20,7 +20,7 @@ const Stateful = stateful()(DateInput);
 const onChange = (value: TDateInputValue) => action('change')(value);
 const onClear = () => action('clear')();
 
-const Calendar: React.SFC<TCalendarProps> = props => {
+const Calendar: React.FC<TCalendarProps> = props => {
 	const onChange = () => props.onValueChange && props.onValueChange(new Date());
 	return (
 		<div onMouseDown={props.onMouseDown}>

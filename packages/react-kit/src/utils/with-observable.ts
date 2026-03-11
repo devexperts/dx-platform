@@ -78,7 +78,7 @@ export function withObservable<M>(M: MonadObservable<M> & Alternative<M>): WithO
 				const { props, effects$ } = this.selected;
 				if (props) {
 					const inputs: HKT<M, Partial<P>>[] = Object.keys(props).map(key =>
-						M.map(props[key], value => ({ [key]: value })),
+					M.map((props as any)[key], value => ({ [key]: value })),
 					) as any;
 					const merged: HKT<M, Partial<P>> = array.reduce(inputs, M.zero(), (b, a) => M.alt(b, () => a));
 					this.inputSubscription = M.subscribe(merged, this.setStateObserver);

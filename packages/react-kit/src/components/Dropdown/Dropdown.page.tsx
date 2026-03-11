@@ -3,7 +3,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { Demo } from '../demo/Demo';
 import { Dropdown } from './Dropdown';
-import { Component, MouseEventHandler, ReactNode, SFC } from 'react';
+import { Component, MouseEventHandler, ReactNode, FC } from 'react';
 import { Button } from '../Button/Button';
 import { WithInnerRef } from '../../utils/typings';
 import { PURE } from '../../utils/pure';
@@ -32,7 +32,7 @@ class AnchorClass extends Component<TAnchorProps> {
 	}
 }
 
-const AnchorSFC: SFC<TAnchorProps> = props => {
+const AnchorSFC: FC<TAnchorProps> = props => {
 	const { innerRef, children, onClick } = props;
 	return (
 		<Button ref={innerRef} onClick={onClick}>

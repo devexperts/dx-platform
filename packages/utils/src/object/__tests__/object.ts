@@ -10,8 +10,8 @@ describe('object', () => {
 			};
 			const newObject = mapKeys(testObject, key => `data-${key}`);
 
-			expect(newObject['data-test']).toEqual('value');
-			expect(newObject['data-test2']).toEqual('value2');
+			expect((newObject as any)['data-test']).toEqual('value');
+			expect((newObject as any)['data-test2']).toEqual('value2');
 		});
 	});
 

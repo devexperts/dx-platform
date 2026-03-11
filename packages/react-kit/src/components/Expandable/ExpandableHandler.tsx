@@ -11,7 +11,7 @@ export type TFullExpandableHandlerProps = {
 	theme: {
 		container?: string;
 	};
-	children: ReactElement<any>;
+	children?: ReactElement<any>;
 };
 
 @PURE

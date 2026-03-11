@@ -283,7 +283,7 @@ export function normalizeLayout<P extends TMinimumLayoutModelItemProps>(
 		if (item.items) {
 			//nested layout
 			const { items, ...rest } = item;
-			result.items[item.id] = {
+			(result.items as any)[item.id] = {
 				...rest,
 				parent_id,
 				item_ids: item.items.map(nestedItem => nestedItem.id),
@@ -291,7 +291,7 @@ export function normalizeLayout<P extends TMinimumLayoutModelItemProps>(
 			item.items.forEach(nestedItem => traverse(nestedItem, item.id));
 		} else {
 			//plain item
-			result.items[item.id] = {
+			(result.items as any)[item.id] = {
 				...item,
 				parent_id,
 			};
@@ -348,7 +348,7 @@ export function getDefaultChildrenSizes(
 	//collect all defined sizes
 	const defined = sizes.reduce((acc, size, i) => {
 		if (typeof size !== 'undefined') {
-			acc[i] = size;
+			(acc as any)[i] = size;
 		}
 		return acc;
 	}, {});
@@ -361,8 +361,8 @@ export function getDefaultChildrenSizes(
 
 	//fill undefined sizes with average values
 	const filled = sizes.reduce<Array<number>>((acc, size, i) => {
-		if (typeof defined[i] !== 'undefined') {
-			acc.push(defined[i]);
+		if (typeof (defined as any)[i] !== 'undefined') {
+			acc.push((defined as any)[i]);
 		} else {
 			acc.push(Number(averageUndefinedSize.toFixed(precision)));
 		}
@@ -389,25 +389,25 @@ export function setDefaults<P extends TMinimumLayoutModelItemProps>(layout: TLay
 	const size = 1;
 
 	Object.keys(items).forEach(id => {
-		let item = items[id];
+		let item = (items as any)[id];
 
 		//set default type
 		if (typeof item.type === 'undefined') {
 			if (typeof item['item_ids'] !== 'undefined') {
-				items[item.id] = {
-					...items[item.id],
+				(items as any)[item.id] = {
+					...(items as any)[item.id],
 					type: LayoutModelItemType.Layout,
 				} as TLayoutModelLayout;
 			} else {
-				items[item.id] = {
-					...items[item.id],
+				(items as any)[item.id] = {
+					...(items as any)[item.id],
 					type: LayoutModelItemType.Plain,
 				} as TLayoutModelItem<P>;
 			}
 		}
 
 		//todo: find a way to mutate readonly object
-		item = items[id];
+		item = (items as any)[id];
 		switch (item.type) {
 			case LayoutModelItemType.Layout: {
 				//nested layout
@@ -422,7 +422,7 @@ export function setDefaults<P extends TMinimumLayoutModelItemProps>(layout: TLay
 
 				//set default sizes
 				const sizes = getDefaultChildrenSizes(layout, item, size, precision);
-				item.item_ids.forEach((nestedItemId, i) => {
+				item.item_ids.forEach((nestedItemId: string, i: number) => {
 					const nestedItem = layout.items[nestedItemId];
 					if (nestedItem.size !== sizes[i]) {
 						items[nestedItem.id] = {

@@ -19,7 +19,7 @@ export type TToggleButtonsChildProps = {
 };
 
 export type TFullToggleButtonsProps = {
-	children: ReactElement<TToggleButtonsChildProps>[];
+	children?: ReactElement<TToggleButtonsChildProps>[];
 	isDisabled?: boolean;
 	isVertical?: boolean;
 	toggleIndex?: number;
@@ -61,7 +61,7 @@ class RawToggleButtons extends Component<TFullToggleButtonsProps, TToggleButtons
 
 	render() {
 		const { children, theme } = this.props;
-		return <div className={theme.container__wrapper}>{React.Children.map(children, this.renderToggleItem)}</div>;
+		return <div className={theme.container__wrapper}>{children ? React.Children.map(children, this.renderToggleItem) : null}</div>;
 	}
 
 	renderToggleItem = (child: ReactElement<TToggleButtonsChildProps> | ReactText, i: number) => {

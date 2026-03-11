@@ -1,7 +1,7 @@
 import React from 'react';
 import { ComponentClass } from 'react';
 import { Omit } from 'typelevel-ts';
-import SFC = React.SFC;
+import FC = React.FC;
 
 export enum KeyCode {
 	Escape = 27,
@@ -118,7 +118,7 @@ export function stateful<
 	H extends string = 'onValueChange'
 >(valueName: N = 'value' as any, handlerName: H = 'onValueChange' as any, defaultValueName: D = 'defaultValue' as any) {
 	return function decorate<V, P extends TCP<V, N, H>>(
-		Target: SFC<P & TCP<V, N, H>> | CC<P & TCP<V, N, H>>,
+		Target: FC<P & TCP<V, N, H>> | CC<P & TCP<V, N, H>>,
 	): TResult<P, V, N, D, H> {
 		class Stateful extends React.Component<TStatefulProps<P, V, N, D, H>, TStatefulState<V>> {
 			static displayName = `Stateful(${Target.displayName || Target.name || 'Component'})`;

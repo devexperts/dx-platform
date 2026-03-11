@@ -18,6 +18,9 @@ export function getBoundingClientRect(element: HTMLElement): ClientRect & { midd
 		left: Math.round(left),
 		width,
 		height,
+		x: left,
+		y: top,
+		toJSON: () => ({}),
 		middle: left + width / 2,
 		center: top + height / 2,
 	};
@@ -26,10 +29,10 @@ export function getBoundingClientRect(element: HTMLElement): ClientRect & { midd
 /**
  * Set all styles from provided object to the element
  */
-export function style(el: HTMLElement, styles: object) {
+export function style(el: HTMLElement, styles: Record<string, any>) {
 	if (el && isPlainObject(styles)) {
 		Object.keys(styles).forEach((rule: string) => {
-			el.style[rule] = styles[rule];
+			(el.style as any)[rule] = styles[rule];
 		});
 	}
 }
@@ -48,9 +51,9 @@ export function getVendorProperty(property: string): string[] {
  * Assign style property to element with all possible vendor prefixes.
  */
 export function setVendorStyle(element: HTMLElement, property: string, value: any) {
-	element.style[property] = value;
+	(element.style as any)[property] = value;
 	getVendorProperty(property).forEach(vendorProperty => {
-		element.style[vendorProperty] = value;
+		(element.style as any)[vendorProperty] = value;
 	});
 }
 

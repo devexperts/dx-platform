@@ -264,7 +264,8 @@ class RawSelectbox extends React.Component<TFullSelectboxProps, TSelectboxState>
 		return React.cloneElement(child, props);
 	};
 
-	onAnchorClick = () => {
+	onAnchorClick = (e: React.MouseEvent) => {
+		e.stopPropagation();
 		const { onToggle } = this.props;
 
 		if (onToggle) {

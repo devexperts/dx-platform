@@ -1,6 +1,6 @@
 import React from 'react';
 import { withTheme } from '../../utils/withTheme';
-import { ComponentClass, SFC } from 'react';
+import { ComponentClass, FC } from 'react';
 import { PartialKeys } from '@devexperts/utils/dist/object/object';
 import { Menu, TMenuProps } from '../Menu/Menu';
 import { Input, TInputProps } from '../input/Input';
@@ -14,8 +14,8 @@ export const AUTOCOMPLETE = Symbol('Autocomplete') as symbol;
 
 export type TFullAutocompleteProps = TInputProps & {
 	Input: ComponentClass<TInputProps>;
-	Popover: ComponentClass<TPopoverProps> | SFC<TPopoverProps>;
-	Menu: ComponentClass<TMenuProps> | SFC<TMenuProps>;
+	Popover: ComponentClass<TPopoverProps> | FC<TPopoverProps>;
+	Menu: ComponentClass<TMenuProps> | FC<TMenuProps>;
 	MenuItem: ComponentClass<TAutocompleteMenuItemProps>;
 	value: string;
 	data: any[];

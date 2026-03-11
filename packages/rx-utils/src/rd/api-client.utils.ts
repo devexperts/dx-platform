@@ -42,7 +42,7 @@ export class ApiClient {
 				'Content-Type': 'application/json; charset=UTF-8',
 				...this.headers,
 				...request.headers,
-			},
+			} as Object,
 			url,
 		};
 

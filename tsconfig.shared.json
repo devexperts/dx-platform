@@ -4,13 +4,16 @@
     "esModuleInterop": true,
     "declaration": true,
     "sourceMap": true,
-    "target": "es5",
+    "target": "ES2022",
     "noEmitOnError": true,
-    "moduleResolution": "node",
-    "module": "commonjs",
-    "suppressImplicitAnyIndexErrors": true,
+    "moduleResolution": "bundler",
+    "module": "ESNext",
+    "jsx": "react-jsx",
     "forceConsistentCasingInFileNames": true,
     "importHelpers": true,
-    "pretty": true
+    "pretty": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "noUncheckedIndexedAccess": false
   }
 }

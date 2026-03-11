@@ -117,7 +117,7 @@ class RawGrid extends React.Component<TFullGridProps> {
 	}
 
 	onCellMount = (rowIndex: number, columnIndex: number, width: number, isInHead: boolean) => {
-		const rowStorage = isInHead ? this._rows.head : this._rows.body;
+		const rowStorage: any = isInHead ? this._rows.head : this._rows.body;
 		//set or update row storage
 		if (!rowStorage[rowIndex]) {
 			rowStorage[rowIndex] = {
@@ -126,9 +126,9 @@ class RawGrid extends React.Component<TFullGridProps> {
 		}
 		rowStorage[rowIndex].columns[columnIndex] = width;
 		//detect max width
-		const maxColumnWidthByIndex = this._maxColumnWidths[columnIndex];
+		const maxColumnWidthByIndex = (this._maxColumnWidths as any)[columnIndex];
 		if (!maxColumnWidthByIndex || (maxColumnWidthByIndex && maxColumnWidthByIndex < width)) {
-			this._maxColumnWidths[columnIndex] = width;
+			(this._maxColumnWidths as any)[columnIndex] = width;
 		}
 	};
 
@@ -138,12 +138,12 @@ class RawGrid extends React.Component<TFullGridProps> {
 
 	onCellUpdate = (rowIndex: number, columnIndex: number, newWidth: number, isInHead: boolean) => {
 		//update row storage
-		const rowStorage = isInHead ? this._rows.head : this._rows.body;
+		const rowStorage: any = isInHead ? this._rows.head : this._rows.body;
 		rowStorage[rowIndex].columns[columnIndex] = newWidth;
 		//update max width
-		this._maxColumnWidths[columnIndex] = Math.max(
-			...Object.keys(this._rows.head).map(key => this._rows.head[key].columns[columnIndex]),
-			...Object.keys(this._rows.body).map(key => this._rows.body[key].columns[columnIndex]),
+		(this._maxColumnWidths as any)[columnIndex] = Math.max(
+			...Object.keys(this._rows.head).map(key => (this._rows.head as any)[key].columns[columnIndex]),
+			...Object.keys(this._rows.body).map(key => (this._rows.body as any)[key].columns[columnIndex]),
 		);
 	};
 }
@@ -165,13 +165,13 @@ class RawGridHead extends React.Component<TFullGridHeadProps> {
 	};
 
 	componentDidMount() {
-		const emitter = this.context[GRID_CONTEXT_EMITTER];
+		const emitter = (this.context as any)[GRID_CONTEXT_EMITTER];
 		emitter.on(EVENT_GRID.BODY_SCROLL, this.onGridBodyScroll);
 		emitter.on(EVENT_GRID.BODY_SCROLLBAR_APPEAR, this.onGridBodyScrollbarAppear);
 	}
 
 	componentWillUnmount() {
-		const emitter = this.context[GRID_CONTEXT_EMITTER];
+		const emitter = (this.context as any)[GRID_CONTEXT_EMITTER];
 		emitter.off(EVENT_GRID.BODY_SCROLL, this.onGridBodyScroll);
 		emitter.off(EVENT_GRID.BODY_SCROLLBAR_APPEAR, this.onGridBodyScrollbarAppear);
 	}
@@ -279,7 +279,7 @@ class RawGridBody extends React.Component<TFullGridBodyProps> {
 	onScroll = (scrollLeft: number, scrollTop: number) => {
 		if (this._scrollLeft !== scrollLeft) {
 			this._scrollLeft = scrollLeft;
-			this.context[GRID_CONTEXT_EMITTER].emit(EVENT_GRID.BODY_SCROLL, scrollLeft, scrollTop);
+			(this.context as any)[GRID_CONTEXT_EMITTER].emit(EVENT_GRID.BODY_SCROLL, scrollLeft, scrollTop);
 		}
 	};
 
@@ -290,7 +290,7 @@ class RawGridBody extends React.Component<TFullGridBodyProps> {
 		) {
 			this._withVerticalScrollbar = withVerticalScrollbar;
 			this._withHorizontalScrollbar = withHorizontalScrollbar;
-			this.context[GRID_CONTEXT_EMITTER].emit(
+		(this.context as any)[GRID_CONTEXT_EMITTER].emit(
 				EVENT_GRID.BODY_SCROLLBAR_APPEAR,
 				withHorizontalScrollbar,
 				withVerticalScrollbar,
@@ -315,13 +315,13 @@ class RawGridRow extends React.Component<TFullGridRowProps> {
 	};
 
 	componentWillMount() {
-		const emitter = this.context[GRID_CONTEXT_EMITTER];
+		const emitter = (this.context as any)[GRID_CONTEXT_EMITTER];
 		emitter.on(EVENT_GRID.GRID_MOUNT, this.onGridMount);
 		emitter.on(EVENT_GRID.GRID_UPDATE, this.onGridUpdate);
 	}
 
 	componentWillUnmount() {
-		const emitter = this.context[GRID_CONTEXT_EMITTER];
+		const emitter = (this.context as any)[GRID_CONTEXT_EMITTER];
 		emitter.on(EVENT_GRID.GRID_MOUNT, this.onGridMount);
 		emitter.on(EVENT_GRID.GRID_UPDATE, this.onGridUpdate);
 	}
@@ -340,7 +340,7 @@ class RawGridRow extends React.Component<TFullGridRowProps> {
 						gridColumnIndexKey: i,
 					};
 					if (this.state.columns) {
-						newProps.gridColumnWidth = this.state.columns[i];
+						newProps.gridColumnWidth = (this.state.columns as any)[i];
 					}
 					return React.cloneElement(child as any, newProps); //dont forget
 				})}
@@ -397,7 +397,7 @@ class RawGridCell extends React.Component<TFullGridCellProps> {
 			return;
 		}
 		this._width = contentDOMNode.clientWidth;
-		const emitter = this.context[GRID_CONTEXT_EMITTER];
+		const emitter = (this.context as any)[GRID_CONTEXT_EMITTER];
 		emitter.emit(
 			EVENT_GRID.CELL_MOUNT,
 			this.props.gridRowIndexKey,
@@ -415,7 +415,7 @@ class RawGridCell extends React.Component<TFullGridCellProps> {
 		const newWidth = contentDOMNode.clientWidth;
 		if (newWidth !== this._width) {
 			this._width = newWidth;
-			const emitter = this.context[GRID_CONTEXT_EMITTER];
+			const emitter = (this.context as any)[GRID_CONTEXT_EMITTER];
 			emitter.emit(
 				EVENT_GRID.CELL_UPDATE,
 				this.props.gridRowIndexKey,

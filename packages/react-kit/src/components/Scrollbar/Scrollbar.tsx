@@ -44,7 +44,7 @@ export class Scrollbar<T> extends React.Component<TScrollbarProps & T, TScrollba
 	}
 
 	componentDidMount() {
-		const emitter = this.context[SCROLLABLE_CONTEXT_EMITTER];
+		const emitter = (this.context as any)[SCROLLABLE_CONTEXT_EMITTER];
 		emitter.on(EVENT_SCROLABLE.RESIZE, this.onResize);
 		if (this._container) {
 			this._container.addEventListener('scroll', this._onContainerScroll);
@@ -52,7 +52,7 @@ export class Scrollbar<T> extends React.Component<TScrollbarProps & T, TScrollba
 	}
 
 	componentWillUnmount() {
-		const emitter = this.context[SCROLLABLE_CONTEXT_EMITTER];
+		const emitter = (this.context as any)[SCROLLABLE_CONTEXT_EMITTER];
 		emitter.off(EVENT_SCROLABLE.RESIZE, this.onResize);
 		if (this._container) {
 			this._container.removeEventListener('scroll', this._onContainerScroll);
@@ -99,7 +99,7 @@ export class Scrollbar<T> extends React.Component<TScrollbarProps & T, TScrollba
 	 */
 	_onContainerScroll = (event: any) => {
 		this._updateBar();
-		const emitter = this.context[SCROLLABLE_CONTEXT_EMITTER];
+		const emitter = (this.context as any)[SCROLLABLE_CONTEXT_EMITTER];
 		emitter.emit(EVENT_SCROLABLE.SCROLL, event);
 	};
 

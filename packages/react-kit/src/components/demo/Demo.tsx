@@ -10,6 +10,7 @@ import { PartialKeys } from '@devexperts/utils/dist/object/object';
 const DEMO = Symbol();
 
 export type TFullDemoComponentProps = JSX.IntrinsicAttributes & {
+	children?: React.ReactNode;
 	theme: {
 		container?: string;
 	};
@@ -26,7 +27,7 @@ class RawDemoComponent extends React.Component<TFullDemoComponentProps> {
 export type TDemoComponentProps = PartialKeys<TFullDemoComponentProps, 'theme'>;
 export const DemoComponent: React.ComponentClass<TDemoComponentProps> = withTheme(DEMO, css)(RawDemoComponent);
 
-const Demo: React.SFC<Partial<TFullDemoComponentProps>> = props => (
+const Demo: React.FC<Partial<TFullDemoComponentProps>> = props => (
 	<DefaultTheme>
 		<DemoComponent theme={props.theme}>{props.children}</DemoComponent>
 	</DefaultTheme>

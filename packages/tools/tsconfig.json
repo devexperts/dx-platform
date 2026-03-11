@@ -11,6 +11,8 @@
     "experimentalDecorators": true,
     "strict": true,
     "esModuleInterop": true,
+    "skipLibCheck": true,
+    "types": [],
     "lib": [
       "dom",
       "es6",

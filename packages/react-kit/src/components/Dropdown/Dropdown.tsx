@@ -21,6 +21,7 @@ export type TFullDropdownProps = TControlProps<boolean | undefined, 'isOpened', 
 	theme: {
 		Popover?: TPopoverProps['theme'];
 	};
+	children?: React.ReactNode;
 	hasArrow?: boolean;
 };
 
@@ -50,7 +51,10 @@ class RawDropdown extends Component<TFullDropdownProps> {
 		this.anchorRef = ref;
 	};
 
-	private onAnchorClick = () => {
+	private onAnchorClick = (e: React.MouseEvent) => {
+		// Stop propagation to prevent RootClose from hearing this click
+		// In React 18, this prevents the click from bubbling to document listeners
+		e.stopPropagation();
 		this.props.onToggle(!this.props.isOpened);
 	};
 

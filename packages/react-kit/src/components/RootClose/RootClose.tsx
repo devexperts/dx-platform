@@ -8,7 +8,7 @@ import { PURE } from '../../utils/pure';
 //inspired by https://github.com/react-bootstrap/react-overlays/blob/master/src/RootCloseWrapper.js
 
 export type TRootCloseProps = {
-	children: ReactElement<any>;
+	children?: ReactElement<any>;
 	onRootClose?: () => any;
 	ignoreClick?: boolean;
 	ignoreKeyUp?: boolean;

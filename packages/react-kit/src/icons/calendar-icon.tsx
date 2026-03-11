@@ -1,7 +1,7 @@
 import React from 'react';
 import { IconWrapper } from '../components/icon-wrapper/icon-wrapper.component';
 
-export const CalendarIcon: React.SFC = () => (
+export const CalendarIcon: React.FC = () => (
 	<IconWrapper>
 		<svg viewBox="0 0 17 9">
 			<path

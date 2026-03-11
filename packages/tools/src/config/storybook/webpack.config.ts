@@ -25,6 +25,12 @@ module.exports = async ({ config }: { config: Configuration }): Promise<Configur
 		output: config.output,
 		module: {
 			rules: [
+				// Transpile react-draggable to handle optional chaining
+				{
+					test: /\.js$/,
+					include: /node_modules[\\/]react-draggable/,
+					use: [babelLoader],
+				},
 				{
 					oneOf: [
 						{

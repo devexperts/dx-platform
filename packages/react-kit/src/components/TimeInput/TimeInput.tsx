@@ -37,7 +37,7 @@ type TTimeInputConfig = {
 export type TTimeInputOwnProps = TTimeInputConfig & TSteppableInputProps & TControlProps<TTimeInputValue>;
 
 export type TTimeInputFullProps = TTimeInputOwnProps & {
-	SteppableInput: React.ComponentClass<TSteppableInputProps> | React.SFC<TSteppableInputProps>;
+	SteppableInput: React.ComponentClass<TSteppableInputProps> | React.FC<TSteppableInputProps>;
 	theme: {
 		inner?: string;
 		inner_isFilled?: string;

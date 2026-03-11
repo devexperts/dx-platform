@@ -30,6 +30,7 @@ export type TFullInputProps = TControlProps<string | undefined> & {
 	id?: string;
 	error?: React.ReactNode; //for possible Input Class extensions
 	innerRef?: (instance: ReactRef) => void;
+	children?: React.ReactNode;
 
 	onChange?: ChangeEventHandler<HTMLInputElement>;
 	onFocus?: FocusEventHandler<HTMLElement>;

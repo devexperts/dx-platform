@@ -1,5 +1,13 @@
 module.exports = {
 	preset: 'ts-jest',
-	testEnvironment: 'node',
-	timers: 'fake',
+	testEnvironment: 'jsdom',
+	globals: {
+		'ts-jest': {
+			isolatedModules: true,
+			diagnostics: false,
+			tsconfig: {
+				jsx: 'react-jsx',
+			},
+		},
+	},
 };

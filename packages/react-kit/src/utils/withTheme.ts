@@ -36,9 +36,9 @@ type CT<P> = React.ComponentType<P>;
 
 export const withTheme = (name: string | symbol, defaultTheme: TTheme = {}) => {
 	function decorate<P extends TTargetProps>(Target: CT<P>): TResult<P, CT<P>> {
-		if (Target['config'] && Target['config'].name === name) {
+		if ((Target as any)['config'] && (Target as any)['config'].name === name) {
 			//already wrapped - just merge in new defaultTheme
-			Target['config'].theme = mergeTwo(Target['config'].theme, defaultTheme);
+			(Target as any)['config'].theme = mergeTwo((Target as any)['config'].theme, defaultTheme);
 			return Target as any;
 		}
 
@@ -73,7 +73,7 @@ export const withTheme = (name: string | symbol, defaultTheme: TTheme = {}) => {
 					ref: withRef,
 					theme: mergeThemes(
 						config.theme,
-						this.context[THEME_CONTEXT_KEY.toString()][name],
+						(this.context as any)[THEME_CONTEXT_KEY.toString()][name],
 						(theme || {}) as TTheme,
 					),
 				};
@@ -81,7 +81,7 @@ export const withTheme = (name: string | symbol, defaultTheme: TTheme = {}) => {
 			}
 		}
 
-		Themed[THEME_CONFIG_KEY] = config;
+		(Themed as any)[THEME_CONFIG_KEY] = config;
 
 		return Themed as any; // type does not match because of `rest` issue above
 	}
@@ -99,7 +99,7 @@ export function mergeThemes(...themes: TTheme[]): TTheme {
 function mergeTwo(original: TTheme = {}, mixin: TTheme = {}): TTheme {
 	//make a copy to avoid mutations of nested objects
 	//also strip all functions injected by isomorphic-style-loader
-	const result = Object.keys(original).reduce((acc, key) => {
+	const result: any = Object.keys(original).reduce((acc: any, key) => {
 		const value = original[key];
 		if (typeof value !== 'function') {
 			acc[key] = value;
@@ -183,6 +183,7 @@ export type TThemeProviderProps = {
 	theme: {
 		[key: string]: TTheme;
 	};
+	children?: React.ReactNode;
 };
 
 export class ThemeProvider extends React.Component<TThemeProviderProps> {

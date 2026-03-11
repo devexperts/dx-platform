@@ -7,10 +7,13 @@ export type THoldableChildProps = {
 	onMouseDown: EventHandler<MouseEvent<Element>>;
 	onMouseUp: EventHandler<MouseEvent<Element>>;
 	onMouseLeave: EventHandler<MouseEvent<Element>>;
+	onTouchStart?: EventHandler<TouchEvent<Element>>;
+	onTouchEnd?: EventHandler<TouchEvent<Element>>;
+	onTouchCancel?: EventHandler<TouchEvent<Element>>;
 };
 
 export type TFullHoldableProps = {
-	children: ReactElement<THoldableChildProps>;
+	children?: ReactElement<THoldableChildProps>;
 	onHold: Function;
 	delay: number;
 	interval: number;
@@ -38,6 +41,11 @@ class RawHoldable extends React.Component<TFullHoldableProps> {
 
 	render() {
 		const { children } = this.props;
+		
+		if (!children) {
+			return null;
+		}
+		
 		const { onMouseDown, onMouseUp, onMouseLeave, onTouchStart, onTouchEnd, onTouchCancel } = children.props;
 
 		return React.cloneElement(React.Children.only(children), {

@@ -73,8 +73,7 @@ class SelectboxPage extends React.Component<{}, TPageState> {
 						onToggle={this.onFirstSelectboxToggle}
 						selectedIcon={<ListItemTickIcon />}
 						onValueChange={this.onHeroChange as any}
-						caretIcon={<SmallDropDownArrowIcon />}>
-						<MenuItem value="superman">Superman</MenuItem>
+						caretIcon={<SmallDropDownArrowIcon />}>					{undefined as any}						<MenuItem value="superman">Superman</MenuItem>
 						<MenuItem value="batman">Batman</MenuItem>
 						<MenuItem value="flash">Flash</MenuItem>
 					</Stateful>

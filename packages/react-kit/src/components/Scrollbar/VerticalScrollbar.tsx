@@ -35,7 +35,7 @@ export class RawVerticalScrollbar extends Scrollbar<TAdditionalVerticalScrollBar
 	 * @private
 	 */
 	_hideNativeScrollContainer() {
-		const { width } = this.context.size;
+		const { width } = (this.context as any).size;
 		if (this._container && width) {
 			this._container.style.marginRight = `-${width}px`;
 			this._container.style.width = `calc(100% + ${width}px)`;
@@ -77,7 +77,7 @@ export class RawVerticalScrollbar extends Scrollbar<TAdditionalVerticalScrollBar
 					isVisible,
 				});
 
-				const emitter = this.context[SCROLLABLE_CONTEXT_EMITTER];
+			const emitter = (this.context as any)[SCROLLABLE_CONTEXT_EMITTER];
 				emitter.emit(EVENT_SCROLABLE.SCROLLBAR_UPDATE, SCROLLBAR_TYPE.VERTICAL, isVisible);
 			}
 		}
@@ -135,7 +135,7 @@ export class RawVerticalScrollbar extends Scrollbar<TAdditionalVerticalScrollBar
 	 */
 	onTrackMouseWheel = (event: React.WheelEvent<HTMLDivElement>) => {
 		if (this._container) {
-			this._container.scrollTop += event.deltaY * 10 || event['detail'] * 10 || event['wheelDelta'] * -1;
+			this._container.scrollTop += event.deltaY * 10 || (event as any)['detail'] * 10 || (event as any)['wheelDelta'] * -1;
 		}
 	};
 

@@ -30,7 +30,7 @@ export function PURE<T extends Function>(target: T): T {
 			!oldShouldComponentUpdate || oldShouldComponentUpdate.call(this, newProps, newState);
 
 		//check props.theme
-		const shouldCheckTheme = !!newProps['theme'];
+		const shouldCheckTheme = !!(newProps as any)['theme'];
 
 		//check shallow equality
 		//will be set further basing on shouldCheckCss
@@ -40,15 +40,15 @@ export function PURE<T extends Function>(target: T): T {
 			//now we need to remove theme object from original props to avoid checking by shouldComponentUpdate
 			const thisPropsCopy = Object.assign({}, this.props);
 			const newPropsCopy = Object.assign({}, newProps);
-			delete thisPropsCopy['theme'];
-			delete newPropsCopy['theme'];
+			delete (thisPropsCopy as any)['theme'];
+			delete (newPropsCopy as any)['theme'];
 
 			//check
 			shouldUpdateByEquality =
 				//either props has changed (ignoring css)
 				shouldComponentUpdate(thisPropsCopy, this.state, newPropsCopy, newState) ||
 				//or theme has changed
-				!deepEqual(this.props.theme, newProps['theme']);
+				!deepEqual(this.props.theme, (newProps as any)['theme']);
 		} else {
 			//we don't need to do anything with the props so just call shouldComponentUpdate
 			shouldUpdateByEquality = shouldComponentUpdate(this.props, this.state, newProps, newState);

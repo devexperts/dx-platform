@@ -10,7 +10,7 @@ type Handlers = {
 export type TEventListenerProps = {
 	capture?: boolean;
 	target: EventTarget | string;
-	children: ReactNode | ReactPortal;
+	children?: ReactNode | ReactPortal;
 } & {
 	[onEvent: string]: Function | boolean | string | object | undefined;
 };
@@ -71,7 +71,7 @@ export class EventListener extends React.Component<TEventListenerProps> {
 	private getTarget(): EventTarget {
 		const { target } = this.props;
 		if (typeof target === 'string') {
-			return window[target];
+			return (window as any)[target];
 		}
 		return target;
 	}
@@ -82,7 +82,7 @@ export class EventListener extends React.Component<TEventListenerProps> {
 		const propKeys = Object.keys(props);
 		const eventKeys = propKeys.filter(key => key.startsWith('on'));
 		const handlers = eventKeys.reduce((acc, key) => {
-			acc[key] = props[key];
+			(acc as any)[key] = (props as any)[key];
 			return acc;
 		}, {});
 		return handlers;

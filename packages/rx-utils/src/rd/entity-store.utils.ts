@@ -124,7 +124,7 @@ export class EntityStore<L = never, A = never> {
 				return hasChanges ? filtered : entities;
 			}),
 			observable.hold,
-		);
+		) as LiveData<L, A[]>;
 	}
 
 	/**
@@ -154,7 +154,7 @@ export class EntityStore<L = never, A = never> {
 				this.updateCache(values, pk);
 			}),
 			switchMap(() => this._getAllValues$),
-		);
+		) as LiveData<L, A[]>;
 	}
 
 	/**

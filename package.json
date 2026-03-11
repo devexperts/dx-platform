@@ -3,7 +3,7 @@
   "scripts": {
     "commitlint": "commitlint",
     "start": "lerna run --parallel watch",
-    "start:storybook": "cd packages/react-kit && yarn start",
+    "start:storybook": "cd packages/react-kit && cross-env NODE_OPTIONS=--openssl-legacy-provider yarn start",
     "storybook:publish": "cd packages/react-kit && yarn storybook:publish",
     "test": "yarn lerna run --parallel test",
     "lerna:bootstrap": "yarn lerna -- bootstrap",
@@ -36,7 +36,9 @@
     "@commitlint/cli": "^8.1.0",
     "@commitlint/config-conventional": "^8.1.0",
     "@commitlint/travis-cli": "^8.1.0",
+    "cross-env": "^10.1.0",
     "husky": "^3.0.5",
+    "jest-environment-jsdom": "24.9.0",
     "lerna": "^3.20.2",
     "npm-normalize-package-bin": "^1.0.1",
     "prettier": "^1.19.1"
@@ -45,5 +47,11 @@
     "hooks": {
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
+  },
+  "dependencies": {
+    "react-draggable": "4.0.3"
+  },
+  "resolutions": {
+    "react-draggable": "4.0.3"
   }
 }

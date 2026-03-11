@@ -25,7 +25,7 @@ import { Children, cloneElement, Component, ComponentClass, MouseEventHandler, R
 export const SCROLLABLE = Symbol('Scrollable') as symbol;
 
 export type TFullScrollableProps = {
-	children: ReactElement;
+	children?: ReactElement;
 	ResizeDetector: ComponentClass<TResizeDetectorProps>;
 	HorizontalScrollbar: ComponentClass<THorizontalScrollbarProps>;
 	VerticalScrollbar: ComponentClass<TVerticalScrollbarProps>;
@@ -151,7 +151,7 @@ export class RawScrollable extends Component<TFullScrollableProps, ScrollableSta
 				<div className={theme.wrapper}>
 					<div className={theme.container} ref={el => (this._container = el)}>
 						<div className={theme.content}>
-							{cloneElement(children, {
+						{children && cloneElement(children, {
 								className: null,
 							})}
 							<ResizeDetector {...resizeDetectorProps} />

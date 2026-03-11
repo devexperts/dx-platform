@@ -1,12 +1,12 @@
 import { storiesOf } from '@storybook/react';
 import { getRenderRemoteData } from '../get-render-remote-data';
 import React from 'react';
-import { Fragment, SFC } from 'react';
+import { Fragment, FC } from 'react';
 import { failure, pending, success } from '@devexperts/remote-data-ts';
 import Demo from '../../demo/Demo';
 
 const DataStatePending = () => <div>pending</div>;
-const DataStateFailure: SFC<{ error: Error }> = props => <div>error: {props.error.message}</div>;
+const DataStateFailure: FC<{ error: Error }> = props => <div>error: {props.error.message}</div>;
 const DataStateNoData = () => <div>no data</div>;
 
 const RenderRemoteData = getRenderRemoteData({

@@ -38,7 +38,7 @@ export const withRX = <P extends object>(Target: ComponentType<P>) => <D extends
 			const { props, effects$ } = this.selected;
 			if (props) {
 				const inputs: Observable<Partial<P>>[] = Object.keys(props).map(key =>
-					props[key].pipe(map(value => ({ [key]: value }))),
+					(props as any)[key].pipe(map(value => ({ [key]: value }))),
 				);
 				const merged = merge(...inputs);
 				const result = options.scheduler ? merged.pipe(observeOn(options.scheduler)) : merged;

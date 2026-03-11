@@ -22,7 +22,7 @@ export type TNumericStepperOwnProps = TSteppableInputProps &
 	};
 
 export type TNumericStepperFullProps = TNumericStepperOwnProps & {
-	SteppableInput: React.ComponentClass<TSteppableInputProps> | React.SFC<TSteppableInputProps>;
+	SteppableInput: React.ComponentClass<TSteppableInputProps> | React.FC<TSteppableInputProps>;
 	theme: {
 		SteppableInput?: TSteppableInputProps['theme'];
 		Input?: TInputProps['theme'];
@@ -204,7 +204,7 @@ class RawNumericStepper extends React.Component<TNumericStepperFullProps, TNumer
 
 	private formatValue(value: number | string): string {
 		const { formatter } = this.props;
-		return formatter ? formatter(value) : value;
+		return formatter ? formatter(value) : String(value);
 	}
 
 	/**

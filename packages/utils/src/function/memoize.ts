@@ -9,7 +9,7 @@ export const MEMOIZE_CLEAR_FUNCTION = Symbol('MEMOIZE_CLEAR_FUNCTION') as symbol
  * Memoizes function for passed arguments
  */
 export function memoize<F extends Function>(this: any, fn: F): F {
-	const storage = {};
+	const storage: Record<string, any> = {};
 	const result = function(this: any) {
 		const args = Array.prototype.slice.call(arguments);
 		const key = serialize(args);
@@ -20,7 +20,7 @@ export function memoize<F extends Function>(this: any, fn: F): F {
 	}.bind(this);
 
 	//inject clearer
-	result[MEMOIZE_CLEAR_FUNCTION] = function() {
+	(result as any)[MEMOIZE_CLEAR_FUNCTION] = function() {
 		const args = Array.prototype.slice.call(arguments);
 		const key = serialize(args);
 		delete storage[key];

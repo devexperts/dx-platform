@@ -40,9 +40,9 @@ describe('LayoutModel', () => {
 	describe('reducer', () => {
 		it('should set initial', () => {
 			const initial = reducer(null as any, {} as any);
-			expect(initial.root_id).toEqual(jasmine.any(String));
+			expect(initial.root_id).toEqual(expect.any(String));
 			expect(initial.items[initial.root_id]).toEqual({
-				id: jasmine.any(String),
+				id: expect.any(String),
 				size: 1,
 				item_ids: [],
 				type: LayoutModelItemType.Layout,
@@ -169,11 +169,11 @@ describe('LayoutModel', () => {
 				//same level
 				expect(result.items[id3]).toEqual({
 					...normalized.items[id3],
-					size: jasmine.any(Number),
+					size: expect.any(Number),
 				});
 				expect(result.items[id4]).toEqual({
 					...normalized.items[id4],
-					size: jasmine.any(Number),
+					size: expect.any(Number),
 				});
 				expect(result.items[idNested2]).not.toBe(normalized.items[idNested2]);
 				expect(result.items[id2]).toBe(normalized.items[id2]);
@@ -360,17 +360,17 @@ describe('LayoutModel', () => {
 							...layout.items,
 							[idRoot]: {
 								...layout.items[idRoot],
-								item_ids: [jasmine.any(String), id2],
+								item_ids: [expect.any(String), id2],
 							},
 							[id1]: {
 								...layout.items[id1],
-								size: jasmine.any(Number),
-								parent_id: jasmine.any(String),
+								size: expect.any(Number),
+								parent_id: expect.any(String),
 							},
 							[item.id]: {
 								...item,
-								size: jasmine.any(Number),
-								parent_id: jasmine.any(String),
+								size: expect.any(Number),
+								parent_id: expect.any(String),
 							},
 						},
 					};
@@ -381,11 +381,11 @@ describe('LayoutModel', () => {
 					delete result.items[addedId];
 					expect(result).toEqual(expected);
 					expect(added).toEqual({
-						id: jasmine.any(String),
+						id: expect.any(String),
 						parent_id: idRoot,
 						orientation: LayoutOrientation.Vertical,
-						size: jasmine.any(Number),
-						type: jasmine.any(Number),
+						size: expect.any(Number),
+						type: expect.any(Number),
 						item_ids: [item.id, id1],
 					});
 				});
@@ -399,17 +399,17 @@ describe('LayoutModel', () => {
 							...layout.items,
 							[idRoot]: {
 								...layout.items[idRoot],
-								item_ids: [jasmine.any(String), id2],
+								item_ids: [expect.any(String), id2],
 							},
 							[id1]: {
 								...layout.items[id1],
-								size: jasmine.any(Number),
-								parent_id: jasmine.any(String),
+								size: expect.any(Number),
+								parent_id: expect.any(String),
 							},
 							[item.id]: {
 								...item,
-								size: jasmine.any(Number),
-								parent_id: jasmine.any(String),
+								size: expect.any(Number),
+								parent_id: expect.any(String),
 							},
 						},
 					};
@@ -420,11 +420,11 @@ describe('LayoutModel', () => {
 					delete result.items[addedId];
 					expect(result).toEqual(expected);
 					expect(added).toEqual({
-						id: jasmine.any(String),
+						id: expect.any(String),
 						parent_id: idRoot,
 						orientation: LayoutOrientation.Vertical,
-						size: jasmine.any(Number),
-						type: jasmine.any(Number),
+						size: expect.any(Number),
+						type: expect.any(Number),
 						item_ids: [id1, item.id],
 					});
 				});
@@ -458,40 +458,40 @@ describe('LayoutModel', () => {
 						id: 'root',
 						orientation: LayoutOrientation.Horizontal,
 						size: 1,
-						type: jasmine.any(Number),
+						type: expect.any(Number),
 						items: [
 							{
-								id: jasmine.any(String),
+								id: expect.any(String),
 								orientation: LayoutOrientation.Vertical,
-								type: jasmine.any(Number),
+								type: expect.any(Number),
 								size: 0.5,
 								items: [
 									{
 										...item,
-										type: jasmine.any(Number),
+										type: expect.any(Number),
 										size: 0.5,
 									},
 									{
 										...data.items[0],
-										type: jasmine.any(Number),
+										type: expect.any(Number),
 										size: 0.5,
 									},
 								],
 							},
 							{
-								id: jasmine.any(String),
+								id: expect.any(String),
 								orientation: LayoutOrientation.Vertical,
-								type: jasmine.any(Number),
+								type: expect.any(Number),
 								size: 0.5,
 								items: [
 									{
 										...data.items[1],
-										type: jasmine.any(Number),
+										type: expect.any(Number),
 										size: 0.5,
 									},
 									{
 										...item2,
-										type: jasmine.any(Number),
+										type: expect.any(Number),
 										size: 0.5,
 									},
 								],
@@ -606,17 +606,17 @@ describe('LayoutModel', () => {
 							...layout.items,
 							[idRoot]: {
 								...layout.items[idRoot],
-								item_ids: [jasmine.any(String), id2],
+								item_ids: [expect.any(String), id2],
 							},
 							[id1]: {
 								...layout.items[id1],
-								size: jasmine.any(Number),
-								parent_id: jasmine.any(String),
+								size: expect.any(Number),
+								parent_id: expect.any(String),
 							},
 							[item.id]: {
 								...item,
-								size: jasmine.any(Number),
-								parent_id: jasmine.any(String),
+								size: expect.any(Number),
+								parent_id: expect.any(String),
 							},
 						},
 					};
@@ -628,9 +628,9 @@ describe('LayoutModel', () => {
 					delete result.items[addedId];
 					expect(result).toEqual(expected);
 					expect(added).toEqual({
-						id: jasmine.any(String),
+						id: expect.any(String),
 						parent_id: idRoot,
-						type: jasmine.any(Number),
+						type: expect.any(Number),
 						orientation: LayoutOrientation.Horizontal,
 						item_ids: [item.id, id1],
 					});
@@ -645,17 +645,17 @@ describe('LayoutModel', () => {
 							...layout.items,
 							[idRoot]: {
 								...layout.items[idRoot],
-								item_ids: [jasmine.any(String), id2],
+								item_ids: [expect.any(String), id2],
 							},
 							[id1]: {
 								...layout.items[id1],
-								size: jasmine.any(Number),
-								parent_id: jasmine.any(String),
+								size: expect.any(Number),
+								parent_id: expect.any(String),
 							},
 							[item.id]: {
 								...item,
-								size: jasmine.any(Number),
-								parent_id: jasmine.any(String),
+								size: expect.any(Number),
+								parent_id: expect.any(String),
 							},
 						},
 					};
@@ -667,9 +667,9 @@ describe('LayoutModel', () => {
 					delete result.items[addedId];
 					expect(result).toEqual(expected);
 					expect(added).toEqual({
-						id: jasmine.any(String),
+						id: expect.any(String),
 						parent_id: idRoot,
-						type: jasmine.any(Number),
+						type: expect.any(Number),
 						orientation: LayoutOrientation.Horizontal,
 						item_ids: [id1, item.id],
 					});
@@ -708,7 +708,7 @@ describe('LayoutModel', () => {
 						size: 1,
 						items: [
 							{
-								id: jasmine.any(String),
+								id: expect.any(String),
 								orientation: LayoutOrientation.Horizontal,
 								size: 0.5,
 								type: LayoutModelItemType.Layout,
@@ -726,7 +726,7 @@ describe('LayoutModel', () => {
 								],
 							},
 							{
-								id: jasmine.any(String),
+								id: expect.any(String),
 								orientation: LayoutOrientation.Horizontal,
 								type: LayoutModelItemType.Layout,
 								size: 0.5,
@@ -826,7 +826,7 @@ describe('LayoutModel', () => {
 					...data,
 					items: [
 						{
-							id: jasmine.any(String),
+							id: expect.any(String),
 							size: 1,
 							type: LayoutModelItemType.Plain,
 							props,
@@ -862,7 +862,7 @@ describe('LayoutModel', () => {
 					...data,
 					items: [
 						{
-							id: jasmine.any(String),
+							id: expect.any(String),
 							props,
 							type: LayoutModelItemType.Plain,
 							size: 0.5,
@@ -917,7 +917,7 @@ describe('LayoutModel', () => {
 						...normalized.items,
 						[idRoot]: {
 							...normalized.items[idRoot],
-							item_ids: [jasmine.any(String), idNested],
+							item_ids: [expect.any(String), idNested],
 						},
 						[idNested]: {
 							...normalized.items[idNested],
@@ -925,21 +925,21 @@ describe('LayoutModel', () => {
 						},
 						[id2]: {
 							...normalized.items[id2],
-							size: jasmine.any(Number),
+							size: expect.any(Number),
 						},
 						[id4]: {
 							...normalized.items[id4],
-							size: jasmine.any(Number),
+							size: expect.any(Number),
 						},
 						[id1]: {
 							...normalized.items[id1],
-							parent_id: jasmine.any(String),
-							size: jasmine.any(Number),
+							parent_id: expect.any(String),
+							size: expect.any(Number),
 						},
 						[id3]: {
 							...normalized.items[id3],
-							size: jasmine.any(Number),
-							parent_id: jasmine.any(String),
+							size: expect.any(Number),
+							parent_id: expect.any(String),
 						},
 					},
 				};
@@ -950,11 +950,11 @@ describe('LayoutModel', () => {
 				delete result.items[addedId];
 				expect(result).toEqual(expected);
 				expect(added).toEqual({
-					id: jasmine.any(String),
+					id: expect.any(String),
 					orientation: LayoutOrientation.Vertical,
 					parent_id: idRoot,
-					type: jasmine.any(Number),
-					size: jasmine.any(Number),
+					type: expect.any(Number),
+					size: expect.any(Number),
 					item_ids: [id3, id1],
 				});
 			});
@@ -1851,7 +1851,7 @@ describe('LayoutModel', () => {
 					size: 100,
 					parent_id,
 					type: LayoutModelItemType.Layout,
-					id: jasmine.any(String),
+					id: expect.any(String),
 					orientation: LayoutOrientation.Vertical,
 					item_ids: [id, destination_id],
 				});
@@ -1862,7 +1862,7 @@ describe('LayoutModel', () => {
 					size: 100,
 					parent_id,
 					type: LayoutModelItemType.Layout,
-					id: jasmine.any(String),
+					id: expect.any(String),
 					orientation: LayoutOrientation.Vertical,
 					item_ids: [destination_id, id],
 				});
@@ -1873,7 +1873,7 @@ describe('LayoutModel', () => {
 					size: 100,
 					parent_id,
 					type: LayoutModelItemType.Layout,
-					id: jasmine.any(String),
+					id: expect.any(String),
 					orientation: LayoutOrientation.Horizontal,
 					item_ids: [id, destination_id],
 				});
@@ -1884,7 +1884,7 @@ describe('LayoutModel', () => {
 					size: 100,
 					parent_id,
 					type: LayoutModelItemType.Layout,
-					id: jasmine.any(String),
+					id: expect.any(String),
 					orientation: LayoutOrientation.Horizontal,
 					item_ids: [destination_id, id],
 				});
@@ -1965,20 +1965,20 @@ describe('LayoutModel', () => {
 			const vertical = layout.items['7'];
 			expect(getSizeMap(layout, vertical, minSize, minSize, 2, 2, 0, precision)[vertical.id]).toEqual({
 				width: 2,
-				height: jasmine.any(Number),
+				height: expect.any(Number),
 			});
 			expect(getSizeMap(layout, vertical, minSize, minSize, 0, 2, 0, precision)[vertical.id]).toEqual({
 				width: minSize,
-				height: jasmine.any(Number),
+				height: expect.any(Number),
 			});
 
 			const horizontal = layout.items['3'];
 			expect(getSizeMap(layout, horizontal, minSize, minSize, 2, 2, 0, precision)[horizontal.id]).toEqual({
-				width: jasmine.any(Number),
+				width: expect.any(Number),
 				height: 2,
 			});
 			expect(getSizeMap(layout, horizontal, minSize, minSize, 2, 0, 0, precision)[horizontal.id]).toEqual({
-				width: jasmine.any(Number),
+				width: expect.any(Number),
 				height: minSize,
 			});
 		});
@@ -2368,3 +2368,4 @@ describe('LayoutModel', () => {
 		});
 	});
 });
+

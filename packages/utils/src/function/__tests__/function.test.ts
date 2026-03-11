@@ -9,6 +9,7 @@ const MEMOIZE_CLEAR_FUNCTION = (_MEMOIZE_CLEAR_FUNCTION as unknown) as string;
 describe('function', () => {
 	describe('debounce', () => {
 		it('should invoke decorated func after timeout', () => {
+			jest.useFakeTimers();
 			const callback = jest.fn();
 			const debounced = debounce(callback, 100);
 
@@ -25,6 +26,7 @@ describe('function', () => {
 
 	describe('throttle', () => {
 		it('should invoke decorated func once during time interval', () => {
+			jest.useFakeTimers();
 			const callback = jest.fn();
 			const throttled = throttle(callback, 1000);
 
@@ -56,8 +58,8 @@ describe('function', () => {
 			const fn = memoize(function() {
 				//eslint-disable-line no-empty-function
 			});
-			expect(fn.bind(null, [])).toThrow();
-			expect(fn.bind(null, {})).toThrow();
+			expect(() => (fn as any)([])).toThrow();
+			expect(() => (fn as any)({})).toThrow();
 		});
 
 		it('should inject clearer function', () => {
@@ -66,11 +68,11 @@ describe('function', () => {
 				callback();
 				return a + b;
 			});
-			expect(fn[MEMOIZE_CLEAR_FUNCTION]).toBeDefined();
+			expect((fn as any)[MEMOIZE_CLEAR_FUNCTION]).toBeDefined();
 			fn(1, 2);
 			fn(1, 2);
 			expect(callback.mock.calls.length).toBe(1);
-			fn[MEMOIZE_CLEAR_FUNCTION](1, 2);
+			(fn as any)[MEMOIZE_CLEAR_FUNCTION](1, 2);
 			fn(1, 2);
 			fn(1, 2);
 			expect(callback.mock.calls.length).toBe(2);

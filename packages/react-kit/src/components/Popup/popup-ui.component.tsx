@@ -14,7 +14,7 @@ export type TRawPopupUIProps = {
 		backdrop_isModal?: string;
 		backdrop_closeOnClickAway?: string;
 	};
-	children: ReactNode;
+	children?: ReactNode;
 	header?: ReactNode;
 	footer?: ReactNode;
 

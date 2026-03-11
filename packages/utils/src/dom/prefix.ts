@@ -98,13 +98,13 @@ const properties = [
  */
 export default function prefix(styles: {}): {} {
 	return Object.keys(styles).reduce((acc, key) => {
-		const value = styles[key];
-		acc[key] = value;
+		const value = (styles as Record<string, any>)[key];
+		(acc as Record<string, any>)[key] = value;
 		if (properties.indexOf(key) !== -1) {
-			acc[`WebKit${capitalize(key)}`] = value;
-			acc[`Moz${capitalize(key)}`] = value;
-			acc[`ms${capitalize(key)}`] = value;
-			acc[`O${capitalize(key)}`] = value;
+			(acc as Record<string, any>)[`WebKit${capitalize(key)}`] = value;
+			(acc as Record<string, any>)[`Moz${capitalize(key)}`] = value;
+			(acc as Record<string, any>)[`ms${capitalize(key)}`] = value;
+			(acc as Record<string, any>)[`O${capitalize(key)}`] = value;
 		}
 		return acc;
 	}, {});

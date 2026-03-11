@@ -17,6 +17,7 @@ export type TFullButtonProps = {
 		loadingIndicator?: string;
 		LoadingIndicator?: TLoadingIndicatorProps['theme'];
 	};
+	children?: React.ReactNode;
 	isDisabled?: boolean;
 	isFlat?: boolean;
 	isLoading?: boolean;
@@ -41,7 +42,7 @@ export type TFullButtonProps = {
 	onDrop?: EventHandler<MouseEvent<HTMLButtonElement>>;
 	onClick?: EventHandler<MouseEvent<HTMLButtonElement>>;
 	onTouchCancel?: EventHandler<TouchEvent<HTMLButtonElement>>;
-	onTouchEnd?: EventHandler<TouchEvent<HTMLButtonElement>>;
+	onTouchEnd?: EventHandler<MouseEvent<HTMLButtonElement>>;
 	onTouchMove?: EventHandler<TouchEvent<HTMLButtonElement>>;
 	onTouchStart?: EventHandler<TouchEvent<HTMLButtonElement>>;
 	tabIndex?: number;
@@ -113,10 +114,10 @@ class RawButton extends React.Component<TFullButtonProps> {
 				onDragStart={onDragStart}
 				onDrop={onDrop}
 				onClick={onClick}
-				onTouchCancel={onTouchCancel}
-				onTouchEnd={onTouchEnd}
-				onTouchMove={onTouchMove}
-				onTouchStart={onTouchStart}
+				onTouchCancel={onTouchCancel as any}
+				onTouchEnd={onTouchEnd as any}
+				onTouchMove={onTouchMove as any}
+				onTouchStart={onTouchStart as any}
 				type={type}
 				style={style}
 				tabIndex={tabIndex}
