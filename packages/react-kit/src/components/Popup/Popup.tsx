@@ -2,7 +2,7 @@ import React from 'react';
 import { createPortal } from 'react-dom';
 import { PURE } from '../../utils/pure';
 import { Component, MouseEventHandler } from 'react';
-import { PartialKeys } from '@devexperts/utils/dist/object/object';
+import { PartialKeys } from '@devexperts/platform-utils/dist/object/object';
 import { withTheme } from '../../utils/withTheme';
 import { RootClose } from '../RootClose/RootClose';
 import { PopupUI, TRawPopupUIFullProps, TRawPopupUIProps } from './popup-ui.component';

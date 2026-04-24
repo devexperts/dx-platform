@@ -1,8 +1,8 @@
 import React from 'react';
 import { SteppableInput, TSteppableInputProps } from '../SteppableInput/SteppableInput';
-import { KeyCode, TControlProps } from '../Control/Control';
+import { Key, TControlProps } from '../Control/Control';
 import { withTheme } from '../../utils/withTheme';
-import { PartialKeys } from '@devexperts/utils/dist/object/object';
+import { PartialKeys } from '@devexperts/platform-utils/dist/object/object';
 import { ComponentClass } from 'react';
 import { Input, TInputProps } from '../input/Input';
 import { withDefaults } from '../../utils/with-defaults';
@@ -31,7 +31,6 @@ export type TNumericStepperFullProps = TNumericStepperOwnProps & {
 
 type TNumericStepperState = {
 	isFocused: boolean;
-	displayedValue: any;
 };
 
 class RawNumericStepper extends React.Component<TNumericStepperFullProps, TNumericStepperState> {
@@ -74,28 +73,12 @@ class RawNumericStepper extends React.Component<TNumericStepperFullProps, TNumer
 
 	constructor(props: TNumericStepperFullProps) {
 		super(props);
-
-		const state: TNumericStepperState = {
+		this.state = {
 			isFocused: false,
-			displayedValue: props.value,
 		};
-
-		if (props.value) {
-			state.displayedValue = this.formatValue(props.value);
-		}
-
-		this.state = state;
-	}
-
-	componentWillReceiveProps(newProps: TNumericStepperFullProps) {
-		this.setState({
-			displayedValue: this.formatValue(newProps.value),
-		});
 	}
 
 	render() {
-		const { displayedValue } = this.state;
-
 		const {
 			theme,
 			decrementIcon,
@@ -107,6 +90,8 @@ class RawNumericStepper extends React.Component<TNumericStepperFullProps, TNumer
 			max,
 			SteppableInput,
 		} = this.props;
+
+		const displayedValue = this.formatValue(value);
 
 		const hasError = isNaN(value) || value < min || value > max;
 
@@ -137,17 +122,18 @@ class RawNumericStepper extends React.Component<TNumericStepperFullProps, TNumer
 					value={`${displayedValue}`}
 					onBlur={this.onBlur}
 					onValueChange={this.onInputChange}
+					isFocused={this.state.isFocused}
 				/>
 			</SteppableInput>
 		);
 	}
 
 	private onKeyDown = (event: React.KeyboardEvent<HTMLElement>) => {
-		switch (event.keyCode) {
-			case KeyCode.Up:
+		switch (event.key) {
+			case Key.Up:
 				this.increase();
 				break;
-			case KeyCode.Down:
+			case Key.Down:
 				this.decrease();
 				break;
 		}
@@ -165,10 +151,6 @@ class RawNumericStepper extends React.Component<TNumericStepperFullProps, TNumer
 					getOrElse(() => ''),
 				),
 			);
-
-			this.setState({
-				displayedValue: this.formatValue(newValue),
-			});
 
 			onValueChange && onValueChange(newValue);
 		}
@@ -234,7 +216,6 @@ class RawNumericStepper extends React.Component<TNumericStepperFullProps, TNumer
 
 		this.setState({
 			isFocused: false,
-			displayedValue: this.formatValue(newValue),
 		});
 
 		onValueChange && onValueChange(newValue);

@@ -4,7 +4,7 @@ import { PURE } from '../../utils/pure';
 import classnames from 'classnames';
 
 import { withTheme } from '../../utils/withTheme';
-import { PartialKeys } from '@devexperts/utils/dist/object/object';
+import { PartialKeys } from '@devexperts/platform-utils/dist/object/object';
 import { TControlProps } from '../Control/Control';
 
 export const CHECKBOX = Symbol('Checkbox') as symbol;

@@ -1,5 +1,5 @@
 import { ComponentClass, PureComponent, ReactElement } from 'react';
-import { PartialKeys } from '@devexperts/utils/dist/object/object';
+import { PartialKeys } from '@devexperts/platform-utils/dist/object/object';
 import { withDefaults } from '../../utils/with-defaults';
 
 export type TRawDeferredProps = {
@@ -13,21 +13,22 @@ type TDeferredState = {
 };
 
 class RawDeferred extends PureComponent<TRawDeferredProps, TDeferredState> {
+	constructor(props: TRawDeferredProps) {
+		super(props);
+		this.delay();
+	}
+
 	readonly state = {
 		isResolved: false,
 	};
 
 	private timeout!: number;
 
-	componentWillMount() {
-		this.delay();
-	}
-
 	componentWillUnmount() {
 		clearTimeout(this.timeout);
 	}
 
-	componentWillUpdate() {
+	componentDidUpdate() {
 		console.log('update');
 		clearTimeout(this.timeout);
 		this.delay();

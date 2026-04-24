@@ -1,4 +1,4 @@
-import { dasherize, camelize, capitalize, randomId, decapitalize, pluralize3, pluralize2 } from '../string';
+import { dasherize, camelize, capitalize, randomId, decapitalize, pluralize3, pluralize2, pascalize } from '../string';
 import split from '../split';
 
 describe('string', () => {
@@ -17,6 +17,15 @@ describe('string', () => {
 		});
 		it('should replace _,-,\\s with CamelCase with first letter capitalized', () => {
 			expect(camelize('aa_bb-cc dd', false)).toBe('AaBbCcDd');
+		});
+	});
+
+	describe('pascalize', () => {
+		it('should handle empty value', () => {
+			expect(pascalize('')).toBe('');
+		});
+		it('should replace first letter with capital and all other letters with noncapital', () => {
+			expect(pascalize('fOO')).toBe('Foo');
 		});
 	});
 

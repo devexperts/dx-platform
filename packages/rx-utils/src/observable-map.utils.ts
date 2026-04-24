@@ -1,5 +1,5 @@
 import { BehaviorSubject, Observable } from 'rxjs';
-import { isNotNullable } from '@devexperts/utils/dist/object/object';
+import { isNotNullable } from '@devexperts/platform-utils/dist/object/object';
 import { distinctUntilChanged, filter, map } from 'rxjs/operators';
 import { observable } from './observable.utils';
 

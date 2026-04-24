@@ -1,5 +1,5 @@
 import React from 'react';
-import { PartialKeys } from '@devexperts/utils/dist/object/object';
+import { PartialKeys } from '@devexperts/platform-utils/dist/object/object';
 import { ComponentClass } from 'react';
 import { withTheme } from '../../utils/withTheme';
 import { MenuItem, TMenuItemProps } from '../Menu/Menu';

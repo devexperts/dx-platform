@@ -1,6 +1,6 @@
 {
-  "name": "@devexperts/utils",
-  "version": "1.0.0-alpha.14",
+  "name": "@devexperts/platform-utils",
+  "version": "1.0.0",
   "description": "",
   "main": "dist",
   "module": "dist",
@@ -9,41 +9,33 @@
     "lint:fix": "yarn lint --fix",
     "test": "yarn lint && tsc --noEmit && jest",
     "build": "tsc -p ./tsconfig.build.json --outDir ./dist",
+    "pack": "npm pack",
     "clean": "rm -rf ./dist",
     "prepare": "yarn clean && yarn build",
     "start": "yarn watch",
     "watch": "yarn build --watch --incremental"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/devexperts/dx-platform.git"
-  },
   "publishConfig": {
-    "access": "public"
+    "registry": "https://nexus.in.devexperts.com/repository/npm-dx-private/"
   },
   "author": "devexperts",
-  "license": "MPL-2.0",
-  "bugs": {
-    "url": "https://github.com/devexperts/dx-platform/issues"
-  },
-  "homepage": "https://github.com/devexperts/dx-platform#readme",
   "dependencies": {
-    "tslib": "^1.10.0",
+    "tslib": "^2.5.0",
     "typelevel-ts": "^0.3.5"
   },
   "peerDependencies": {
     "fp-ts": "^2.0.5",
-    "io-ts": "^2.0.1",
-    "io-ts-types": "^0.5.3"
+    "io-ts": "^2.2.20",
+    "io-ts-types": "^0.5.19"
   },
   "devDependencies": {
     "@types/jest": "^24.0.18",
-    "eslint": "^6.7.2",
+    "eslint": "^8.34.0",
     "fp-ts": "^2.0.5",
-    "io-ts": "^2.0.1",
-    "io-ts-types": "^0.5.3",
+    "io-ts": "^2.2.20",
+    "io-ts-types": "^0.5.19",
     "jest": "^24.9.0",
     "ts-jest": "^24.1.0",
-    "typescript": "^3.6.3"
+    "typescript": "^4.9.5"
   }
 }

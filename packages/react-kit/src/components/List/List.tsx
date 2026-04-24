@@ -1,15 +1,13 @@
-import React from 'react';
+import React, { Component, createContext } from 'react';
 import classnames from 'classnames';
 import { withTheme } from '../../utils/withTheme';
 import { ComponentClass, MouseEventHandler, ReactNode } from 'react';
-import { PartialKeys } from '@devexperts/utils/dist/object/object';
+import { PartialKeys } from '@devexperts/platform-utils/dist/object/object';
 import { PURE } from '../../utils/pure';
 
-export const LIST = Symbol('List') as symbol;
-const CONTEXT_LEVEL_KEY = '__LIST_CONTEXT_LEVEL_KEY__';
-const CONTEXT_TYPES: any = {
-	[CONTEXT_LEVEL_KEY]() {},
-};
+export const LIST = Symbol('List');
+
+const Ctx = createContext<number>(0);
 
 export type TFullListProps = {
 	theme: {
@@ -19,16 +17,17 @@ export type TFullListProps = {
 	level?: number;
 };
 
-class RawList extends React.Component<TFullListProps> {
-	static contextTypes = CONTEXT_TYPES;
-
+class RawList extends Component<TFullListProps> {
 	render() {
-		const level = this.context[CONTEXT_LEVEL_KEY] || 0;
+		return <Ctx.Consumer>{level => this.renderContent(level)}</Ctx.Consumer>;
+	}
+
+	private renderContent = (level: number) => {
 		const { theme, children } = this.props;
 		const className = classnames(theme.container, theme[`container_level_${level}`]);
 
 		return <ul className={className}>{children}</ul>;
-	}
+	};
 }
 
 export type TListProps = PartialKeys<TFullListProps, 'theme'>;
@@ -44,12 +43,13 @@ export type TFullListItemProps = {
 };
 
 @PURE
-class RawListItem extends React.Component<TFullListItemProps> {
-	static contextTypes = CONTEXT_TYPES;
-
+class RawListItem extends Component<TFullListItemProps> {
 	render() {
+		return <Ctx.Consumer>{level => this.renderContent(level)}</Ctx.Consumer>;
+	}
+
+	private renderContent = (level: number) => {
 		const { theme, onClick, children } = this.props;
-		const level = this.context[CONTEXT_LEVEL_KEY] || 0;
 		const className = classnames(theme.item, theme[`item_level_${level}`]);
 
 		return (
@@ -57,7 +57,7 @@ class RawListItem extends React.Component<TFullListItemProps> {
 				{children}
 			</li>
 		);
-	}
+	};
 }
 
 export type TListItemProps = PartialKeys<TFullListItemProps, 'theme'>;
@@ -75,24 +75,17 @@ export type TFullListItemGroupProps = {
 	onClick?: MouseEventHandler<HTMLElement>;
 };
 
-class RawListItemGroup extends React.Component<TFullListItemGroupProps> {
+class RawListItemGroup extends Component<TFullListItemGroupProps> {
 	static defaultProps = {
 		isCollapsed: false,
 	};
 
-	static contextTypes = CONTEXT_TYPES;
-
-	static childContextTypes = CONTEXT_TYPES;
-
-	getChildContext() {
-		return {
-			[CONTEXT_LEVEL_KEY]: (this.context[CONTEXT_LEVEL_KEY] || 0) + 1,
-		};
+	render() {
+		return <Ctx.Consumer>{level => this.renderContent(level)}</Ctx.Consumer>;
 	}
 
-	render() {
+	private renderContent = (level: number) => {
 		const { theme, isCollapsed, children, header, onClick } = this.props;
-		const level = this.context[CONTEXT_LEVEL_KEY] || 0;
 		const className = classnames(theme.itemGroup, theme[`itemGroup_level_${level}`], {
 			[theme.itemGroup_isCollapsed as string]: isCollapsed,
 		});
@@ -102,11 +95,11 @@ class RawListItemGroup extends React.Component<TFullListItemGroupProps> {
 				<span className={theme.itemGroup__header} onClick={onClick}>
 					{header}
 				</span>
-				{children}
+				<Ctx.Provider value={level + 1}>{children}</Ctx.Provider>
 			</li>
 		);
-	}
+	};
 }
 
 export type TListItemGroupProps = PartialKeys<TFullListItemGroupProps, 'theme'>;
-export const ListItemGroup: ComponentClass<TListItemGroupProps> = withTheme(LIST)(RawListItemGroup);
+export const ListItemGroup = withTheme(LIST)(RawListItemGroup);

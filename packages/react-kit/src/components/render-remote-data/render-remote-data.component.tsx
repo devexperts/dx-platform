@@ -1,7 +1,7 @@
 import React from 'react';
 import { ComponentType, Fragment, Component } from 'react';
 import { isFailure, isPending, isSuccess, RemoteData } from '@devexperts/remote-data-ts';
-import { isNotNullable } from '@devexperts/utils/dist/object/object';
+import { isNotNullable } from '@devexperts/platform-utils/dist/object/object';
 
 export type TDataStateErrorMainProps<L> = {
 	error: L;

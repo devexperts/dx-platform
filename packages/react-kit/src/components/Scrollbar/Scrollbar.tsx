@@ -1,9 +1,8 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React, { createRef } from 'react';
 import classnames from 'classnames';
 import { Bar } from './Bar';
 
-import { CONTEXT_TYPES, EVENT_SCROLABLE, SCROLLABLE_CONTEXT_EMITTER } from '../Scrollable/Scrollable.const';
+import { ScrollableContext, EVENT_SCROLABLE, SCROLLABLE_CONTEXT_EMITTER } from '../Scrollable/Scrollable.const';
 
 export const SCROLLBAR = Symbol('Scrollbar') as symbol;
 export enum SCROLLBAR_TYPE {
@@ -25,19 +24,20 @@ export type TScrollbarState = {
 	isVisible: boolean;
 };
 
-export class Scrollbar<T> extends React.Component<TScrollbarProps & T, TScrollbarState> {
+export class Scrollbar<T> extends React.Component<TScrollbarProps & T, TScrollbarState, typeof ScrollableContext> {
 	_scrollbar!: HTMLDivElement | null;
 	_container: HTMLDivElement | null;
-	_track!: HTMLDivElement | null;
-	_bar!: HTMLDivElement;
+	_track = createRef<HTMLDivElement>();
+	_bar = createRef<HTMLDivElement>();
 
-	static contextTypes: any = CONTEXT_TYPES;
+	static contextType = ScrollableContext;
+	context!: React.ContextType<typeof ScrollableContext>;
 
 	state = {
 		isVisible: false,
 	};
 
-	constructor(props: TScrollbarProps & T, context: any) {
+	constructor(props: TScrollbarProps & T, context: typeof ScrollableContext) {
 		super(props, context);
 		const { container } = this.props;
 		this._container = container;
@@ -82,8 +82,8 @@ export class Scrollbar<T> extends React.Component<TScrollbarProps & T, TScrollba
 					className={theme.track}
 					onWheel={this.onTrackMouseWheel}
 					onClick={this.onTrackClick}
-					ref={el => (this._track = el)}>
-					<Bar {...barProps} ref={(el: Bar) => (this._bar = ReactDOM.findDOMNode(el) as HTMLDivElement)} />
+					ref={this._track}>
+					<Bar {...barProps} innerRef={this._bar} />
 				</div>
 			</div>
 		);

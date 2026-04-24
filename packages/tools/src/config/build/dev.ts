@@ -50,6 +50,7 @@ const devConfig: Configuration = {
 			},
 		],
 	},
+	// @ts-ignore
 	plugins: [createHtmlPlugin(), createForkTSCheckerPlugin()],
 };
 

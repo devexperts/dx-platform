@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { Component, ComponentClass, ReactNode, CSSProperties, MouseEventHandler } from 'react';
 import { PURE } from '../../utils/pure';
 import classnames from 'classnames';
 import { withTheme } from '../../utils/withTheme';
-import { PartialKeys } from '@devexperts/utils/dist/object/object';
+import { PartialKeys } from '@devexperts/platform-utils/dist/object/object';
 
 export const TABLE = Symbol('Table') as symbol;
 
@@ -17,7 +17,8 @@ export type TTableTheme = {
 
 export type TFullTableProps = {
 	theme: TTableTheme;
-	children?: React.ReactNode;
+	children?: ReactNode;
+	attributes?: Record<string, string>;
 };
 
 export type TFullTableHeadProps = TFullTableProps;
@@ -25,25 +26,26 @@ export type TFullTableHeadProps = TFullTableProps;
 export type TFullTableBodyProps = TFullTableProps;
 
 export type TFullTableRowProps = TFullTableProps & {
-	onClick?: React.MouseEventHandler<HTMLTableRowElement>;
-	onMouseOver?: React.MouseEventHandler<HTMLTableRowElement>;
-	onMouseOut?: React.MouseEventHandler<HTMLTableRowElement>;
+	onClick?: MouseEventHandler<HTMLTableRowElement>;
+	onMouseOver?: MouseEventHandler<HTMLTableRowElement>;
+	onMouseOut?: MouseEventHandler<HTMLTableRowElement>;
 	row?: string;
 	isInHead?: boolean;
 };
 
 export type TFullTableCellProps = TFullTableProps & {
-	onClick?: React.MouseEventHandler<HTMLTableRowElement>;
-	onMouseOver?: React.MouseEventHandler<HTMLTableRowElement>;
-	onMouseOut?: React.MouseEventHandler<HTMLTableRowElement>;
-	style?: React.CSSProperties;
+	onClick?: MouseEventHandler<HTMLTableRowElement>;
+	onMouseOver?: MouseEventHandler<HTMLTableRowElement>;
+	onMouseOut?: MouseEventHandler<HTMLTableRowElement>;
+	style?: CSSProperties;
 	colSpan?: number;
 	rowSpan?: number;
 	isInHead?: boolean;
+	attributes?: Record<string, string>;
 };
 
 @PURE
-export default class RawTable extends React.Component<TFullTableProps> {
+export default class RawTable extends Component<TFullTableProps> {
 	render() {
 		const { theme, children } = this.props;
 
@@ -52,7 +54,7 @@ export default class RawTable extends React.Component<TFullTableProps> {
 }
 
 @PURE
-export class RawTableHead extends React.Component<TFullTableHeadProps> {
+export class RawTableHead extends Component<TFullTableHeadProps> {
 	render() {
 		const { children, theme } = this.props;
 
@@ -72,21 +74,30 @@ export class RawTableHead extends React.Component<TFullTableHeadProps> {
 }
 
 @PURE
-class RawTableBody extends React.Component<TFullTableBodyProps> {
+class RawTableBody extends Component<TFullTableBodyProps> {
 	render() {
-		const { children, theme } = this.props;
+		const { children, theme, attributes } = this.props;
 
-		return <tbody className={theme.body}>{children}</tbody>;
+		return (
+			<tbody className={theme.body} {...attributes}>
+				{children}
+			</tbody>
+		);
 	}
 }
 
 @PURE
-class RawTableRow extends React.Component<TFullTableRowProps> {
+class RawTableRow extends Component<TFullTableRowProps> {
 	render() {
-		const { children, theme, onClick, onMouseOver, onMouseOut, isInHead } = this.props;
+		const { children, theme, onClick, onMouseOver, onMouseOut, isInHead, attributes } = this.props;
 
 		return (
-			<tr className={theme.row} onClick={onClick} onMouseOver={onMouseOver} onMouseOut={onMouseOut}>
+			<tr
+				className={theme.row}
+				onClick={onClick}
+				onMouseOver={onMouseOver}
+				onMouseOut={onMouseOut}
+				{...attributes}>
 				{!isInHead && children}
 				{isInHead &&
 					React.Children.map(
@@ -104,9 +115,9 @@ class RawTableRow extends React.Component<TFullTableRowProps> {
 }
 
 @PURE
-class RawTableCell extends React.Component<TFullTableCellProps> {
+class RawTableCell extends Component<TFullTableCellProps> {
 	render() {
-		const { children, theme, style, colSpan, rowSpan, isInHead } = this.props;
+		const { children, theme, style, colSpan, rowSpan, isInHead, attributes } = this.props;
 
 		const className = classnames(theme.cell, {
 			[theme.cell_isInHead as string]: isInHead,
@@ -116,7 +127,7 @@ class RawTableCell extends React.Component<TFullTableCellProps> {
 		const Tag = isInHead ? 'th' : 'td';
 
 		return (
-			<Tag className={className} style={style} colSpan={colSpan} rowSpan={rowSpan}>
+			<Tag className={className} style={style} colSpan={colSpan} rowSpan={rowSpan} {...attributes}>
 				{children}
 			</Tag>
 		);
@@ -124,16 +135,16 @@ class RawTableCell extends React.Component<TFullTableCellProps> {
 }
 
 export type TTableProps = PartialKeys<TFullTableProps, 'theme'>;
-export const Table: React.ComponentClass<TTableProps> = withTheme(TABLE)(RawTable);
+export const Table: ComponentClass<TTableProps> = withTheme(TABLE)(RawTable);
 
 export type TTableBodyProps = PartialKeys<TFullTableBodyProps, 'theme'>;
-export const TableBody: React.ComponentClass<TTableBodyProps> = withTheme(TABLE)(RawTableBody);
+export const TableBody: ComponentClass<TTableBodyProps> = withTheme(TABLE)(RawTableBody);
 
 export type TTableHeadProps = PartialKeys<TFullTableHeadProps, 'theme'>;
-export const TableHead: React.ComponentClass<TTableHeadProps> = withTheme(TABLE)(RawTableHead);
+export const TableHead: ComponentClass<TTableHeadProps> = withTheme(TABLE)(RawTableHead);
 
 export type TTableRowProps = PartialKeys<TFullTableRowProps, 'theme'>;
-export const TableRow: React.ComponentClass<TTableRowProps> = withTheme(TABLE)(RawTableRow);
+export const TableRow: ComponentClass<TTableRowProps> = withTheme(TABLE)(RawTableRow);
 
 export type TTableCellProps = PartialKeys<TFullTableCellProps, 'theme'>;
-export const TableCell: React.ComponentClass<TTableCellProps> = withTheme(TABLE)(RawTableCell);
+export const TableCell: ComponentClass<TTableCellProps> = withTheme(TABLE)(RawTableCell);

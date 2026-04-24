@@ -2,7 +2,7 @@ import React from 'react';
 import { Component, KeyboardEventHandler, MouseEvent, MouseEventHandler, ReactElement, TouchEventHandler } from 'react';
 import { EventListener } from '../EventListener/EventListener';
 import { findDOMNode } from 'react-dom';
-import { KeyCode } from '../Control/Control';
+import { Key } from '../Control/Control';
 import { PURE } from '../../utils/pure';
 
 //inspired by https://github.com/react-bootstrap/react-overlays/blob/master/src/RootCloseWrapper.js
@@ -69,7 +69,7 @@ export class RootClose extends Component<TRootCloseProps> {
 	};
 
 	private handleKeyUp: KeyboardEventHandler<HTMLElement> = e => {
-		if (!this.props.ignoreKeyUp && e.keyCode === KeyCode.Escape && this.props.onRootClose) {
+		if (!this.props.ignoreKeyUp && e.key === Key.Escape && this.props.onRootClose) {
 			this.props.onRootClose();
 		}
 	};

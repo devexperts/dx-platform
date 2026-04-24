@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { ReactNode, ReactPortal } from 'react';
 import { PURE } from '../../utils/pure';
-import { shallowEqual } from '@devexperts/utils/dist/object/fb';
-import { ReactPortal, ReactNode } from 'react';
+import { shallowEqual } from '@devexperts/platform-utils/dist/object/fb';
 
 type Handlers = {
 	[onEvent: string]: Function;
@@ -24,10 +23,11 @@ export class EventListener extends React.Component<TEventListenerProps> {
 		this.addListeners();
 	}
 
-	componentWillUpdate(nextProps: TEventListenerProps) {
-		if (shouldResetListeners(this.props, nextProps)) {
+	getSnapshotBeforeUpdate(prevProps: TEventListenerProps) {
+		if (shouldResetListeners(prevProps, this.props)) {
 			this.removeListeners();
 		}
+		return null;
 	}
 
 	componentDidUpdate(prevProps: TEventListenerProps) {
@@ -81,11 +81,10 @@ export class EventListener extends React.Component<TEventListenerProps> {
 		const { target, children, ...props } = this.props;
 		const propKeys = Object.keys(props);
 		const eventKeys = propKeys.filter(key => key.startsWith('on'));
-		const handlers = eventKeys.reduce((acc, key) => {
+		return eventKeys.reduce((acc, key) => {
 			acc[key] = props[key];
 			return acc;
 		}, {});
-		return handlers;
 	}
 }
 

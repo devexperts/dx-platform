@@ -3,7 +3,7 @@ import { Scrollbar, SCROLLBAR_TYPE, TScrollbarProps } from './Scrollbar';
 import { EVENT_SCROLABLE, SCROLLABLE_CONTEXT_EMITTER } from '../Scrollable/Scrollable.const';
 import { PURE } from '../../utils/pure';
 import { withTheme } from '../../utils/withTheme';
-import { PartialKeys } from '@devexperts/utils/dist/object/object';
+import { PartialKeys } from '@devexperts/platform-utils/dist/object/object';
 
 export const VERTICAL_SCROLLBAR = Symbol('VerticalScrollbar') as symbol;
 
@@ -27,7 +27,9 @@ export class RawVerticalScrollbar extends Scrollbar<TAdditionalVerticalScrollBar
 	 * @protected
 	 */
 	_getMinBarSize() {
-		return parseFloat(window.getComputedStyle(this._bar).getPropertyValue('min-height'));
+		return this._bar.current
+			? parseFloat(window.getComputedStyle(this._bar.current).getPropertyValue('min-height'))
+			: 0;
 	}
 
 	/**
@@ -53,9 +55,9 @@ export class RawVerticalScrollbar extends Scrollbar<TAdditionalVerticalScrollBar
 		}
 	}
 
-	componentWillReceiveProps(newProps: TFullVerticalScrollBarProp) {
-		if (this.props.scrollTop !== newProps.scrollTop && newProps.scrollTop) {
-			this._scrollTo(newProps.scrollTop);
+	componentDidUpdate(prevProps: TFullVerticalScrollBarProp) {
+		if (this.props.scrollTop !== prevProps.scrollTop && this.props.scrollTop) {
+			this._scrollTo(this.props.scrollTop);
 		}
 	}
 
@@ -87,19 +89,23 @@ export class RawVerticalScrollbar extends Scrollbar<TAdditionalVerticalScrollBar
 		if (this._container) {
 			const visibleHeight = this._container.clientHeight;
 			const barHeight = Math.ceil(visibleHeight * this._ratio.size);
-			this._bar.style.height = `${barHeight}px`;
+			if (this._bar.current) {
+				this._bar.current.style.height = `${barHeight}px`;
+			}
 
 			//position
 			const scrollTop = this._container.scrollTop;
 			const barPositionTop = Math.floor(scrollTop * this._ratio.position);
-			this._bar.style.top = `${barPositionTop}px`;
+			if (this._bar.current) {
+				this._bar.current.style.top = `${barPositionTop}px`;
+			}
 		}
 	}
 
 	_getRatio() {
 		if (this._container && this._track) {
 			const { scrollHeight: scrollSize, clientHeight: containerSize } = this._container;
-			const { offsetHeight: trackSize } = this._track;
+			const trackSize = this._track.current?.offsetHeight || 0;
 			const sizeRatio = trackSize / scrollSize;
 			const possibleBarSize = containerSize * sizeRatio;
 			const barSize = possibleBarSize < this._minBarSize ? this._minBarSize : possibleBarSize;
@@ -146,7 +152,9 @@ export class RawVerticalScrollbar extends Scrollbar<TAdditionalVerticalScrollBar
 	onTrackClick = (event: React.MouseEvent<HTMLDivElement>) => {
 		if (this._track && this._container) {
 			const trackPosition =
-				this._track.getBoundingClientRect().top + window.pageYOffset - document.documentElement.clientTop;
+				(this._track.current?.getBoundingClientRect().top || 0) +
+				window.pageYOffset -
+				document.documentElement.clientTop;
 
 			this._container.scrollTop = Math.floor((event.clientY - trackPosition) / this._ratio.position);
 		}

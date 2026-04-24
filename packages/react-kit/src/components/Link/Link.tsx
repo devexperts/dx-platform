@@ -3,7 +3,7 @@ import { PURE } from '../../utils/pure';
 import classnames from 'classnames';
 import { MouseEvent, EventHandler, ComponentClass } from 'react';
 import { withTheme } from '../../utils/withTheme';
-import { PartialKeys } from '@devexperts/utils/dist/object/object';
+import { PartialKeys } from '@devexperts/platform-utils/dist/object/object';
 
 export const LINK = Symbol('Link') as symbol;
 

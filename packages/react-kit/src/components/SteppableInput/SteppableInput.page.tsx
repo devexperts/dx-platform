@@ -1,5 +1,4 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React, { createRef } from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import pageTheme from './theme/SteppableInput.page.styl';
@@ -10,7 +9,7 @@ import { SteppableInput } from './SteppableInput';
 import { Demo } from '../demo/Demo';
 
 class DemoInput extends React.Component<any, any> {
-	private input: any;
+	private input = createRef<HTMLInputElement>();
 
 	render() {
 		const { onIncrement, onDecrement, error, onClear, isDisabled } = this.props;
@@ -27,20 +26,15 @@ class DemoInput extends React.Component<any, any> {
 					decrementIcon={<DecreaseIcon />}
 					incrementIcon={<AddIcon />}
 					isDisabled={isDisabled}>
-					<input
-						className={pageTheme.customInput}
-						tabIndex={-1}
-						disabled={isDisabled}
-						ref={(el: any) => (this.input = el)}
-					/>
+					<input className={pageTheme.customInput} tabIndex={-1} disabled={isDisabled} ref={this.input} />
 				</SteppableInput>
 			</div>
 		);
 	}
 
-	onFocus = (e: any) => {
-		const input = ReactDOM.findDOMNode(this.input) as any;
-		input.focus();
+	private onFocus = () => {
+		const input = this.input.current;
+		input?.focus();
 	};
 }
 

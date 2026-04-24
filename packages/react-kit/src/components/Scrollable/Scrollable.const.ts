@@ -1,5 +1,5 @@
-import Emitter from '@devexperts/utils/dist/emitter/Emitter';
-import { constNull } from 'fp-ts/lib/function';
+import Emitter from '@devexperts/platform-utils/dist/emitter/Emitter';
+import { createContext } from 'react';
 
 export const EVENT_SCROLABLE = {
 	RESIZE: 'EVENT_SCROLABLE:RESIZE',
@@ -14,7 +14,14 @@ export class ScrollableInternalEmitter extends Emitter {
 }
 
 export const SCROLLABLE_CONTEXT_EMITTER = '__SCROLLABLE__CONTEXT_EMITTER__';
-export const CONTEXT_TYPES = {
-	[SCROLLABLE_CONTEXT_EMITTER.toString()]: constNull,
-	size: constNull,
+type ScrollableContextProperties = {
+	size: {
+		width: number;
+		height: number;
+	};
+	[SCROLLABLE_CONTEXT_EMITTER]: ScrollableInternalEmitter;
 };
+export const ScrollableContext = createContext<ScrollableContextProperties>({
+	[SCROLLABLE_CONTEXT_EMITTER]: new ScrollableInternalEmitter(),
+	size: { width: 0, height: 0 },
+});

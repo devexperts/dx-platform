@@ -1,32 +1,29 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React, { ComponentType, createRef, RefObject } from 'react';
 import { ComponentClass } from 'react';
 import { createPortal } from 'react-dom';
 import { TSteppableInputProps, SteppableInput, checkParentsUpTo } from '../SteppableInput/SteppableInput';
-import { KeyCode, KEY_CODE_NUM_MAP, TControlProps } from '../Control/Control';
+import { Key, KEY_CODE_NUM_MAP, TControlProps } from '../Control/Control';
 import classnames from 'classnames';
 import { withTheme } from '../../utils/withTheme';
 import { ButtonIcon, TButtonIconProps } from '../ButtonIcon/ButtonIcon';
-import ReactInstance = React.ReactInstance;
-import { PartialKeys } from '@devexperts/utils/dist/object/object';
+import { PartialKeys } from '@devexperts/platform-utils/dist/object/object';
 import { PURE } from '../../utils/pure';
 import { Popover, TPopoverProps } from '../Popover/Popover';
 import { withDefaults } from '../../utils/with-defaults';
 import { Option, none, some, isSome, map, toNullable, alt, chain } from 'fp-ts/lib/Option';
 import {
-	TDateInputState,
-	ActiveSection,
-	DateFormatType,
-	isDatesDifferent,
-	toObjectDate,
-	format,
-	buildDateOption,
-	decrementMonthOption,
-	incrementMonthOption,
-	TDateInputValue,
-	inc,
+    TDateInputState,
+    ActiveSection,
+    DateFormatType,
+    isDatesDifferent,
+    toObjectDate,
+    format,
+    buildDateOption,
+    decrementMonthOption,
+    incrementMonthOption,
+    TDateInputValue,
+    inc,
 } from './DateInput.model';
-import { ReactRef } from '../../utils/typings';
 import { pipe } from 'fp-ts/lib/pipeable';
 
 export const DATE_INPUT = Symbol('DateInput') as symbol;
@@ -50,16 +47,15 @@ export type TDateInputOwnProps = TSteppableInputProps &
 		onMouseEnter?: () => void;
 		onMouseLeave?: () => void;
 		target?: Element;
-		Calendar?: ComponentClass<TCalendarProps> | React.SFC<TCalendarProps>;
-		defaultActiveSection?: ActiveSection;
+		Calendar?: ComponentType<TCalendarProps>;
 	};
 
 type TDateDefaultProps = {
-	SteppableInput: ComponentClass<TSteppableInputProps> | React.SFC<TSteppableInputProps>;
+	SteppableInput: ComponentType<TSteppableInputProps>;
 	ButtonIcon: ComponentClass<TButtonIconProps>;
 	Popover: ComponentClass<TPopoverProps> | React.SFC<TPopoverProps>;
 	dateFormatType: DateFormatType;
-	innerRef?: (instance: ReactRef) => void;
+	innerRef?: RefObject<HTMLElement>;
 };
 
 export type TDateInputInjectedProps = {
@@ -84,7 +80,8 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 		isOpened: false,
 	};
 	private secondInput: boolean = false;
-	private calendarButtonRef!: ReactInstance;
+	private calendarButtonRef = createRef<HTMLButtonElement>();
+	private thisRef = createRef<HTMLDivElement>();
 
 	render() {
 		const {
@@ -99,7 +96,10 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 			ButtonIcon,
 			SteppableInput,
 			dateFormatType,
+			Popover,
+			onValueChange,
 			value: { day, month, year },
+			...inputProps
 		} = this.props;
 
 		const yearClassName = this.getSectionClassName(ActiveSection.Year);
@@ -113,6 +113,8 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 
 		return (
 			<SteppableInput
+				{...inputProps}
+				innerRef={this.thisRef}
 				isDisabled={isDisabled}
 				theme={theme.SteppableInput}
 				onClear={onClear}
@@ -127,8 +129,7 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 				onKeyDown={this.onKeyDown}
 				onClick={this.onSteppableInputClick}
 				onMouseEnter={this.onMouseEnter}
-				onMouseLeave={this.onMouseLeave}
-				innerRef={this.props.innerRef}>
+				onMouseLeave={this.onMouseLeave}>
 				<div className={innerClassName}>
 					{dateFormatType === DateFormatType.DMY && this.renderDay()}
 					{dateFormatType === DateFormatType.MDY && this.renderMonth()}
@@ -143,7 +144,7 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 				{Calendar && calendarIcon && (
 					<ButtonIcon
 						isFlat={true}
-						ref={(el: any) => (this.calendarButtonRef = el)}
+						innerRef={this.calendarButtonRef}
 						isDisabled={isDisabled}
 						tabIndex={-1}
 						icon={calendarIcon}
@@ -157,14 +158,11 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 	}
 
 	private getSectionClassName = (activeSection: ActiveSection): string => {
-		const { theme, isDisabled, defaultActiveSection } = this.props;
+		const { theme, isDisabled } = this.props;
 		const { activeSection: selectedActiveSection } = this.state;
 
-		const activeSectionSelected = selectedActiveSection || selectedActiveSection === 0;
-
-		const selectedOrDefault = activeSectionSelected ? selectedActiveSection : defaultActiveSection;
 		return classnames(theme.section, {
-			[theme.section_isActive as string]: !isDisabled && selectedOrDefault === activeSection,
+			[theme.section_isActive as string]: !isDisabled && selectedActiveSection === activeSection,
 		});
 	};
 
@@ -227,7 +225,7 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 			return (
 				<Popover
 					theme={theme.Popover}
-					anchor={this}
+					anchor={this.thisRef}
 					closeOnClickAway={true}
 					onMouseDown={this.onCalendarMouseDown}
 					isOpened={isOpened}>
@@ -389,8 +387,8 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 			value: { day, month, year },
 		} = this.props;
 		const { activeSection } = this.state;
-		switch (e.keyCode) {
-			case KeyCode.Escape: {
+		switch (e.key) {
+			case Key.Escape: {
 				if (this.state.isOpened) {
 					this.setState({
 						isOpened: false,
@@ -398,7 +396,7 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 				}
 				break;
 			}
-			case KeyCode.Left: {
+			case Key.Left: {
 				e.preventDefault(); //block h-scrolling
 				switch (activeSection) {
 					case ActiveSection.Month: //fallthrough
@@ -410,7 +408,7 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 				this.selectPreviousSection();
 				break;
 			}
-			case KeyCode.Right: {
+			case Key.Right: {
 				e.preventDefault(); //block h-scrolling
 				switch (activeSection) {
 					case ActiveSection.Day: //fallthrough
@@ -422,8 +420,8 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 				this.selectNextSection();
 				break;
 			}
-			case KeyCode.Delete: //fallthrough
-			case KeyCode.Backspace: {
+			case Key.Delete: //fallthrough
+			case Key.Backspace: {
 				this.secondInput = false;
 				switch (activeSection) {
 					case ActiveSection.Day: {
@@ -442,7 +440,7 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 				break;
 			}
 			default: {
-				const number = KEY_CODE_NUM_MAP[e.keyCode];
+				const number = KEY_CODE_NUM_MAP[e.key];
 				if (isDefined(number)) {
 					this.handleDigitKeyDown(number);
 				}
@@ -450,10 +448,10 @@ class RawDateInput extends React.Component<TDateInputFullProps, TDateInputState>
 		}
 	};
 
-	onSteppableInputClick = (e: React.MouseEvent<HTMLElement>) => {
+	private onSteppableInputClick = (e: React.MouseEvent<HTMLElement>) => {
 		if (this.state.isOpened) {
-			const calendarButtonDOMNode = ReactDOM.findDOMNode(this.calendarButtonRef);
-			const thisNode = ReactDOM.findDOMNode(this);
+			const calendarButtonDOMNode = this.calendarButtonRef.current;
+			const thisNode = this.thisRef.current;
 			if (
 				calendarButtonDOMNode === null ||
 				calendarButtonDOMNode instanceof Text ||

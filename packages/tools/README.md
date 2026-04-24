@@ -1,6 +1,6 @@
-[![build status](https://img.shields.io/travis/devexperts/dx-platform/master.svg?style=flat-square)](https://travis-ci.org/devexperts/dx-platform) ![npm](https://img.shields.io/npm/v/@devexperts/tools.svg?style=flat-square) 
-## @devexperts/tools
-Build tooling for Devexperts frontend team projects. 
+[![build status](https://img.shields.io/travis/devexperts/dx-platform/master.svg?style=flat-square)](https://travis-ci.org/devexperts/dx-platform) ![npm](https://img.shields.io/npm/v/@devexperts/tools.svg?style=flat-square)
+## @devexperts/platform-tools
+Build tooling for Devexperts frontend team projects.
 
 Usage:
 ```

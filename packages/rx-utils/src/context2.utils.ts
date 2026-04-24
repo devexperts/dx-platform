@@ -1,19 +1,19 @@
-import { getReaderM, ReaderM1 } from 'fp-ts/lib/ReaderT';
+import { getReaderM } from 'fp-ts/lib/ReaderT';
 import { Monad2 } from 'fp-ts/lib/Monad';
 import { map as readerMap, Reader } from 'fp-ts/lib/Reader';
 import { sequenceT } from 'fp-ts/lib/Apply';
 import { Omit } from 'typelevel-ts';
 import {
-	ProductLeft,
-	ProductMap,
-	ProjectMany,
-} from '@devexperts/utils/dist/typeclasses/product-left-coproduct-left/product-left-coproduct-left.utils';
-import { deferReader } from '@devexperts/utils/dist/adt/reader.utils';
+    ProductLeft,
+    ProductMap,
+    ProjectMany,
+} from '@devexperts/platform-utils/dist/typeclasses/product-left-coproduct-left/product-left-coproduct-left.utils';
+import { deferReader } from '@devexperts/platform-utils/dist/adt/reader.utils';
 import { pipe, pipeable } from 'fp-ts/lib/pipeable';
-import { memoOnce } from '@devexperts/utils/dist/function/memoize';
+import { memoOnce } from '@devexperts/platform-utils/dist/function/memoize';
 import { NonEmptyArray } from 'fp-ts/lib/NonEmptyArray';
 import { array } from 'fp-ts/lib/Array';
-import { instanceSink, sink, Sink, URI as URISink } from './sink2.utils';
+import { instanceSink, sink, Sink } from './sink2.utils';
 import { strictEqual } from 'fp-ts/lib/Eq';
 
 export const URI = '@devexperts/dx-utils//Context';

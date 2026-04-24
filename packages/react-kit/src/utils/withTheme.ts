@@ -1,9 +1,16 @@
-import React from 'react';
+import {
+	Component,
+	ComponentClass,
+	ComponentType,
+	ContextType,
+	createContext,
+	createElement,
+	ReactNode,
+	Ref,
+} from 'react';
 import { Omit } from 'typelevel-ts';
-import { PartialKeys } from '@devexperts/utils/dist/object/object';
-import { constNull } from 'fp-ts/lib/function';
+import { PartialKeys } from '@devexperts/platform-utils/dist/object/object';
 
-const THEME_CONTEXT_KEY = '@@dx-util/withTheme-context-key'; //should be serializable
 const THEME_CONFIG_KEY = '@@dx-util/withTheme-config-key';
 
 export type TTheme = {
@@ -19,23 +26,23 @@ type TResultProps<P extends TTargetProps> = Omit<P, 'theme'> & {
 };
 
 type TWithRef<P extends TTargetProps, C> = TResultProps<P> & {
-	withRef?: React.Ref<C>;
+	withRef?: Ref<C>;
 };
 
 type OmitTheme<P extends TTargetProps> = PartialKeys<P, 'theme'>;
-type TResult<P extends TTargetProps, C extends React.ComponentType<P>> = React.ComponentClass<
+type TResult<P extends TTargetProps> = ComponentClass<
 	OmitTheme<
 		P & {
-			withRef?: React.Ref<any>;
+			withRef?: Ref<any>;
 		}
 	>
 >;
 
 //shortcuts
-type CT<P> = React.ComponentType<P>;
+type CT<P> = ComponentType<P>;
 
 export const withTheme = (name: string | symbol, defaultTheme: TTheme = {}) => {
-	function decorate<P extends TTargetProps>(Target: CT<P>): TResult<P, CT<P>> {
+	function decorate<P extends TTargetProps>(Target: CT<P>): TResult<P> {
 		if (Target['config'] && Target['config'].name === name) {
 			//already wrapped - just merge in new defaultTheme
 			Target['config'].theme = mergeTwo(Target['config'].theme, defaultTheme);
@@ -48,12 +55,8 @@ export const withTheme = (name: string | symbol, defaultTheme: TTheme = {}) => {
 			theme: defaultTheme,
 		};
 
-		class Themed extends React.Component<TWithRef<P, React.ComponentClass<TResultProps<P>>>, never> {
+		class Themed extends Component<TWithRef<P, ComponentClass<TResultProps<P>>>, never> {
 			static displayName = `Themed(${Target.displayName || Target.name})`;
-
-			static contextTypes = {
-				[THEME_CONTEXT_KEY.toString()]: constNull,
-			};
 
 			render() {
 				/* BROKEN TYPES HERE
@@ -68,16 +71,17 @@ export const withTheme = (name: string | symbol, defaultTheme: TTheme = {}) => {
 				delete rest.withRef;
 				delete rest.theme;
 
-				const props = {
-					...rest,
-					ref: withRef,
-					theme: mergeThemes(
-						config.theme,
-						this.context[THEME_CONTEXT_KEY.toString()][name],
-						(theme || {}) as TTheme,
-					),
-				};
-				return React.createElement(Target as any, props);
+				return createElement(ThemeContext.Consumer, {
+					children: context => {
+						const props = {
+							...rest,
+							ref: withRef,
+							theme: mergeThemes(config.theme, context[name] || {}, (theme || {}) as TTheme),
+						};
+
+						return createElement(Target as any, props);
+					},
+				});
 			}
 		}
 
@@ -179,24 +183,22 @@ function mergeTwo(original: TTheme = {}, mixin: TTheme = {}): TTheme {
 	return result;
 }
 
-export type TThemeProviderProps = {
-	theme: {
-		[key: string]: TTheme;
-	};
+type TThemeProviderTheme = {
+	[key: string | symbol]: TTheme;
 };
 
-export class ThemeProvider extends React.Component<TThemeProviderProps> {
-	static childContextTypes = {
-		[THEME_CONTEXT_KEY.toString()]: constNull,
-	};
+export type TThemeProviderProps = {
+	theme: TThemeProviderTheme;
+	children: ReactNode;
+};
+
+export const ThemeContext = createContext<TThemeProviderTheme>({});
+
+export class ThemeProvider extends Component<TThemeProviderProps> {
+	static contextType = ThemeContext;
+	context!: ContextType<typeof ThemeContext>;
 
 	render() {
-		return React.Children.only(this.props.children);
-	}
-
-	getChildContext() {
-		return {
-			[THEME_CONTEXT_KEY.toString()]: this.props.theme,
-		};
+		return createElement(ThemeContext.Provider, { value: this.props.theme }, this.props.children);
 	}
 }

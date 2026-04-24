@@ -12,7 +12,7 @@ import { SmallDropDownArrowIcon } from '../../icons/small-dropdown-arrow-icon';
 import { stateful } from '../Control/Control';
 
 import selectoxPageCss from './Selectbox.page.styl';
-import { PartialKeys } from '@devexperts/utils/dist/object/object';
+import { PartialKeys } from '@devexperts/platform-utils/dist/object/object';
 import { ReactNode, ReactText } from 'react';
 
 const wideSelectboxTheme = {

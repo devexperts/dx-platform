@@ -12,6 +12,7 @@ export function getBoundingClientRect(element: HTMLElement): ClientRect & { midd
 	height = height || element.offsetHeight;
 
 	return {
+		...rect,
 		top,
 		right: Math.round(right),
 		bottom: Math.round(bottom),

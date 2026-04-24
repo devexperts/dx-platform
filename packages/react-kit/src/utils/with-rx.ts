@@ -59,16 +59,13 @@ export function withRX<P extends object = never>(select: WithRXSelector<P>): Com
 				}
 			}
 
-			componentWillReceiveProps(props: P) {
-				this.props$.next(props);
-			}
-
 			componentWillUnmount() {
 				this.inputSubscription && this.inputSubscription.unsubscribe();
 				this.effectSubscription && this.effectSubscription.unsubscribe();
 			}
 
 			render() {
+				this.props$.next(this.props);
 				return createElement(Target, Object.assign({}, this.props, this.state));
 			}
 		}

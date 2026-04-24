@@ -1,10 +1,10 @@
 import {
-	MonadObservable,
-	MonadObservable1,
-	MonadObservable2,
-	MonadObservable2C,
-	MonadObservable3,
-} from '@devexperts/utils/dist/typeclasses/monad-observable/monad-observable';
+    MonadObservable,
+    MonadObservable1,
+    MonadObservable2,
+    MonadObservable2C,
+    MonadObservable3,
+} from '@devexperts/platform-utils/dist/typeclasses/monad-observable/monad-observable';
 import { HKT, Kind, Kind2, Kind3, URIS, URIS2, URIS3 } from 'fp-ts/lib/HKT';
 import { useMemo, useState } from 'react';
 import { useSubscription } from './use-subscription';

@@ -420,3 +420,5 @@ export function getPlacementModifier(placement: PopoverPlacement): string {
 		}
 	}
 }
+
+export const isNode = (e: unknown): e is Node => e instanceof Node;

@@ -1,11 +1,11 @@
 import { HKT, URIS, Kind, Kind2, URIS2 } from 'fp-ts/lib/HKT';
 import {
-	MonadObservable,
-	MonadObservable1,
-	MonadObservable2,
-	Observer,
-	Subscription,
-} from '@devexperts/utils/dist/typeclasses/monad-observable/monad-observable';
+    MonadObservable,
+    MonadObservable1,
+    MonadObservable2,
+    Observer,
+    Subscription,
+} from '@devexperts/platform-utils/dist/typeclasses/monad-observable/monad-observable';
 import { ComponentClass, ComponentType, createElement, PureComponent } from 'react';
 import { constVoid } from 'fp-ts/lib/function';
 import { array } from 'fp-ts/lib/Array';
@@ -63,6 +63,11 @@ export function withObservable<M>(M: MonadObservable<M> & Alternative<M>): WithO
 		selector: (props$: HKT<M, Readonly<P>>) => WithObservableSelectorResult<M, P, D>,
 	): ComponentClass<Omit<P, keyof D> & Partial<D>> => {
 		class WithObservable extends PureComponent<P, Partial<P>> {
+			constructor(props: P) {
+				super(props);
+				this.inputSubscription && this.inputSubscription.unsubscribe();
+				this.effectsSubscription && this.effectsSubscription.unsubscribe();
+			}
 			static displayName = `WithObservable(${Target.displayName || Target.name})`;
 
 			private readonly adapter = M.createAdapter<P>();
@@ -88,16 +93,8 @@ export function withObservable<M>(M: MonadObservable<M> & Alternative<M>): WithO
 				}
 			}
 
-			componentWillReceiveProps(nextProps: Readonly<P>, nextContext: any): void {
-				this.adapter[0](nextProps);
-			}
-
-			componentWillMount(): void {
-				this.inputSubscription && this.inputSubscription.unsubscribe();
-				this.effectsSubscription && this.effectsSubscription.unsubscribe();
-			}
-
 			render() {
+				this.adapter[0](this.props);
 				return createElement(
 					Target,
 					Object.assign({}, this.selected.defaultProps, this.props, this.state || {}),

@@ -1,34 +1,24 @@
 {
-  "name": "@devexperts/lint",
-  "version": "1.0.0-alpha.14",
+  "name": "@devexperts/platform-lint",
+  "version": "1.0.0",
   "description": "",
   "main": "dist",
   "module": "dist",
-  "scripts": {},
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/devexperts/dx-platform.git"
-  },
   "publishConfig": {
-    "access": "public"
+    "registry": "https://nexus.in.devexperts.com/repository/npm-dx-private/"
   },
   "author": "devexperts",
-  "license": "MPL-2.0",
-  "bugs": {
-    "url": "https://github.com/devexperts/dx-platform/issues"
-  },
-  "homepage": "https://github.com/devexperts/dx-platform#readme",
   "dependencies": {
-    "@typescript-eslint/eslint-plugin": "^2.11.0",
-    "@typescript-eslint/parser": "^2.11.0",
-    "eslint-config-prettier": "^6.7.0",
-    "eslint-plugin-jsdoc": "^18.4.3",
-    "eslint-plugin-prettier": "^3.1.2"
+    "@typescript-eslint/eslint-plugin": "^5.26.0",
+    "@typescript-eslint/parser": "^5.26.0",
+    "eslint-config-prettier": "^8.6.0",
+    "eslint-plugin-jsdoc": "^40.0.0",
+    "eslint-plugin-prettier": "^4.2.1"
   },
   "devDependencies": {
-    "eslint": "^6.7.2"
+    "eslint": "^8.34.0"
   },
   "peerDependencies": {
-    "eslint": "^6.7.2"
+    "eslint": "^8.34.0"
   }
 }

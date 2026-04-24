@@ -1,7 +1,7 @@
 import React from 'react';
 import { PURE } from '../../utils/pure';
 import { withTheme } from '../../utils/withTheme';
-import { PartialKeys } from '@devexperts/utils/dist/object/object';
+import { PartialKeys } from '@devexperts/platform-utils/dist/object/object';
 import { ComponentClass } from 'react';
 
 export const LOADING_INDICATOR = Symbol('LoadingIndicator') as symbol;

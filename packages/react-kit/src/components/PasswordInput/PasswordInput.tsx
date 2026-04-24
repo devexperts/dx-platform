@@ -3,7 +3,7 @@ import { PURE } from '../../utils/pure';
 import { ButtonIcon, TButtonIconProps } from '../ButtonIcon/ButtonIcon';
 import { Input as BaseInput, TInputProps } from '../input/Input';
 import { withTheme } from '../../utils/withTheme';
-import { PartialKeys } from '@devexperts/utils/dist/object/object';
+import { PartialKeys } from '@devexperts/platform-utils/dist/object/object';
 import { ComponentType } from 'react';
 
 export const PASSWORD_INPUT = Symbol('PasswordInput') as symbol;

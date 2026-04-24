@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { ReactNode, RefObject } from 'react';
 import classnames from 'classnames';
 import { PURE } from '../../utils/pure';
 import { LoadingIndicator, TLoadingIndicatorProps } from '../LoadingIndicator/LoadingIndicator';
 import { withTheme } from '../../utils/withTheme';
 import { ComponentClass, EventHandler, MouseEvent, TouchEvent } from 'react';
-import { PartialKeys } from '@devexperts/utils/dist/object/object';
+import { PartialKeys } from '@devexperts/platform-utils/dist/object/object';
 
 export const BUTTON = Symbol('Button') as symbol;
 
@@ -45,6 +45,8 @@ export type TFullButtonProps = {
 	onTouchMove?: EventHandler<TouchEvent<HTMLButtonElement>>;
 	onTouchStart?: EventHandler<TouchEvent<HTMLButtonElement>>;
 	tabIndex?: number;
+	innerRef?: RefObject<HTMLButtonElement>;
+	children?: ReactNode;
 };
 
 @PURE
@@ -85,6 +87,8 @@ class RawButton extends React.Component<TFullButtonProps> {
 			isLoading,
 			isDisabled,
 			tabIndex,
+			innerRef,
+			...buttonProps
 		} = this.props;
 
 		const className = classnames(theme.container, {
@@ -120,7 +124,9 @@ class RawButton extends React.Component<TFullButtonProps> {
 				type={type}
 				style={style}
 				tabIndex={tabIndex}
-				disabled={isDisabled}>
+				disabled={isDisabled}
+				ref={innerRef}
+				{...buttonProps}>
 				{children}
 				{isLoading && (
 					<div className={theme.loadingIndicator}>

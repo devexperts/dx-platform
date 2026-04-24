@@ -5,14 +5,14 @@ import { MonadThrow2 } from 'fp-ts/lib/MonadThrow';
 import {
 	CoproductLeft,
 	coproductMapLeft,
-} from '@devexperts/utils/dist/typeclasses/product-left-coproduct-left/product-left-coproduct-left.utils';
+} from '@devexperts/platform-utils/dist/typeclasses/product-left-coproduct-left/product-left-coproduct-left.utils';
 import { instanceObservable } from './observable.utils';
 import { pipeable } from 'fp-ts/lib/pipeable';
 import { sequenceT } from 'fp-ts/lib/Apply';
 import { array } from 'fp-ts/lib/Array';
 import { Filterable2 } from 'fp-ts/lib/Filterable';
-import { getLiveDataM } from '@devexperts/utils/dist/adt/live-data.utils';
-import { FoldableValue2 } from '@devexperts/utils/dist/typeclasses/foldable-value/foldable-value';
+import { getLiveDataM } from '@devexperts/platform-utils/dist/adt/live-data.utils';
+import { FoldableValue2 } from '@devexperts/platform-utils/dist/typeclasses/foldable-value/foldable-value';
 
 /**
  * isomoprhic to `LiveData12<typeof instanceObservable.URI, typeof remoteData.URI, E, A>`

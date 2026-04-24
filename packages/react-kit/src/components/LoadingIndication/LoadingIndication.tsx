@@ -1,5 +1,5 @@
 import React from 'react';
-import { PartialKeys } from '@devexperts/utils/dist/object/object';
+import { PartialKeys } from '@devexperts/platform-utils/dist/object/object';
 import { ComponentClass, ComponentType } from 'react';
 
 import { withTheme } from '../../utils/withTheme';
@@ -69,14 +69,6 @@ class RawLoadingIndicaton extends React.Component<TRawLoadingIndicatonProps, TRa
 			this.setState({
 				isDisplay: true,
 			});
-		}
-	}
-
-	componentWillReceiveProps(nextProps: TRawLoadingIndicatonProps) {
-		const { isVisible, hideTimer } = nextProps;
-
-		if (hideTimer) {
-			this.timeoutWorker(hideTimer, isVisible);
 		}
 	}
 

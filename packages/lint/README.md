@@ -1,5 +1,5 @@
-[![build status](https://img.shields.io/travis/devexperts/dx-platform/master.svg?style=flat-square)](https://travis-ci.org/devexperts/dx-platform) ![npm](https://img.shields.io/npm/v/@devexperts/lint.svg?style=flat-square) 
-## @devexperts/lint
+[![build status](https://img.shields.io/travis/devexperts/dx-platform/master.svg?style=flat-square)](https://travis-ci.org/devexperts/dx-platform) ![npm](https://img.shields.io/npm/v/@devexperts/lint.svg?style=flat-square)
+## @devexperts/platform-lint
 Infrastructure configuration files, to have consistent linting rules across different Devexperts frontend team projects. Those files are:
 
 * `.eslintrc.js`

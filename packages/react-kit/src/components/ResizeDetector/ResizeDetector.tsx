@@ -2,10 +2,10 @@ import React from 'react';
 import { PURE } from '../../utils/pure';
 import { withTheme } from '../../utils/withTheme';
 import { ComponentClass } from 'react';
-import { PartialKeys } from '@devexperts/utils/dist/object/object';
+import { PartialKeys } from '@devexperts/platform-utils/dist/object/object';
 
 import detectorFactory from 'element-resize-detector';
-import { raf } from '@devexperts/utils/dist/function/raf';
+import { raf } from '@devexperts/platform-utils/dist/function/raf';
 
 export const NativeResizeDetector = detectorFactory({
 	strategy: 'scroll',
@@ -41,7 +41,7 @@ class RawResizeDetector extends React.Component<TFullResizeDetectorProps> {
 		return <div className={theme.container} ref={el => (this.element = el)} />;
 	}
 
-	onResize = raf((element: Element) => {
+	private onResize = raf((element: Element) => {
 		this.props.onResize(element);
 	});
 }

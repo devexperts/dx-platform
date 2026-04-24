@@ -24,7 +24,7 @@ class AnchorClass extends Component<TAnchorProps> {
 		console.log('rendering anchor class');
 
 		return (
-			<Button ref={innerRef} onClick={onClick}>
+			<Button innerRef={innerRef} onClick={onClick}>
 				Class Anchor
 				{children}
 			</Button>
@@ -35,7 +35,7 @@ class AnchorClass extends Component<TAnchorProps> {
 const AnchorSFC: SFC<TAnchorProps> = props => {
 	const { innerRef, children, onClick } = props;
 	return (
-		<Button ref={innerRef} onClick={onClick}>
+		<Button innerRef={innerRef} onClick={onClick}>
 			SFC Anchor
 			{children}
 		</Button>

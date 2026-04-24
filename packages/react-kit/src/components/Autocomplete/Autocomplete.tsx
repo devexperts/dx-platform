@@ -1,12 +1,12 @@
 import React from 'react';
 import { withTheme } from '../../utils/withTheme';
 import { ComponentClass, SFC } from 'react';
-import { PartialKeys } from '@devexperts/utils/dist/object/object';
+import { PartialKeys } from '@devexperts/platform-utils/dist/object/object';
 import { Menu, TMenuProps } from '../Menu/Menu';
 import { Input, TInputProps } from '../input/Input';
 import { Popover, TPopoverProps } from '../Popover/Popover';
 import { Pure } from '../Pure/Pure';
-import { KeyCode } from '../Control/Control';
+import { Key } from '../Control/Control';
 import { AutocompleteMenuItem, TAutocompleteMenuItemProps } from './AutocompleteMenuItem';
 import { withDefaults } from '../../utils/with-defaults';
 
@@ -81,7 +81,7 @@ class RawAutocomplete extends React.Component<TFullAutocompleteProps> {
 
 	onInputKeyDown = (e: React.KeyboardEvent<HTMLElement>) => {
 		//keyDown may be fired from menu, don't call props handler
-		if ((e.keyCode || e.which) === KeyCode.Tab) {
+		if ((e.key || e.which) === Key.Tab) {
 			//loose focus on tab press
 			this.isFocused = false;
 			this.setState({
@@ -91,7 +91,7 @@ class RawAutocomplete extends React.Component<TFullAutocompleteProps> {
 	};
 
 	onInputKeyPress = (e: React.KeyboardEvent<HTMLElement>) => {
-		if ((e.keyCode || e.which) === KeyCode.Enter) {
+		if ((e.key || e.which) === Key.Enter) {
 			this.isFocused = false;
 			this.setState({
 				isOpened: false,

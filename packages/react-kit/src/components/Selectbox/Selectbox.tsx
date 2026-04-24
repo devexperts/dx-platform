@@ -1,17 +1,17 @@
-import React from 'react';
+import React, { createRef } from 'react';
 import { SelectboxAnchor, TFullSelectboxAnchorProps, TSelectboxAnchorProps } from './SelectboxAnchor';
 import { Popover, TFullPopoverProps, TPopoverProps } from '../Popover/Popover';
 import { Menu, TFullMenuProps, TMenuItemProps, TMenuProps } from '../Menu/Menu';
 import { PURE } from '../../utils/pure';
 import classnames from 'classnames';
 import { withTheme } from '../../utils/withTheme';
-import { Component, ComponentClass, ComponentType, ReactElement, ReactNode, ReactText } from 'react';
-import { PartialKeys } from '@devexperts/utils/dist/object/object';
+import { ComponentClass, ComponentType, ReactElement, ReactNode, ReactText } from 'react';
+import { PartialKeys } from '@devexperts/platform-utils/dist/object/object';
 import { TControlProps } from '../Control/Control';
-import { NativeResizeDetector } from '../ResizeDetector/ResizeDetector';
-import { findDOMNode } from 'react-dom';
-import { raf } from '@devexperts/utils/dist/function/raf';
+import { ResizeDetector } from '../ResizeDetector/ResizeDetector';
+import { raf } from '@devexperts/platform-utils/dist/function/raf';
 import { withDefaults } from '../../utils/with-defaults';
+
 export const SELECTBOX = Symbol('Selectbox') as symbol;
 
 export type SelectboxValue = ReactText | ReactText[] | undefined;
@@ -20,6 +20,7 @@ type SelectboxChildren = ReactElement<TMenuItemProps>[] | ReactElement<TMenuItem
 export type TFullSelectboxProps = TControlProps<SelectboxValue> &
 	TControlProps<boolean | undefined, 'isOpened', 'onToggle'> & {
 		theme: {
+			container?: string;
 			container_isOpened?: string;
 			container__popover?: string;
 			container__popover__content?: string;
@@ -90,54 +91,7 @@ class RawSelectbox extends React.Component<TFullSelectboxProps, TSelectboxState>
 
 	readonly state: TSelectboxState = {};
 
-	private _anchor!: Component<TSelectboxAnchorProps> | null;
-	private get anchor() {
-		return this._anchor;
-	}
-
-	private set anchor(value) {
-		if (this._anchor !== value) {
-			//uninstall previous
-			if (this.anchor && this.props.shouldSyncWidth) {
-				const element = findDOMNode(this.anchor);
-				if (!element || element instanceof Text) {
-					return;
-				}
-				NativeResizeDetector.uninstall(element);
-			}
-
-			//install new
-			this._anchor = value;
-			if (this.anchor && this.props.shouldSyncWidth) {
-				const element = findDOMNode(this.anchor);
-				if (!element || element instanceof Text) {
-					return;
-				}
-				NativeResizeDetector.listenTo(element, this.handleAnchorResize);
-			}
-		}
-	}
-
-	componentDidMount() {
-		// if (this.anchor && this.props.shouldSyncWidth) {
-		// 	const element = findDOMNode(this.anchor);
-		// 	NativeResizeDetector.listenTo(element, this.handleAnchorResize);
-		// }
-	}
-
-	componentDidUpdate(newProps: TFullSelectboxProps) {
-		//todo: rebind
-	}
-
-	componentWillUnmount() {
-		if (this.anchor) {
-			const element = findDOMNode(this.anchor);
-			if (!element || element instanceof Text) {
-				return;
-			}
-			NativeResizeDetector.uninstall(element);
-		}
-	}
+	private anchor = createRef<HTMLButtonElement>();
 
 	render() {
 		const {
@@ -218,28 +172,31 @@ class RawSelectbox extends React.Component<TFullSelectboxProps, TSelectboxState>
 		const values = getValues(value);
 
 		return (
-			<Anchor
-				ref={el => (this.anchor = el)}
-				isDisabled={isDisabled}
-				isLoading={isLoading}
-				theme={anchorTheme}
-				caretIcon={caretIcon}
-				isOpened={isOpened}
-				value={value}
-				valueText={valueText}
-				onClick={this.onAnchorClick}>
-				<Popover
+			<div className={theme.container}>
+				<ResizeDetector onResize={this.handleAnchorResize} />
+				<Anchor
+					innerRef={this.anchor}
+					isDisabled={isDisabled}
+					isLoading={isLoading}
+					theme={anchorTheme}
+					caretIcon={caretIcon}
 					isOpened={isOpened}
-					style={popoverStyle}
-					theme={popoverTheme}
-					closeOnClickAway={true}
-					onRequestClose={this.onPopoverRequestClose}
-					anchor={this.anchor}>
-					<Menu onItemSelect={this.onItemSelect} theme={menuTheme}>
-						{React.Children.map(children, this.wrapItem(values)) as any}
-					</Menu>
-				</Popover>
-			</Anchor>
+					value={value}
+					valueText={valueText}
+					onClick={this.onAnchorClick}>
+					<Popover
+						isOpened={isOpened}
+						style={popoverStyle}
+						theme={popoverTheme}
+						closeOnClickAway={true}
+						onRequestClose={this.onPopoverRequestClose}
+						anchor={this.anchor}>
+						<Menu onItemSelect={this.onItemSelect} theme={menuTheme}>
+							{React.Children.map(children, this.wrapItem(values)) as any}
+						</Menu>
+					</Popover>
+				</Anchor>
+			</div>
 		);
 	}
 
@@ -317,7 +274,7 @@ class RawSelectbox extends React.Component<TFullSelectboxProps, TSelectboxState>
 		if (!this.anchor) {
 			return;
 		}
-		const anchor = findDOMNode(this.anchor);
+		const anchor = this.anchor.current;
 		if (anchor instanceof HTMLElement) {
 			anchor.focus();
 		}

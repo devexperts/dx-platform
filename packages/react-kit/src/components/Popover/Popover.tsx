@@ -1,28 +1,26 @@
-import React from 'react';
+import React, { createRef, RefObject } from 'react';
 import ReactDOM from 'react-dom';
-import prefix from '@devexperts/utils/dist/dom/prefix';
+import prefix from '@devexperts/platform-utils/dist/dom/prefix';
 import classnames from 'classnames';
 
 import { PURE } from '../../utils/pure';
 import { BoundsUpdateDetector } from '../BoundsUpdateDetector/BoundsUpdateDetector';
-import throttle from '@devexperts/utils/dist/function/throttle';
+import throttle from '@devexperts/platform-utils/dist/function/throttle';
 
 import { withTheme } from '../../utils/withTheme';
 import { ComponentClass, MouseEventHandler, ReactNode, SyntheticEvent } from 'react';
-import { PartialKeys } from '@devexperts/utils/dist/object/object';
-import { ReactRef } from '../../utils/typings';
+import { PartialKeys } from '@devexperts/platform-utils/dist/object/object';
 import { EventListener } from '../EventListener/EventListener';
-import { RootClose } from '../RootClose/RootClose';
 import { withDefaults } from '../../utils/with-defaults';
-import { findDOMNode } from 'react-dom';
 import {
-	PopoverPlacement,
-	PopoverAlign,
-	movePopoverVertically,
-	TVerticalPosition,
-	THorizontalPosition,
-	movePopoverHorizontally,
-	getPlacementModifier,
+    PopoverPlacement,
+    PopoverAlign,
+    movePopoverVertically,
+    TVerticalPosition,
+    THorizontalPosition,
+    movePopoverHorizontally,
+    getPlacementModifier,
+    isNode,
 } from './Popover.model';
 export { PopoverPlacement, PopoverAlign } from './Popover.model';
 
@@ -38,7 +36,7 @@ export type TFullPopoverProps = {
 	isOpened?: boolean;
 	closeOnClickAway?: boolean;
 	disableCloseOnScroll?: boolean;
-	anchor?: ReactRef;
+	anchor?: RefObject<Element>;
 	onMouseDown?: MouseEventHandler<Element>;
 	placement: PopoverPlacement;
 	align: PopoverAlign;
@@ -81,8 +79,8 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 	readonly state: TPopoverState = {};
 
 	private _needsUpdate = false;
-	private _anchor?: Element;
-	private _popover!: Element;
+	private _anchor = createRef<Element>();
+	private _popover = createRef<HTMLDivElement>();
 	private _popoverSize!: TSize;
 	private rootElement!: Element;
 	private mediaQueryList?: MediaQueryList;
@@ -101,7 +99,7 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 	componentDidMount() {
 		if (this.props.isOpened) {
 			if (this.props.anchor) {
-				const anchorDOMNode = findDOMNode(this.props.anchor);
+				const anchorDOMNode = this.props.anchor;
 				if (!anchorDOMNode || anchorDOMNode instanceof Text) {
 					return;
 				}
@@ -118,6 +116,8 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 
 		window['onbeforeprint'] = this.updatePosition;
 		window['onafterprint'] = this.updatePosition;
+
+		document.addEventListener('click', this.handleDocumentClick, { capture: true });
 	}
 
 	componentWillUnmount() {
@@ -126,23 +126,14 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 		this.mediaQueryList && this.mediaQueryList.removeListener(this.updatePosition);
 		window['onbeforeprint'] = null;
 		window['onafterprint'] = null;
-	}
 
-	componentWillReceiveProps(nextProps: TFullPopoverProps) {
-		if (nextProps.isOpened && nextProps.anchor) {
-			this._needsUpdate = true;
-			const anchorDOMNode = findDOMNode(nextProps.anchor);
-			if (!anchorDOMNode || anchorDOMNode instanceof Text) {
-				return;
-			}
-			this._anchor = anchorDOMNode;
-		}
+		document.removeEventListener('click', this.handleDocumentClick);
 	}
 
 	componentDidUpdate(prevProps: TFullPopoverProps) {
-		//@PURE check is passed here - update anyway
-		if (this._needsUpdate) {
-			/** set in {@link componentWillReceiveProps} */
+		this.setAnchor(this.props);
+
+		if (this.props.isOpened && this._needsUpdate) {
 			this._needsUpdate = false;
 			this._popoverSize = this.getPopoverSize();
 			this.updatePosition();
@@ -150,7 +141,7 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 	}
 
 	render() {
-		const { closeOnClickAway, theme, hasArrow, onMouseDown, isOpened, onRequestClose, anchor } = this.props;
+		const { theme, hasArrow, onMouseDown, isOpened, anchor } = this.props;
 
 		if (!isOpened || !anchor) {
 			return null;
@@ -179,42 +170,57 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 			...this.props.style,
 		};
 
-		let child = (
-			<BoundsUpdateDetector onUpdate={this.onSizeUpdate}>
-				<div
-					ref={(el: any) => (this._popover = el)}
-					style={style}
-					onMouseDown={onMouseDown}
-					onClick={stopPropagation}
-					className={popoverClassName}>
-					<div className={theme.content}>
-						{isMeasured && finalPlacement && finalAlign && hasArrow && (
-							<div
-								className={theme.arrow}
-								style={getArrowStyle(finalPlacement, finalAlign, arrowOffset)}
-							/>
-						)}
-						{this.props.children}
-					</div>
-				</div>
-			</BoundsUpdateDetector>
-		);
-
-		if (closeOnClickAway) {
-			child = <RootClose onRootClose={onRequestClose}>{child}</RootClose>;
-		}
-
 		const target = typeof window !== 'undefined' ? window : 'window';
 
 		return (
 			<EventListener onResize={this.onResize} onScrollCapture={this.onScroll} target={target}>
-				{ReactDOM.createPortal(child, this.rootElement)}
+				{ReactDOM.createPortal(
+					<BoundsUpdateDetector
+						// @ts-ignore
+						ref={this._popover}
+						onUpdate={this.onSizeUpdate}>
+						<div
+							ref={this._popover}
+							style={style}
+							onMouseDown={onMouseDown}
+							onClick={stopPropagation}
+							className={popoverClassName}>
+							<div className={theme.content}>
+								{isMeasured && finalPlacement && finalAlign && hasArrow && (
+									<div
+										className={theme.arrow}
+										style={getArrowStyle(finalPlacement, finalAlign, arrowOffset)}
+									/>
+								)}
+								{this.props.children}
+							</div>
+						</div>
+					</BoundsUpdateDetector>,
+					this.rootElement,
+				)}
 			</EventListener>
 		);
 	}
+	private handleDocumentClick = (e: MouseEvent) => {
+		const { onRequestClose, closeOnClickAway } = this.props;
+		if (isNode(e.target) && !this.rootElement.contains(e.target) && closeOnClickAway && onRequestClose) {
+			onRequestClose();
+		}
+	};
+
+	setAnchor(props: TFullPopoverProps) {
+		if (props.isOpened && props.anchor) {
+			this._needsUpdate = true;
+			const anchorDOMNode = props.anchor.current;
+			if (!anchorDOMNode || anchorDOMNode instanceof Text) {
+				return;
+			}
+			this._anchor = props.anchor;
+		}
+	}
 
 	getPopoverSize(): TSize {
-		const popover = findDOMNode(this._popover) as HTMLElement;
+		const popover = this._popover.current;
 		if (popover instanceof HTMLElement) {
 			return {
 				height: popover.offsetHeight,
@@ -229,7 +235,7 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 
 	private getAnchorProperties(): AnchorProperties | undefined {
 		const container = this.props.container;
-		const anchor = this._anchor;
+		const anchor = this._anchor.current;
 
 		if (container && anchor) {
 			const containerRect = container.getBoundingClientRect();
@@ -334,9 +340,9 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 
 	private onScroll = (event: UIEvent) => {
 		if (this._anchor && this._popover && event.target) {
-			const popoverNode = findDOMNode(this._popover);
+			const popoverNode = this._popover.current;
 			const scrolled = event.target as Node;
-			if (popoverNode && scrolled.contains(this._anchor)) {
+			if (popoverNode && scrolled.contains(this._anchor.current)) {
 				this.handleScroll();
 			}
 		}

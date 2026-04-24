@@ -16,8 +16,8 @@ storiesOf('Table', module).add('default', () => (
 	<Demo>
 		<Table>
 			<THead>
-				<Tr isInHead={true}>
-					<Cell rowSpan={2} theme={firstTheme}>
+				<Tr isInHead={true} attributes={{ 'data-test-id': 'row-test' }}>
+					<Cell rowSpan={2} theme={firstTheme} attributes={{ 'data-test-id': 'cell-test' }}>
 						1
 					</Cell>
 					<Cell style={secondStyle}>2</Cell>

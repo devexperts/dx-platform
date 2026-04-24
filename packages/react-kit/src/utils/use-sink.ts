@@ -1,12 +1,12 @@
 import { URIS, URIS2 } from 'fp-ts/lib/HKT';
 import {
-	MonadObservable,
-	MonadObservable1,
-	MonadObservable2,
-} from '@devexperts/utils/dist/typeclasses/monad-observable/monad-observable';
+    MonadObservable,
+    MonadObservable1,
+    MonadObservable2,
+} from '@devexperts/platform-utils/dist/typeclasses/monad-observable/monad-observable';
 import { useEffect, useMemo } from 'react';
 import { constVoid } from 'fp-ts/lib/function';
-import { Sink1, Sink2, Sink } from '@devexperts/utils/dist/adt/sink.utils';
+import { Sink1, Sink2, Sink } from '@devexperts/platform-utils/dist/adt/sink.utils';
 
 const observerVoid = {
 	next: constVoid,

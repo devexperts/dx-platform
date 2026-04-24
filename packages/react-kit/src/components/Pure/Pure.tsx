@@ -3,7 +3,7 @@ import { shouldComponentUpdate } from '../../utils/pure';
 
 export type TPureProps = {
 	[key: string]: any;
-	children: Function;
+	children?: Function;
 };
 
 export class Pure extends React.Component<TPureProps> {
@@ -16,7 +16,11 @@ export class Pure extends React.Component<TPureProps> {
 	}
 
 	render() {
-		const children: Function = this.props.children;
-		return children();
+		const children: Function | undefined = this.props.children;
+
+		if (children) {
+			return children();
+		}
+		return null;
 	}
 }

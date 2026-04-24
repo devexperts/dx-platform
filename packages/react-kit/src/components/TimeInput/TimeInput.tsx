@@ -1,29 +1,29 @@
 import React from 'react';
 import { ComponentClass, Fragment } from 'react';
 import { PURE } from '../../utils/pure';
-import { KEY_CODE_LETR_MAP, KEY_CODE_NUM_MAP, KeyCode, TControlProps } from '../Control/Control';
+import { KEY_CODE_LETR_MAP, KEY_CODE_NUM_MAP, Key, TControlProps } from '../Control/Control';
 import classnames from 'classnames';
 import { withTheme } from '../../utils/withTheme';
-import { PartialKeys } from '@devexperts/utils/dist/object/object';
+import { PartialKeys } from '@devexperts/platform-utils/dist/object/object';
 import { SteppableInput, TSteppableInputProps } from '../SteppableInput/SteppableInput';
 import { withDefaults } from '../../utils/with-defaults';
 import { none, Option, some, isSome, map, toNullable } from 'fp-ts/lib/Option';
 import {
-	add,
-	findActiveSectionOnKeyLeft,
-	findActiveSectionOnKeyRight,
-	formatNumericValue,
-	formatTimePeriod,
-	isDefined,
-	isTimesDifferent,
-	togglePeriodType,
-	renderSection,
-	MAX_VALID_HOURS_FOR_12H_FORMAT,
-	MAX_VALID_HOURS_FOR_24H_FORMAT,
-	MAX_VALID_MINS_AND_SEC,
-	PeriodType,
-	Section,
-	TTimeInputValue,
+    add,
+    findActiveSectionOnKeyLeft,
+    findActiveSectionOnKeyRight,
+    formatNumericValue,
+    formatTimePeriod,
+    isDefined,
+    isTimesDifferent,
+    togglePeriodType,
+    renderSection,
+    MAX_VALID_HOURS_FOR_12H_FORMAT,
+    MAX_VALID_HOURS_FOR_24H_FORMAT,
+    MAX_VALID_MINS_AND_SEC,
+    PeriodType,
+    Section,
+    TTimeInputValue,
 } from './TimeInput.model';
 import { pipe } from 'fp-ts/lib/pipeable';
 
@@ -197,8 +197,8 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState>
 		const { withSeconds, withPeriodType } = this.props;
 		const { hours, minutes, seconds, periodType } = this.props.value;
 
-		switch (e.keyCode) {
-			case KeyCode.Left: {
+		switch (e.key) {
+			case Key.Left: {
 				e.preventDefault(); //block h-scrolling
 				this.secondInput = false;
 				this.correctTimeAndUpdate();
@@ -207,7 +207,7 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState>
 				});
 				break;
 			}
-			case KeyCode.Right: {
+			case Key.Right: {
 				e.preventDefault(); //block h-scrolling
 				this.secondInput = false;
 				this.correctTimeAndUpdate();
@@ -216,8 +216,8 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState>
 				});
 				break;
 			}
-			case KeyCode.Delete: //fallthrough
-			case KeyCode.Backspace: {
+			case Key.Delete: //fallthrough
+			case Key.Backspace: {
 				this.secondInput = false;
 				switch (activeSection) {
 					case Section.Hours: {
@@ -236,9 +236,9 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState>
 				break;
 			}
 			default: {
-				const keyCode = e.keyCode;
-				const number = KEY_CODE_NUM_MAP[keyCode];
-				const letter = KEY_CODE_LETR_MAP[keyCode];
+				const key = e.key;
+				const number = KEY_CODE_NUM_MAP[key];
+				const letter = KEY_CODE_LETR_MAP[key];
 				if (isDefined(number)) {
 					this.handleDigitKeyDown(number);
 				} else if (isDefined(letter)) {
@@ -252,9 +252,9 @@ class RawTimeInput extends React.Component<TTimeInputFullProps, TTimeInputState>
 		const { hours, minutes, seconds } = this.props.value;
 		const { activeSection } = this.state;
 		if (activeSection === Section.PeriodType) {
-			if (letter === KEY_CODE_LETR_MAP[KeyCode.LETR_A]) {
+			if (letter === KEY_CODE_LETR_MAP[Key.LETR_A]) {
 				this.updateTime(hours, minutes, seconds, some(PeriodType.AM));
-			} else if (letter === KEY_CODE_LETR_MAP[KeyCode.LETR_P]) {
+			} else if (letter === KEY_CODE_LETR_MAP[Key.LETR_P]) {
 				this.updateTime(hours, minutes, seconds, some(PeriodType.PM));
 			}
 		}

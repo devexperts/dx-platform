@@ -2,23 +2,23 @@ import React from 'react';
 import classnames from 'classnames';
 
 import {
-	CONTEXT_TYPES,
-	EVENT_SCROLABLE,
-	SCROLLABLE_CONTEXT_EMITTER,
-	ScrollableInternalEmitter,
+    ScrollableContext,
+    EVENT_SCROLABLE,
+    SCROLLABLE_CONTEXT_EMITTER,
+    ScrollableInternalEmitter,
 } from './Scrollable.const';
 
 import { SCROLLBAR_TYPE } from '../Scrollbar/Scrollbar';
 import { ResizeDetector as BaseResizeDetector, TResizeDetectorProps } from '../ResizeDetector/ResizeDetector';
 import {
-	HorizontalScrollbar as BaseHorizontalScrollbar,
-	THorizontalScrollbarProps,
+    HorizontalScrollbar as BaseHorizontalScrollbar,
+    THorizontalScrollbarProps,
 } from '../Scrollbar/HorizontalScrollbar';
 import { VerticalScrollbar as BaseVerticalScrollbar, TVerticalScrollbarProps } from '../Scrollbar/VerticalScrollbar';
 
 import getScrollbarSize from '../Scrollbar/Scrollbar.util';
 import { withTheme } from '../../utils/withTheme';
-import { PartialKeys } from '@devexperts/utils/dist/object/object';
+import { PartialKeys } from '@devexperts/platform-utils/dist/object/object';
 import { withDefaults } from '../../utils/with-defaults';
 import { Children, cloneElement, Component, ComponentClass, MouseEventHandler, ReactElement } from 'react';
 
@@ -55,7 +55,10 @@ export type ScrollableState = {
 };
 
 export class RawScrollable extends Component<TFullScrollableProps, ScrollableState> {
-	static childContextTypes: any = CONTEXT_TYPES;
+	constructor(props: TFullScrollableProps) {
+		super(props);
+		this._emitter = new ScrollableInternalEmitter();
+	}
 
 	_withHorizontalScrollbar = false;
 	_withVerticalScrollbar = false;
@@ -70,14 +73,6 @@ export class RawScrollable extends Component<TFullScrollableProps, ScrollableSta
 		scrollable: void 0, //eslint-disable-line no-void
 	};
 
-	getChildContext() {
-		const { theme } = this.props;
-		return {
-			size: getScrollbarSize(theme.container as string),
-			[SCROLLABLE_CONTEXT_EMITTER.toString()]: this._emitter,
-		};
-	}
-
 	componentDidMount() {
 		this.setState({
 			container: this._container,
@@ -90,10 +85,6 @@ export class RawScrollable extends Component<TFullScrollableProps, ScrollableSta
 	componentWillUnmount() {
 		this._emitter.off(EVENT_SCROLABLE.SCROLLBAR_UPDATE, this.onScrollbarUpdate);
 		this._emitter.off(EVENT_SCROLABLE.SCROLL, this.onScroll);
-	}
-
-	componentWillMount() {
-		this._emitter = new ScrollableInternalEmitter();
 	}
 
 	onScroll: MouseEventHandler<HTMLDivElement> = event => {
@@ -146,42 +137,49 @@ export class RawScrollable extends Component<TFullScrollableProps, ScrollableSta
 			onResize: this.onResize,
 		};
 
+		const scrollableContextValue = {
+			size: getScrollbarSize(theme.container as string),
+			[SCROLLABLE_CONTEXT_EMITTER]: this._emitter,
+		};
+
 		return (
-			<div className={className} ref={el => (this._scrollable = el)}>
-				<div className={theme.wrapper}>
-					<div className={theme.container} ref={el => (this._container = el)}>
-						<div className={theme.content}>
-							{cloneElement(children, {
-								className: null,
-							})}
-							<ResizeDetector {...resizeDetectorProps} />
+			<ScrollableContext.Provider value={scrollableContextValue}>
+				<div className={className} ref={el => (this._scrollable = el)}>
+					<div className={theme.wrapper}>
+						<div className={theme.container} ref={el => (this._container = el)}>
+							<div className={theme.content}>
+								{cloneElement(children, {
+									className: null,
+								})}
+								<ResizeDetector {...resizeDetectorProps} />
+							</div>
 						</div>
+						{container && [
+							<HorizontalScrollbar
+								ref={(el: any) => (this._horizontalScrollbar = el)}
+								key="horizontalScrollbar"
+								container={container}
+								scrollLeft={this.props.scrollLeft}
+								theme={{
+									bar: theme.horizontal_scrollbar__bar,
+									container: containerClassName,
+								}}
+							/>,
+							<VerticalScrollbar
+								ref={(el: any) => (this._verticalScrollbar = el)}
+								key="verticalScrollbar"
+								container={container}
+								scrollTop={this.props.scrollTop}
+								theme={{
+									bar: theme.vertical_scrollbar__bar,
+									container: containerClassName,
+								}}
+							/>,
+						]}
 					</div>
-					{container && [
-						<HorizontalScrollbar
-							ref={(el: any) => (this._horizontalScrollbar = el)}
-							key="horizontalScrollbar"
-							container={container}
-							scrollLeft={this.props.scrollLeft}
-							theme={{
-								bar: theme.horizontal_scrollbar__bar,
-								container: containerClassName,
-							}}
-						/>,
-						<VerticalScrollbar
-							ref={(el: any) => (this._verticalScrollbar = el)}
-							key="verticalScrollbar"
-							container={container}
-							scrollTop={this.props.scrollTop}
-							theme={{
-								bar: theme.vertical_scrollbar__bar,
-								container: containerClassName,
-							}}
-						/>,
-					]}
+					<ResizeDetector {...resizeDetectorProps} />
 				</div>
-				<ResizeDetector {...resizeDetectorProps} />
-			</div>
+			</ScrollableContext.Provider>
 		);
 	}
 

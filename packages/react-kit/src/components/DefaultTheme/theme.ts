@@ -34,9 +34,6 @@ import vertScrollbar from '../Scrollbar/VerricalScrollbar.demo.styl';
 import { SCROLLABLE } from '../Scrollable/Scrollable';
 import scrollableTheme from '../Scrollable/Scrollable.styl';
 
-import { GRID } from '../Grid/Grid';
-import gridTheme from '../Grid/Grid.styl';
-
 import { BUTTON_ICON } from '../ButtonIcon/ButtonIcon';
 import buttonIconTheme from '../ButtonIcon/ButtonIcon.styl';
 
@@ -88,7 +85,6 @@ export default {
 	[VERTICAL_SCROLLBAR]: vertScrollbar,
 	[SCROLLABLE]: scrollableTheme,
 	[AUTOCOMPLETE]: autocompleteTheme,
-	[GRID]: gridTheme,
 	[BUTTON_ICON]: buttonIconTheme,
 	[DATE_INPUT]: {
 		...dateInputTheme,

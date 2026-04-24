@@ -1,5 +1,5 @@
-import { shallowEqual } from '@devexperts/utils/dist/object/fb';
-import { deepEqual } from '@devexperts/utils/dist/object/object';
+import { shallowEqual } from '@devexperts/platform-utils/dist/object/fb';
+import { deepEqual } from '@devexperts/platform-utils/dist/object/object';
 
 /**
  * Pure render checker

@@ -49,16 +49,13 @@ export const withRX = <P extends object>(Target: ComponentType<P>) => <D extends
 			}
 		}
 
-		UNSAFE_componentWillReceiveProps(props: P) {
-			this.props$.next(props);
-		}
-
 		componentWillUnmount() {
 			this.inputSubscription && this.inputSubscription.unsubscribe();
 			this.effectsSubscription && this.effectsSubscription.unsubscribe();
 		}
 
 		render() {
+			this.props$.next(this.props);
 			return createElement(Target, Object.assign({}, this.selected.defaultProps, this.props, this.state || {}));
 		}
 	}

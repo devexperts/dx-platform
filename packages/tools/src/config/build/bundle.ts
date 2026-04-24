@@ -1,5 +1,5 @@
 import { ROOT, SRC_PATH } from '../env';
-import { Configuration, DefinePlugin } from 'webpack';
+import webpack, { Configuration, DefinePlugin } from 'webpack';
 import {
 	TS_PATTERN,
 	STYLUS_PATTERN,
@@ -59,7 +59,7 @@ const bundleConfig: Configuration = {
 		new DefinePlugin({
 			ROOT_FOLDER: JSON.stringify(ROOT),
 		}),
-	],
+	] as webpack.Plugin[],
 };
 
 export { bundleConfig as default };

@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { RefObject } from 'react';
 import { PURE } from '../../utils/pure';
 import { EventListener, TEventListenerProps } from '../EventListener/EventListener';
 import { Omit } from 'typelevel-ts';
 
 export type TBarProps = {
+	innerRef: RefObject<HTMLDivElement>;
 	onBarDragStart: React.MouseEventHandler<HTMLDivElement>;
 	onBarDrag: React.MouseEventHandler<HTMLDivElement>;
 	theme: {
@@ -22,6 +23,7 @@ export class Bar extends React.Component<TBarProps, TBarState> {
 	};
 
 	render() {
+		const { innerRef } = this.props;
 		const { isDragging } = this.state;
 
 		let eventListenerProps: Omit<TEventListenerProps, 'children'> = {
@@ -47,7 +49,7 @@ export class Bar extends React.Component<TBarProps, TBarState> {
 
 		return (
 			<EventListener {...(eventListenerProps as TEventListenerProps)}>
-				<div {...barProps} />
+				<div {...barProps} ref={innerRef} />
 			</EventListener>
 		);
 	}

@@ -1,13 +1,13 @@
-import React from 'react';
+import React, { RefObject } from 'react';
 import { PURE } from '../../utils/pure';
 import { Button, TButtonProps, TFullButtonProps } from '../Button/Button';
-import { ComponentClass, ReactNode, ReactText } from 'react';
+import { ReactNode, ReactText } from 'react';
 import { Omit } from 'typelevel-ts';
-import { PartialKeys } from '@devexperts/utils/dist/object/object';
+import { PartialKeys } from '@devexperts/platform-utils/dist/object/object';
 import classnames from 'classnames';
 
 export type TFullSelectboxAnchorProps = Omit<TButtonProps, 'theme'> & {
-	theme: TFullButtonProps['theme'] & {
+	theme?: TFullButtonProps['theme'] & {
 		text?: string;
 		content?: string;
 		wrapperCaret?: string;
@@ -18,10 +18,12 @@ export type TFullSelectboxAnchorProps = Omit<TButtonProps, 'theme'> & {
 	caretIcon?: ReactNode;
 	value?: ReactText | ReactText[];
 	valueText?: ReactNode;
+	innerRef?: RefObject<HTMLButtonElement>;
+	children?: ReactNode;
 };
 
 @PURE
-class RawSelectboxAnchor extends React.Component<TFullSelectboxAnchorProps> {
+export class SelectboxAnchor extends React.Component<TFullSelectboxAnchorProps> {
 	render() {
 		const {
 			theme,
@@ -33,24 +35,28 @@ class RawSelectboxAnchor extends React.Component<TFullSelectboxAnchorProps> {
 			caretIcon,
 			onClick,
 			isOpened,
+			innerRef,
+			...buttonProps
 		} = this.props;
 
 		const buttonTheme = {
-			container: classnames(theme.container, {
-				[theme.container_isOpened as string]: isOpened,
+			container: classnames(theme?.container, {
+				[theme?.container_isOpened as string]: isOpened,
 			}),
 		};
 
 		return (
 			<Button
-				onClick={onClick}
 				isDisabled={isDisabled}
 				isLoading={isLoading}
 				isPrimary={isPrimary}
-				theme={buttonTheme}>
-				<div className={theme.content}>
-					<div className={theme.text}>{valueText}</div>
-					<div className={theme.caret}>{caretIcon}</div>
+				theme={buttonTheme}
+				innerRef={innerRef}
+				onClick={onClick}
+				{...buttonProps}>
+				<div className={theme?.content}>
+					<div className={theme?.text}>{valueText}</div>
+					<div className={theme?.caret}>{caretIcon}</div>
 				</div>
 				{children}
 			</Button>
@@ -59,4 +65,3 @@ class RawSelectboxAnchor extends React.Component<TFullSelectboxAnchorProps> {
 }
 
 export type TSelectboxAnchorProps = PartialKeys<TFullSelectboxAnchorProps, 'theme'>;
-export const SelectboxAnchor: ComponentClass<TSelectboxAnchorProps> = RawSelectboxAnchor as any;

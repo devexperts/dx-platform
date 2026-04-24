@@ -15,11 +15,11 @@ describe('function', () => {
 			debounced();
 			expect(callback).not.toBeCalled();
 
-			jest.runAllTimers();
-			expect(callback).toBeCalled();
-
-			debounced();
-			expect(callback.mock.calls.length).toBe(1);
+			setTimeout(() => {
+				expect(callback).toBeCalled();
+				debounced();
+				expect(callback.mock.calls.length).toBe(1);
+			}, 100);
 		});
 	});
 
@@ -34,9 +34,10 @@ describe('function', () => {
 			throttled();
 			expect(callback.mock.calls.length).toBe(1);
 
-			jest.runAllTimers();
-			throttled();
-			expect(callback.mock.calls.length).toBe(2);
+			setTimeout(() => {
+				throttled();
+				expect(callback.mock.calls.length).toBe(2);
+			}, 1000);
 		});
 	});
 

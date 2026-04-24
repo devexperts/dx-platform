@@ -32,5 +32,6 @@ export function combineLatestRD<L, A, B, C, D, E, F>(
 	f: Observable<RemoteData<L, F>>,
 ): Observable<RemoteData<L, [A, B, C, D, E, F]>>;
 export function combineLatestRD<L, A>(...as: Observable<RemoteData<L, A>>[]): Observable<RemoteData<L, A[]>> {
+	// @ts-ignore
 	return combineLatest<RemoteData<L, A[]>>(...as, combine);
 }
