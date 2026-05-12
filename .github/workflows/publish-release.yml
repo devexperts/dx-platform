@@ -1,0 +1,104 @@
+# Publishes all workspaces to GitHub Packages via Lerna (same flow as local
+# `yarn publish:patch|minor|major`). Run from Actions → "Publish release".
+#
+# If branch protection blocks pushes from GITHUB_TOKEN, create a fine-grained PAT
+# with repo contents write + packages write, store it as repo secret GH_PUBLISH_TOKEN,
+# and set checkout token to that secret in this file.
+
+name: Publish release
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_type:
+        description: Semantic bump applied to every package (--force-publish=*)
+        required: true
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+      skip_tests:
+        description: Skip tests before publishing (not recommended)
+        required: false
+        type: boolean
+        default: false
+
+concurrency:
+  group: publish-release-${{ github.repository }}
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
+
+    env:
+      NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # act copies the host .git/config; SSH remotes and core.sshCommand break
+      # `git remote update` inside Docker (no keys, no ssh host aliases).
+      - name: Normalize Git for nektos/act
+        if: ${{ env.ACT == 'true' }}
+        run: |
+          git config --local --unset-all core.sshCommand 2>/dev/null || true
+          url=$(git remote get-url origin)
+          if [[ "$url" == git@* ]]; then
+            path="${url#*:}"
+            path="${path%.git}"
+            url="https://github.com/${path}.git"
+          fi
+          git remote set-url origin "$url"
+
+      # Pin Node for native addons (@parcel/watcher, etc.). Without this, act’s
+      # default image can use Node 24+ and `yarn install` fails at the link step.
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          # No `cache: yarn` here: act’s runner image has no yarn on PATH yet
+          # (Corepack runs in the next step). GitHub-hosted runners are fine without it.
+          registry-url: https://npm.pkg.github.com
+          scope: "@devexperts"
+
+      - name: Enable Corepack (Yarn 4 / Berry)
+        run: |
+          corepack enable
+          corepack prepare yarn@4.13.0 --activate
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Build packages
+        run: yarn lerna run prepare
+
+      - name: Test
+        if: ${{ inputs.skip_tests == false }}
+        run: yarn test
+
+      - name: Git user for Lerna
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Publish to GitHub Packages (Lerna)
+        if: ${{ env.ACT != 'true' }}
+        run: |
+          ./node_modules/.bin/lerna publish ${{ inputs.release_type }} \
+            --force-publish=* \
+            --yes \
+            --registry https://npm.pkg.github.com
+
+      - name: Skip publish under act
+        if: ${{ env.ACT == 'true' }}
+        run: |
+          echo "Skipping lerna publish in act (avoids git tags, pushes, and registry writes)."
+          echo "Install and build steps above match what runs on GitHub Actions before publish."
