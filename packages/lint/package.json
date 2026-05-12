@@ -5,7 +5,7 @@
   "main": "dist",
   "module": "dist",
   "publishConfig": {
-    "registry": "https://nexus.in.devexperts.com/repository/npm-dx-private/"
+    "registry": "https://github.com/devexperts/dx-platform"
   },
   "author": "devexperts",
   "dependencies": {
