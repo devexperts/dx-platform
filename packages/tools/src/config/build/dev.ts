@@ -45,12 +45,11 @@ const devConfig: Configuration = {
 					{
 						exclude: FILE_LOADER_EXCLUDES,
 						use: [fileLoader],
-					} as any, // typings for webpack doesn't support default case properly
+					},
 				],
 			},
 		],
 	},
-	// @ts-ignore
 	plugins: [createHtmlPlugin(), createForkTSCheckerPlugin()],
 };
 

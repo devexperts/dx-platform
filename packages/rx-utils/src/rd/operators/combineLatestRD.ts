@@ -1,5 +1,6 @@
-import { combineLatest, Observable } from 'rxjs';
+import { combineLatest, Observable, map } from 'rxjs';
 import { combine, RemoteData } from '@devexperts/remote-data-ts';
+import { pipe } from 'fp-ts/lib/pipeable';
 
 export function combineLatestRD<L, A, B>(
 	a: Observable<RemoteData<L, A>>,
@@ -32,6 +33,21 @@ export function combineLatestRD<L, A, B, C, D, E, F>(
 	f: Observable<RemoteData<L, F>>,
 ): Observable<RemoteData<L, [A, B, C, D, E, F]>>;
 export function combineLatestRD<L, A>(...as: Observable<RemoteData<L, A>>[]): Observable<RemoteData<L, A[]>> {
-	// @ts-ignore
-	return combineLatest<RemoteData<L, A[]>>(...as, combine);
+	return pipe(
+		combineLatest(as),
+		map(data => {
+			switch (data.length) {
+				case 2:
+					return combine(data[0], data[1]);
+				case 3:
+					return combine(data[0], data[1], data[2]);
+				case 4:
+					return combine(data[0], data[1], data[2], data[3]);
+				case 5:
+					return combine(data[0], data[1], data[2], data[3], data[4]);
+				default:
+					return combine(data[0], data[1], data[2], data[3], data[4], data[5]);
+			}
+		}),
+	);
 }

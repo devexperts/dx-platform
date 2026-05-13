@@ -178,6 +178,7 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 			<EventListener onResize={this.onResize} onScrollCapture={this.onScroll} target={target}>
 				{ReactDOM.createPortal(
 					<BoundsUpdateDetector
+						// TODO: ref as function returns BoundsUpdateDetector(?)
 						// @ts-ignore
 						ref={this._popover}
 						onUpdate={this.onSizeUpdate}>
