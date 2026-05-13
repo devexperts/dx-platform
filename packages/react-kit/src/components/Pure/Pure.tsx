@@ -1,10 +1,9 @@
-import React from 'react';
+import React, { PropsWithChildren } from 'react';
 import { shouldComponentUpdate } from '../../utils/pure';
 
-export type TPureProps = {
+export type TPureProps = PropsWithChildren<{
 	[key: string]: any;
-	children?: Function;
-};
+}>;
 
 export class Pure extends React.Component<TPureProps> {
 	shouldComponentUpdate(newProps: TPureProps, newState: TPureProps) {
@@ -16,7 +15,7 @@ export class Pure extends React.Component<TPureProps> {
 	}
 
 	render() {
-		const children: Function | undefined = this.props.children;
+		const children = typeof this.props.children === 'function' ? (this.props.children as Function) : undefined;
 
 		if (children) {
 			return children();

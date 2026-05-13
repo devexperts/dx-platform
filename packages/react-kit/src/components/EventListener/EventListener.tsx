@@ -1,4 +1,4 @@
-import React, { ReactNode, ReactPortal } from 'react';
+import React, { PropsWithChildren, ReactNode, ReactPortal } from 'react';
 import { PURE } from '../../utils/pure';
 import { shallowEqual } from '@devexperts/platform-utils/dist/object/fb';
 
@@ -6,13 +6,14 @@ type Handlers = {
 	[onEvent: string]: Function;
 };
 
-export type TEventListenerProps = {
-	capture?: boolean;
-	target: EventTarget | string;
-	children: ReactNode | ReactPortal;
-} & {
-	[onEvent: string]: Function | boolean | string | object | undefined;
-};
+export type TEventListenerProps = PropsWithChildren<
+	{
+		capture?: boolean;
+		target: EventTarget | string;
+	} & {
+		[onEvent: string]: Function | boolean | string | object | undefined;
+	}
+>;
 
 const ON_MARKER = 'on';
 const CAPTURE_MARKER = 'Capture';

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropsWithChildren } from 'react';
 import ReactDOM from 'react-dom';
 
 export type TSize = {
@@ -6,10 +6,9 @@ export type TSize = {
 	height: number;
 };
 
-export type TBoundsUpdateDetectorProps = {
+export type TBoundsUpdateDetectorProps = PropsWithChildren<{
 	onUpdate: (size: TSize) => void;
-	children: any;
-};
+}>;
 
 export class BoundsUpdateDetector extends React.Component<TBoundsUpdateDetectorProps> {
 	private size!: TSize;

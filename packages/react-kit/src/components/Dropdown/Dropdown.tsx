@@ -1,6 +1,6 @@
-import React, { createRef } from 'react';
+import React, { createRef, PropsWithChildren } from 'react';
 import { PURE } from '../../utils/pure';
-import { Component, ComponentClass, ComponentType, MouseEventHandler, ReactNode } from 'react';
+import { Component, ComponentClass, ComponentType, MouseEventHandler } from 'react';
 import { Popover, TPopoverProps } from '../Popover/Popover';
 import { WithInnerRef } from '../../utils/typings';
 import { withTheme } from '../../utils/withTheme';
@@ -10,19 +10,22 @@ import { withDefaults } from '../../utils/with-defaults';
 
 export const DROPDOWN = Symbol('Dropdown') as symbol;
 
-export type TAnchorProps = WithInnerRef<{
-	onClick: MouseEventHandler<Element>;
-	children: ReactNode;
-}>;
+export type TAnchorProps = PropsWithChildren<
+	WithInnerRef<{
+		onClick: MouseEventHandler<Element>;
+	}>
+>;
 
-export type TFullDropdownProps = TControlProps<boolean | undefined, 'isOpened', 'onToggle'> & {
-	Anchor: ComponentType<TAnchorProps>;
-	Popover: ComponentType<TPopoverProps>;
-	theme: {
-		Popover?: TPopoverProps['theme'];
-	};
-	hasArrow?: boolean;
-};
+export type TFullDropdownProps = PropsWithChildren<
+	TControlProps<boolean | undefined, 'isOpened', 'onToggle'> & {
+		Anchor: ComponentType<TAnchorProps>;
+		Popover: ComponentType<TPopoverProps>;
+		theme: {
+			Popover?: TPopoverProps['theme'];
+		};
+		hasArrow?: boolean;
+	}
+>;
 
 @PURE
 class RawDropdown extends Component<TFullDropdownProps> {

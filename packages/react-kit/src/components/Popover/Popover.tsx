@@ -1,4 +1,4 @@
-import React, { createRef, RefObject } from 'react';
+import React, { createRef, PropsWithChildren, RefObject } from 'react';
 import ReactDOM from 'react-dom';
 import prefix from '@devexperts/platform-utils/dist/dom/prefix';
 import classnames from 'classnames';
@@ -8,19 +8,19 @@ import { BoundsUpdateDetector } from '../BoundsUpdateDetector/BoundsUpdateDetect
 import throttle from '@devexperts/platform-utils/dist/function/throttle';
 
 import { withTheme } from '../../utils/withTheme';
-import { ComponentClass, MouseEventHandler, ReactNode, SyntheticEvent } from 'react';
+import { ComponentClass, MouseEventHandler, SyntheticEvent } from 'react';
 import { PartialKeys } from '@devexperts/platform-utils/dist/object/object';
 import { EventListener } from '../EventListener/EventListener';
 import { withDefaults } from '../../utils/with-defaults';
 import {
-    PopoverPlacement,
-    PopoverAlign,
-    movePopoverVertically,
-    TVerticalPosition,
-    THorizontalPosition,
-    movePopoverHorizontally,
-    getPlacementModifier,
-    isNode,
+	PopoverPlacement,
+	PopoverAlign,
+	movePopoverVertically,
+	TVerticalPosition,
+	THorizontalPosition,
+	movePopoverHorizontally,
+	getPlacementModifier,
+	isNode,
 } from './Popover.model';
 export { PopoverPlacement, PopoverAlign } from './Popover.model';
 
@@ -31,8 +31,7 @@ type TSize = {
 
 export const POPOVER = Symbol('Popover') as symbol;
 
-export type TFullPopoverProps = {
-	children: ReactNode;
+export type TFullPopoverProps = PropsWithChildren<{
 	isOpened?: boolean;
 	closeOnClickAway?: boolean;
 	disableCloseOnScroll?: boolean;
@@ -54,7 +53,7 @@ export type TFullPopoverProps = {
 		arrow?: string;
 	};
 	style?: object;
-};
+}>;
 
 type TPopoverState = {
 	finalPlacement?: PopoverPlacement;
@@ -154,6 +153,9 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 		let style;
 		let popoverClassName = classnames(theme.container);
 		if (isMeasured && finalPlacement) {
+			const placementModifier = getPlacementModifier(finalPlacement);
+			const placementClass = theme[`container_${placementModifier}`];
+
 			style = prefix({
 				transform: `translate(${left || 0}px, ${top || 0}px)`,
 			});
@@ -162,7 +164,7 @@ class RawPopover extends React.Component<TFullPopoverProps, TPopoverState> {
 				{
 					[theme.container_hasArrow as string]: hasArrow,
 				},
-				[getPlacementModifier(finalPlacement)].map(mod => theme[`container_${mod}`]),
+				placementClass,
 			);
 		}
 		style = {

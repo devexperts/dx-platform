@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropsWithChildren } from 'react';
 import {
     List,
     ListItem,
@@ -25,11 +25,12 @@ export type TMenuChildProps = {
 	onSelect?: (value: ReactText) => void;
 };
 
-export type TFullMenuProps = TFullListProps & {
-	List: ComponentType<TListProps>;
-	onItemSelect?: (value: ReactText) => void;
-	children: ReactChildren<ReactElement<TMenuChildProps>>;
-};
+export type TFullMenuProps = PropsWithChildren<
+	TFullListProps & {
+		List: ComponentType<TListProps>;
+		onItemSelect?: (value: ReactText) => void;
+	}
+>;
 
 class RawMenu extends React.Component<TFullMenuProps> {
 	render() {
@@ -67,7 +68,6 @@ export type TFullMenuItemProps = TFullListItemProps & {
 	isActive?: boolean;
 	onSelect?: (value: ReactText) => void; //this is injected by Menu/MenuItemGroup
 	text?: string;
-	children?: ReactNode;
 };
 
 @PURE

@@ -2,17 +2,17 @@ import React from 'react';
 import classnames from 'classnames';
 
 import {
-    ScrollableContext,
-    EVENT_SCROLABLE,
-    SCROLLABLE_CONTEXT_EMITTER,
-    ScrollableInternalEmitter,
+	ScrollableContext,
+	EVENT_SCROLABLE,
+	SCROLLABLE_CONTEXT_EMITTER,
+	ScrollableInternalEmitter,
 } from './Scrollable.const';
 
 import { SCROLLBAR_TYPE } from '../Scrollbar/Scrollbar';
 import { ResizeDetector as BaseResizeDetector, TResizeDetectorProps } from '../ResizeDetector/ResizeDetector';
 import {
-    HorizontalScrollbar as BaseHorizontalScrollbar,
-    THorizontalScrollbarProps,
+	HorizontalScrollbar as BaseHorizontalScrollbar,
+	THorizontalScrollbarProps,
 } from '../Scrollbar/HorizontalScrollbar';
 import { VerticalScrollbar as BaseVerticalScrollbar, TVerticalScrollbarProps } from '../Scrollbar/VerticalScrollbar';
 
