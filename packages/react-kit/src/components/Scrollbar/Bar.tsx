@@ -1,10 +1,10 @@
-import React, { RefObject } from 'react';
+import React, { Ref } from 'react';
 import { PURE } from '../../utils/pure';
 import { EventListener, TEventListenerProps } from '../EventListener/EventListener';
 import { Omit } from 'typelevel-ts';
 
 export type TBarProps = {
-	innerRef: RefObject<HTMLDivElement>;
+	innerRef: Ref<HTMLDivElement>;
 	onBarDragStart: React.MouseEventHandler<HTMLDivElement>;
 	onBarDrag: React.MouseEventHandler<HTMLDivElement>;
 	theme: {

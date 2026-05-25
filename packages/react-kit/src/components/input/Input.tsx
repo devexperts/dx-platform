@@ -1,14 +1,14 @@
-import React, { createRef, RefObject, FocusEvent, Component, ChangeEvent, ReactNode } from 'react';
+import React, { createRef, FocusEvent, Component, ChangeEvent, ReactNode, Ref } from 'react';
 import classnames from 'classnames';
 import { PURE } from '../../utils/pure';
 import { TControlProps } from '../Control/Control';
 import {
-    ChangeEventHandler,
-    ComponentClass,
-    FocusEventHandler,
-    KeyboardEventHandler,
-    MouseEventHandler,
-    WheelEventHandler,
+	ChangeEventHandler,
+	ComponentClass,
+	FocusEventHandler,
+	KeyboardEventHandler,
+	MouseEventHandler,
+	WheelEventHandler,
 } from 'react';
 import { PartialKeys } from '@devexperts/platform-utils/dist/object/object';
 import { withTheme } from '../../utils/withTheme';
@@ -28,7 +28,7 @@ export type TFullInputProps = TControlProps<string | undefined> & {
 	id?: string;
 	error?: ReactNode; //for possible Input Class extensions
 	isFocused?: boolean;
-	innerRef?: RefObject<HTMLDivElement>;
+	innerRef?: Ref<HTMLDivElement>;
 
 	onChange?: ChangeEventHandler<HTMLInputElement>;
 	onFocus?: FocusEventHandler<HTMLElement>;

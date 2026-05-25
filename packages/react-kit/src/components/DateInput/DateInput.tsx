@@ -1,4 +1,4 @@
-import React, { ComponentType, createRef, RefObject } from 'react';
+import React, { ComponentType, createRef, Ref } from 'react';
 import { ComponentClass } from 'react';
 import { createPortal } from 'react-dom';
 import { TSteppableInputProps, SteppableInput, checkParentsUpTo } from '../SteppableInput/SteppableInput';
@@ -12,17 +12,17 @@ import { Popover, TPopoverProps } from '../Popover/Popover';
 import { withDefaults } from '../../utils/with-defaults';
 import { Option, none, some, isSome, map, toNullable, alt, chain } from 'fp-ts/lib/Option';
 import {
-    TDateInputState,
-    ActiveSection,
-    DateFormatType,
-    isDatesDifferent,
-    toObjectDate,
-    format,
-    buildDateOption,
-    decrementMonthOption,
-    incrementMonthOption,
-    TDateInputValue,
-    inc,
+	TDateInputState,
+	ActiveSection,
+	DateFormatType,
+	isDatesDifferent,
+	toObjectDate,
+	format,
+	buildDateOption,
+	decrementMonthOption,
+	incrementMonthOption,
+	TDateInputValue,
+	inc,
 } from './DateInput.model';
 import { pipe } from 'fp-ts/lib/pipeable';
 
@@ -55,7 +55,7 @@ type TDateDefaultProps = {
 	ButtonIcon: ComponentClass<TButtonIconProps>;
 	Popover: ComponentClass<TPopoverProps> | React.SFC<TPopoverProps>;
 	dateFormatType: DateFormatType;
-	innerRef?: RefObject<HTMLElement>;
+	innerRef?: Ref<HTMLElement>;
 };
 
 export type TDateInputInjectedProps = {

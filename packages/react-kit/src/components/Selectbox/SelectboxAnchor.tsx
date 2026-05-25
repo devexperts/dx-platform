@@ -1,4 +1,4 @@
-import React, { RefObject } from 'react';
+import React, { Ref } from 'react';
 import { PURE } from '../../utils/pure';
 import { Button, TButtonProps, TFullButtonProps } from '../Button/Button';
 import { ReactNode, ReactText } from 'react';
@@ -18,7 +18,7 @@ export type TFullSelectboxAnchorProps = Omit<TButtonProps, 'theme'> & {
 	caretIcon?: ReactNode;
 	value?: ReactText | ReactText[];
 	valueText?: ReactNode;
-	innerRef?: RefObject<HTMLButtonElement>;
+	innerRef?: Ref<HTMLButtonElement>;
 	children?: ReactNode;
 };
 

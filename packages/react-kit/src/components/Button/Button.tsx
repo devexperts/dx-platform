@@ -1,4 +1,4 @@
-import React, { ReactNode, RefObject } from 'react';
+import React, { ReactNode, Ref } from 'react';
 import classnames from 'classnames';
 import { PURE } from '../../utils/pure';
 import { LoadingIndicator, TLoadingIndicatorProps } from '../LoadingIndicator/LoadingIndicator';
@@ -45,7 +45,7 @@ export type TFullButtonProps = {
 	onTouchMove?: EventHandler<TouchEvent<HTMLButtonElement>>;
 	onTouchStart?: EventHandler<TouchEvent<HTMLButtonElement>>;
 	tabIndex?: number;
-	innerRef?: RefObject<HTMLButtonElement>;
+	innerRef?: Ref<HTMLButtonElement>;
 	children?: ReactNode;
 };
 
