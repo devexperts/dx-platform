@@ -4,6 +4,7 @@ import { withTheme } from '../../utils/withTheme';
 import { ComponentClass, MouseEventHandler, ReactNode } from 'react';
 import { PartialKeys } from '@devexperts/platform-utils/dist/object/object';
 import { PURE } from '../../utils/pure';
+import { objectToClassnames } from '../../utils/classnames';
 
 export const LIST = Symbol('List');
 
@@ -43,7 +44,7 @@ class RawList extends Component<TFullListProps> {
 export type TListProps = PartialKeys<TFullListProps, 'theme'>;
 export const List: ComponentClass<TListProps> = withTheme(LIST)(RawList);
 
-type ItemTheme = Record<string, string | undefined> & {
+type ItemTheme = Record<string, string | undefined | any> & {
 	item?: string;
 	item_level_0?: string;
 	item_level_1?: string;
@@ -114,7 +115,8 @@ class RawListItemGroup extends Component<TFullListItemGroupProps> {
 	private renderContent = (level: number) => {
 		const { theme = {}, isCollapsed, children, header, onClick } = this.props;
 		const itemGroupModifier = `itemGroup_level_${level}` as ItemGroupThemeLevel;
-		const className = classnames(theme.itemGroup, theme[itemGroupModifier], {
+		const itemGroupClassnames = objectToClassnames(theme[itemGroupModifier]);
+		const className = classnames(itemGroupClassnames, {
 			[theme.itemGroup_isCollapsed as string]: isCollapsed,
 		});
 

@@ -7,6 +7,9 @@ export type THoldableChildProps = {
 	onMouseDown: EventHandler<MouseEvent<Element>>;
 	onMouseUp: EventHandler<MouseEvent<Element>>;
 	onMouseLeave: EventHandler<MouseEvent<Element>>;
+	onTouchStart: EventHandler<TouchEvent<Element>>;
+	onTouchEnd: EventHandler<TouchEvent<Element>>;
+	onTouchCancel: EventHandler<TouchEvent<Element>>;
 };
 
 export type TFullHoldableProps = PropsWithChildren<{
