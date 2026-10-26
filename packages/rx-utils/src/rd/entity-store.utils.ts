@@ -3,7 +3,7 @@ import { Observable, ReplaySubject, of } from 'rxjs';
 import { RemoteData, remoteData, isSuccess, success } from '@devexperts/remote-data-ts';
 import { array } from 'fp-ts/lib/Array';
 import { Predicate } from 'fp-ts/lib/function';
-import { isNotNullable } from '@devexperts/utils/dist/object/object';
+import { isNotNullable } from '@devexperts/platform-utils/dist/object/object';
 import { LiveData } from './live-data.utils';
 import { filter, map, distinctUntilChanged, switchMap, tap, multicast, refCount } from 'rxjs/operators';
 import { tapRD } from './operators/tapRD';

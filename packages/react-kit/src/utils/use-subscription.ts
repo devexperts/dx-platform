@@ -4,9 +4,9 @@ import {
 	MonadObservable1,
 	MonadObservable2,
 	MonadObservable2C,
-} from '@devexperts/utils/dist/typeclasses/monad-observable/monad-observable';
+	Observer,
+} from '@devexperts/platform-utils/dist/typeclasses/monad-observable/monad-observable';
 import { useEffect, useMemo } from 'react';
-import { Observer } from '@devexperts/utils/src/typeclasses/monad-observable/monad-observable';
 import { constVoid } from 'fp-ts/lib/function';
 
 const voidObserver: Observer<unknown> = {

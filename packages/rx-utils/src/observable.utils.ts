@@ -1,9 +1,9 @@
 import { observable as rxjs, URI } from 'fp-ts-rxjs/lib/Observable';
-import { MonadObservable1 } from '@devexperts/utils/dist/typeclasses/monad-observable/monad-observable';
+import { MonadObservable1 } from '@devexperts/platform-utils/dist/typeclasses/monad-observable/monad-observable';
 import { Observable, Subject } from 'rxjs';
 import { pipe, pipeable } from 'fp-ts/lib/pipeable';
 import { share, shareReplay, switchMap } from 'rxjs/operators';
-import { fromPromise } from 'rxjs/internal-compatibility';
+import { from } from 'rxjs';
 import { task } from 'fp-ts/lib/Task';
 
 export const instanceObservable: typeof rxjs & MonadObservable1<URI> = {
@@ -34,8 +34,8 @@ export const instanceObservable: typeof rxjs & MonadObservable1<URI> = {
 				},
 			}),
 		),
-	fromTask: fa => fromPromise(fa()),
-	fromIO: fa => fromPromise(task.fromIO(fa)()),
+	fromTask: fa => from(fa()),
+	fromIO: fa => from(task.fromIO(fa)()),
 	subscribe: (fa, observer) =>
 		fa.subscribe({
 			next(e) {

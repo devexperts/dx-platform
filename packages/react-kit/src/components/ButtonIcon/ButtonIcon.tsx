@@ -3,7 +3,7 @@ import { Button, TButtonProps } from '../Button/Button';
 import { PURE } from '../../utils/pure';
 import { ComponentClass, ComponentType } from 'react';
 import { withTheme } from '../../utils/withTheme';
-import { PartialKeys } from '@devexperts/utils/dist/object/object';
+import { PartialKeys } from '@devexperts/platform-utils/dist/object/object';
 import { withDefaults } from '../../utils/with-defaults';
 
 export const BUTTON_ICON = Symbol('ButtonIcon') as symbol;

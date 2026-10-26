@@ -1,24 +1,23 @@
-import React from 'react';
+import React, { PropsWithChildren } from 'react';
 import { PURE } from '../../utils/pure';
 import { ComponentClass, ReactElement } from 'react';
 import { withTheme } from '../../utils/withTheme';
-import { PartialKeys } from '@devexperts/utils/dist/object/object';
+import { PartialKeys } from '@devexperts/platform-utils/dist/object/object';
 
 export const EXPANDABLE_HEADER = Symbol() as symbol;
 
-export type TFullExpandableHandlerProps = {
+export type TFullExpandableHandlerProps = PropsWithChildren<{
 	isExpanded?: boolean;
 	theme: {
 		container?: string;
 	};
-	children: ReactElement<any>;
-};
+}>;
 
 @PURE
 class RawExpandableHandler extends React.Component<TFullExpandableHandlerProps> {
 	render() {
 		const { theme, children } = this.props;
-		return <div className={theme.container}>{children}</div>;
+		return <div className={theme.container}>{children as ReactElement<any>}</div>;
 	}
 }
 

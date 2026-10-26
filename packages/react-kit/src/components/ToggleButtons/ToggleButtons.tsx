@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { PropsWithChildren } from 'react';
 import { Component, ReactElement, ComponentClass, ReactText } from 'react';
 import { PURE } from '../../utils/pure';
 import classnames from 'classnames';
 import { mergeThemes, withTheme } from '../../utils/withTheme';
-import { PartialKeys } from '@devexperts/utils/dist/object/object';
+import { PartialKeys } from '@devexperts/platform-utils/dist/object/object';
 
 export const TOGGLE_BUTTONS = Symbol('ToggleButtons') as symbol;
 
@@ -18,8 +18,7 @@ export type TToggleButtonsChildProps = {
 	onClick?: () => void;
 };
 
-export type TFullToggleButtonsProps = {
-	children: ReactElement<TToggleButtonsChildProps>[];
+export type TFullToggleButtonsProps = PropsWithChildren<{
 	isDisabled?: boolean;
 	isVertical?: boolean;
 	toggleIndex?: number;
@@ -32,7 +31,7 @@ export type TFullToggleButtonsProps = {
 		container__item?: string;
 		container__item_active?: string;
 	};
-};
+}>;
 
 type TToggleButtonsState = {
 	toggleIndex: number;
@@ -44,19 +43,18 @@ class RawToggleButtons extends Component<TFullToggleButtonsProps, TToggleButtons
 		toggleIndex: 0,
 	};
 
-	componentWillMount() {
+	componentDidMount() {
 		const { toggleIndex, defaultIndex } = this.props;
 		this.setState({
 			toggleIndex: typeof toggleIndex !== 'undefined' ? toggleIndex : defaultIndex || 0,
 		});
 	}
 
-	componentWillReceiveProps(newProps: TFullToggleButtonsProps) {
+	static getDerivedStateFromProps(newProps: TFullToggleButtonsProps, state: TToggleButtonsState) {
 		if (typeof newProps.toggleIndex !== 'undefined') {
-			this.setState({
-				toggleIndex: newProps.toggleIndex,
-			});
+			return { ...state, toggleIndex: newProps.toggleIndex };
 		}
+		return null;
 	}
 
 	render() {
@@ -64,7 +62,7 @@ class RawToggleButtons extends Component<TFullToggleButtonsProps, TToggleButtons
 		return <div className={theme.container__wrapper}>{React.Children.map(children, this.renderToggleItem)}</div>;
 	}
 
-	renderToggleItem = (child: ReactElement<TToggleButtonsChildProps> | ReactText, i: number) => {
+	renderToggleItem = (child: React.ReactNode, i: number) => {
 		if (!React.isValidElement<TToggleButtonsChildProps>(child)) {
 			return child;
 		}

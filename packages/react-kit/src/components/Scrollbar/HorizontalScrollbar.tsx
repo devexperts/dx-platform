@@ -4,7 +4,7 @@ import { Scrollbar, SCROLLBAR_TYPE, TScrollbarProps } from './Scrollbar';
 import { EVENT_SCROLABLE, SCROLLABLE_CONTEXT_EMITTER } from '../Scrollable/Scrollable.const';
 
 import { PURE } from '../../utils/pure';
-import { PartialKeys } from '@devexperts/utils/dist/object/object';
+import { PartialKeys } from '@devexperts/platform-utils/dist/object/object';
 import { withTheme } from '../../utils/withTheme';
 
 export const HORIZONTAL_SCROLLBAR = Symbol('HorizontalScrollbar') as symbol;
@@ -29,7 +29,9 @@ export class RawHorizontalScrollbar extends Scrollbar<TAdditionalHorizontalProps
 	 * @protected
 	 */
 	_getMinBarSize() {
-		return parseFloat(window.getComputedStyle(this._bar).getPropertyValue('min-width'));
+		return this._bar.current
+			? parseFloat(window.getComputedStyle(this._bar.current).getPropertyValue('min-width'))
+			: 0;
 	}
 
 	/**
@@ -56,10 +58,10 @@ export class RawHorizontalScrollbar extends Scrollbar<TAdditionalHorizontalProps
 		}
 	}
 
-	componentWillReceiveProps(newProps: TFullHorizontalProps) {
-		if (this.props.scrollLeft !== newProps.scrollLeft) {
-			if (newProps.scrollLeft) {
-				this._scrollTo(newProps.scrollLeft);
+	componentDidUpdate(prevProps: TFullHorizontalProps) {
+		if (this.props.scrollLeft !== prevProps.scrollLeft) {
+			if (this.props.scrollLeft) {
+				this._scrollTo(this.props.scrollLeft);
 			}
 		}
 	}
@@ -90,18 +92,22 @@ export class RawHorizontalScrollbar extends Scrollbar<TAdditionalHorizontalProps
 		const { container } = this.props;
 		const visibleWidth = container.clientWidth;
 		const barWidth = Math.ceil(visibleWidth * this._ratio.size);
-		this._bar.style.width = `${barWidth}px`;
+		if (this._bar.current) {
+			this._bar.current.style.width = `${barWidth}px`;
+		}
 
 		//position
 		const scrollLeft = container.scrollLeft;
 		const barPositionLeft = Math.floor(scrollLeft * this._ratio.position);
-		this._bar.style.left = `${barPositionLeft}px`;
+		if (this._bar.current) {
+			this._bar.current.style.left = `${barPositionLeft}px`;
+		}
 	}
 
 	_getRatio() {
 		if (this._container && this._track) {
 			const { scrollWidth: scrollSize, clientWidth: containerSize } = this._container;
-			const { offsetWidth: trackSize } = this._track;
+			const trackSize = this._track.current?.offsetWidth || 0;
 			const sizeRatio = trackSize / scrollSize;
 			const possibleBarSize = containerSize * sizeRatio;
 			const barSize = possibleBarSize < this._minBarSize ? this._minBarSize : possibleBarSize;
@@ -148,7 +154,9 @@ export class RawHorizontalScrollbar extends Scrollbar<TAdditionalHorizontalProps
 	onTrackClick = (event: React.MouseEvent<HTMLDivElement>) => {
 		if (this._track && this._container) {
 			const trackPosition =
-				this._track.getBoundingClientRect().left + window.pageXOffset - document.documentElement.clientLeft;
+				(this._track.current?.getBoundingClientRect().left || 0) +
+				window.pageXOffset -
+				document.documentElement.clientLeft;
 
 			this._container.scrollLeft = Math.floor((event.clientX - trackPosition) / this._ratio.position);
 		}

@@ -1,18 +1,19 @@
-import React from 'react';
+import React, { PropsWithChildren } from 'react';
 
 import { storiesOf } from '@storybook/react';
 import { Demo } from '../demo/Demo';
 import { Dropdown } from './Dropdown';
-import { Component, MouseEventHandler, ReactNode, SFC } from 'react';
+import { Component, MouseEventHandler, SFC } from 'react';
 import { Button } from '../Button/Button';
 import { WithInnerRef } from '../../utils/typings';
 import { PURE } from '../../utils/pure';
 import { stateful } from '../Control/Control';
 
-type TAnchorProps = WithInnerRef<{
-	onClick: MouseEventHandler<Element>;
-	children: ReactNode;
-}>;
+type TAnchorProps = PropsWithChildren<
+	WithInnerRef<{
+		onClick: MouseEventHandler<Element>;
+	}>
+>;
 
 const StatefulDropdown = stateful('isOpened', 'onToggle')(Dropdown);
 
@@ -24,7 +25,7 @@ class AnchorClass extends Component<TAnchorProps> {
 		console.log('rendering anchor class');
 
 		return (
-			<Button ref={innerRef} onClick={onClick}>
+			<Button innerRef={innerRef} onClick={onClick}>
 				Class Anchor
 				{children}
 			</Button>
@@ -35,7 +36,7 @@ class AnchorClass extends Component<TAnchorProps> {
 const AnchorSFC: SFC<TAnchorProps> = props => {
 	const { innerRef, children, onClick } = props;
 	return (
-		<Button ref={innerRef} onClick={onClick}>
+		<Button innerRef={innerRef} onClick={onClick}>
 			SFC Anchor
 			{children}
 		</Button>

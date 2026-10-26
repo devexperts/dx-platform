@@ -53,7 +53,7 @@ module.exports = async ({ config }: { config: Configuration }): Promise<Configur
 			new webpack.DefinePlugin({
 				SRC_PATH: JSON.stringify(ENV.SRC_PATH),
 			}),
-		],
+		] as webpack.Plugin[],
 		resolve: {
 			symlinks: true,
 			extensions: ['.ts', '.tsx', '.js', '.jsx', '.styl'],

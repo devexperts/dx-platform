@@ -1,21 +1,23 @@
-import React from 'react';
-import { ReactElement, EventHandler, MouseEvent, TouchEvent } from 'react';
-import { PartialKeys } from '@devexperts/utils/dist/object/object';
+import React, { PropsWithChildren, ReactElement } from 'react';
+import { EventHandler, MouseEvent, TouchEvent } from 'react';
+import { PartialKeys } from '@devexperts/platform-utils/dist/object/object';
 import { withDefaults } from '../../utils/with-defaults';
 
 export type THoldableChildProps = {
 	onMouseDown: EventHandler<MouseEvent<Element>>;
 	onMouseUp: EventHandler<MouseEvent<Element>>;
 	onMouseLeave: EventHandler<MouseEvent<Element>>;
+	onTouchStart: EventHandler<TouchEvent<Element>>;
+	onTouchEnd: EventHandler<TouchEvent<Element>>;
+	onTouchCancel: EventHandler<TouchEvent<Element>>;
 };
 
-export type TFullHoldableProps = {
-	children: ReactElement<THoldableChildProps>;
+export type TFullHoldableProps = PropsWithChildren<{
 	onHold: Function;
 	delay: number;
 	interval: number;
 	isDisabled?: boolean;
-};
+}>;
 
 class RawHoldable extends React.Component<TFullHoldableProps> {
 	private _timeoutId: any;
@@ -37,10 +39,10 @@ class RawHoldable extends React.Component<TFullHoldableProps> {
 	}
 
 	render() {
-		const { children } = this.props;
-		const { onMouseDown, onMouseUp, onMouseLeave, onTouchStart, onTouchEnd, onTouchCancel } = children.props;
+		const child = React.Children.only(this.props.children) as ReactElement<THoldableChildProps>;
+		const { onMouseDown, onMouseUp, onMouseLeave, onTouchStart, onTouchEnd, onTouchCancel } = child.props;
 
-		return React.cloneElement(React.Children.only(children), {
+		return React.cloneElement(child, {
 			onMouseDown: (e: MouseEvent<Element>) => {
 				this.onStartHold();
 				onMouseDown && onMouseDown(e);

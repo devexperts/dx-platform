@@ -1,5 +1,4 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React, { createRef, FocusEvent, Component, ChangeEvent, ReactNode, Ref } from 'react';
 import classnames from 'classnames';
 import { PURE } from '../../utils/pure';
 import { TControlProps } from '../Control/Control';
@@ -11,9 +10,8 @@ import {
 	MouseEventHandler,
 	WheelEventHandler,
 } from 'react';
-import { PartialKeys } from '@devexperts/utils/dist/object/object';
+import { PartialKeys } from '@devexperts/platform-utils/dist/object/object';
 import { withTheme } from '../../utils/withTheme';
-import { ReactRef } from '../../utils/typings';
 
 export const INPUT = Symbol('Input') as symbol;
 
@@ -28,8 +26,9 @@ export type TFullInputProps = TControlProps<string | undefined> & {
 	pattern?: string;
 	name?: string;
 	id?: string;
-	error?: React.ReactNode; //for possible Input Class extensions
-	innerRef?: (instance: ReactRef) => void;
+	error?: ReactNode; //for possible Input Class extensions
+	isFocused?: boolean;
+	innerRef?: Ref<HTMLDivElement>;
 
 	onChange?: ChangeEventHandler<HTMLInputElement>;
 	onFocus?: FocusEventHandler<HTMLElement>;
@@ -60,7 +59,7 @@ type TInputState = {
 };
 
 @PURE
-class RawInput extends React.Component<TFullInputProps, TInputState> {
+class RawInput extends Component<TFullInputProps, TInputState> {
 	static defaultProps = {
 		tabIndex: 0,
 	};
@@ -69,7 +68,7 @@ class RawInput extends React.Component<TFullInputProps, TInputState> {
 		isFocused: false,
 	};
 
-	private input!: React.ReactInstance | null;
+	private input = createRef<HTMLInputElement>();
 	private isFocusingOnInput!: boolean;
 
 	render() {
@@ -97,12 +96,20 @@ class RawInput extends React.Component<TFullInputProps, TInputState> {
 			pattern,
 			id,
 			onWheel,
+			isFocused,
+			onValueChange,
+			innerRef,
+			...inputProps
 		} = this.props;
 
-		const { isFocused } = this.state;
+		const isFocusedDefined = isFocused !== undefined;
+
+		const isFocusedInput = isFocusedDefined ? isFocused : this.state.isFocused;
+		const onFocusHandler = isFocusedDefined ? this.props.onFocus : this.onFocus;
+		const onBlurHandler = isFocusedDefined ? this.props.onBlur : this.onBlur;
 
 		const className = classnames(theme.container, {
-			[theme.container_isFocused as string]: !isDisabled && isFocused,
+			[theme.container_isFocused as string]: !isDisabled && isFocusedInput,
 			[theme.container_isDisabled as string]: isDisabled,
 			[theme.container_isReadOnly as string]: isReadOnly,
 			[theme.container_hasError as string]: Boolean(error),
@@ -124,15 +131,15 @@ class RawInput extends React.Component<TFullInputProps, TInputState> {
 				onMouseUp={onMouseUp}
 				onMouseEnter={onMouseEnter}
 				onMouseLeave={onMouseLeave}
-				onFocus={this.onFocus}
-				onBlur={this.onBlur}
+				onFocus={onFocusHandler}
+				onBlur={onBlurHandler}
 				onWheel={onWheel}
-				tabIndex={!isCustom && (isFocused || isDisabled) ? -1 : tabIndex}
-				ref={this.getRef}
+				tabIndex={!isCustom && (isFocusedInput || isDisabled) ? -1 : tabIndex}
+				ref={innerRef}
 				{...(isCustom && keyboardEvents)}>
 				<input
 					className={theme.input}
-					ref={el => (this.input = el)}
+					ref={this.input}
 					value={value}
 					type={type}
 					min={min}
@@ -145,23 +152,16 @@ class RawInput extends React.Component<TFullInputProps, TInputState> {
 					readOnly={isReadOnly}
 					disabled={isDisabled}
 					{...(!isCustom && keyboardEvents)}
+					{...inputProps}
 				/>
 				{children}
 			</div>
 		);
 	}
 
-	private getRef = (input: ReactRef<HTMLElement>): void => {
-		const { innerRef } = this.props;
-
-		if (innerRef) {
-			innerRef(input);
-		}
-	};
-
-	onFocus = (e: React.FocusEvent<HTMLElement>) => {
-		if (!this.props.isDisabled && !this.state.isFocused && !this.isFocusingOnInput && this.input) {
-			const input = ReactDOM.findDOMNode(this.input) as HTMLElement;
+	private onFocus = (e: FocusEvent<HTMLElement>) => {
+		if (!this.props.isDisabled && !this.isFocusingOnInput && this.input) {
+			const input = this.input.current;
 			if (input) {
 				this.isFocusingOnInput = true;
 				input.focus();
@@ -170,22 +170,22 @@ class RawInput extends React.Component<TFullInputProps, TInputState> {
 			this.setState({
 				isFocused: true,
 			});
-			this.props.onFocus && this.props.onFocus(e);
+			this.props.onFocus?.(e);
 		}
 	};
 
-	onBlur = (e: React.FocusEvent<HTMLElement>) => {
-		if (!this.props.isDisabled && this.state.isFocused && !this.isFocusingOnInput) {
+	private onBlur = (e: FocusEvent<HTMLElement>) => {
+		if (!this.props.isDisabled && !this.isFocusingOnInput) {
 			this.setState({
 				isFocused: false,
 			});
-			this.props.onBlur && this.props.onBlur(e);
+			this.props.onBlur?.(e);
 		}
 	};
 
-	onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+	private onChange = (e: ChangeEvent<HTMLInputElement>) => {
 		this.props.onValueChange && this.props.onValueChange(e.target.value);
-		this.props.onChange && this.props.onChange(e);
+		this.props.onChange?.(e);
 	};
 }
 

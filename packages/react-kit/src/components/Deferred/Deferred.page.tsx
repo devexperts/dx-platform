@@ -9,19 +9,19 @@ type TDeferredPageState = {
 };
 
 class DeferredPage extends PureComponent<{}, TDeferredPageState> {
-	readonly state = {
-		counter: 0,
-	};
-
-	private interval!: number;
-
-	componentWillMount() {
+	constructor(props: {}) {
+		super(props);
 		this.interval = window.setInterval(() => {
 			this.setState({
 				counter: this.state.counter + 1,
 			});
 		}, 3000);
 	}
+	readonly state = {
+		counter: 0,
+	};
+
+	private interval!: number;
 
 	componentWillUnmount() {
 		clearInterval(this.interval);

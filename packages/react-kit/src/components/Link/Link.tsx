@@ -1,14 +1,13 @@
-import React from 'react';
+import React, { PropsWithChildren } from 'react';
 import { PURE } from '../../utils/pure';
 import classnames from 'classnames';
 import { MouseEvent, EventHandler, ComponentClass } from 'react';
 import { withTheme } from '../../utils/withTheme';
-import { PartialKeys } from '@devexperts/utils/dist/object/object';
+import { PartialKeys } from '@devexperts/platform-utils/dist/object/object';
 
 export const LINK = Symbol('Link') as symbol;
 
-export type TFullLinkProps = {
-	children: React.ReactNode;
+export type TFullLinkProps = PropsWithChildren<{
 	href?: string;
 	target?: string;
 	rel?: string;
@@ -20,7 +19,7 @@ export type TFullLinkProps = {
 		container?: string;
 		container_isDisabled?: string;
 	};
-};
+}>;
 
 @PURE
 class RawLink extends React.Component<TFullLinkProps> {

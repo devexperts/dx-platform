@@ -1,9 +1,9 @@
-import { Component, ReactNode } from 'react';
+import { Component, ReactNode, RefObject } from 'react';
 
 export type ReactRef<P = any> = Component<P> | Element | null;
 
 export type WithInnerRef<P> = P & {
-	innerRef: (instance: ReactRef) => void;
+	innerRef: RefObject<HTMLButtonElement>;
 };
 
 export type ReactChildren<C extends ReactNode> = C | C[];

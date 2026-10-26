@@ -1,16 +1,14 @@
-import React from 'react';
+import React, { Ref } from 'react';
 import { PURE } from '../../utils/pure';
-import { ComponentClass, ComponentType, ReactElement } from 'react';
-import ReactDOM from 'react-dom';
+import { ComponentType, ReactElement } from 'react';
 import { withTheme } from '../../utils/withTheme';
-import { PartialKeys } from '@devexperts/utils/dist/object/object';
+import { PartialKeys } from '@devexperts/platform-utils/dist/object/object';
 import { ButtonIcon, TButtonIconProps } from '../ButtonIcon/ButtonIcon';
 import { Input, TInputProps } from '../input/Input';
-import { KeyCode } from '../Control/Control';
+import { Key } from '../Control/Control';
 import { Holdable } from '../Holdable/Holdable';
 import { withDefaults } from '../../utils/with-defaults';
 import { constUndefined } from 'fp-ts/lib/function';
-import { ReactRef } from '../../utils/typings';
 
 export const STEPPABLE_INPUT = Symbol('SteppableInput') as symbol;
 
@@ -30,7 +28,7 @@ export type TFullSteppableInputProps = TPickedInputProps & {
 	incrementIcon?: ReactElement<any>;
 	decrementIcon?: ReactElement<any>;
 	clearIcon?: ReactElement<any>;
-	innerRef?: (instance: ReactRef) => void;
+	innerRef?: Ref<HTMLDivElement>;
 	children?: any;
 	Input: ComponentType<TInputProps>;
 	ButtonIcon: ComponentType<TButtonIconProps>;
@@ -48,13 +46,13 @@ type TSteppableInputState = {
 
 @PURE
 class RawSteppableInput extends React.Component<TFullSteppableInputProps, TSteppableInputState> {
-	readonly state: TSteppableInputState = {};
+	readonly state: TSteppableInputState = { isFocused: false };
 
 	componentDidUpdate(prevProps: TFullSteppableInputProps) {
 		if (prevProps.onClear && !this.props.onClear) {
 			//when removing clear button from dom component wierdly loses focus
-			const element = ReactDOM.findDOMNode(this) as HTMLElement;
-			element.focus();
+			const element = this.props.innerRef?.current;
+			element?.focus();
 		}
 	}
 
@@ -77,6 +75,7 @@ class RawSteppableInput extends React.Component<TFullSteppableInputProps, TStepp
 			onMouseLeave,
 			Input,
 			ButtonIcon,
+			...inputProps
 		} = this.props;
 
 		const { isFocused } = this.state;
@@ -99,8 +98,9 @@ class RawSteppableInput extends React.Component<TFullSteppableInputProps, TStepp
 				isDisabled={isDisabled}
 				error={error}
 				tabIndex={isFocused || isDisabled ? -1 : tabIndex || 0}
+				isFocused={isFocused}
 				innerRef={innerRef}>
-				<div className={theme.inner}>
+				<div {...inputProps} className={theme.inner}>
 					{children}
 					{onClear && clearIcon && (
 						<ButtonIcon
@@ -183,12 +183,12 @@ class RawSteppableInput extends React.Component<TFullSteppableInputProps, TStepp
 
 	private onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
 		if (!this.props.isDisabled) {
-			switch (e.keyCode) {
-				case KeyCode.Up: {
+			switch (e.key) {
+				case Key.Up: {
 					this.props.onIncrement && this.props.onIncrement();
 					break;
 				}
-				case KeyCode.Down: {
+				case Key.Down: {
 					this.props.onDecrement && this.props.onDecrement();
 					break;
 				}
@@ -213,7 +213,7 @@ class RawSteppableInput extends React.Component<TFullSteppableInputProps, TStepp
 }
 
 export type TSteppableInputProps = PartialKeys<TFullSteppableInputProps, 'theme' | 'Input' | 'ButtonIcon'>;
-export const SteppableInput: ComponentClass<TSteppableInputProps> = withTheme(STEPPABLE_INPUT)(
+export const SteppableInput = withTheme(STEPPABLE_INPUT)(
 	withDefaults<TFullSteppableInputProps, 'Input' | 'ButtonIcon'>({
 		Input,
 		ButtonIcon,

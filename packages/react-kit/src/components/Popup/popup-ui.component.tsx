@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { PropsWithChildren } from 'react';
 import { PURE } from '../../utils/pure';
 import classnames from 'classnames';
 import { Component, MouseEventHandler, ReactNode } from 'react';
 import { ReactRef } from '../../utils/typings';
 
-export type TRawPopupUIProps = {
+export type TRawPopupUIProps = PropsWithChildren<{
 	theme: {
 		container?: string;
 		header?: string;
@@ -14,13 +14,12 @@ export type TRawPopupUIProps = {
 		backdrop_isModal?: string;
 		backdrop_closeOnClickAway?: string;
 	};
-	children: ReactNode;
 	header?: ReactNode;
 	footer?: ReactNode;
 
 	isModal?: boolean;
 	shouldCloseOnClickAway?: boolean;
-};
+}>;
 
 export type TRawPopupUIFullProps = TRawPopupUIProps & {
 	innerRef?: (instance: ReactRef) => void;

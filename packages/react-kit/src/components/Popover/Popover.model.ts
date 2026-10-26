@@ -404,7 +404,7 @@ export function movePopoverHorizontally({
 	return undefined;
 }
 
-export function getPlacementModifier(placement: PopoverPlacement): string {
+export function getPlacementModifier(placement: PopoverPlacement) {
 	switch (placement) {
 		case PopoverPlacement.Bottom: {
 			return 'placementBottom';
@@ -420,3 +420,5 @@ export function getPlacementModifier(placement: PopoverPlacement): string {
 		}
 	}
 }
+
+export const isNode = (e: unknown): e is Node => e instanceof Node;

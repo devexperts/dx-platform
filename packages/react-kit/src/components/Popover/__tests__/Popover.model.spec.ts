@@ -1,14 +1,14 @@
 import {
-	PopoverPlacement,
-	PopoverAlign,
-	TVerticalMoveProps,
-	TVerticalPosition,
-	movePopoverVertically,
-	THorizontalMoveProps,
-	THorizontalPosition,
-	movePopoverHorizontally,
+    PopoverPlacement,
+    PopoverAlign,
+    TVerticalMoveProps,
+    TVerticalPosition,
+    movePopoverVertically,
+    THorizontalMoveProps,
+    THorizontalPosition,
+    movePopoverHorizontally,
 } from '../Popover.model';
-import { PartialKeys } from '@devexperts/utils/dist/object/object';
+import { PartialKeys } from '@devexperts/platform-utils/dist/object/object';
 
 const createMoveVertically: (
 	defaultProps: PartialKeys<TVerticalMoveProps, 'placement'>,

@@ -1,68 +1,67 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { ComponentClass } from 'react';
 import { Omit } from 'typelevel-ts';
-import SFC = React.SFC;
 
-export enum KeyCode {
-	Escape = 27,
-	Left = 37,
-	Up = 38,
-	Down = 40,
-	Right = 39,
-	Delete = 46,
-	Tab = 9,
-	Enter = 13,
-	Backspace = 8,
-	N0 = 48,
-	N1 = 49,
-	N2 = 50,
-	N3 = 51,
-	N4 = 52,
-	N5 = 53,
-	N6 = 54,
-	N7 = 55,
-	N8 = 56,
-	N9 = 57,
-	NUM0 = 96,
-	NUM1 = 97,
-	NUM2 = 98,
-	NUM3 = 99,
-	NUM4 = 100,
-	NUM5 = 101,
-	NUM6 = 102,
-	NUM7 = 103,
-	NUM8 = 104,
-	NUM9 = 105,
-	LETR_A = 65,
-	LETR_P = 80,
+export enum Key {
+	Escape = 'Escape',
+	Left = 'ArrowLeft',
+	Up = 'ArrowUp',
+	Down = 'ArrowDown',
+	Right = 'ArrowRight',
+	Delete = 'Delete',
+	Tab = 'Tab',
+	Enter = 'Enter',
+	Backspace = 'Backspace',
+	N0 = '0',
+	N1 = '1',
+	N2 = '2',
+	N3 = '3',
+	N4 = '4',
+	N5 = '5',
+	N6 = '6',
+	N7 = '7',
+	N8 = '8',
+	N9 = '9',
+	NUM0 = '0',
+	NUM1 = '1',
+	NUM2 = '2',
+	NUM3 = '3',
+	NUM4 = '4',
+	NUM5 = '5',
+	NUM6 = '6',
+	NUM7 = '7',
+	NUM8 = '8',
+	NUM9 = '9',
+	LETR_A = 'a',
+	LETR_P = 'p',
 }
 
-export const KEY_CODE_NUM_MAP: { [code: number]: number } = {
-	[KeyCode.N0]: 0,
-	[KeyCode.N1]: 1,
-	[KeyCode.N2]: 2,
-	[KeyCode.N3]: 3,
-	[KeyCode.N4]: 4,
-	[KeyCode.N5]: 5,
-	[KeyCode.N6]: 6,
-	[KeyCode.N7]: 7,
-	[KeyCode.N8]: 8,
-	[KeyCode.N9]: 9,
-	[KeyCode.NUM0]: 0,
-	[KeyCode.NUM1]: 1,
-	[KeyCode.NUM2]: 2,
-	[KeyCode.NUM3]: 3,
-	[KeyCode.NUM4]: 4,
-	[KeyCode.NUM5]: 5,
-	[KeyCode.NUM6]: 6,
-	[KeyCode.NUM7]: 7,
-	[KeyCode.NUM8]: 8,
-	[KeyCode.NUM9]: 9,
+export const KEY_CODE_NUM_MAP: { [key: string]: number } = {
+	[Key.N0]: 0,
+	[Key.N1]: 1,
+	[Key.N2]: 2,
+	[Key.N3]: 3,
+	[Key.N4]: 4,
+	[Key.N5]: 5,
+	[Key.N6]: 6,
+	[Key.N7]: 7,
+	[Key.N8]: 8,
+	[Key.N9]: 9,
+	[Key.NUM0]: 0,
+	[Key.NUM1]: 1,
+	[Key.NUM2]: 2,
+	[Key.NUM3]: 3,
+	[Key.NUM4]: 4,
+	[Key.NUM5]: 5,
+	[Key.NUM6]: 6,
+	[Key.NUM7]: 7,
+	[Key.NUM8]: 8,
+	[Key.NUM9]: 9,
 };
 
-export const KEY_CODE_LETR_MAP: { [code: number]: string } = {
-	[KeyCode.LETR_A]: 'A',
-	[KeyCode.LETR_P]: 'P',
+export const KEY_CODE_LETR_MAP: { [key: string]: string } = {
+	[Key.LETR_A]: 'A',
+	[Key.LETR_P]: 'P',
 };
 
 //tslint:disable max-line-length
@@ -118,15 +117,16 @@ export function stateful<
 	H extends string = 'onValueChange'
 >(valueName: N = 'value' as any, handlerName: H = 'onValueChange' as any, defaultValueName: D = 'defaultValue' as any) {
 	return function decorate<V, P extends TCP<V, N, H>>(
-		Target: SFC<P & TCP<V, N, H>> | CC<P & TCP<V, N, H>>,
+		Target: FC<P & TCP<V, N, H>> | CC<P & TCP<V, N, H>>,
 	): TResult<P, V, N, D, H> {
 		class Stateful extends React.Component<TStatefulProps<P, V, N, D, H>, TStatefulState<V>> {
 			static displayName = `Stateful(${Target.displayName || Target.name || 'Component'})`;
 
-			componentWillMount() {
-				this.setState({
-					value: this.props[defaultValueName] as any,
-				});
+			constructor(props: TStatefulProps<P, V, N, D, H>) {
+				super(props);
+				this.state = {
+					value: props[defaultValueName],
+				};
 			}
 
 			render() {

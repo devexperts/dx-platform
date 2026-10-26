@@ -1,9 +1,9 @@
 import Demo from '../demo/Demo';
 import { Button } from './Button';
-import React from 'react';
+import React, { CSSProperties } from 'react';
 import { storiesOf } from '@storybook/react';
 
-const demoStyle = {
+const demoStyle: CSSProperties = {
 	fontWeight: 'bold',
 	color: 'blue',
 };

@@ -5,7 +5,7 @@ import { sequenceT } from 'fp-ts/lib/Apply';
 import { array } from 'fp-ts/lib/Array';
 import { Semigroup } from 'fp-ts/lib/Semigroup';
 import { Monoid } from 'fp-ts/lib/Monoid';
-import { getSink, Sink1 } from '@devexperts/utils/dist/adt/sink.utils';
+import { getSink, Sink1 } from '@devexperts/platform-utils/dist/adt/sink.utils';
 import { instanceObservable } from './observable.utils';
 
 export interface Sink<A> extends Sink1<typeof instanceObservable.URI, A> {}

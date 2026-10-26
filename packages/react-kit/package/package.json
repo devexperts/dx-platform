@@ -1,0 +1,67 @@
+{
+  "name": "@devexperts/platform-react-kit",
+  "version": "1.0.0-alpha.30",
+  "description": "",
+  "main": "dist",
+  "module": "dist",
+  "scripts": {
+    "lint": "eslint ./**/*.{ts,tsx}",
+    "lint:fix": "yarn lint --fix",
+    "test": "jest",
+    "build": "dx-tools build-lib src dist --failOnError --project tsconfig.build.json",
+    "pack": "npm pack",
+    "clean": "dx-tools clean dist",
+    "prepare": "yarn clean && yarn build",
+    "start": "dx-tools storybook",
+    "watch": "dx-tools build-lib src dist -w --project tsconfig.build.json",
+    "storybook:build": "build-storybook -o .out -c ../../node_modules/@devexperts/tools/dist/config/storybook",
+    "storybook:deploy": "storybook-to-ghpages --ci --existing-output-dir=.out --host-token-env-variable=GITHUB_TOKEN",
+    "storybook:publish": "yarn storybook:build && yarn storybook:deploy"
+  },
+  "publishConfig": {
+    "registry": "https://github.com/devexperts/dx-platform"
+  },
+  "author": "devexperts",
+  "dependencies": {
+    "@devexperts/platform-utils": "^1.0.0",
+    "@devexperts/remote-data-ts": "^2.0.0",
+    "@types/classnames": ">=2.2.3",
+    "@types/node": ">=8.5.2",
+    "classnames": "^2.2.5",
+    "date-fns": "^1.29.0",
+    "element-resize-detector": "^1.1.12",
+    "hoist-non-react-statics": "^2.5.0",
+    "react-css-themr": "2.1.2",
+    "rxjs": "7.5.7",
+    "tslib": "^2.5.0",
+    "typelevel-ts": "^0.3.5"
+  },
+  "peerDependencies": {
+    "@types/react": "^16.9.2",
+    "@types/react-dom": "^16.9.0",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0"
+  },
+  "devDependencies": {
+    "@devexperts/platform-tools": "^1.0.0-alpha.30",
+    "@storybook/addon-actions": "^5.3.5",
+    "@storybook/addon-info": "^5.3.5",
+    "@storybook/addon-knobs": "^5.3.5",
+    "@storybook/react": "^6.5.16",
+    "@storybook/storybook-deployer": "^2.8.1",
+    "@types/enzyme": "^3.10.7",
+    "@types/enzyme-adapter-react-16": "^1.0.5",
+    "@types/jest": "^24.0.18",
+    "@types/react": "^16.9.2",
+    "@types/react-dom": "^16.9.0",
+    "enzyme": "^3.10.7",
+    "enzyme-adapter-react-16": "^1.14.0",
+    "eslint": "^8.34.0",
+    "fast-check": "^1.20.1",
+    "fp-ts": "^2.0.5",
+    "jsdom": "^15.1.1",
+    "jsdom-global": "^3.0.2",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0"
+  }
+}

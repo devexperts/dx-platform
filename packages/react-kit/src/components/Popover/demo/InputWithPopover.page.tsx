@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createRef } from 'react';
 import { Input } from '../../input/Input';
 import { Popover } from '../Popover';
 import { PopoverPlacement, PopoverAlign } from '../Popover.model';
@@ -12,7 +12,7 @@ type TInputWithPopoverPageState = Readonly<{
 }>;
 
 export class InputWithPopoverPage extends React.PureComponent<{}, TInputWithPopoverPageState> {
-	private anchor: HTMLElement | null = null;
+	private anchor = createRef<HTMLElement>();
 
 	readonly state: TInputWithPopoverPageState = {
 		isOpened: false,

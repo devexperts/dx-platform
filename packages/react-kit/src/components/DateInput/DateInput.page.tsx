@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createRef, RefObject } from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { AddIcon } from '../../icons/add-icon';
@@ -14,7 +14,6 @@ import { ToggleButtons } from '../ToggleButtons/ToggleButtons';
 import { some, none } from 'fp-ts/lib/Option';
 import { TDateInputValue, DateFormatType } from './DateInput.model';
 import { ReactRef } from '../../utils/typings';
-import { findDOMNode } from 'react-dom';
 
 const Stateful = stateful()(DateInput);
 const onChange = (value: TDateInputValue) => action('change')(value);
@@ -38,7 +37,7 @@ type TDateInputPageState = Readonly<{
 }>;
 
 class DateInputPage extends React.Component<any, TDateInputPageState> {
-	private endDateInput: ReactRef<HTMLElement> | null = null;
+	private endDateInput = createRef<HTMLInputElement>();
 	private target: any;
 	readonly state: TDateInputPageState = {
 		value: { day: some(1), month: some(1), year: some(2018) },
@@ -171,7 +170,7 @@ class DateInputPage extends React.Component<any, TDateInputPageState> {
 							onClear={onClear}
 							error={error}
 							defaultValue={{ day: none, month: none, year: none }}
-							innerRef={this.getEndDateRef}
+							innerRef={this.endDateInput}
 							onFocus={this.onEndDateFocus}
 							onBlur={this.onEndDateBlur}
 							isDisabled={isDisabled}
@@ -198,24 +197,20 @@ class DateInputPage extends React.Component<any, TDateInputPageState> {
 		}
 	};
 
-	private onFocus = (reference: React.ReactInstance) => {
-		const element = findDOMNode(reference);
+	private onFocus = (reference: RefObject<HTMLElement>) => {
+		const element = reference.current;
 
 		if (element instanceof HTMLElement) {
 			element.focus();
 		}
 	};
 
-	private onBlur = (reference: React.ReactInstance) => {
-		const element = findDOMNode(reference);
+	private onBlur = (reference: RefObject<HTMLElement>) => {
+		const element = reference.current;
 
 		if (element instanceof HTMLElement) {
 			element.blur();
 		}
-	};
-
-	private getEndDateRef = (input: ReactRef<HTMLElement>): void => {
-		this.endDateInput = input;
 	};
 
 	private getToggleIndex() {

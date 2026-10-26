@@ -1,32 +1,33 @@
-import React from 'react';
-import split from '@devexperts/utils/dist/string/split';
+import React, { PropsWithChildren } from 'react';
+import split from '@devexperts/platform-utils/dist/string/split';
 import { PURE } from '../../utils/pure';
 import { withTheme } from '../../utils/withTheme';
-import { PartialKeys } from '@devexperts/utils/dist/object/object';
+import { PartialKeys } from '@devexperts/platform-utils/dist/object/object';
 import { ComponentClass, ReactNode } from 'react';
 import { withDefaults } from '../../utils/with-defaults';
 
 export const HIGHLIGHT = Symbol('Mark') as symbol;
 
-export type TFullHighlightProps = {
+export type TFullHighlightProps = PropsWithChildren<{
 	search: string;
-	children: string;
 	theme: {
 		mark?: string;
 		container?: string;
 	};
-};
+}>;
 
 @PURE
 class RawHighlight extends React.Component<TFullHighlightProps> {
 	render() {
 		const { search, children, theme } = this.props;
 
+		const text = typeof children === 'string' ? children : String(children ?? '');
+
 		let result;
 		if (this.props.search === '') {
-			result = children;
+			result = text;
 		} else {
-			const splitted = split(children, search, false);
+			const splitted = split(text, search, false);
 			result = splitted.reduce<ReactNode[]>((acc, el, i) => {
 				if (el.trim() !== '') {
 					acc.push(

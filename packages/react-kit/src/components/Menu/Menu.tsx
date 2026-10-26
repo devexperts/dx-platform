@@ -1,18 +1,18 @@
-import React from 'react';
+import React, { PropsWithChildren } from 'react';
 import {
-	List,
-	ListItem,
-	ListItemGroup,
-	TFullListItemGroupProps,
-	TFullListItemProps,
-	TFullListProps,
-	TListItemGroupProps,
-	TListItemProps,
-	TListProps,
+    List,
+    ListItem,
+    ListItemGroup,
+    TFullListItemGroupProps,
+    TFullListItemProps,
+    TFullListProps,
+    TListItemGroupProps,
+    TListItemProps,
+    TListProps,
 } from '../List/List';
 import { withTheme } from '../../utils/withTheme';
 import { Component, ComponentClass, ComponentType, ReactElement, ReactNode, ReactText } from 'react';
-import { PartialKeys } from '@devexperts/utils/dist/object/object';
+import { PartialKeys } from '@devexperts/platform-utils/dist/object/object';
 import { PURE } from '../../utils/pure';
 import classnames from 'classnames';
 import { Pure } from '../Pure/Pure';
@@ -25,11 +25,12 @@ export type TMenuChildProps = {
 	onSelect?: (value: ReactText) => void;
 };
 
-export type TFullMenuProps = TFullListProps & {
-	List: ComponentType<TListProps>;
-	onItemSelect?: (value: ReactText) => void;
-	children: ReactChildren<ReactElement<TMenuChildProps>>;
-};
+export type TFullMenuProps = PropsWithChildren<
+	TFullListProps & {
+		List: ComponentType<TListProps>;
+		onItemSelect?: (value: ReactText) => void;
+	}
+>;
 
 class RawMenu extends React.Component<TFullMenuProps> {
 	render() {
@@ -67,7 +68,6 @@ export type TFullMenuItemProps = TFullListItemProps & {
 	isActive?: boolean;
 	onSelect?: (value: ReactText) => void; //this is injected by Menu/MenuItemGroup
 	text?: string;
-	children?: ReactNode;
 };
 
 @PURE
@@ -117,20 +117,11 @@ type TMenuItemGroupState = {
 
 @PURE
 class RawMenuItemGroup extends React.Component<TFullMenuItemGroupProps, TMenuItemGroupState> {
-	state = {
-		isCollapsed: true,
-	};
-
-	componentWillMount() {
-		this.setState({
-			isCollapsed: this.props.isCollapsed,
-		});
-	}
-
-	componentWillReceiveProps(props: TFullMenuItemGroupProps) {
-		this.setState({
+	constructor(props: TFullMenuItemGroupProps) {
+		super(props);
+		this.state = {
 			isCollapsed: props.isCollapsed,
-		});
+		};
 	}
 
 	render() {
@@ -146,7 +137,7 @@ class RawMenuItemGroup extends React.Component<TFullMenuItemGroupProps, TMenuIte
 				<Pure check={children}>
 					{() =>
 						React.isValidElement(children) &&
-						React.cloneElement(React.Children.only(children), {
+						React.cloneElement(React.Children.only<ReactElement>(children), {
 							onItemSelect: this.props.onSelect,
 						})
 					}

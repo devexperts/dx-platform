@@ -1,6 +1,6 @@
 import { getEq, Option, some, map, alt, getOrElse } from 'fp-ts/lib/Option';
 import { getStructEq, Eq, eqNumber } from 'fp-ts/lib/Eq';
-import { eqUnknown } from '@devexperts/utils/dist/typeclasses/eq/eq.utils';
+import { eqUnknown } from '@devexperts/platform-utils/dist/typeclasses/eq/eq.utils';
 import { pipe } from 'fp-ts/lib/pipeable';
 
 export type TTimeInputValue = {

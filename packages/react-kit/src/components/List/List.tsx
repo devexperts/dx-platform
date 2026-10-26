@@ -1,99 +1,122 @@
-import React from 'react';
+import React, { Component, createContext, PropsWithChildren } from 'react';
 import classnames from 'classnames';
 import { withTheme } from '../../utils/withTheme';
 import { ComponentClass, MouseEventHandler, ReactNode } from 'react';
-import { PartialKeys } from '@devexperts/utils/dist/object/object';
+import { PartialKeys } from '@devexperts/platform-utils/dist/object/object';
 import { PURE } from '../../utils/pure';
+import { objectToClassnames } from '../../utils/classnames';
 
-export const LIST = Symbol('List') as symbol;
-const CONTEXT_LEVEL_KEY = '__LIST_CONTEXT_LEVEL_KEY__';
-const CONTEXT_TYPES: any = {
-	[CONTEXT_LEVEL_KEY]() {},
+export const LIST = Symbol('List');
+
+const Ctx = createContext<number>(0);
+
+type ContainerTheme = Record<string, string | undefined> & {
+	container?: string;
+	container_level_0?: string;
+	container_level_1?: string;
+	container_level_2?: string;
+	container_level_3?: string;
+	container_level_4?: string;
+	container_level_5?: string;
 };
+// eslint-disable-next-line prettier/prettier
+type ContainerThemeLevel = Extract<keyof ContainerTheme, `container_level_${number}`>;
 
-export type TFullListProps = {
-	theme: {
-		container?: string;
-	};
-	children: ReactNode;
+export type TFullListProps = PropsWithChildren<{
+	theme?: ContainerTheme;
 	level?: number;
-};
+}>;
 
-class RawList extends React.Component<TFullListProps> {
-	static contextTypes = CONTEXT_TYPES;
-
+class RawList extends Component<TFullListProps> {
 	render() {
-		const level = this.context[CONTEXT_LEVEL_KEY] || 0;
-		const { theme, children } = this.props;
-		const className = classnames(theme.container, theme[`container_level_${level}`]);
+		return <Ctx.Consumer>{level => this.renderContent(level)}</Ctx.Consumer>;
+	}
+
+	private renderContent = (level: number) => {
+		const { theme = {}, children } = this.props;
+		const levelModifier = `container_level_${level}` as ContainerThemeLevel;
+		const className = classnames(theme.container, theme[levelModifier]);
 
 		return <ul className={className}>{children}</ul>;
-	}
+	};
 }
 
 export type TListProps = PartialKeys<TFullListProps, 'theme'>;
 export const List: ComponentClass<TListProps> = withTheme(LIST)(RawList);
 
-export type TFullListItemProps = {
-	theme: {
-		item?: string;
-	};
-	children?: ReactNode;
+type ItemTheme = Record<string, string | undefined | any> & {
+	item?: string;
+	item_level_0?: string;
+	item_level_1?: string;
+	item_level_2?: string;
+	item_level_3?: string;
+	item_level_4?: string;
+	item_level_5?: string;
+};
+type ItemThemeLevel = Extract<keyof ItemTheme, `item_level_${number}`>;
+
+export type TFullListItemProps = PropsWithChildren<{
+	theme?: ItemTheme;
 	level?: number;
 	onClick?: MouseEventHandler<HTMLElement>;
-};
+}>;
 
 @PURE
-class RawListItem extends React.Component<TFullListItemProps> {
-	static contextTypes = CONTEXT_TYPES;
-
+class RawListItem extends Component<TFullListItemProps> {
 	render() {
-		const { theme, onClick, children } = this.props;
-		const level = this.context[CONTEXT_LEVEL_KEY] || 0;
-		const className = classnames(theme.item, theme[`item_level_${level}`]);
+		return <Ctx.Consumer>{level => this.renderContent(level)}</Ctx.Consumer>;
+	}
+
+	private renderContent = (level: number) => {
+		const { theme = {}, onClick, children } = this.props;
+		const itemLevelModifier = `item_level_${level}` as ItemThemeLevel;
+		const className = classnames(theme.item, theme[itemLevelModifier]);
 
 		return (
 			<li className={className} onClick={onClick}>
 				{children}
 			</li>
 		);
-	}
+	};
 }
 
 export type TListItemProps = PartialKeys<TFullListItemProps, 'theme'>;
 export const ListItem: ComponentClass<TListItemProps> = withTheme(LIST)(RawListItem);
 
-export type TFullListItemGroupProps = {
-	isCollapsed?: boolean;
-	children: ReactNode;
-	header?: ReactNode;
-	theme: {
-		itemGroup?: string;
-		itemGroup_isCollapsed?: string;
-		itemGroup__header?: string;
-	};
-	onClick?: MouseEventHandler<HTMLElement>;
+type ItemGroupTheme = Record<string, string | undefined> & {
+	itemGroup?: string;
+	itemGroup_isCollapsed?: string;
+	itemGroup__header?: string;
+	itemGroup_level_0?: string;
+	itemGroup_level_1?: string;
+	itemGroup_level_2?: string;
+	itemGroup_level_3?: string;
+	itemGroup_level_4?: string;
+	itemGroup_level_5?: string;
 };
+type ItemGroupThemeLevel = Extract<keyof ItemGroupTheme, `itemGroup_level_${number}`>;
 
-class RawListItemGroup extends React.Component<TFullListItemGroupProps> {
+export type TFullListItemGroupProps = PropsWithChildren<{
+	isCollapsed?: boolean;
+	header?: ReactNode;
+	theme?: ItemGroupTheme;
+	onClick?: MouseEventHandler<HTMLElement>;
+}>;
+
+class RawListItemGroup extends Component<TFullListItemGroupProps> {
 	static defaultProps = {
 		isCollapsed: false,
 	};
 
-	static contextTypes = CONTEXT_TYPES;
-
-	static childContextTypes = CONTEXT_TYPES;
-
-	getChildContext() {
-		return {
-			[CONTEXT_LEVEL_KEY]: (this.context[CONTEXT_LEVEL_KEY] || 0) + 1,
-		};
+	render() {
+		return <Ctx.Consumer>{level => this.renderContent(level)}</Ctx.Consumer>;
 	}
 
-	render() {
-		const { theme, isCollapsed, children, header, onClick } = this.props;
-		const level = this.context[CONTEXT_LEVEL_KEY] || 0;
-		const className = classnames(theme.itemGroup, theme[`itemGroup_level_${level}`], {
+	private renderContent = (level: number) => {
+		const { theme = {}, isCollapsed, children, header, onClick } = this.props;
+		const itemGroupModifier = `itemGroup_level_${level}` as ItemGroupThemeLevel;
+		const itemGroupClassnames = objectToClassnames(theme[itemGroupModifier]);
+		const className = classnames(itemGroupClassnames, {
 			[theme.itemGroup_isCollapsed as string]: isCollapsed,
 		});
 
@@ -102,11 +125,11 @@ class RawListItemGroup extends React.Component<TFullListItemGroupProps> {
 				<span className={theme.itemGroup__header} onClick={onClick}>
 					{header}
 				</span>
-				{children}
+				<Ctx.Provider value={level + 1}>{children}</Ctx.Provider>
 			</li>
 		);
-	}
+	};
 }
 
 export type TListItemGroupProps = PartialKeys<TFullListItemGroupProps, 'theme'>;
-export const ListItemGroup: ComponentClass<TListItemGroupProps> = withTheme(LIST)(RawListItemGroup);
+export const ListItemGroup = withTheme(LIST)(RawListItemGroup);

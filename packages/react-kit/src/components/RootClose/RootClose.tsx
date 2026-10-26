@@ -1,18 +1,17 @@
-import React from 'react';
-import { Component, KeyboardEventHandler, MouseEvent, MouseEventHandler, ReactElement, TouchEventHandler } from 'react';
+import React, { PropsWithChildren, ReactElement } from 'react';
+import { Component, KeyboardEventHandler, MouseEvent, MouseEventHandler, TouchEventHandler } from 'react';
 import { EventListener } from '../EventListener/EventListener';
 import { findDOMNode } from 'react-dom';
-import { KeyCode } from '../Control/Control';
+import { Key } from '../Control/Control';
 import { PURE } from '../../utils/pure';
 
 //inspired by https://github.com/react-bootstrap/react-overlays/blob/master/src/RootCloseWrapper.js
 
-export type TRootCloseProps = {
-	children: ReactElement<any>;
+export type TRootCloseProps = PropsWithChildren<{
 	onRootClose?: () => any;
 	ignoreClick?: boolean;
 	ignoreKeyUp?: boolean;
-};
+}>;
 
 @PURE
 export class RootClose extends Component<TRootCloseProps> {
@@ -29,7 +28,7 @@ export class RootClose extends Component<TRootCloseProps> {
 				onTouchStart={this.handleTouchStart}
 				onTouchStartCapture={this.handleTouchStartCapture}
 				onKeyUp={this.handleKeyUp}>
-				{this.props.children}
+				{this.props.children as ReactElement<any>}
 			</EventListener>
 		);
 	}
@@ -69,7 +68,7 @@ export class RootClose extends Component<TRootCloseProps> {
 	};
 
 	private handleKeyUp: KeyboardEventHandler<HTMLElement> = e => {
-		if (!this.props.ignoreKeyUp && e.keyCode === KeyCode.Escape && this.props.onRootClose) {
+		if (!this.props.ignoreKeyUp && e.key === Key.Escape && this.props.onRootClose) {
 			this.props.onRootClose();
 		}
 	};
