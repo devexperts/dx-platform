@@ -1,4 +1,4 @@
-import React, { RefObject } from 'react';
+import React, { Ref } from 'react';
 import { PURE } from '../../utils/pure';
 import { ComponentType, ReactElement } from 'react';
 import { withTheme } from '../../utils/withTheme';
@@ -28,7 +28,7 @@ export type TFullSteppableInputProps = TPickedInputProps & {
 	incrementIcon?: ReactElement<any>;
 	decrementIcon?: ReactElement<any>;
 	clearIcon?: ReactElement<any>;
-	innerRef?: RefObject<HTMLDivElement>;
+	innerRef?: Ref<HTMLDivElement>;
 	children?: any;
 	Input: ComponentType<TInputProps>;
 	ButtonIcon: ComponentType<TButtonIconProps>;
